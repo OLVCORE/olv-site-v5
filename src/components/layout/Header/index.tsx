@@ -5,7 +5,7 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { usePathname } from 'next/navigation';
 import UserMenu from '../UserMenu';
-import LanguageSwitcher from '@/components/LanguageSwitcher';
+// LanguageSwitcher removido conforme solicitado
 import OptimizedImage from '../../OptimizedImage';
 import DropdownMenu from './DropdownMenu';
 
@@ -56,9 +56,9 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
     <>
       {/* Header */}
       <header className="header-wrapper">
-        <div className="header-inner" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                  <div className="header-inner" style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', width: '100%', gap: '2rem' }}>
           {/* Logo + Slogan */}
-          <div className="header-brand" style={{ display: 'flex', alignItems: 'center', minWidth: 0, flexShrink: 0, flexBasis: 'auto', gap: '1.5rem', marginLeft: '-1rem' }}>
+          <div className="header-brand" style={{ display: 'flex', alignItems: 'center', minWidth: 0, flexShrink: 0, flexBasis: 'auto', gap: '1.5rem' }}>
             <Link href="/" className="header-logo-link" title="OLV Internacional" style={{ display: 'block', minWidth: 0 }}>
               <div className="logo-olv-padrao" style={{ aspectRatio: '1/1', minWidth: 50, minHeight: 50, maxWidth: 88, maxHeight: 88, width: '84px', height: '84px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <OptimizedImage 
@@ -79,13 +79,7 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
             </div>
           </div>
 
-          {/* Menu Principal - Visible only on desktop */}
-          <div className="flex items-center gap-6" style={{ flex: 1, minWidth: 0, justifyContent: 'flex-end' }}>
-            {/* Buscar (desktop only) */}
-            <div className="desktop-only">
-              <GlobalSearch />
-            </div>
-
+                      {/* Menu Principal - Visible only on desktop */}
             <nav className="nav-menu desktop-only">
               <Link href="/" className={`nav-item ${isActive('/') ? 'active' : ''}`} data-page="home">Home</Link>
               <Link href="/sobre" className={`nav-item ${isActive('/sobre') ? 'active' : ''}`} data-page="sobre">Sobre</Link>
@@ -368,41 +362,42 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
               <Link href="/contato" className={`nav-item ${isActive('/contato') ? 'active' : ''}`} data-page="contato">Contato</Link>
             </nav>
 
-            {/* Language switcher desktop */}
-            <LanguageSwitcher className="desktop-only" />
+            {/* Buscar (desktop only) */}
+            <div className="desktop-only">
+              <GlobalSearch />
+            </div>
+
+            {/* User Menu (avatar + settings) */}
+            <UserMenu />
+
+            {/* Botão BUSCAR – apenas mobile (ação futura) */}
+            <button
+              className="mobile-search-toggle md:hidden flex items-center justify-center ml-2"
+              aria-label="Abrir busca"
+              onClick={() => setSearchOpen(!searchOpen)}
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </button>
+
+            {/* Botão MENU Principal – mobile */}
+            <button
+              className="mobile-nav-toggle md:hidden flex items-center justify-center"
+              aria-label="Abrir menu principal"
+              onClick={() => setNavOpen(!navOpen)}
+            >
+              <span className="sr-only">Menu</span>
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <line x1="3" y1="12" x2="21" y2="12" />
+                <line x1="3" y1="18" x2="21" y2="18" />
+              </svg>
+              <span className="toggle-label">Menu</span>
+            </button>
           </div>
-
-          {/* User Menu (avatar + settings) */}
-          <UserMenu />
-
-          {/* Botão BUSCAR – apenas mobile (ação futura) */}
-          <button
-            className="mobile-search-toggle md:hidden flex items-center justify-center ml-2"
-            aria-label="Abrir busca"
-            onClick={() => setSearchOpen(!searchOpen)}
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-          </button>
-
-          {/* Botão MENU Principal – mobile */}
-          <button
-            className="mobile-nav-toggle md:hidden flex items-center justify-center"
-            aria-label="Abrir menu principal"
-            onClick={() => setNavOpen(!navOpen)}
-          >
-            <span className="sr-only">Menu</span>
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="3" y1="6" x2="21" y2="6" />
-              <line x1="3" y1="12" x2="21" y2="12" />
-              <line x1="3" y1="18" x2="21" y2="18" />
-            </svg>
-            <span className="toggle-label">Menu</span>
-          </button>
-        </div>
-      </header>
+        </header>
 
       {/* Overlay nav mobile */}
       { /* usa portal root para overlay se quiser, mas simples div */ }
@@ -448,8 +443,7 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
         <Link href="/blog" className={`nav-item ${isActive('/blog') ? 'active' : ''}`} onClick={() => setNavOpen(false)}>Blog</Link>
         <Link href="/faq" className={`nav-item ${isActive('/faq') ? 'active' : ''}`} onClick={() => setNavOpen(false)}>FAQ</Link>
         <Link href="/contato" className={`nav-item ${isActive('/contato') ? 'active' : ''}`} onClick={() => setNavOpen(false)}>Contato</Link>
-        {/* Language switcher mobile */}
-        <LanguageSwitcher className="mt-4" />
+        {/* Language switcher removido conforme solicitado */}
       </nav>
     </>
   );

@@ -33,7 +33,7 @@ export default function GlobalSearch() {
   };
 
   return (
-    <div className="relative w-80 md:w-[30rem]">
+    <div className="relative w-64 md:w-80">
       <input
         type="text"
         placeholder="Buscar..."
@@ -41,7 +41,7 @@ export default function GlobalSearch() {
         value={query}
         onChange={e => setQuery(e.target.value)}
         onKeyDown={handleKeyDown}
-        className="px-3 py-2 rounded bg-surface-light text-on-surface outline-none"
+        className="px-3 py-2 rounded bg-gray-700 text-white placeholder-gray-300 outline-none border border-gray-600 focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400"
       />
       {data?.results?.length > 0 && (
         <ul className="absolute z-50 mt-2 w-full bg-surface rounded shadow-lg max-h-72 overflow-auto">
