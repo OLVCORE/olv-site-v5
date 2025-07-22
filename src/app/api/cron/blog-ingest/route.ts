@@ -2,10 +2,12 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import OpenAI from 'openai';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+const supabase = supabaseUrl && supabaseKey 
+  ? createClient(supabaseUrl, supabaseKey)
+  : null;
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY! });
 
@@ -246,6 +248,11 @@ async function processFeed(url: string, category: string) {
         const coverUrl = item.image || 'https://images.unsplash.com/photo-1667895622485-b0b37a7250c1?w=800';
         
         // Inserir no Supabase
+        if (!supabase) {
+          console.log('Supabase não configurado, pulando inserção:', item.title);
+          continue;
+        }
+
         const { error } = await supabase.from('posts').insert({
           slug: createSlug(item.title),
           title: item.title,
@@ -303,6 +310,10 @@ export async function GET(request: NextRequest) {
   }
 
   if (logs) {
+    if (!supabase) {
+      return NextResponse.json({ logs: [], message: 'Supabase não configurado' });
+    }
+
     const { data: logsData } = await supabase
       .from('ingest_logs')
       .select('*')
