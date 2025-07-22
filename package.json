@@ -24,6 +24,7 @@
     "@radix-ui/react-toast": "^1.1.5",
     "@stripe/stripe-js": "^3.0.0",
     "@supabase/supabase-js": "^2.39.0",
+    "@tippyjs/react": "^4.2.6",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "framer-motion": "^10.16.16",
@@ -38,6 +39,7 @@
     "swr": "^2.3.4",
     "tailwind-merge": "^2.0.0",
     "tailwindcss-animate": "^1.0.7",
+    "tippy.js": "^6.3.7",
     "zod": "^3.22.4"
   },
   "devDependencies": {
