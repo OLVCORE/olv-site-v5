@@ -5,12 +5,34 @@ import FaqPageClient from './FaqPageClient';
 import React from 'react';
 
 export const metadata = {
-  title: 'FAQ | OLV Internacional',
+  title: 'FAQ - Perguntas Frequentes | OLV Internacional',
   description:
-    'Perguntas frequentes sobre importação, logística, tributos, supply chain e plataformas OLV.',
+    'Perguntas frequentes sobre importação, exportação, logística internacional, tributos, supply chain industrial e plataformas OLV. Tire suas dúvidas sobre comércio exterior.',
   keywords:
-    'faq, perguntas frequentes, dúvidas comex, comércio exterior, logística internacional, importação, exportação, tributos, supply chain',
-  alternates: { canonical: 'https://olvinternacional.com.br/faq' },
+    'faq, perguntas frequentes, dúvidas comex, comércio exterior, logística internacional, importação, exportação, tributos, supply chain, radar siscomex, desembaraço aduaneiro, planejamento tributário',
+  alternates: { canonical: 'https://olv-site-v5.vercel.app/faq' },
+  openGraph: {
+    title: 'FAQ - Perguntas Frequentes | OLV Internacional',
+    description: 'Perguntas frequentes sobre importação, exportação, logística internacional, tributos, supply chain industrial e plataformas OLV.',
+    url: 'https://olv-site-v5.vercel.app/faq',
+    siteName: 'OLV Internacional',
+    locale: 'pt_BR',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'FAQ - Perguntas Frequentes | OLV Internacional',
+    description: 'Perguntas frequentes sobre importação, exportação, logística internacional, tributos, supply chain industrial.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+    }
+  }
 };
 
 // Base content directory that contains subfolders like `answers/` and new intent-based folders

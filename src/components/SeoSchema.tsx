@@ -1,260 +1,197 @@
 import React from 'react';
 
-interface SeoSchemaProps {
-  type: 'organization' | 'localBusiness' | 'service' | 'breadcrumb' | 'faq' | 'howTo';
-  data: any;
-}
+export const OrganizationSchema: React.FC = () => {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "OLV Internacional",
+    "url": "https://olv-site-v5.vercel.app",
+    "logo": "https://olv-site-v5.vercel.app/images/logo.png",
+    "description": "Consultoria especializada em Supply Chain Industrial e Comércio Exterior para PMEs. 35 anos de experiência em multinacionais.",
+    "foundingDate": "1989",
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "BR",
+      "addressRegion": "São Paulo"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer service",
+      "email": "contato@olvinternacional.com.br"
+    },
+    "sameAs": [
+      "https://www.linkedin.com/company/olv-internacional",
+      "https://www.facebook.com/olvinternacional"
+    ]
+  };
 
-export function SeoSchema({ type, data }: SeoSchemaProps) {
-  const getSchema = () => {
-    switch (type) {
-      case 'organization':
-        return {
-          "@context": "https://schema.org",
-          "@type": "Organization",
-          "name": "OLV Internacional",
-          "description": "Consultoria especializada em Supply Chain Industrial e Comércio Exterior para PMEs. 35 anos de experiência em multinacionais (Volkswagen, Ericsson, Lupatech). Otimizamos importação de insumos, exportação de produtos acabados e redução de custos logísticos.",
-          "url": "https://olvinternacional.com.br",
-          "logo": "https://olvinternacional.com.br/images/olv-logo.jpeg",
-          "foundingDate": "1989",
-          "founder": {
-            "@type": "Person",
-            "name": "Marcos Oliveira"
-          },
-          "sameAs": [
-            "https://www.linkedin.com/company/26251289/admin/dashboard/",
-            "https://www.instagram.com/olvinternacional",
-            "https://www.facebook.com/olvinternacional"
-          ],
-          "contactPoint": {
-            "@type": "ContactPoint",
-            "telephone": "+55-11-2675-1446",
-            "contactType": "customer service",
-            "email": "atendimento@olvinternacional.com.br",
-            "areaServed": "BR",
-            "availableLanguage": "Portuguese"
-          },
-          "address": {
-            "@type": "PostalAddress",
-            "addressCountry": "BR",
-            "addressRegion": "SP",
-            "addressLocality": "São Paulo"
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+};
+
+export const LocalBusinessSchema: React.FC = () => {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "OLV Internacional",
+    "description": "Consultoria especializada em Supply Chain Industrial e Comércio Exterior para PMEs",
+    "url": "https://olv-site-v5.vercel.app",
+    "telephone": "+55-11-99999-9999",
+    "email": "contato@olvinternacional.com.br",
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "BR",
+      "addressRegion": "São Paulo",
+      "addressLocality": "São Paulo"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "-23.5505",
+      "longitude": "-46.6333"
+    },
+    "openingHours": "Mo-Fr 09:00-18:00",
+    "priceRange": "$$",
+    "serviceArea": {
+      "@type": "Country",
+      "name": "Brasil"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Serviços de Consultoria",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Consultoria de Importação",
+            "description": "Orientação completa para importação de insumos industriais"
           }
-        };
-
-      case 'localBusiness':
-        return {
-          "@context": "https://schema.org",
-          "@type": "LocalBusiness",
-          "name": "OLV Internacional",
-          "description": "Consultoria especializada em comércio exterior",
-          "url": "https://olvinternacional.com.br",
-          "telephone": "+55-11-2675-1446",
-          "email": "atendimento@olvinternacional.com.br",
-          "address": {
-            "@type": "PostalAddress",
-            "addressCountry": "BR",
-            "addressRegion": "SP",
-            "addressLocality": "São Paulo"
-          },
-          "geo": {
-            "@type": "GeoCoordinates",
-            "latitude": -23.5505,
-            "longitude": -46.6333
-          },
-          "openingHoursSpecification": [
-            {
-              "@type": "OpeningHoursSpecification",
-              "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-              "opens": "09:00",
-              "closes": "18:00"
-            }
-          ],
-          "priceRange": "$$",
-          "currenciesAccepted": "BRL, USD, EUR",
-          "paymentAccepted": "Cash, Credit Card, Bank Transfer",
-          "areaServed": {
-            "@type": "Country",
-            "name": "Brasil"
-          },
-          "serviceArea": {
-            "@type": "Country",
-            "name": "Brasil"
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Consultoria de Exportação",
+            "description": "Suporte para exportação de produtos acabados"
           }
-        };
-
-      case 'service':
-        return {
-          "@context": "https://schema.org",
-          "@type": "Service",
-          "name": data.name || "OLV Internacional",
-          "provider": {
-            "@type": "Organization",
-            "name": "OLV Internacional",
-            "url": "https://olvinternacional.com.br"
-          },
-          "description": data.description || "Consultoria em comércio exterior",
-          "serviceType": data.serviceType || "Consultoria Empresarial",
-          "category": data.category || "Comércio Exterior",
-          "offers": {
-            "@type": "Offer",
-            "availability": "https://schema.org/InStock",
-            "priceCurrency": "BRL",
-            "areaServed": {
-              "@type": "Country",
-              "name": "Brasil"
-            }
-          },
-                      "hasOfferCatalog": {
-              "@type": "OfferCatalog",
-              "name": "Serviços OLV Industrial",
-              "itemListElement": [
-                {
-                  "@type": "Offer",
-                  "itemOffered": {
-                    "@type": "Service",
-                    "name": "Consultoria em Importação Industrial",
-                    "description": "Otimização de importação de insumos e matéria-prima para indústrias"
-                  }
-                },
-                {
-                  "@type": "Offer",
-                  "itemOffered": {
-                    "@type": "Service",
-                    "name": "Consultoria em Exportação Industrial",
-                    "description": "Estruturação de exportação de produtos acabados para PMEs industriais"
-                  }
-                },
-                {
-                  "@type": "Offer",
-                  "itemOffered": {
-                    "@type": "Service",
-                    "name": "Supply Chain Industrial",
-                    "description": "Otimização de cadeia de suprimentos para indústrias de manufatura"
-                  }
-                },
-                {
-                  "@type": "Offer",
-                  "itemOffered": {
-                    "@type": "Service",
-                    "name": "Radar SISCOMEX Industrial",
-                    "description": "Habilitação e manutenção de Radar SISCOMEX para empresas industriais"
-                  }
-                },
-                {
-                  "@type": "Offer",
-                  "itemOffered": {
-                    "@type": "Service",
-                    "name": "Planejamento Tributário Comex",
-                    "description": "Redução de custos tributários em operações de comércio exterior industrial"
-                  }
-                },
-                {
-                  "@type": "Offer",
-                  "itemOffered": {
-                    "@type": "Service",
-                    "name": "Desembaraço Aduaneiro Industrial",
-                    "description": "Aceleração e otimização de desembaraço aduaneiro para insumos industriais"
-                  }
-                }
-              ]
-            }
-        };
-
-      case 'breadcrumb':
-        return {
-          "@context": "https://schema.org",
-          "@type": "BreadcrumbList",
-          "itemListElement": data.items.map((item: any, index: number) => ({
-            "@type": "ListItem",
-            "position": index + 1,
-            "name": item.name,
-            "item": item.url
-          }))
-        };
-
-      case 'faq':
-        return {
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          "mainEntity": data.faqs.map((faq: any) => ({
-            "@type": "Question",
-            "name": faq.question,
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": faq.answer
-            }
-          }))
-        };
-
-      case 'howTo':
-        return {
-          "@context": "https://schema.org",
-          "@type": "HowTo",
-          "name": data.title,
-          "description": data.description,
-          "image": data.image,
-          "totalTime": data.totalTime,
-          "estimatedCost": {
-            "@type": "MonetaryAmount",
-            "currency": "BRL",
-            "value": data.cost
-          },
-          "step": data.steps.map((step: any, index: number) => ({
-            "@type": "HowToStep",
-            "position": index + 1,
-            "name": step.name,
-            "text": step.text,
-            "image": step.image
-          }))
-        };
-
-      default:
-        return data;
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Otimização de Supply Chain",
+            "description": "Redução de custos e otimização de processos logísticos"
+          }
+        }
+      ]
     }
   };
 
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{
-        __html: JSON.stringify(getSchema())
-      }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
     />
   );
-}
+};
 
-// Componentes específicos para facilitar o uso
-export function OrganizationSchema() {
-  return <SeoSchema type="organization" data={{}} />;
-}
+export const ServiceSchema: React.FC = () => {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Consultoria Supply Chain Industrial",
+    "description": "Consultoria especializada em Supply Chain Industrial e Comércio Exterior para PMEs",
+    "provider": {
+      "@type": "Organization",
+      "name": "OLV Internacional"
+    },
+    "serviceType": "Consultoria Empresarial",
+    "areaServed": {
+      "@type": "Country",
+      "name": "Brasil"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Serviços de Consultoria Industrial",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Desembaraço Aduaneiro",
+            "description": "Processo completo de desembaraço aduaneiro"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Planejamento Tributário",
+            "description": "Otimização tributária para operações de comércio exterior"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Radar SISCOMEX",
+            "description": "Habilitação e gestão do Radar SISCOMEX"
+          }
+        }
+      ]
+    }
+  };
 
-export function LocalBusinessSchema() {
-  return <SeoSchema type="localBusiness" data={{}} />;
-}
-
-export function ServiceSchema({ name, description, serviceType, category }: any) {
   return (
-    <SeoSchema 
-      type="service" 
-      data={{ name, description, serviceType, category }} 
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
     />
   );
-}
+};
 
-export function BreadcrumbSchema({ items }: { items: Array<{ name: string; url: string }> }) {
-  return <SeoSchema type="breadcrumb" data={{ items }} />;
-}
+export const BreadcrumbSchema: React.FC<{ items: Array<{ name: string; url: string }> }> = ({ items }) => {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": items.map((item, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "name": item.name,
+      "item": item.url
+    }))
+  };
 
-export function FaqSchema({ faqs }: { faqs: Array<{ question: string; answer: string }> }) {
-  return <SeoSchema type="faq" data={{ faqs }} />;
-}
-
-export function HowToSchema({ title, description, steps, image, totalTime, cost }: any) {
   return (
-    <SeoSchema 
-      type="howTo" 
-      data={{ title, description, steps, image, totalTime, cost }} 
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
     />
   );
-} 
+};
+
+export const FAQSchema: React.FC<{ questions: Array<{ question: string; answer: string }> }> = ({ questions }) => {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": questions.map(q => ({
+      "@type": "Question",
+      "name": q.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": q.answer
+      }
+    }))
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}; 
