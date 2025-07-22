@@ -78,7 +78,7 @@ export default function HomePage() {
             <div className="flex-shrink-0 md:w-1/3">
               <div className="bg-[#0a0f1d] p-4 rounded-lg border border-[#2a3448] shadow-md">
                 <HomeImage 
-                  src="/images/hero-industrial-factory.jpg" 
+                  src="/images/BANNER-HOME.jpeg" 
                   alt="Fábrica Industrial Moderna - OLV Internacional Especialistas em Supply Chain Industrial" 
                   width={460} 
                   height={460} 
