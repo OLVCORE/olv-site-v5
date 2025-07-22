@@ -203,7 +203,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         {/* <CookieConsent /> */}
         
         {/* Google Analytics 4 */}
-        <GoogleAnalytics measurementId="G-XXXXXXXXXX" />
+        <GoogleAnalytics measurementId="G-3D4GMDQSFS" />
         
         {/* Core Web Vitals Monitor */}
         <WebVitals />
