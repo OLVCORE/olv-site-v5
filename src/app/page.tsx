@@ -4,13 +4,46 @@ import Link from 'next/link';
 import RadarHub from '../components/home/RadarHub';
 import HomeImage from '../components/home/HomeImage';
 import { AnimatedCard, FadeIn } from '../components/MicroInteractions';
+import { OrganizationSchema, LocalBusinessSchema } from '../components/SeoSchema';
 
 export const metadata = {
   title: 'OLV Internacional - Supply Chain Industrial | Comex para PMEs Industriais',
-  description: 'Especialistas em otimização de Supply Chain e Comércio Exterior para indústrias de manufatura. 35 anos de expertise aplicada em PMEs industriais.',
-  keywords: 'supply chain industrial, comex industrial, logística industrial, PME industrial, exportação industrial, importação industrial',
+  description: 'Consultoria especializada em Supply Chain Industrial e Comércio Exterior para PMEs. 35 anos de experiência em multinacionais (Volkswagen, Ericsson, Lupatech). Otimizamos importação de insumos, exportação de produtos acabados e redução de custos logísticos. Radar SISCOMEX, desembaraço aduaneiro e planejamento tributário.',
+  keywords: 'consultoria importação exportação, supply chain industrial, comércio exterior PME, logística internacional, desembaraço aduaneiro, radar siscomex, planejamento tributário comex, importação insumos industriais, exportação produtos acabados, redução custos importação, otimização supply chain, consultoria comex industrial, frete internacional, câmbio importação, impostos importação, compliance aduaneiro, logística 4.0, automação comex, inteligência mercado industrial, consultoria estratégica industrial, PME industrial, multinacionais experiência, Volkswagen Ericsson Lupatech, expertise industrial, cadeia suprimentos, otimização estoques, lead time importação, custos portuários, demurrage porto, incoterms 2020, ncm classificação fiscal, drawback suspensão, regime aduaneiro especial, due diligence global, trading company, importação drop shipping, commodities importação, bens capital importação, produtos acabados importação, insumos matéria prima, licenciamento anvisa, certificado origem, compliance aeo oea, controle riscos aduaneiros, digitalização processos comex, documentos exportação, financiamento exim, habilitar radar siscomex, cotação dólar importação, custos portuários despacho, demurrage porto evitar, despacho aduaneiro etapas, diferença incoterms 2020, digitalização processos comex, documentos necessários exportação, drawback suspensão benefícios, due diligence global, engage o que é, escolha mercado alvo exportação, escolher transportadora internacional, exceltta o que é, financiamento exim, finx o que é, habilitar radar siscomex requisitos, importação bens capital, importação commodities, importação drop shipping regulamentação, importação insumos matéria prima, importação produtos acabados, labs o que é, licenciamento anvisa importação, logística 4.0 benefícios supply chain, ncm classificação fiscal, negociar câmbio importação, otimização estoques importação, passos li anvisa, planejamento tributário importação, plano internacionalização PME, quanto custa importar china, reduzir lead time importação, regimes aduaneiros especiais, risco cambial hedge, seguro carga internacional, simulador custo importação, simulador frete internacional, simulador tax importação, siscomex li declaração, stratevo o que é, supply chain resiliente, trading company vs importação própria, ventures o que é, veritus o que é',
   alternates: {
-    canonical: 'https://olvinternacional.com.br/'
+    canonical: 'https://olv-site-v5.vercel.app/'
+  },
+  openGraph: {
+    title: 'OLV Internacional - Supply Chain Industrial | Comex para PMEs Industriais',
+    description: 'Consultoria especializada em Supply Chain Industrial e Comércio Exterior para PMEs. 35 anos de experiência em multinacionais (Volkswagen, Ericsson, Lupatech). Otimizamos importação de insumos, exportação de produtos acabados e redução de custos logísticos.',
+    url: 'https://olv-site-v5.vercel.app/',
+    siteName: 'OLV Internacional',
+    locale: 'pt_BR',
+    type: 'website',
+    images: [
+      {
+        url: 'https://olv-site-v5.vercel.app/images/BANNER-HOME.jpeg',
+        width: 1200,
+        height: 630,
+        alt: 'OLV Internacional - Especialistas em Supply Chain Industrial'
+      }
+    ]
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'OLV Internacional - Supply Chain Industrial',
+    description: 'Consultoria especializada em Supply Chain Industrial e Comércio Exterior para PMEs. 35 anos de experiência em multinacionais.',
+    images: ['https://olv-site-v5.vercel.app/images/BANNER-HOME.jpeg']
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    }
   }
 };
 
@@ -743,6 +776,10 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Structured Data for SEO */}
+      <OrganizationSchema />
+      <LocalBusinessSchema />
     </MainLayout>
   );
 }

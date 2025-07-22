@@ -13,7 +13,7 @@ export function SeoSchema({ type, data }: SeoSchemaProps) {
           "@context": "https://schema.org",
           "@type": "Organization",
           "name": "OLV Internacional",
-          "description": "Consultoria especializada em comércio exterior, importação, exportação e logística internacional para PMEs",
+          "description": "Consultoria especializada em Supply Chain Industrial e Comércio Exterior para PMEs. 35 anos de experiência em multinacionais (Volkswagen, Ericsson, Lupatech). Otimizamos importação de insumos, exportação de produtos acabados e redução de custos logísticos.",
           "url": "https://olvinternacional.com.br",
           "logo": "https://olvinternacional.com.br/images/olv-logo.jpeg",
           "foundingDate": "1989",
@@ -105,33 +105,60 @@ export function SeoSchema({ type, data }: SeoSchemaProps) {
               "name": "Brasil"
             }
           },
-          "hasOfferCatalog": {
-            "@type": "OfferCatalog",
-            "name": "Serviços OLV",
-            "itemListElement": [
-              {
-                "@type": "Offer",
-                "itemOffered": {
-                  "@type": "Service",
-                  "name": "Consultoria em Importação"
+                      "hasOfferCatalog": {
+              "@type": "OfferCatalog",
+              "name": "Serviços OLV Industrial",
+              "itemListElement": [
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Consultoria em Importação Industrial",
+                    "description": "Otimização de importação de insumos e matéria-prima para indústrias"
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Consultoria em Exportação Industrial",
+                    "description": "Estruturação de exportação de produtos acabados para PMEs industriais"
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Supply Chain Industrial",
+                    "description": "Otimização de cadeia de suprimentos para indústrias de manufatura"
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Radar SISCOMEX Industrial",
+                    "description": "Habilitação e manutenção de Radar SISCOMEX para empresas industriais"
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Planejamento Tributário Comex",
+                    "description": "Redução de custos tributários em operações de comércio exterior industrial"
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Desembaraço Aduaneiro Industrial",
+                    "description": "Aceleração e otimização de desembaraço aduaneiro para insumos industriais"
+                  }
                 }
-              },
-              {
-                "@type": "Offer",
-                "itemOffered": {
-                  "@type": "Service",
-                  "name": "Consultoria em Exportação"
-                }
-              },
-              {
-                "@type": "Offer",
-                "itemOffered": {
-                  "@type": "Service",
-                  "name": "Logística Internacional"
-                }
-              }
-            ]
-          }
+              ]
+            }
         };
 
       case 'breadcrumb':
