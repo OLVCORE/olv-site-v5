@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/admin/', '/api/', '/_next/', '/private/'],
     },
-    sitemap: 'https://olv-site-v5.vercel.app/sitemap.xml',
+    sitemap: 'https://olvinternacional.com.br/sitemap.xml',
   }
 } 

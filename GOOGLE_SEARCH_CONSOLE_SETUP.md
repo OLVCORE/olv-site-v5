@@ -8,7 +8,7 @@
 
 ### 2. Adicionar Propriedade
 - Clique em "Adicionar propriedade"
-- Digite: `https://olv-site-v5.vercel.app`
+- Digite: `https://olvinternacional.com.br`
 - Selecione "Prefixo de URL"
 
 ### 3. Verificar Propriedade
@@ -17,7 +17,7 @@ Escolha um dos métodos de verificação:
 #### Método 1: Arquivo HTML (Recomendado)
 - Baixe o arquivo de verificação fornecido pelo Google
 - Faça upload para a pasta `public/` do projeto
-- O arquivo será acessível em: `https://olv-site-v5.vercel.app/nome-do-arquivo.html`
+- O arquivo será acessível em: `https://olvinternacional.com.br/nome-do-arquivo.html`
 
 #### Método 2: Meta Tag
 - Copie a meta tag fornecida pelo Google
@@ -29,7 +29,7 @@ Escolha um dos métodos de verificação:
 
 ### 4. Configurar Sitemap
 - Após a verificação, vá para "Sitemaps"
-- Adicione: `https://olv-site-v5.vercel.app/sitemap.xml`
+- Adicione: `https://olvinternacional.com.br/sitemap.xml`
 - O sitemap já está configurado automaticamente
 
 ### 5. Configurar Google Analytics 4

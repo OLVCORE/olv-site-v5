@@ -5,8 +5,8 @@ export const OrganizationSchema: React.FC = () => {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "OLV Internacional",
-    "url": "https://olv-site-v5.vercel.app",
-    "logo": "https://olv-site-v5.vercel.app/images/logo.png",
+    "url": "https://olvinternacional.com.br",
+    "logo": "https://olvinternacional.com.br/images/logo.png",
     "description": "Consultoria especializada em Supply Chain Industrial e Comércio Exterior para PMEs. 35 anos de experiência em multinacionais.",
     "foundingDate": "1989",
     "address": {
@@ -39,8 +39,8 @@ export const LocalBusinessSchema: React.FC = () => {
     "@type": "LocalBusiness",
     "name": "OLV Internacional",
     "description": "Consultoria especializada em Supply Chain Industrial e Comércio Exterior para PMEs",
-    "url": "https://olv-site-v5.vercel.app",
-    "telephone": "+55-11-99999-9999",
+    "url": "https://olvinternacional.com.br",
+    "telephone": "+55-11-2675-1446",
     "email": "contato@olvinternacional.com.br",
     "address": {
       "@type": "PostalAddress",

@@ -10,7 +10,7 @@ export const metadata = {
     'Perguntas frequentes sobre importação, exportação, logística internacional, tributos, supply chain industrial e plataformas OLV. Tire suas dúvidas sobre comércio exterior.',
   keywords:
     'faq, perguntas frequentes, dúvidas comex, comércio exterior, logística internacional, importação, exportação, tributos, supply chain, radar siscomex, desembaraço aduaneiro, planejamento tributário',
-  alternates: { canonical: 'https://olv-site-v5.vercel.app/faq' },
+  alternates: { canonical: 'https://olvinternacional.com.br/faq' },
   openGraph: {
     title: 'FAQ - Perguntas Frequentes | OLV Internacional',
     description: 'Perguntas frequentes sobre importação, exportação, logística internacional, tributos, supply chain industrial e plataformas OLV.',

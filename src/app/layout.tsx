@@ -6,6 +6,7 @@ import { SITE_URL } from '@/lib/siteConfig';
 import { LocalBusinessSchema, OrganizationSchema } from '@/components/SeoSchema';
 import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics';
 import { WebVitals } from '@/components/analytics/WebVitals';
+import { FloatingWhatsAppButton } from '@/components/WhatsAppButton';
 // Internationalization temporarily disabled
 
 const inter = Inter({ subsets: ["latin"] });
@@ -207,6 +208,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         
         {/* Core Web Vitals Monitor */}
         <WebVitals />
+        
+        {/* Botão Flutuante WhatsApp */}
+        <FloatingWhatsAppButton />
       </body>
     </html>
   );
