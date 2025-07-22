@@ -67,11 +67,11 @@ const ImportacaoExclusiva = () => {
           <div className="container text-center">
             <div className="mb-8">
               <h1 className="uppercase tracking-wider text-4xl md:text-6xl font-extrabold mb-6 bg-gradient-to-r from-[#d4af37] to-[#2e8ce6] bg-clip-text text-transparent">
-                Domine Sua Rota de Importação
+                Domine Sua Rota de Importação Industrial
               </h1>
               <p className="text-xl md:text-2xl text-slate-400/90 max-w-4xl mx-auto mb-6">
-                Pare de importar junto com seus concorrentes. Comece a importar para vencê-los.
-                Transforme sua PME de dependente para dominante com inteligência e exclusividade.
+                Pare de importar insumos junto com seus concorrentes. Comece a importar para vencê-los.
+                Transforme sua indústria de dependente para dominante com inteligência e exclusividade.
               </p>
             </div>
 
@@ -84,7 +84,7 @@ const ImportacaoExclusiva = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-lg text-on-surface text-center">
-                  Na OLV Internacional, ajudamos PMEs a sair da dependência de operadores logísticos
+                  Na OLV Internacional, ajudamos indústrias a sair da dependência de operadores logísticos
                   compartilhados para criar operações exclusivas e blindadas.
                 </p>
               </CardContent>
