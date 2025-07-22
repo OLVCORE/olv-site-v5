@@ -176,21 +176,21 @@ export default function Sobre() {
                   quality={85}
                 />
               </div>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
       {/* SEÇÃO: QUEM É A OLV INTERNACIONAL */}
       <section className="section py-8">
-        <div className="container">
+          <div className="container">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-[#d4af37] mb-4">
               A Empresa que Democratiza Expertise em Internacionalização Industrial Avançada
             </h2>
-          </div>
+            </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <FadeIn delay={0.1}>
               <AnimatedCard className="bg-[#141c2f] p-6 rounded-lg border border-[#2a3448] shadow-lg">
                 <h3 className="text-white font-bold text-xl mb-4">Nossa Essência</h3>
@@ -303,7 +303,7 @@ export default function Sobre() {
                 </AnimatedCard>
               </FadeIn>
             ))}
-          </div>
+              </div>
         </div>
       </section>
 
@@ -325,9 +325,9 @@ export default function Sobre() {
                 </AnimatedCard>
               </FadeIn>
             ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
       {/* SEÇÃO: NOSSA MISSÃO ATUAL */}
       <section className="section py-8 bg-[#0a0f1d]">
@@ -336,7 +336,7 @@ export default function Sobre() {
             <h2 className="text-3xl font-bold text-[#d4af37] mb-4">
               Selecionando Parceiros Industriais Visionários
             </h2>
-          </div>
+            </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <FadeIn delay={0.1}>
@@ -365,18 +365,18 @@ export default function Sobre() {
                 </p>
               </AnimatedCard>
             </FadeIn>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
       {/* SEÇÃO: COMO TRABALHAMOS */}
       <section className="section py-8">
-        <div className="container">
+          <div className="container">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-[#d4af37] mb-4">
               Nossa Abordagem de Parceria Estratégica
             </h2>
-          </div>
+            </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <FadeIn delay={0.1}>
@@ -395,7 +395,7 @@ export default function Sobre() {
               <AnimatedCard className="bg-[#141c2f] p-6 rounded-lg border border-[#2a3448] shadow-lg text-center">
                 <div className="w-16 h-16 rounded-full bg-[#d4af37] flex items-center justify-center mx-auto mb-4">
                   <span className="text-[#0a0f1d] font-bold text-2xl">2</span>
-                </div>
+              </div>
                 <h3 className="text-white font-bold text-lg mb-3">Estratégia Personalizada</h3>
                 <p className="text-gray-300 text-sm">
                   Desenvolvimento de roadmap específico baseado em best practices do setor industrial, adaptado para sua realidade e objetivos de crescimento através de operações nacionais e internacionais.
@@ -426,9 +426,9 @@ export default function Sobre() {
                 </p>
               </AnimatedCard>
             </FadeIn>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
       {/* SEÇÃO CTA FINAL */}
       <section className="section py-8">
@@ -440,7 +440,7 @@ export default function Sobre() {
             
             <p className="text-lg text-gray-300 mb-6 max-w-3xl mx-auto">
               Se sua empresa do setor industrial busca aplicar expertise em internacionalização de Supply Chain para crescer de forma sustentável através de operações nacionais e internacionais, a OLV Internacional pode ser a parceira estratégica que você procura.
-            </p>
+              </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/contato" className="btn btn-primary text-lg px-8 py-3 font-semibold">
@@ -450,9 +450,9 @@ export default function Sobre() {
                 Saiba Mais Sobre Nossa Metodologia 4D
               </Link>
             </div>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
       <WhatsAppButton />
     </MainLayout>

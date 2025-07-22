@@ -18,9 +18,9 @@ export default function ImportSimPage() {
       <div className="container import-sim-container pb-12 mx-auto max-w-7xl">
         <div className="flex items-center justify-between mb-[0.5cm]">
           <h1 className="import-sim-heading text-3xl font-bold flex items-center gap-2 text-gray-900 dark:text-white">
-            <Icon src="/icons/calculator.svg" alt="Simulador" size="sm" className="text-accent w-6 h-6 shrink-0" />
-            Simulador de Custos de Importação
-          </h1>
+          <Icon src="/icons/calculator.svg" alt="Simulador" size="sm" className="text-accent w-6 h-6 shrink-0" />
+          Simulador de Custos de Importação
+        </h1>
           <Link
             href="/radar360"
             className="inline-flex items-center px-4 py-2 bg-[#d4af37] text-gray-900 font-semibold rounded-lg hover:bg-[#b8941f] transition-colors text-sm"
