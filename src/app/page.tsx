@@ -6,9 +6,9 @@ import HomeImage from '../components/home/HomeImage';
 import { AnimatedCard, FadeIn } from '../components/MicroInteractions';
 
 export const metadata = {
-  title: 'OLV Internacional – Especialistas em Supply Chain Industrial e Comex para Indústrias de Manufatura',
-  description: 'Transforme sua indústria em uma máquina de exportação/importação lucrativa. Especialistas em reestruturação de cadeias, otimização de Comex e redução de custos para PMEs industriais.',
-  keywords: 'supply chain industrial, comex industrial, logística internacional fabril, otimização industrial, redução custos indústria, exportação importação industrial, PMEs industriais',
+  title: 'OLV Internacional - Supply Chain Industrial | Comex para PMEs Industriais',
+  description: 'Especialistas em otimização de Supply Chain e Comércio Exterior para indústrias de manufatura. 35 anos de expertise aplicada em PMEs industriais.',
+  keywords: 'supply chain industrial, comex industrial, logística industrial, PME industrial, exportação industrial, importação industrial',
   alternates: {
     canonical: 'https://olvinternacional.com.br/'
   }
@@ -292,6 +292,226 @@ export default function HomePage() {
               <h3 className="text-xl font-bold text-gray-100 leading-tight">Integre Estratégia, Tecnologia e Pessoas</h3>
               <p className="text-sm text-gray-300 max-w-xs">Unimos inteligência de dados, automação e visão humana para acelerar o crescimento global da sua indústria com segurança e performance.</p>
               <Link href="/solucoes" className="btn btn-primary text-sm px-5 py-2">Explorar Soluções</Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Desafios da Indústria */}
+      <section id="desafios-industria" className="section section-humano pt-6 pb-0 mb-0">
+        <div className="container">
+          <div className="bg-[#141c2f] rounded-lg border border-[#2a3448] overflow-hidden shadow-xl">
+            <div className="p-6">
+              <div className="text-center mb-8">
+                <h2 className="text-3xl font-extrabold text-white mb-4">Sua Indústria Enfrenta Estes Desafios de Supply Chain e Comércio Exterior?</h2>
+                <p className="text-gray-300 text-lg text-center max-w-4xl mx-auto">
+                  Identificamos os principais gargalos que impedem PMEs industriais de otimizar suas operações e reduzir custos
+                </p>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="bg-[#0a0f1d] p-4 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300">
+                  <div className="flex items-start mb-3">
+                    <div className="w-8 h-8 rounded-full bg-red-500/20 border border-red-500 flex items-center justify-center mr-3 flex-shrink-0">
+                      <svg className="w-4 h-4 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <p className="text-gray-300 text-sm leading-relaxed">
+                      Altos custos de importação de matéria-prima e componentes que reduzem sua margem de produção
+                    </p>
+                  </div>
+                </div>
+
+                <div className="bg-[#0a0f1d] p-4 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300">
+                  <div className="flex items-start mb-3">
+                    <div className="w-8 h-8 rounded-full bg-red-500/20 border border-red-500 flex items-center justify-center mr-3 flex-shrink-0">
+                      <svg className="w-4 h-4 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <p className="text-gray-300 text-sm leading-relaxed">
+                      Paradas na linha de produção devido a atrasos no desembaraço aduaneiro de insumos críticos
+                    </p>
+                  </div>
+                </div>
+
+                <div className="bg-[#0a0f1d] p-4 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300">
+                  <div className="flex items-start mb-3">
+                    <div className="w-8 h-8 rounded-full bg-red-500/20 border border-red-500 flex items-center justify-center mr-3 flex-shrink-0">
+                      <svg className="w-4 h-4 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <p className="text-gray-300 text-sm leading-relaxed">
+                      Falta de visibilidade na cadeia de suprimentos, impedindo a otimização do estoque fabril
+                    </p>
+                  </div>
+                </div>
+
+                <div className="bg-[#0a0f1d] p-4 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300">
+                  <div className="flex items-start mb-3">
+                    <div className="w-8 h-8 rounded-full bg-red-500/20 border border-red-500 flex items-center justify-center mr-3 flex-shrink-0">
+                      <svg className="w-4 h-4 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <p className="text-gray-300 text-sm leading-relaxed">
+                      Dificuldade em exportar produtos acabados para novos mercados, perdendo oportunidades
+                    </p>
+                  </div>
+                </div>
+
+                <div className="bg-[#0a0f1d] p-4 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300">
+                  <div className="flex items-start mb-3">
+                    <div className="w-8 h-8 rounded-full bg-red-500/20 border border-red-500 flex items-center justify-center mr-3 flex-shrink-0">
+                      <svg className="w-4 h-4 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <p className="text-gray-300 text-sm leading-relaxed">
+                      Burocracia complexa (REPETRO, RECOF, ex-tarifário) que impede a agilidade da indústria
+                    </p>
+                  </div>
+                </div>
+
+                <div className="bg-[#0a0f1d] p-4 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300">
+                  <div className="flex items-start mb-3">
+                    <div className="w-8 h-8 rounded-full bg-red-500/20 border border-red-500 flex items-center justify-center mr-3 flex-shrink-0">
+                      <svg className="w-4 h-4 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <p className="text-gray-300 text-sm leading-relaxed">
+                      Dependência de poucos fornecedores, expondo sua fábrica a riscos de ruptura
+                    </p>
+                  </div>
+                </div>
+
+                <div className="bg-[#0a0f1d] p-4 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300 md:col-span-2 lg:col-span-3">
+                  <div className="flex items-start mb-3">
+                    <div className="w-8 h-8 rounded-full bg-red-500/20 border border-red-500 flex items-center justify-center mr-3 flex-shrink-0">
+                      <svg className="w-4 h-4 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <p className="text-gray-300 text-sm leading-relaxed">
+                      Falta de expertise interna em Comex, desviando foco da equipe de produção
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="text-center mt-8">
+                <Link href="/contato" className="btn btn-primary text-lg px-8 py-3">
+                  Se identificou? Agende um Diagnóstico Gratuito para sua Indústria
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Cases de Sucesso Industriais */}
+      <section id="cases-sucesso" className="section section-humano pt-6 pb-0 mb-0">
+        <div className="container">
+          <div className="bg-[#141c2f] rounded-lg border border-[#2a3448] overflow-hidden shadow-xl">
+            <div className="p-6">
+              <div className="text-center mb-8">
+                <h2 className="text-3xl font-extrabold text-white mb-4">Resultados Reais na Indústria: Cases de Sucesso da OLV Internacional</h2>
+                <p className="text-gray-300 text-lg text-center max-w-4xl mx-auto">
+                  Veja como transformamos desafios em oportunidades para PMEs industriais
+                </p>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="bg-[#0a0f1d] p-6 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300">
+                  <div className="flex items-center mb-4">
+                    <div className="w-12 h-12 rounded-full bg-green-500/20 border border-green-500 flex items-center justify-center mr-3">
+                      <svg className="w-6 h-6 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <h3 className="text-xl font-bold text-white">Otimização de Custos</h3>
+                  </div>
+                  <div className="space-y-3">
+                    <div>
+                      <h4 className="text-[#d4af37] font-semibold text-sm">Empresa:</h4>
+                      <p className="text-gray-300 text-sm">Indústria de Autopeças (R$ 80M faturamento)</p>
+                    </div>
+                    <div>
+                      <h4 className="text-[#d4af37] font-semibold text-sm">Desafio:</h4>
+                      <p className="text-gray-300 text-sm">Altos custos de importação de aços especiais e componentes eletrônicos</p>
+                    </div>
+                    <div>
+                      <h4 className="text-[#d4af37] font-semibold text-sm">Solução:</h4>
+                      <p className="text-gray-300 text-sm">Otimização da classificação fiscal e reengenharia do desembaraço aduaneiro</p>
+                    </div>
+                    <div>
+                      <h4 className="text-[#d4af37] font-semibold text-sm">Resultado:</h4>
+                      <p className="text-gray-300 text-sm font-bold">Redução de 28% no custo de aquisição, liberando R$ 2,5M anuais</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-[#0a0f1d] p-6 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300">
+                  <div className="flex items-center mb-4">
+                    <div className="w-12 h-12 rounded-full bg-blue-500/20 border border-blue-500 flex items-center justify-center mr-3">
+                      <svg className="w-6 h-6 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <h3 className="text-xl font-bold text-white">Expansão de Mercado</h3>
+                  </div>
+                  <div className="space-y-3">
+                    <div>
+                      <h4 className="text-[#d4af37] font-semibold text-sm">Empresa:</h4>
+                      <p className="text-gray-300 text-sm">Fábrica de Máquinas Agrícolas (R$ 120M faturamento)</p>
+                    </div>
+                    <div>
+                      <h4 className="text-[#d4af37] font-semibold text-sm">Desafio:</h4>
+                      <p className="text-gray-300 text-sm">Dependência do mercado nacional e dificuldade de expandir</p>
+                    </div>
+                    <div>
+                      <h4 className="text-[#d4af37] font-semibold text-sm">Solução:</h4>
+                      <p className="text-gray-300 text-sm">Mapeamento de novos mercados e estruturação de canais</p>
+                    </div>
+                    <div>
+                      <h4 className="text-[#d4af37] font-semibold text-sm">Resultado:</h4>
+                      <p className="text-gray-300 text-sm font-bold">3 novos mercados em 12 meses, +150% em exportações</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-[#0a0f1d] p-6 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300">
+                  <div className="flex items-center mb-4">
+                    <div className="w-12 h-12 rounded-full bg-purple-500/20 border border-purple-500 flex items-center justify-center mr-3">
+                      <svg className="w-6 h-6 text-purple-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <h3 className="text-xl font-bold text-white">Eficiência Logística</h3>
+                  </div>
+                  <div className="space-y-3">
+                    <div>
+                      <h4 className="text-[#d4af37] font-semibold text-sm">Empresa:</h4>
+                      <p className="text-gray-300 text-sm">Indústria Química (R$ 95M faturamento)</p>
+                    </div>
+                    <div>
+                      <h4 className="text-[#d4af37] font-semibold text-sm">Desafio:</h4>
+                      <p className="text-gray-300 text-sm">Complexidade na importação de insumos químicos especiais</p>
+                    </div>
+                    <div>
+                      <h4 className="text-[#d4af37] font-semibold text-sm">Solução:</h4>
+                      <p className="text-gray-300 text-sm">Implementação de Supply Chain 4.0 com IA e automação</p>
+                    </div>
+                    <div>
+                      <h4 className="text-[#d4af37] font-semibold text-sm">Resultado:</h4>
+                      <p className="text-gray-300 text-sm font-bold">40% redução no lead time, 25% economia em custos logísticos</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
