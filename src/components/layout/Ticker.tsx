@@ -83,16 +83,15 @@ const Ticker: React.FC = () => {
   const tickerHoverColor = isDark ? '#fffbe6' : '#003366';
   const tickerFont = "'Inter', 'Segoe UI', Arial, sans-serif";
 
-  // Calcular duração da animação: mobile 35% mais lento, desktop 10% mais rápido
-  const baseDuration = isMobile ? 81 : 27;
-  const animationDuration = Math.max(baseDuration, headlines.length * (isMobile ? 8 : 2.7));
+  // Calcular duração da animação: velocidade reduzida para melhor leitura
+  const baseDuration = isMobile ? 120 : 60; // Aumentado significativamente
+  const animationDuration = Math.max(baseDuration, headlines.length * (isMobile ? 12 : 6)); // Mais tempo por mensagem
 
   return (
     <div className="ticker" style={{ overflow: 'hidden', whiteSpace: 'nowrap' }}>
       <div 
         className="ticker-inner" 
         style={{ 
-          display: 'inline-block', 
           animation: hoveredIdx === null ? `ticker-scroll ${animationDuration}s linear infinite` : 'none',
           whiteSpace: 'nowrap',
           color: tickerColor,

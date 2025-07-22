@@ -14,6 +14,8 @@ export default function SitemapPage() {
     Institucional: [
       { href: '/', label: 'Home' },
       { href: '/sobre', label: 'Sobre Nós' },
+      { href: '/solucoes', label: 'Soluções' },
+      { href: '/radar360', label: 'Radar 360' },
       { href: '/contato', label: 'Contato' },
       { href: '/blog', label: 'Blog' },
     ],

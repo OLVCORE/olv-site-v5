@@ -1,5 +1,6 @@
 'use client';
 import { useState, Suspense } from 'react';
+import Link from 'next/link';
 import DisclaimerAlert from '@/components/DisclaimerAlert';
 import FreightCalculatorLight from '@/components/simulators/FreightCalculatorLight';
 import VolumesTable from '@/components/simulators/VolumesTable';
@@ -47,7 +48,18 @@ export default function FreightFullPage() {
   return (
     <MainLayout>
     <div className="import-sim-container mx-auto max-w-6xl py-6">
-      <h1 className="import-sim-heading text-2xl font-bold mb-2">Simulador de Fretes – Versão FULL</h1>
+      <div className="flex items-center justify-between mb-2">
+        <h1 className="import-sim-heading text-2xl font-bold">Simulador de Fretes – Versão FULL</h1>
+        <Link
+          href="/radar360"
+          className="inline-flex items-center px-4 py-2 bg-[#d4af37] text-gray-900 font-semibold rounded-lg hover:bg-[#b8941f] transition-colors text-sm"
+        >
+          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+          Voltar ao Radar 360
+        </Link>
+      </div>
 
       <DisclaimerAlert />
 

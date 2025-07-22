@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Header from './Header/index';
 import Footer from './Footer/index';
-import Sidebar from './Sidebar/index';
+// Sidebar removed completely
 import WhatsAppButton from '../layout/WhatsAppButton';
 import Ticker from './Ticker';
 import { usePathname } from 'next/navigation';
@@ -95,7 +95,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({
 
   return (
     <div className={`app-container ${className} ${isPageLoaded ? 'loaded' : ''}`}>
-      <Sidebar />
+              {/* Sidebar removed completely */}
       <div className="content-wrapper">
         <Header theme={theme} toggleTheme={toggleTheme} />
         <Ticker />

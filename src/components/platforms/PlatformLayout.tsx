@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import Sidebar from '../layout/Sidebar';
+// Sidebar removed completely
 import Header from '../layout/Header';
 import Footer from '../layout/Footer';
 import Ticker from '../layout/Ticker';
@@ -77,8 +77,7 @@ const PlatformLayout: React.FC<PlatformLayoutProps> = ({
 
   return (
     <div className="site-wrapper">
-      {/* Sidebar */}
-      <Sidebar />
+      {/* Sidebar removed completely */}
       
       {/* Main Content Area */}
       <div className="content-wrapper">

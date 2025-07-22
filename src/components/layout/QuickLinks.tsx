@@ -8,7 +8,6 @@ const quickLinks = [
   { name: 'Home', href: '/' },
   { name: 'Sobre', href: '/sobre' },
   { name: 'Soluções', href: '/solucoes' },
-  { name: 'Ecossistema', href: '/ecossistema' },
   { name: 'Radar 360', href: '/radar360' },
   { name: 'Blog', href: '/blog' },
   { name: 'Contato', href: '/contato' },

@@ -6,7 +6,7 @@ import Link from 'next/link';
 interface DropdownItem {
   label: string;
   href: string;
-  description?: string;
+  description?: string; // Mantido para tooltip
   icon?: React.ReactNode;
 }
 
@@ -91,7 +91,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({ label, items, className = '
       
       {isOpen && (
         <div 
-          className="absolute top-full left-0 mt-2 w-80 bg-white dark:bg-[#1a2338] rounded-lg shadow-xl border border-gray-200 dark:border-[#2a3448] z-50 py-2"
+          className="absolute top-full left-0 mt-2 w-64 bg-white dark:bg-[#1a2338] rounded-lg shadow-xl border border-gray-200 dark:border-[#2a3448] z-[9999] py-2 max-h-96 overflow-y-auto"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
@@ -99,23 +99,19 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({ label, items, className = '
             <div key={index} className="relative">
               <Link
                 href={item.href}
-                className="flex items-start gap-3 px-4 py-3 hover:bg-gray-50 dark:hover:bg-[#0a0f1d] transition-colors duration-150 group block w-full"
+                className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 dark:hover:bg-[#0a0f1d] transition-colors duration-150 group block w-full"
                 onClick={handleItemClick}
+                title={item.description} // Tooltip com a descrição
               >
                 {item.icon && (
-                  <div className="flex-shrink-0 w-8 h-8 bg-[#d4af37]/10 rounded-lg flex items-center justify-center group-hover:bg-[#d4af37]/20 transition-colors duration-150">
+                  <div className="flex-shrink-0 w-6 h-6 bg-[#d4af37]/10 rounded-lg flex items-center justify-center group-hover:bg-[#d4af37]/20 transition-colors duration-150">
                     {item.icon}
                   </div>
                 )}
                 <div className="flex-1 min-w-0">
-                  <div className="font-medium text-gray-900 dark:text-white group-hover:text-[#d4af37] transition-colors duration-150">
+                  <div className="font-medium text-gray-900 dark:text-white group-hover:text-[#d4af37] transition-colors duration-150 text-sm">
                     {item.label}
                   </div>
-                  {item.description && (
-                    <div className="text-sm text-gray-600 dark:text-gray-300 mt-1">
-                      {item.description}
-                    </div>
-                  )}
                 </div>
               </Link>
             </div>

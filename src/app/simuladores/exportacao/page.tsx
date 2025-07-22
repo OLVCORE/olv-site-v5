@@ -1,48 +1,58 @@
 import React from 'react';
-import MainLayout from '../../../components/layout/MainLayout';
-import ExportCostCalculator from '../../../components/simulators/ExportCostCalculator';
-import ImportSimWrapper from '../../../components/simulators/ImportSimWrapper';
-import Icon from '../../../components/icons/Icon';
-import SimLayout from '../../../components/simulators/SimLayout';
-import RealtimeQuotes from '../../../components/radar/RealtimeQuotes';
+import Link from 'next/link';
+import { Metadata } from 'next';
 
-export const metadata = {
-  title: 'Simulador de Custos de Exportação | OLV Internacional',
-  description: 'Calcule custos logísticos e receita líquida de exportação com base no crédito Reintegra e despesas de frete.',
+export const metadata: Metadata = {
+  title: 'Simulador de Custos de Exportação - OLV Internacional',
+  description: 'Calcule receita líquida e crédito Reintegra para suas operações de exportação.',
+  keywords: 'simulador, exportação, custos, reintegra, receita líquida',
+  openGraph: {
+    title: 'Simulador de Custos de Exportação - OLV Internacional',
+    description: 'Calcule receita líquida e crédito Reintegra para suas operações de exportação.',
+    type: 'website',
+  },
 };
 
-export default function ExportSimPage() {
+export default function SimuladorExportacaoPage() {
   return (
-    <MainLayout>
-      <div className="container import-sim-container pb-12 mx-auto max-w-7xl">
-        <h1 className="import-sim-heading text-3xl font-bold flex items-center gap-2 mb-[0.5cm] text-gray-900 dark:text-white">
-          <Icon src="/icons/calculator.svg" alt="Simulador" size="sm" className="text-accent w-6 h-6 shrink-0" />
-          Simulador de Custos de Exportação
-        </h1>
-        <SimLayout
-          quotes={<RealtimeQuotes symbols={['USD','EUR','GBP','CNY']} />}
-          calculator={<ImportSimWrapper><ExportCostCalculator showQuotes={false} /></ImportSimWrapper>}
-          guide={(
-          <div className="glass p-6 rounded-2xl shadow-gold card-hover">
-            <h2 className="text-xl font-semibold text-gray-100 mb-4 flex items-center gap-2">
-              <Icon src="/icons/info.svg" alt="Guia" size="xs" className="text-accent" />
-              Como Precificar uma Exportação
-            </h2>
-            <ol className="list-decimal pl-4 space-y-2 text-gray-300 text-sm leading-relaxed">
-              <li><strong>FOB</strong>: valor da mercadoria pronta para embarque no porto/aeroporto de saída.</li>
-              <li><strong>Custos Logísticos</strong>: frete internacional, seguro, transporte interno, taxas portuárias e despesas diversas.</li>
-              <li><strong>Reintegra</strong>: crédito fiscal concedido (0-3 %) sobre o valor exportado — aumenta a margem.</li>
-              <li><strong>Receita Líquida</strong>: FOB – custos + crédito Reintegra. Use-a para definir sua margem e preço de venda.</li>
-              <li>Mercados diferentes ⇒ requisitos diferentes. Avalie <em>incoterms</em>, barreiras técnicas e preferências de consumo.</li>
-            </ol>
-            <p className="mt-4 text-xs"><span className="text-accent">Precificar corretamente é o primeiro passo; dominar requisitos de mercado garante que sua oferta seja competitiva e compliant. Conte com a OLV Internacional para abrir novos destinos e maximizar resultados.</span></p>
-            <div className="mt-4">
-              <a href="/contato" className="btn btn-gold animate-gold-pulse">Fale com um Especialista</a>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900">
+      <div className="container mx-auto px-4 py-16">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
+            Simulador de Custos de Exportação
+          </h1>
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            Calcule receita líquida e crédito Reintegra para suas operações de exportação
+          </p>
+        </div>
+
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white/10 backdrop-blur-lg rounded-xl p-8 border border-white/20">
+            <div className="text-center">
+              <div className="text-6xl mb-4">🚢</div>
+              <h2 className="text-2xl font-semibold text-white mb-4">
+                Simulador em Desenvolvimento
+              </h2>
+              <p className="text-gray-300 mb-8">
+                Este simulador está sendo desenvolvido para calcular receita líquida e crédito Reintegra 
+                para operações de exportação. Em breve estará disponível.
+              </p>
+              
+                             <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                 <Link
+                   href="/radar360"
+                   className="inline-flex items-center px-6 py-3 bg-[#d4af37] text-gray-900 font-semibold rounded-lg hover:bg-[#b8941f] transition-colors"
+                 >
+                   <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                   </svg>
+                   Voltar ao Radar 360
+                 </Link>
+               </div>
             </div>
           </div>
-          )}
-        />
+        </div>
       </div>
-    </MainLayout>
+    </div>
   );
 } 

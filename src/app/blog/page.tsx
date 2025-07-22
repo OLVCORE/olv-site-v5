@@ -166,7 +166,7 @@ export default async function BlogPage({ searchParams }: { searchParams: { page?
                 </section>
               </div>
 
-              {/* SIDEBAR */}
+              {/* Sidebar removed completely */}
               <div className="w-full lg:w-1/3">
                 {/* Categorias */}
                 <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md mb-8">
