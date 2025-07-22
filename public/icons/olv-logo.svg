@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4af37">
+  <!-- Círculo principal representando o globo -->
+  <circle cx="12" cy="12" r="10" stroke="#d4af37" stroke-width="1.5" fill="none"/>
+
+  <!-- Linhas de grade sutis para dar a sensação de globo -->
+  <path d="M12 2L12 22M2 12L22 12" stroke="#d4af37" stroke-width="0.5" opacity="0.4"/>
+
+  <!-- Rota dinâmica com seta, simbolizando comércio exterior e movimento -->
+  <path d="M 2 12 A 10 10 0 0 1 22 12" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round"/>
+  <path d="M 22 12 L 18 10 L 18 14 Z" fill="#d4af37"/>
+</svg>

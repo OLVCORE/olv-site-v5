@@ -1,0 +1,234 @@
+{
+  "sources": [
+    {
+      "url": "https://www.comexstat.mdic.gov.br/feed/",
+      "category": "Comércio Exterior",
+      "description": "ComexStat – Governo Federal"
+    },
+    {
+      "url": "https://www.gov.br/receitafederal/pt-br/assuntos/noticias/feed",
+      "category": "Comércio Exterior",
+      "description": "Receita Federal – Notícias"
+    },
+    {
+      "url": "https://www.gov.br/mdic/pt-br/assuntos/noticias/feed",
+      "category": "Comércio Exterior",
+      "description": "MDIC – Ministério do Desenvolvimento"
+    },
+    {
+      "url": "https://www.gov.br/antaq/pt-br/assuntos/noticias/feed",
+      "category": "Logística",
+      "description": "ANTAQ – Transportes Aquaviários"
+    },
+    {
+      "url": "https://www.gov.br/anvisa/pt-br/assuntos/noticias/feed",
+      "category": "Compliance",
+      "description": "ANVISA – Produtos Regulados"
+    },
+    {
+      "url": "https://portosenavios.com.br/feed/",
+      "category": "Logística",
+      "description": "Portos e Navios"
+    },
+    {
+      "url": "https://www.porttechnology.org/feed/",
+      "category": "Logística",
+      "description": "Port Technology International"
+    },
+    {
+      "url": "https://www.worldmaritimenews.com/feed/",
+      "category": "Logística",
+      "description": "World Maritime News"
+    },
+    {
+      "url": "https://www.tradewindsnews.com/rss",
+      "category": "Logística",
+      "description": "TradeWinds"
+    },
+    {
+      "url": "https://www.hellenicshippingnews.com/feed/",
+      "category": "Logística",
+      "description": "Hellenic Shipping News"
+    },
+    {
+      "url": "https://www.joc.com/rss",
+      "category": "Logística",
+      "description": "JOC – Journal of Commerce"
+    },
+    {
+      "url": "https://www.seatrade-maritime.com/rss",
+      "category": "Logística",
+      "description": "Seatrade Maritime News"
+    },
+    {
+      "url": "https://www.bcb.gov.br/novosnoticias/rss/noticias.xml",
+      "category": "Finanças",
+      "description": "Banco Central do Brasil"
+    },
+    {
+      "url": "https://valor.globo.com/rss/feed/feed.xml",
+      "category": "Finanças",
+      "description": "Valor Econômico – Comércio Exterior"
+    },
+    {
+      "url": "https://www.bloomberg.com/feed/podcast/etf-report.xml",
+      "category": "Finanças",
+      "description": "Bloomberg Markets – Economics"
+    },
+    {
+      "url": "https://www.investing.com/rss/news_301.rss",
+      "category": "Finanças",
+      "description": "Investing.com – Global Economy"
+    },
+    {
+      "url": "https://economia.estadao.com.br/rss.xml",
+      "category": "Finanças",
+      "description": "Estadão – Economia & Negócios"
+    },
+    {
+      "url": "https://www.reuters.com/rssCommoditiesNews",
+      "category": "Finanças",
+      "description": "Reuters Business News"
+    },
+    {
+      "url": "https://www.agrolink.com.br/rss/exportacao.xml",
+      "category": "Exportação",
+      "description": "AgroLink – Exportação"
+    },
+    {
+      "url": "https://g1.globo.com/rss/g1/economia/agronegocio/",
+      "category": "Exportação",
+      "description": "Globo Rural – Exportações Agrícolas"
+    },
+    {
+      "url": "https://www.abag.com.br/rss/noticias.xml",
+      "category": "Exportação",
+      "description": "ABAG – Associação Brasileira do Agronegócio"
+    },
+    {
+      "url": "https://www.abimaq.org.br/rss/noticias.xml",
+      "category": "Exportação",
+      "description": "ABIMAQ – Indústria de Máquinas"
+    },
+    {
+      "url": "https://www.cnabrasil.org.br/rss/agroexportacao.xml",
+      "category": "Exportação",
+      "description": "CNA Brasil – AgroExportação"
+    },
+    {
+      "url": "https://scm.mit.edu/feed/",
+      "category": "Supply Chain",
+      "description": "MIT Supply Chain"
+    },
+    {
+      "url": "https://www.supplychaindive.com/rss/",
+      "category": "Supply Chain",
+      "description": "Supply Chain Dive"
+    },
+    {
+      "url": "https://www.logisticsmgmt.com/rss/",
+      "category": "Supply Chain",
+      "description": "Logistics Management"
+    },
+    {
+      "url": "https://www.freightwaves.com/rss",
+      "category": "Supply Chain",
+      "description": "FreightWaves"
+    },
+    {
+      "url": "https://www.inboundlogistics.com/rss/",
+      "category": "Supply Chain",
+      "description": "Inbound Logistics"
+    },
+    {
+      "url": "https://theloadstar.com/feed/",
+      "category": "Supply Chain",
+      "description": "The Loadstar – Global Logistics"
+    },
+    {
+      "url": "https://www.ttnews.com/rss",
+      "category": "Supply Chain",
+      "description": "Transport Topics"
+    },
+    {
+      "url": "https://www.smartindustry.com/rss/",
+      "category": "Supply Chain",
+      "description": "Smart Industry News"
+    },
+    {
+      "url": "https://www.tradecompliance.com/rss",
+      "category": "Compliance",
+      "description": "Trade Compliance News"
+    },
+    {
+      "url": "https://www.wto.org/english/news_e/rss_e/rss_e.xml",
+      "category": "Compliance",
+      "description": "WTO – World Trade Organization"
+    },
+    {
+      "url": "https://www.export.gov/rss",
+      "category": "Compliance",
+      "description": "Export.gov – US Export Assistance"
+    },
+    {
+      "url": "https://www.customstoday.com/rss",
+      "category": "Compliance",
+      "description": "Customs Today – Notícias Aduaneiras"
+    },
+    {
+      "url": "https://www.trade.gov/rss.xml",
+      "category": "Compliance",
+      "description": "International Trade Administration"
+    },
+    {
+      "url": "https://www.oecd.org/trade/rss.xml",
+      "category": "Internacional",
+      "description": "OECD – Comércio & Desenvolvimento"
+    },
+    {
+      "url": "https://unctad.org/rss.xml",
+      "category": "Internacional",
+      "description": "UNCTAD – United Nations Trade"
+    },
+    {
+      "url": "https://iccwbo.org/rss/",
+      "category": "Internacional",
+      "description": "International Chamber of Commerce"
+    },
+    {
+      "url": "https://data.worldbank.org/rss",
+      "category": "Internacional",
+      "description": "Banco Mundial – Global Indicators"
+    },
+    {
+      "url": "https://www.imf.org/rss",
+      "category": "Internacional",
+      "description": "FMI – Fundo Monetário Internacional"
+    },
+    {
+      "url": "https://www.globalcompliancepanel.com/rss",
+      "category": "Compliance",
+      "description": "Global Compliance Panel"
+    }
+  ],
+  "categories": [
+    "Estratégia Internacional",
+    "Business Intelligence", 
+    "Importação",
+    "Exportação",
+    "Compliance",
+    "Logística",
+    "Finanças",
+    "Supply Chain",
+    "Gestão",
+    "Internacional",
+    "PMEs",
+    "Outros"
+  ],
+  "settings": {
+    "max_articles_per_source": 2,
+    "cron_schedule": "0 8,13,19 * * *",
+    "translation_model": "gpt-4o-mini",
+    "content_length": "400-600 palavras"
+  }
+} 

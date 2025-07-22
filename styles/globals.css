@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+.solutions-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 2rem;
+  letter-spacing: -0.02em;
+  color: var(--txt);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.solution-card h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 1.25rem;
+  letter-spacing: -0.01em;
+  color: var(--txt);
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.solution-card {
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.solution-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.solution-icon {
+  width: 64px;
+  height: 64px;
+  color: var(--accent);
+  transition: color 0.2s ease-in-out;
+}
+
+.solution-card:hover .solution-icon {
+  color: var(--accent-hover);
+} 

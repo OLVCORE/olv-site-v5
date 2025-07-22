@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M8 24L32 12L56 24L32 36L8 24Z" stroke="currentColor" stroke-width="2" fill="none"/>
+  <path d="M20 30V44C20 44 32 52 44 44V30" stroke="currentColor" stroke-width="2"/>
+  <path d="M56 24V40" stroke="currentColor" stroke-width="2"/>
+  <circle cx="56" cy="44" r="4" stroke="currentColor" stroke-width="2" fill="none"/>
+</svg>
