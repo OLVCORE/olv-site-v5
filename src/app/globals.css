@@ -49,16 +49,26 @@
   --space-8: 32px;
 
   /* Header height */
-  --height-header: 64px;
+  --height-header: 70px;
 
   /* Altura fixa da barra de ticker (desktop) */
   --height-ticker: 45px;
+
+  /* Header variables */
+  --header-bg: #11161e;
+  --text-primary: #d1d5db;
+  --text-secondary: #9ca3af;
+  --border-color: #e0c178;
+  --input-bg: #1a1f29;
 
   --olv-card-bg: var(--color-surface);
   --olv-card-text: #0a2540;
   --olv-card-meta: #0a2540cc;
   --olv-card-heading: #0a2540;
   --olv-card-img-bg: #e5e7eb;
+
+  --logo-bg: #ffffff;
+  --ticker-bg: #f8f9fa;
 }
 
 @media (prefers-color-scheme: light) {
@@ -78,6 +88,13 @@
     /* Opposite surface for modals */
     --color-surface-opposite: #11161e;
     --color-on-surface-opposite: #d1d5db;
+
+    /* Header variables - Light theme */
+    --header-bg: #ffffff;
+    --text-primary: #1a1a1a;
+    --text-secondary: #666666;
+    --border-color: #e5e5e5;
+    --input-bg: #ffffff;
 
     /* Platform brand colours */
     --stratevo-color: #2e59a8; /* 15% lighter */
@@ -130,23 +147,7 @@
     display: none !important;
   }
 
-  /* Exibe toggle de plataformas */
-  .mobile-sidebar-toggle {
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    bottom: 60px;
-    left: 1rem;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: var(--color-surface-light);
-    border: 1px solid var(--color-accent);
-    z-index: 2500;
-    color: var(--color-accent);
-  }
-  .mobile-sidebar-toggle img,
+  /* Sidebar completely removed */
   .mobile-nav-toggle svg {
     width: 24px;
     height: 24px;
@@ -200,37 +201,7 @@
     display: none !important;
   }
 
-  /* Sidebar slides in */
-  .sidebar {
-    position: fixed;
-    top: var(--height-header);
-    left: 0;
-    height: calc(100vh - var(--height-header));
-    width: 280px;
-    background: var(--color-surface);
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-    z-index: 2400;
-    overflow-y: auto;
-  }
-  .sidebar.mobile-open {
-    transform: translateX(0);
-  }
-  /* Hide sidebar header (desktop) duplicate */
-  .sidebar-header-mobile {
-    display: flex !important;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem;
-    font-weight: 600;
-  }
-  .sidebar-nav ul {
-    padding: 1rem;
-  }
-
-  .mobile-sidebar-toggle span {
-    display: none;
-  }
+  /* Sidebar completely removed */
 
   .nav-menu-mobile .nav-item {
     font-size: 1.05rem;
@@ -249,9 +220,8 @@
     display: flex !important;
     pointer-events: auto;
   }
-  /* Ensure nav and platform buttons both visible */
-  .mobile-nav-toggle,
-  .mobile-sidebar-toggle {
+  /* Ensure nav button visible */
+  .mobile-nav-toggle {
     z-index: 2600;
   }
 
@@ -259,25 +229,7 @@
     display: none !important;
   }
 
-  .header-wrapper {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    height: var(--height-header) !important;
-    background: var(--color-surface) !important;
-    border-bottom: 2px solid var(--color-accent) !important;
-    z-index: 2300 !important;
-  }
-
-  .header-inner {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    height: 100% !important;
-    padding: 0 1rem !important;
-    position: relative !important;
-  }
+  /* OLD HEADER STYLES REMOVED - Using new .header structure */
 
   /* Ajusta altura padrão do cabeçalho */
   :root {
@@ -334,7 +286,7 @@
   /* Ticker garantia de visibilidade */
   .ticker {
     display: flex !important;
-    align-items: center;
+    align-items: center !important; /* Alinha no centro */
     overflow: hidden;
   }
   .ticker-inner {
@@ -347,15 +299,9 @@
     left: 1rem !important;
     right: auto !important;
   }
-  .mobile-sidebar-toggle {
-    bottom: 88px !important;
-    left: 1rem !important;
-    right: auto !important;
-    color: var(--color-accent) !important;
-  }
+  /* Sidebar button removed */
   /* Ensure labels visible & positioned outside */
-  .mobile-nav-toggle .toggle-label,
-  .mobile-sidebar-toggle .toggle-label {
+  .mobile-nav-toggle .toggle-label {
     position: absolute !important;
     left: 50% !important;
     transform: translateX(-50%);
@@ -365,13 +311,7 @@
     white-space: nowrap;
     pointer-events: none;
     display: block !important; /* override earlier hidden rule */
-  }
-
-  .mobile-nav-toggle .toggle-label {
     top: calc(-100% + 28px) !important; /* place ~20px above bottom of circle */
-  }
-  .mobile-sidebar-toggle .toggle-label {
-    top: calc(100% + 6px) !important;  /* below button */
   }
 
   /* Reposiciona lupa para não sobrepor o switch */
@@ -393,11 +333,7 @@
     padding-top: calc(env(safe-area-inset-top) + 4px);
   }
 
-  /* Limit sidebar height */
-  .sidebar.mobile-open {
-    height: auto !important;
-    max-height: 85vh !important;
-  }
+  /* Sidebar removed */
 }
 
 @layer base {
@@ -435,24 +371,18 @@
     left: 0 !important;
   }
   .ticker {
-    top: var(--height-header) !important;
+    top: calc(var(--height-header) + 8px) !important;
     left: 0 !important;
+    align-items: center !important; /* Alinha no centro */
   }
   .main-content {
-    margin-top: calc(var(--height-header) + 45px) !important;
+    margin-top: calc(var(--height-header) + 53px) !important; /* 70px + 8px + 45px */
   }
 }
 
 /* === OLV MOBILE OVERRIDES – FINAL WINS ALL (duplicated here to guarantee last-in bundle) === */
 @media (max-width: 768px) {
-  .sidebar {
-    display: none !important;
-    transform: translateX(-100%) !important;
-  }
-  .sidebar.mobile-open {
-    display: block !important;
-    transform: translateX(0) !important;
-  }
+  /* Sidebar completely removed */
 
   .nav-menu-mobile {
     display: none !important;
@@ -468,16 +398,16 @@
     left: 0 !important;
   }
   .ticker {
-    top: var(--height-header) !important;
+    top: calc(var(--height-header) + 8px) !important;
     left: 0 !important;
+    align-items: center !important; /* Alinha no centro */
   }
   .main-content {
     margin-left: 0 !important;
-    margin-top: calc(var(--height-header) + 45px) !important;
+    margin-top: calc(var(--height-header) + 53px) !important; /* 70px + 8px + 45px */
   }
 
   .mobile-nav-toggle,
-  .mobile-sidebar-toggle,
   .whatsapp-button {
     z-index: 2600 !important;
   }
@@ -495,15 +425,16 @@
   border-radius: 4px;
 }
 
-/* Ticker fixo logo abaixo do header */
+/* Ticker fixo logo abaixo do header - AJUSTADO */
 .ticker {
   position: fixed !important;
-  top: var(--height-header) !important;
+  top: calc(var(--height-header) + 8px) !important; /* 70px + 8px de espaçamento */
   left: 0 !important;
   width: 100%;
   background: var(--color-surface);
-  border-bottom: 1px solid var(--color-accent-light);
+  border-bottom: 1px solid var(--color-accent);
   padding-left: var(--space-4);
+  z-index: 9997 !important;
 }
 
 /* Reposiciona botões: Menu à esquerda, Plataformas à direita */
@@ -512,11 +443,7 @@
   left: 1rem;
   right: auto;
 }
-.mobile-sidebar-toggle {
-  bottom: 88px;
-  right: 1rem;
-  left: auto;
-}
+/* Sidebar button removed */
 
 @keyframes ticker-scroll {
   0% { transform: translateX(100%); }
@@ -529,21 +456,14 @@
 .ticker-inner p {
   display: inline-block;
   white-space: nowrap;
-  animation: ticker-scroll 20s linear infinite;
+  animation: ticker-scroll 60s linear infinite;
   margin: 0;
 }
 .ticker-inner p:hover {
   animation-play-state: paused;
 }
 
-/* Sincroniza overlay/nav e sidebar */
-body.nav-open .sidebar {
-  display: none !important;
-}
-body.sidebar-open .nav-menu-mobile {
-  display: none !important;
-  pointer-events: none !important;
-}
+/* Sidebar synchronization removed */
 
 /* ======== GLOBAL PREMIUM STYLING ======== */
 .header-wrapper {
@@ -566,17 +486,18 @@ body.sidebar-open .nav-menu-mobile {
 /* Desktop ticker visuals (mobile already overridden) */
 .ticker {
   width: 100%;
-  height: 40px;
+  height: var(--height-ticker) !important; /* 45px */
   background: var(--color-surface);
   display: flex;
-  align-items: center;
+  align-items: center !important; /* Alinha no centro */
   overflow: hidden;
   border-bottom: 1px solid var(--color-accent);
-  z-index: 2200;
+  z-index: 9997 !important;
 }
 .ticker-inner p {
   font-size: 0.85rem;
   color: var(--color-accent);
+  margin: 0;
 }
 .ticker-inner a {
   color: var(--color-accent);
@@ -762,9 +683,6 @@ body.theme-light .ticker-inner p {
   .mobile-nav-toggle {
     bottom: 96px !important; /* 6rem */
   }
-  .mobile-sidebar-toggle {
-    bottom: 40px !important; /* 2.5rem */
-  }
 
   /* Shift search icon further left */
   .mobile-search-toggle {
@@ -792,9 +710,6 @@ body.theme-light .ticker-inner a {
   .mobile-nav-toggle .toggle-label {
     top: -130% !important; /* label above icon to avoid overlap */
   }
-  .mobile-sidebar-toggle .toggle-label {
-    top: 110% !important; /* keep below */
-  }
 }
 
 /* ===== Footer Reveal Animation (mobile & desktop) ===== */
@@ -820,16 +735,12 @@ body.theme-light .ticker-inner a {
 /* ================= LABEL OFFSET FINAL OVERRIDE ================= */
 @media (max-width: 768px) {
   /* Allow labels to overflow */
-  .mobile-nav-toggle,
-  .mobile-sidebar-toggle {
+  .mobile-nav-toggle {
     overflow: visible !important;
   }
 
   .mobile-nav-toggle .toggle-label {
     top: calc(-100% + 28px) !important; /* place ~20px above bottom of circle */
-  }
-  .mobile-sidebar-toggle .toggle-label {
-    top: calc(100% + 4px) !important; /* 4px gap below */
   }
 }
 
@@ -909,8 +820,7 @@ body.theme-dark .card-list-icon {
 
   /* Ícones dentro da sidebar e botões flutuantes */
   body.theme-light .sidebar-nav svg,
-  body.theme-light .mobile-nav-toggle svg,
-  body.theme-light .mobile-sidebar-toggle svg {
+  body.theme-light .mobile-nav-toggle svg {
     color: var(--color-on-surface) !important;
   }
 
@@ -950,7 +860,6 @@ body.theme-light .nav-menu-mobile .nav-item {
 
 /* Simulator specific overrides */
 body.import-sim .ticker,
-body.import-sim .mobile-sidebar-toggle,
 body.import-sim .mobile-nav-toggle,
 body.import-sim .sidebar {
   /* oculta ou desabilita ponteiros para evitar que capturem foco */
@@ -1979,6 +1888,60 @@ body.theme-light .glass-premium {
 /* Estilos base para dropdowns */
 .nav-menu .dropdown-menu {
   position: relative;
+  z-index: 9999;
+}
+
+.nav-menu .dropdown-menu .dropdown-content {
+  z-index: 9999 !important;
+}
+
+/* Header com z-index alto para ficar sobre o ticker */
+.header {
+  z-index: 9998 !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+}
+
+/* Ticker posicionado corretamente abaixo do header */
+.ticker {
+  position: fixed !important;
+  top: calc(var(--height-header) + 8px) !important; /* 70px + 8px de espaçamento */
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 9997 !important; /* Menor que o header (9998) */
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-accent);
+  height: var(--height-ticker) !important; /* 45px */
+  display: flex !important;
+  align-items: center !important; /* Alinha no centro */
+  overflow: hidden;
+}
+
+/* Mobile navigation */
+.nav-menu-mobile {
+  z-index: 9997 !important;
+}
+
+/* User menu dropdown */
+.user-menu-wrapper {
+  z-index: 9996 !important;
+}
+
+/* Search overlay */
+.search-overlay-mobile {
+  z-index: 9995 !important;
+}
+
+/* Quick links */
+.quick-links-panel {
+  z-index: 9994 !important;
+}
+
+/* Footer tooltips */
+.sidebar-tooltip {
+  z-index: 9993 !important;
 }
 
 .nav-menu .dropdown-menu button {
@@ -2020,7 +1983,7 @@ body.theme-light .glass-premium {
   border: 1px solid var(--card-border);
   border-radius: 0.75rem;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-  z-index: 1000;
+  z-index: 9999;
   opacity: 0;
   visibility: hidden;
   transform: translateY(-10px);
@@ -2344,5 +2307,468 @@ body.theme-light .mobile-simulator-item:hover {
   
   .mobile-simulator-icon {
     font-size: 1rem;
+  }
+}
+
+/* ========================================
+   HEADER STRUCTURE - NEW CLEAN VERSION
+   ======================================== */
+
+/* Header Structure */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  height: auto;
+  min-height: 70px;
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--border-color);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 0 0 auto;
+}
+
+/* LOGO PREMIUM HEADER - UPDATED 2025-01-27 15:30 */
+.logo {
+  width: 56px !important;
+  height: 56px !important;
+  border-radius: 50% !important;
+  background: #fff !important;
+  border: 2px solid #e0c178 !important;
+  box-shadow: 0 0 8px 0 rgba(224,193,120,0.18) !important;
+  transition: box-shadow 0.2s, border-color 0.2s, transform 0.2s !important;
+  object-fit: cover !important;
+  display: block !important;
+  padding: 2px !important;
+}
+.logo:hover {
+  box-shadow: 0 0 16px 2px #e0c178, 0 0 8px 0 rgba(224,193,120,0.18) !important;
+  border-color: #d4af37 !important;
+  transform: scale(1.06) !important;
+}
+
+/* LOGO AJUSTADO PARA MOLDURA CIRCULAR */
+.logo {
+  object-fit: contain !important;
+  padding: 4px !important;
+}
+
+/* LOGO MAIOR DENTRO DA MOLDURA */
+.logo {
+  width: 48px !important;
+  height: 48px !important;
+  padding: 2px !important;
+}
+
+/* LOGO COBRINDO TODO O CÍRCULO */
+.logo {
+  width: 52px !important;
+  height: 52px !important;
+  padding: 0px !important;
+  object-fit: cover !important;
+}
+
+/* LOGO PREENCHENDO COMPLETAMENTE O CÍRCULO */
+.logo {
+  width: 56px !important;
+  height: 56px !important;
+  padding: 0px !important;
+  object-fit: cover !important;
+  border-radius: 50% !important;
+}
+
+/* CONTAINER DO LOGO COM MOLDURA */
+.logo-container {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  cursor: pointer;
+}
+
+.logo-background {
+  width: 56px !important;
+  height: 56px !important;
+  object-fit: cover !important;
+  border-radius: 50% !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.logo-frame {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: 60px;
+  height: 60px;
+  border: 2px solid #e0c178;
+  border-radius: 50%;
+  z-index: 2;
+  pointer-events: none;
+  box-shadow: 0 0 8px 0 rgba(224,193,120,0.18);
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.logo-container:hover .logo-frame {
+  box-shadow: 0 0 16px 2px #e0c178, 0 0 8px 0 rgba(224,193,120,0.18);
+  border-color: #d4af37;
+}
+
+.slogan {
+  color: #e0c178 !important;
+  font-weight: 500 !important;
+  font-size: 1.05rem !important;
+  letter-spacing: 0.02em !important;
+  text-shadow: 0 1px 6px rgba(224,193,120,0.12) !important;
+  margin-left: 1.2rem !important;
+  line-height: 1.3 !important;
+  font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-style: normal !important;
+  text-transform: none !important;
+}
+
+@media (max-width: 1023px) {
+  .slogan {
+    font-size: 0.95rem !important;
+    margin-left: 0.7rem !important;
+    letter-spacing: 0.015em !important;
+  }
+}
+
+.header-center {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex: 1;
+  justify-content: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.nav-menu {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.nav-item {
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  color: var(--text-primary);
+  font-weight: 500;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-item.active {
+  background: var(--color-accent);
+  color: var(--color-on-primary);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 0 0 auto;
+}
+
+.search-container {
+  position: relative;
+  width: 250px;
+}
+
+.user-menu-wrapper {
+  margin-left: 1rem;
+}
+
+/* Mobile buttons */
+.mobile-search-toggle,
+.mobile-nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mobile-search-toggle:hover,
+.mobile-nav-toggle:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.toggle-label {
+  font-size: 0.6rem;
+  line-height: 1;
+  margin-top: 2px;
+  color: var(--text-secondary);
+}
+
+/* Mobile navigation */
+.nav-menu-mobile {
+  position: fixed;
+  top: var(--height-header);
+  left: 0;
+  right: 0;
+  background: var(--header-bg);
+  padding: 1.75rem 1.25rem 2rem;
+  display: none;
+  flex-direction: column;
+  gap: 1.25rem;
+  z-index: 2400;
+  max-height: calc(100vh - var(--height-header));
+  overflow-y: auto;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.nav-menu-mobile.show {
+  display: flex;
+}
+
+.nav-menu-mobile .nav-item {
+  padding: 0.75rem 1rem;
+  text-decoration: none;
+  color: var(--text-primary);
+  font-weight: 500;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.nav-menu-mobile .nav-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-menu-mobile .nav-item.active {
+  background: var(--color-accent);
+  color: var(--color-on-primary);
+}
+
+/* ========================================
+   MEDIA QUERIES - RESPONSIVE DESIGN
+   ======================================== */
+
+/* Desktop (1024px+) */
+@media (min-width: 1024px) {
+  .mobile-only {
+    display: none !important;
+  }
+  
+  .header {
+    padding: 1rem 2rem;
+  }
+  
+  .search-container {
+    width: 250px;
+  }
+  
+  .nav-menu {
+    display: flex;
+  }
+}
+
+/* Tablet (768px - 1023px) */
+@media (max-width: 1023px) and (min-width: 768px) {
+  .header {
+    padding: 1rem 1.5rem;
+  }
+  
+  .search-container {
+    width: 200px;
+  }
+  
+  .slogan {
+    display: none;
+  }
+}
+
+/* Mobile (até 767px) */
+@media (max-width: 767px) {
+  .desktop-only {
+    display: none !important;
+  }
+  
+  .header {
+    padding: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  .header-center {
+    order: 3;
+    width: 100%;
+    margin-top: 1rem;
+  }
+  
+  .search-container {
+    width: 100%;
+  }
+  
+  .mobile-search-toggle,
+  .mobile-nav-toggle {
+    display: flex;
+  }
+  
+  .nav-menu {
+    display: none;
+  }
+}
+
+/* ========================================
+   THEME OVERRIDES
+   ======================================== */
+
+body.theme-light .header {
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--border-color);
+}
+
+body.theme-light .nav-item {
+  color: var(--text-primary);
+}
+
+body.theme-light .nav-item:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+body.theme-light .nav-menu-mobile {
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--border-color);
+}
+
+body.theme-light .nav-menu-mobile .nav-item {
+  color: var(--text-primary);
+}
+
+body.theme-light .nav-menu-mobile .nav-item:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* LOGO PREMIUM HEADER - UPDATED 2025-01-27 15:30 */
+.logo {
+  width: 56px !important;
+  height: 56px !important;
+  border-radius: 50% !important;
+  background: #fff !important;
+  border: 2px solid #e0c178 !important;
+  box-shadow: 0 0 8px 0 rgba(224,193,120,0.18) !important;
+  transition: box-shadow 0.2s, border-color 0.2s, transform 0.2s !important;
+  object-fit: cover !important;
+  display: block !important;
+  padding: 2px !important;
+}
+.logo:hover {
+  box-shadow: 0 0 16px 2px #e0c178, 0 0 8px 0 rgba(224,193,120,0.18) !important;
+  border-color: #d4af37 !important;
+  transform: scale(1.06) !important;
+}
+
+/* LOGO AJUSTADO PARA MOLDURA CIRCULAR */
+.logo {
+  object-fit: contain !important;
+  padding: 4px !important;
+}
+
+/* LOGO MAIOR DENTRO DA MOLDURA */
+.logo {
+  width: 48px !important;
+  height: 48px !important;
+  padding: 2px !important;
+}
+
+/* LOGO COBRINDO TODO O CÍRCULO */
+.logo {
+  width: 52px !important;
+  height: 52px !important;
+  padding: 0px !important;
+  object-fit: cover !important;
+}
+
+/* LOGO PREENCHENDO COMPLETAMENTE O CÍRCULO */
+.logo {
+  width: 56px !important;
+  height: 56px !important;
+  padding: 0px !important;
+  object-fit: cover !important;
+  border-radius: 50% !important;
+}
+
+/* CONTAINER DO LOGO COM MOLDURA */
+.logo-container {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  cursor: pointer;
+}
+
+.logo-background {
+  width: 56px !important;
+  height: 56px !important;
+  object-fit: cover !important;
+  border-radius: 50% !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.logo-frame {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: 60px;
+  height: 60px;
+  border: 2px solid #e0c178;
+  border-radius: 50%;
+  z-index: 2;
+  pointer-events: none;
+  box-shadow: 0 0 8px 0 rgba(224,193,120,0.18);
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.logo-container:hover .logo-frame {
+  box-shadow: 0 0 16px 2px #e0c178, 0 0 8px 0 rgba(224,193,120,0.18);
+  border-color: #d4af37;
+}
+
+.slogan {
+  color: #e0c178 !important;
+  font-weight: 500 !important;
+  font-size: 1.05rem !important;
+  letter-spacing: 0.02em !important;
+  text-shadow: 0 1px 6px rgba(224,193,120,0.12) !important;
+  margin-left: 1.2rem !important;
+  line-height: 1.3 !important;
+  font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-style: normal !important;
+  text-transform: none !important;
+}
+
+@media (max-width: 1023px) {
+  .slogan {
+    font-size: 0.95rem !important;
+    margin-left: 0.7rem !important;
+    letter-spacing: 0.015em !important;
   }
 }

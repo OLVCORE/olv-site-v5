@@ -5,18 +5,18 @@ import RadarHub from '../components/home/RadarHub';
 import HomeImage from '../components/home/HomeImage';
 import { AnimatedCard, FadeIn } from '../components/MicroInteractions';
 import { OrganizationSchema, LocalBusinessSchema } from '../components/SeoSchema';
-import { WhatsAppButton } from '../components/WhatsAppButton';
+import WhatsAppButton from '../components/WhatsAppButton';
 
 export const metadata = {
   title: 'OLV Internacional - Supply Chain Industrial | Comex para PMEs Industriais',
-  description: 'Consultoria especializada em Supply Chain Industrial e Comércio Exterior para PMEs. 35 anos de experiência em multinacionais (Volkswagen, Ericsson, Lupatech). Otimizamos importação de insumos, exportação de produtos acabados e redução de custos logísticos. Radar SISCOMEX, desembaraço aduaneiro e planejamento tributário.',
-  keywords: 'consultoria importação exportação, supply chain industrial, comércio exterior PME, logística internacional, desembaraço aduaneiro, radar siscomex, planejamento tributário comex, importação insumos industriais, exportação produtos acabados, redução custos importação, otimização supply chain, consultoria comex industrial, frete internacional, câmbio importação, impostos importação, compliance aduaneiro, logística 4.0, automação comex, inteligência mercado industrial, consultoria estratégica industrial, PME industrial, multinacionais experiência, Volkswagen Ericsson Lupatech, expertise industrial, cadeia suprimentos, otimização estoques, lead time importação, custos portuários, demurrage porto, incoterms 2020, ncm classificação fiscal, drawback suspensão, regime aduaneiro especial, due diligence global, trading company, importação drop shipping, commodities importação, bens capital importação, produtos acabados importação, insumos matéria prima, licenciamento anvisa, certificado origem, compliance aeo oea, controle riscos aduaneiros, digitalização processos comex, documentos exportação, financiamento exim, habilitar radar siscomex, cotação dólar importação, custos portuários despacho, demurrage porto evitar, despacho aduaneiro etapas, diferença incoterms 2020, digitalização processos comex, documentos necessários exportação, drawback suspensão benefícios, due diligence global, engage o que é, escolha mercado alvo exportação, escolher transportadora internacional, exceltta o que é, financiamento exim, finx o que é, habilitar radar siscomex requisitos, importação bens capital, importação commodities, importação drop shipping regulamentação, importação insumos matéria prima, importação produtos acabados, labs o que é, licenciamento anvisa importação, logística 4.0 benefícios supply chain, ncm classificação fiscal, negociar câmbio importação, otimização estoques importação, passos li anvisa, planejamento tributário importação, plano internacionalização PME, quanto custa importar china, reduzir lead time importação, regimes aduaneiros especiais, risco cambial hedge, seguro carga internacional, simulador custo importação, simulador frete internacional, simulador tax importação, siscomex li declaração, stratevo o que é, supply chain resiliente, trading company vs importação própria, ventures o que é, veritus o que é',
+  description: 'Consultoria especializada em Supply Chain Industrial e Comércio Exterior para PMEs. Experiência consolidada em setores industriais diversos. Otimizamos importação de insumos, exportação de produtos acabados e redução de custos logísticos. Radar SISCOMEX, desembaraço aduaneiro e planejamento tributário.',
+      keywords: 'consultoria importação exportação, supply chain industrial, comércio exterior PME, logística internacional, desembaraço aduaneiro, radar siscomex, planejamento tributário comex, importação insumos industriais, exportação produtos acabados, redução custos importação, otimização supply chain, consultoria comex industrial, frete internacional, câmbio importação, impostos importação, compliance aduaneiro, logística 4.0, automação comex, inteligência mercado industrial, consultoria estratégica industrial, PME industrial, setores industriais, expertise industrial, cadeia suprimentos, otimização estoques, lead time importação, custos portuários, demurrage porto, incoterms 2020, ncm classificação fiscal, drawback suspensão, regime aduaneiro especial, due diligence global, trading company, importação drop shipping, commodities importação, bens capital importação, produtos acabados importação, insumos matéria prima, licenciamento anvisa, certificado origem, compliance aeo oea, controle riscos aduaneiros, digitalização processos comex, documentos exportação, financiamento exim, habilitar radar siscomex, cotação dólar importação, custos portuários despacho, demurrage porto evitar, despacho aduaneiro etapas, diferença incoterms 2020, digitalização processos comex, documentos necessários exportação, drawback suspensão benefícios, due diligence global, engage o que é, escolha mercado alvo exportação, escolher transportadora internacional, exceltta o que é, financiamento exim, finx o que é, habilitar radar siscomex requisitos, importação bens capital, importação commodities, importação drop shipping regulamentação, importação insumos matéria prima, importação produtos acabados, labs o que é, licenciamento anvisa importação, logística 4.0 benefícios supply chain, ncm classificação fiscal, negociar câmbio importação, otimização estoques importação, passos li anvisa, planejamento tributário importação, plano internacionalização PME, quanto custa importar china, reduzir lead time importação, regimes aduaneiros especiais, risco cambial hedge, seguro carga internacional, simulador custo importação, simulador frete internacional, simulador tax importação, siscomex li declaração, stratevo o que é, supply chain resiliente, trading company vs importação própria, ventures o que é, veritus o que é',
   alternates: {
     canonical: 'https://olvinternacional.com.br/'
   },
   openGraph: {
     title: 'OLV Internacional - Supply Chain Industrial | Comex para PMEs Industriais',
-    description: 'Consultoria especializada em Supply Chain Industrial e Comércio Exterior para PMEs. 35 anos de experiência em multinacionais (Volkswagen, Ericsson, Lupatech). Otimizamos importação de insumos, exportação de produtos acabados e redução de custos logísticos.',
+    description: 'Consultoria especializada em Supply Chain Industrial e Comércio Exterior para PMEs. Experiência consolidada em setores industriais diversos. Otimizamos importação de insumos, exportação de produtos acabados e redução de custos logísticos.',
     url: 'https://olv-site-v5.vercel.app/',
     siteName: 'OLV Internacional',
     locale: 'pt_BR',
@@ -33,7 +33,7 @@ export const metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'OLV Internacional - Supply Chain Industrial',
-    description: 'Consultoria especializada em Supply Chain Industrial e Comércio Exterior para PMEs. 35 anos de experiência em multinacionais.',
+    description: 'Consultoria especializada em Supply Chain Industrial e Comércio Exterior para PMEs. Experiência consolidada em setores industriais diversos.',
     images: ['https://olv-site-v5.vercel.app/images/BANNER-HOME.jpeg']
   },
   robots: {
@@ -85,28 +85,25 @@ export default function HomePage() {
           <div className="flex flex-col md:flex-row items-center gap-4 mb-2 bg-[#141c2f] p-5 rounded-lg border border-[#2a3448] shadow-lg">
             <div className="flex-1">
               <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                Transforme sua Indústria em uma Máquina de Exportação/Importação Lucrativa
+                Consultoria Especializada em Supply Chain e Comércio Exterior para Empresas Industriais
               </h1>
               <p className="text-lg text-gray-300 mb-4">
-                A <span className="text-[#d4af37] font-semibold">OLV Internacional</span> é especialista em <strong>Reestruturação de Cadeias, Otimização de Comex e Redução de Custos</strong> para <strong>Indústrias de Manufatura de Médio Porte</strong> no Brasil.
+                A <span className="text-[#d4af37] font-semibold">OLV Internacional</span> oferece <strong>consultoria especializada em Supply Chain Industrial e Comércio Exterior</strong> para empresas que atuam no setor industrial, com foco em otimização de processos e redução de custos operacionais.
               </p>
               <p className="mb-2 text-gray-300">
-                <span className="text-[#d4af37] font-semibold">35 anos</span> integrando estratégia, operações e resultados. Somos especialistas em Supply Chain Industrial, Comex Industrial, Logística Internacional Fabril e Desenvolvimento de Negócios Industriais.
+                Com <span className="text-[#d4af37] font-semibold">experiência consolidada</span> em setores industriais diversos, nossa equipe possui expertise especializada em Supply Chain Industrial, Comércio Exterior, Logística Internacional e Desenvolvimento de Negócios para o setor industrial.
               </p>
               <p className="mb-2 text-gray-300">
-                Atuamos como o braço consultivo do Ecossistema OLV, oferecendo suporte completo para
-                indústrias que querem importar insumos, exportar produtos acabados, expandir seus negócios, operar com segurança e alta performance no
-                mercado global.
+                Atuamos como parceiro consultivo do Ecossistema OLV, oferecendo suporte especializado para empresas que buscam importar insumos, exportar produtos acabados, expandir suas operações e operar com eficiência no mercado global.
               </p>
               <p className="mb-2 text-gray-300">
-                Nossa missão é simplificar operações complexas, acelerar negócios industriais e integrar estratégias com resultados.
-                Atuamos como uma extensão do seu negócio, sem ativos próprios, focando exclusivamente na entrega de valor.
+                Nossa abordagem visa simplificar operações complexas, otimizar processos industriais e integrar estratégias com resultados práticos. Atuamos como extensão da sua equipe, sem ativos próprios, focando exclusivamente na entrega de valor e resultados mensuráveis.
               </p>
               <p className="text-[#d4af37] font-medium italic mb-4">
-                Do Radar SISCOMEX ao Embarque. Da Estratégia à Execução. Da Burocracia ao Resultado.
+                Do planejamento estratégico à execução operacional. Da análise de viabilidade aos resultados concretos.
               </p>
-              <Link href="/diagnostico-industrial" className="btn btn-primary text-lg px-8 py-3 font-semibold">
-                Solicite seu Diagnóstico Industrial Gratuito
+              <Link href="/contato" className="btn btn-primary text-lg px-8 py-3 font-semibold">
+                Agende uma Consultoria Especializada
               </Link>
             </div>
             <div className="flex-shrink-0 md:w-1/3">
@@ -124,12 +121,12 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Slim CTA banner – agora ocupa toda a largura da viewport */}
+          {/* Banner informativo sobre otimização de importação */}
           <div className="my-10 animate-gold-pulse bg-yellow-200/10 border-y border-yellow-400 px-4 py-1 md:py-[6px] text-sm md:text-base leading-snug text-gray-200 dark:text-gray-200 shadow-md home-alert">
             <p className="text-center max-w-6xl mx-auto">
-              ⚠️ Importar insumos junto com seus concorrentes destrói sua margem industrial.
+              💡 A importação de insumos em rotas compartilhadas pode impactar a competitividade industrial.
               <Link href="/solucoes/importacao-exclusiva" className="font-semibold underline text-[#d4af37] hover:text-yellow-300 ml-1">
-                Descubra como dominar sua própria rota de importação industrial →
+                Conheça soluções para otimizar sua rota de importação industrial →
               </Link>
             </p>
           </div>
@@ -141,7 +138,7 @@ export default function HomePage() {
 
           {/* Pilares de Atuação em mini-cards */}
           <div className="mb-2">
-            <h3 className="text-2xl font-semibold mb-2 text-[#d4af37]">Pilares da Nossa Atuação Industrial</h3>
+            <h3 className="text-2xl font-semibold mb-2 text-[#d4af37]">Nossas Áreas de Especialização</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {keyPoints.map((point, index) => (
                 <FadeIn key={index} delay={index * 0.1}>
@@ -168,7 +165,7 @@ export default function HomePage() {
             <div className="w-14 h-14 mb-1 rounded-full bg-[#0a0f1d] border-2 border-[#d4af37] flex items-center justify-center">
               <Image src="/icons/solutions-icon.svg" alt="Ícone de Soluções" width={28} height={28} className="text-[#d4af37]" />
             </div>
-            <h2 className="text-2xl font-bold mb-2">Nossas Soluções Estratégicas para Indústria</h2>
+            <h2 className="text-2xl font-bold mb-2">Nossas Soluções Especializadas</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
             {/* Card 1 - Consultoria Estratégica em Comex */}
@@ -177,7 +174,7 @@ export default function HomePage() {
                 <div className="w-14 h-14 rounded-full bg-[#0a0f1d] border-2 border-[#d4af37] flex items-center justify-center mb-3">
                   <Image src="/icons/strategy.svg" alt="Ícone de Estratégia" width={28} height={28} />
                 </div>
-                <h3 className="text-xl font-semibold mb-2 text-white">Consultoria Estratégica em Comex Industrial</h3>
+                <h3 className="text-xl font-semibold mb-2 text-white">Consultoria Estratégica em Comércio Exterior</h3>
                 <p className="text-gray-300 mb-3 text-sm">
                   Análise profunda de cenários, estruturação de operações internacionais e desenho de estratégias
                   personalizadas para cada perfil de indústria. Desenvolvemos roadmaps completos para
@@ -452,96 +449,138 @@ export default function HomePage() {
           <div className="bg-[#141c2f] rounded-lg border border-[#2a3448] overflow-hidden shadow-xl">
             <div className="p-6">
               <div className="text-center mb-8">
-                <h2 className="text-3xl font-extrabold text-white mb-4">Resultados Reais na Indústria: Cases de Sucesso da OLV Internacional</h2>
+                <h2 className="text-3xl font-extrabold text-white mb-4">Resultados Executivos Transformadores</h2>
                 <p className="text-gray-300 text-lg text-center max-w-4xl mx-auto">
-                  Veja como transformamos desafios em oportunidades para PMEs industriais
+                  Experiência comprovada em Supply Chain Global com impacto direto em resultados financeiros
                 </p>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div className="bg-[#0a0f1d] p-6 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300">
                   <div className="flex items-center mb-4">
-                    <div className="w-12 h-12 rounded-full bg-green-500/20 border border-green-500 flex items-center justify-center mr-3">
-                      <svg className="w-6 h-6 text-green-400" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 border border-emerald-400 flex items-center justify-center mr-3 shadow-lg">
+                      <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                       </svg>
                     </div>
-                    <h3 className="text-xl font-bold text-white">Otimização de Custos</h3>
+                    <h3 className="text-xl font-bold text-white">BPO Empresa de Alimentos LATAM</h3>
                   </div>
                   <div className="space-y-3">
                     <div>
-                      <h4 className="text-[#d4af37] font-semibold text-sm">Empresa:</h4>
-                      <p className="text-gray-300 text-sm">Indústria de Autopeças (R$ 80M faturamento)</p>
+                      <h4 className="text-[#d4af37] font-semibold text-sm">Projeto:</h4>
+                      <p className="text-gray-300 text-sm">Desenvolvimento de projetos de eficiência logística (ENALTECER)</p>
                     </div>
                     <div>
-                      <h4 className="text-[#d4af37] font-semibold text-sm">Desafio:</h4>
-                      <p className="text-gray-300 text-sm">Altos custos de importação de aços especiais e componentes eletrônicos</p>
+                      <h4 className="text-[#d4af37] font-semibold text-sm">Escopo:</h4>
+                      <p className="text-gray-300 text-sm">Procurement estratégico com foco em otimização de Supply Chain</p>
                     </div>
                     <div>
-                      <h4 className="text-[#d4af37] font-semibold text-sm">Solução:</h4>
-                      <p className="text-gray-300 text-sm">Otimização da classificação fiscal e reengenharia do desembaraço aduaneiro</p>
-                    </div>
-                    <div>
-                      <h4 className="text-[#d4af37] font-semibold text-sm">Resultado:</h4>
-                      <p className="text-gray-300 text-sm font-bold">Redução de 28% no custo de aquisição, liberando R$ 2,5M anuais</p>
+                      <h4 className="text-[#d4af37] font-semibold text-sm">Impacto Financeiro:</h4>
+                      <p className="text-gray-300 text-sm font-bold">Redução de custos estimada em KUSD 937,0</p>
                     </div>
                   </div>
                 </div>
 
                 <div className="bg-[#0a0f1d] p-6 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300">
                   <div className="flex items-center mb-4">
-                    <div className="w-12 h-12 rounded-full bg-blue-500/20 border border-blue-500 flex items-center justify-center mr-3">
-                      <svg className="w-6 h-6 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 border border-amber-400 flex items-center justify-center mr-3 shadow-lg">
+                      <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
                       </svg>
                     </div>
-                    <h3 className="text-xl font-bold text-white">Expansão de Mercado</h3>
+                    <h3 className="text-xl font-bold text-white">Reestruturação Comércio Exterior - Óleo e Gás</h3>
                   </div>
                   <div className="space-y-3">
                     <div>
-                      <h4 className="text-[#d4af37] font-semibold text-sm">Empresa:</h4>
-                      <p className="text-gray-300 text-sm">Fábrica de Máquinas Agrícolas (R$ 120M faturamento)</p>
+                      <h4 className="text-[#d4af37] font-semibold text-sm">Projeto:</h4>
+                      <p className="text-gray-300 text-sm">Importação/Exportação equipamentos sob regimes especiais (REPETRO)</p>
                     </div>
                     <div>
-                      <h4 className="text-[#d4af37] font-semibold text-sm">Desafio:</h4>
-                      <p className="text-gray-300 text-sm">Dependência do mercado nacional e dificuldade de expandir</p>
+                      <h4 className="text-[#d4af37] font-semibold text-sm">Escopo:</h4>
+                      <p className="text-gray-300 text-sm">Reestruturação completa da área de comércio exterior</p>
                     </div>
                     <div>
-                      <h4 className="text-[#d4af37] font-semibold text-sm">Solução:</h4>
-                      <p className="text-gray-300 text-sm">Mapeamento de novos mercados e estruturação de canais</p>
-                    </div>
-                    <div>
-                      <h4 className="text-[#d4af37] font-semibold text-sm">Resultado:</h4>
-                      <p className="text-gray-300 text-sm font-bold">3 novos mercados em 12 meses, +150% em exportações</p>
+                      <h4 className="text-[#d4af37] font-semibold text-sm">Proteção Financeira:</h4>
+                      <p className="text-gray-300 text-sm font-bold">Evitadas multas de MR$ 15,0 nos primeiros 6 meses</p>
                     </div>
                   </div>
                 </div>
 
                 <div className="bg-[#0a0f1d] p-6 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300">
                   <div className="flex items-center mb-4">
-                    <div className="w-12 h-12 rounded-full bg-purple-500/20 border border-purple-500 flex items-center justify-center mr-3">
-                      <svg className="w-6 h-6 text-purple-400" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 border border-blue-400 flex items-center justify-center mr-3 shadow-lg">
+                      <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                        <polyline points="3.27,6.96 12,12.01 20.73,6.96"/>
+                        <line x1="12" y1="22.08" x2="12" y2="12"/>
                       </svg>
                     </div>
-                    <h3 className="text-xl font-bold text-white">Eficiência Logística</h3>
+                    <h3 className="text-xl font-bold text-white">Gestão Supply Chain Multinacional</h3>
                   </div>
                   <div className="space-y-3">
                     <div>
-                      <h4 className="text-[#d4af37] font-semibold text-sm">Empresa:</h4>
-                      <p className="text-gray-300 text-sm">Indústria Química (R$ 95M faturamento)</p>
+                      <h4 className="text-[#d4af37] font-semibold text-sm">Projeto:</h4>
+                      <p className="text-gray-300 text-sm">Gestão de compras CAPEX/OPEX para 17 filiais em 7 países LATAM</p>
                     </div>
                     <div>
-                      <h4 className="text-[#d4af37] font-semibold text-sm">Desafio:</h4>
-                      <p className="text-gray-300 text-sm">Complexidade na importação de insumos químicos especiais</p>
+                      <h4 className="text-[#d4af37] font-semibold text-sm">Escopo:</h4>
+                      <p className="text-gray-300 text-sm">Strategic Sourcing para 32 categorias - 3 tabelas de compras</p>
                     </div>
                     <div>
-                      <h4 className="text-[#d4af37] font-semibold text-sm">Solução:</h4>
-                      <p className="text-gray-300 text-sm">Implementação de Supply Chain 4.0 com IA e automação</p>
+                      <h4 className="text-[#d4af37] font-semibold text-sm">Volume Financeiro:</h4>
+                      <p className="text-gray-300 text-sm font-bold">Gasto estimado de USD 575 MM/ano</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-[#0a0f1d] p-6 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300">
+                  <div className="flex items-center mb-4">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-violet-600 border border-purple-400 flex items-center justify-center mr-3 shadow-lg">
+                      <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                      </svg>
+                    </div>
+                    <h3 className="text-xl font-bold text-white">Implementação JIT/JIS - Sondas de Perfuração</h3>
+                  </div>
+                  <div className="space-y-3">
+                    <div>
+                      <h4 className="text-[#d4af37] font-semibold text-sm">Projeto:</h4>
+                      <p className="text-gray-300 text-sm">Ações de JIT/JIS em operações de MRO</p>
                     </div>
                     <div>
-                      <h4 className="text-[#d4af37] font-semibold text-sm">Resultado:</h4>
-                      <p className="text-gray-300 text-sm font-bold">40% redução no lead time, 25% economia em custos logísticos</p>
+                      <h4 className="text-[#d4af37] font-semibold text-sm">Escopo:</h4>
+                      <p className="text-gray-300 text-sm">Otimização de logística e estoque para equipamentos de perfuração</p>
+                    </div>
+                    <div>
+                      <h4 className="text-[#d4af37] font-semibold text-sm">Eficiência Operacional:</h4>
+                      <p className="text-gray-300 text-sm font-bold">Redução de 15% em custos combinados = MR$ 1,0 a.a. por equipamento</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-[#0a0f1d] p-6 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300">
+                  <div className="flex items-center mb-4">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-rose-500 to-pink-600 border border-rose-400 flex items-center justify-center mr-3 shadow-lg">
+                      <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                        <polyline points="3.27,6.96 12,12.01 20.73,6.96"/>
+                        <line x1="12" y1="22.08" x2="12" y2="12"/>
+                      </svg>
+                    </div>
+                    <h3 className="text-xl font-bold text-white">Metodologias S&OP - Projetos Offshore</h3>
+                  </div>
+                  <div className="space-y-3">
+                    <div>
+                      <h4 className="text-[#d4af37] font-semibold text-sm">Projeto:</h4>
+                      <p className="text-gray-300 text-sm">Implementação de metodologias S&OP em projetos selecionados</p>
+                    </div>
+                    <div>
+                      <h4 className="text-[#d4af37] font-semibold text-sm">Escopo:</h4>
+                      <p className="text-gray-300 text-sm">Otimização de fluxo de caixa, OTD e redução de estoque</p>
+                    </div>
+                    <div>
+                      <h4 className="text-[#d4af37] font-semibold text-sm">Impacto Financeiro:</h4>
+                      <p className="text-gray-300 text-sm font-bold">Evitados gastos de 15% a 20% no fluxo de caixa</p>
                     </div>
                   </div>
                 </div>
@@ -559,84 +598,75 @@ export default function HomePage() {
               <div className="text-center mb-8">
                 <h2 className="text-3xl font-extrabold text-white mb-4">Expertise Comprovada em Grandes Indústrias Globais</h2>
                 <p className="text-gray-300 text-lg text-center max-w-4xl mx-auto">
-                  35 anos de experiência aplicada em multinacionais industriais, agora disponível para PMEs
+                  Experiência consolidada em setores industriais diversos, agora disponível para PMEs
                 </p>
               </div>
               
-              {/* Logos das Empresas */}
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-6 mb-8">
+              {/* Setores Industriais Especializados */}
+              <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mb-8">
                 <div className="bg-[#0a0f1d] p-4 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300 flex items-center justify-center">
                   <div className="text-center">
-                    <div className="w-20 h-20 bg-white rounded-lg flex items-center justify-center mb-2 mx-auto p-2">
-                      <Image 
-                        src="/images/partners/volkswagen-logo.svg" 
-                        alt="Volkswagen Logo" 
-                        width={64} 
-                        height={64} 
-                        className="object-contain"
-                      />
+                    <div className="w-16 h-16 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl flex items-center justify-center mb-2 mx-auto p-2 shadow-lg border border-slate-200">
+                      <svg className="w-10 h-10 text-slate-700" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                      </svg>
                     </div>
-                    <p className="text-white font-semibold text-sm">Volkswagen</p>
+                    <p className="text-white font-semibold text-xs">Insumos</p>
                   </div>
                 </div>
                 
                 <div className="bg-[#0a0f1d] p-4 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300 flex items-center justify-center">
                   <div className="text-center">
-                    <div className="w-20 h-20 bg-white rounded-lg flex items-center justify-center mb-2 mx-auto p-2">
-                      <Image 
-                        src="/images/partners/ericsson-logo.svg" 
-                        alt="Ericsson Logo" 
-                        width={64} 
-                        height={64} 
-                        className="object-contain"
-                      />
+                    <div className="w-16 h-16 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl flex items-center justify-center mb-2 mx-auto p-2 shadow-lg border border-slate-200">
+                      <svg className="w-10 h-10 text-slate-700" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h4c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+                      </svg>
                     </div>
-                    <p className="text-white font-semibold text-sm">Ericsson</p>
+                    <p className="text-white font-semibold text-xs">Máquinas</p>
                   </div>
                 </div>
                 
                 <div className="bg-[#0a0f1d] p-4 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300 flex items-center justify-center">
                   <div className="text-center">
-                    <div className="w-20 h-20 bg-white rounded-lg flex items-center justify-center mb-2 mx-auto p-2">
-                      <Image 
-                        src="/images/partners/lupatech-logo.svg" 
-                        alt="Lupatech Logo" 
-                        width={64} 
-                        height={64} 
-                        className="object-contain"
-                      />
+                    <div className="w-16 h-16 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl flex items-center justify-center mb-2 mx-auto p-2 shadow-lg border border-slate-200">
+                      <svg className="w-10 h-10 text-slate-700" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                      </svg>
                     </div>
-                    <p className="text-white font-semibold text-sm">Lupatech</p>
+                    <p className="text-white font-semibold text-xs">Equipamentos</p>
                   </div>
                 </div>
                 
                 <div className="bg-[#0a0f1d] p-4 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300 flex items-center justify-center">
                   <div className="text-center">
-                    <div className="w-20 h-20 bg-white rounded-lg flex items-center justify-center mb-2 mx-auto p-2">
-                      <Image 
-                        src="/images/partners/san-antonio-logo.svg" 
-                        alt="San Antonio Logo" 
-                        width={64} 
-                        height={64} 
-                        className="object-contain"
-                      />
+                    <div className="w-16 h-16 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl flex items-center justify-center mb-2 mx-auto p-2 shadow-lg border border-slate-200">
+                      <svg className="w-10 h-10 text-slate-700" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                      </svg>
                     </div>
-                    <p className="text-white font-semibold text-sm">San Antonio</p>
+                    <p className="text-white font-semibold text-xs">Bens de Capital</p>
                   </div>
                 </div>
                 
                 <div className="bg-[#0a0f1d] p-4 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300 flex items-center justify-center">
                   <div className="text-center">
-                    <div className="w-20 h-20 bg-white rounded-lg flex items-center justify-center mb-2 mx-auto p-2">
-                      <Image 
-                        src="/images/partners/komatsu-logo.svg" 
-                        alt="Komatsu Logo" 
-                        width={64} 
-                        height={64} 
-                        className="object-contain"
-                      />
+                    <div className="w-16 h-16 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl flex items-center justify-center mb-2 mx-auto p-2 shadow-lg border border-slate-200">
+                      <svg className="w-10 h-10 text-slate-700" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm4 18v-6h2.5l-2.54-7.63A1.5 1.5 0 0 0 18.54 8H17c-.8 0-1.54.37-2.01 1l-4.7 6.28c-.37.5-.58 1.11-.58 1.73V20c0 1.1.9 2 2 2h6c1.1 0 2-.9 2-2z"/>
+                      </svg>
                     </div>
-                    <p className="text-white font-semibold text-sm">Komatsu</p>
+                    <p className="text-white font-semibold text-xs">Óleo e Gás</p>
+                  </div>
+                </div>
+                
+                <div className="bg-[#0a0f1d] p-4 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300 flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="w-16 h-16 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl flex items-center justify-center mb-2 mx-auto p-2 shadow-lg border border-slate-200">
+                      <svg className="w-10 h-10 text-slate-700" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm4 18v-6h2.5l-2.54-7.63A1.5 1.5 0 0 0 18.54 8H17c-.8 0-1.54.37-2.01 1l-4.7 6.28c-.37.5-.58 1.11-.58 1.73V20c0 1.1.9 2 2 2h6c1.1 0 2-.9 2-2z"/>
+                      </svg>
+                    </div>
+                    <p className="text-white font-semibold text-xs">Serviços Industriais</p>
                   </div>
                 </div>
               </div>
@@ -644,17 +674,17 @@ export default function HomePage() {
               {/* Expertise Comprovada */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="bg-[#0a0f1d] p-6 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300 text-center">
-                  <div className="text-3xl font-bold text-[#d4af37] mb-2">35+</div>
-                  <p className="text-gray-300 text-sm">Anos de Experiência</p>
+                  <div className="text-3xl font-bold text-[#d4af37] mb-2">✓</div>
+                  <p className="text-gray-300 text-sm">Expertise Consolidada</p>
                 </div>
                 
                 <div className="bg-[#0a0f1d] p-6 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300 text-center">
-                  <div className="text-3xl font-bold text-[#d4af37] mb-2">5</div>
-                  <p className="text-gray-300 text-sm">Multinacionais Industriais</p>
+                  <div className="text-3xl font-bold text-[#d4af37] mb-2">✓</div>
+                  <p className="text-gray-300 text-sm">Setores Industriais Diversos</p>
                 </div>
                 
                 <div className="bg-[#0a0f1d] p-6 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300 text-center">
-                  <div className="text-3xl font-bold text-[#d4af37] mb-2">100%</div>
+                  <div className="text-3xl font-bold text-[#d4af37] mb-2">✓</div>
                   <p className="text-gray-300 text-sm">Foco em PMEs Industriais</p>
                 </div>
               </div>
@@ -682,7 +712,7 @@ export default function HomePage() {
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
                   </div>
-                  <h3 className="text-lg font-bold text-white mb-2">35 Anos de Experiência</h3>
+                  <h3 className="text-lg font-bold text-white mb-2">Expertise Consolidada</h3>
                   <p className="text-gray-300 text-sm">Expertise consolidada em Supply Chain e Comex</p>
                 </div>
                 
@@ -727,9 +757,9 @@ export default function HomePage() {
           <div className="bg-[#141c2f] rounded-lg border border-[#2a3448] overflow-hidden shadow-xl">
             <div className="p-6">
               <div className="text-center mb-6">
-                <h2 className="text-3xl font-extrabold text-white mb-2">Expertise Industrial da OLV: 35 Anos no Coração das Grandes Indústrias Globais</h2>
+                <h2 className="text-3xl font-extrabold text-white mb-2">Expertise Industrial da OLV: Experiência Consolidada em Setores Industriais Diversos</h2>
                 <p className="text-gray-300 text-base text-center max-w-4xl mx-auto">
-                  A OLV Internacional possui expertise comprovada em grandes multinacionais industriais como Volkswagen, Ericsson, Lupatech, San Antonio e Komatsu. Nossa experiência foi moldada em ambientes fabris complexos, aplicando conceitos como JIT/JIS, S&OP e REPETRO no contexto industrial. Trazemos essa expertise de multinacionais para PMEs industriais que buscam otimização e crescimento.
+                  A OLV Internacional possui expertise comprovada em diversos setores industriais, incluindo automotivo, eletrônico, químico, máquinas e equipamentos. Nossa experiência foi moldada em ambientes fabris complexos, aplicando conceitos como JIT/JIS, S&OP e REPETRO no contexto industrial. Trazemos essa expertise consolidada para PMEs industriais que buscam otimização e crescimento.
                 </p>
               </div>
               
