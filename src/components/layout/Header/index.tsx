@@ -56,9 +56,9 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
     <>
       {/* Header */}
       <header className="header-wrapper">
-                  <div className="header-inner" style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', width: '100%', gap: '2rem' }}>
+        <div className="header-inner">
           {/* Logo + Slogan */}
-          <div className="header-brand" style={{ display: 'flex', alignItems: 'center', minWidth: 0, flexShrink: 0, flexBasis: 'auto', gap: '1.5rem' }}>
+          <div className="header-brand">
             <Link href="/" className="header-logo-link" title="OLV Internacional" style={{ display: 'block', minWidth: 0 }}>
               <div className="logo-olv-padrao" style={{ aspectRatio: '1/1', minWidth: 50, minHeight: 50, maxWidth: 88, maxHeight: 88, width: '84px', height: '84px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <OptimizedImage 
@@ -73,14 +73,14 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
                 />
               </div>
             </Link>
-            <div className="header-slogan" style={{ marginLeft: '0.5rem', whiteSpace: 'normal', wordBreak: 'break-word', fontSize: '1rem', minWidth: 0, flexShrink: 1, lineHeight: 1.3 }}>
+            <div className="header-slogan" style={{ marginLeft: '0.5rem', whiteSpace: 'normal', wordBreak: 'break-word', fontSize: '0.85rem', minWidth: 0, flexShrink: 1, lineHeight: 1.2 }}>
               Integramos Estratégia,<br />
               Operação e Resultado
             </div>
           </div>
 
-                      {/* Menu Principal - Visible only on desktop */}
-            <nav className="nav-menu desktop-only">
+          {/* Menu Principal - Visible only on desktop */}
+          <nav className="nav-menu desktop-only">
               <Link href="/" className={`nav-item ${isActive('/') ? 'active' : ''}`} data-page="home">Home</Link>
               <Link href="/sobre" className={`nav-item ${isActive('/sobre') ? 'active' : ''}`} data-page="sobre">Sobre</Link>
               
