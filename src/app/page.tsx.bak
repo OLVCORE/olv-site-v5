@@ -1,0 +1,274 @@
+import MainLayout from '../components/layout/MainLayout';
+import Image from 'next/image';
+import Link from 'next/link';
+
+export default function HomePage() {
+  // Os pilares de atuação da OLV Internacional
+  const keyPoints = [
+    { title: "Operação Legalizada", icon: "/icons/check.svg", 
+      description: "Condução de processos de importação e exportação dentro das normativas brasileiras e internacionais." },
+    { title: "Redução Tributária Estruturada", icon: "/icons/check.svg", 
+      description: "Planejamento fiscal estratégico para redução de carga tributária em operações de comércio exterior." },
+    { title: "Planejamento Logístico Integrado", icon: "/icons/check.svg", 
+      description: "Organização completa do fluxo logístico internacional, da origem ao destino." },
+    { title: "Planejamento Estratégico", icon: "/icons/check.svg", 
+      description: "Estruturação de operações internacionais para empresas brasileiras." },
+    { title: "Acompanhamento Total", icon: "/icons/check.svg", 
+      description: "Gestão de ponta a ponta das etapas operacionais, desde a negociação até a entrega final." },
+    { title: "Gestão de Riscos", icon: "/icons/check.svg", 
+      description: "Identificação, prevenção e mitigação de riscos aduaneiros, cambiais, logísticos e contratuais." },
+    { title: "Desenvolvimento de Negócios", icon: "/icons/check.svg", 
+      description: "Estruturação de ofertas, definição de canais e abertura de novos mercados no exterior." },
+    { title: "Compliance e Governança", icon: "/icons/check.svg", 
+      description: "Estruturação de modelos de compliance e governança para o mercado Nacional e Internacional." },
+    { title: "Automação e Tecnologia Aplicada", icon: "/icons/check.svg", 
+      description: "Uso de plataformas digitais inteligentes para simular, integrar e otimizar operações internacionais com inteligência artificial e dados públicos." },
+    { title: "Consultoria Customizada por Projeto", icon: "/icons/check.svg", 
+      description: "Diagnóstico sob medida com soluções práticas e direcionadas à realidade de cada cliente, sem estruturas fixas ou pacotes engessados." },
+    { title: "Inteligência de Mercado e Análise de Dados", icon: "/icons/check.svg", 
+      description: "Utilização de dados privados e vernamentais (Comex Stat, Receita Federal, SIASG, etc.) para tomada de decisão estratégica." },
+    { title: "Capacitação e Formação Técnica para PMEs", icon: "/icons/check.svg", 
+      description: "Treinamentos, mentorias e suporte técnico para equipes internas de empresas que desejam internalizar competências de Comex e Supply Chain." }
+  ];
+
+  return (
+    <MainLayout>
+      {/* Hero Section */}
+      <section className="section hero">
+        <div className="container">
+          <div className="flex flex-col md:flex-row items-center gap-8 mb-12 bg-[#141c2f] p-8 rounded-lg border border-[#2a3448] shadow-lg">
+            <div className="flex-1">
+              <h2 className="text-3xl font-bold mb-6 text-white">Integramos Estratégia, Operação e Resultado</h2>
+              <p className="mb-6 text-gray-300">
+                <span className="text-[#d4af37] font-semibold">35 anos</span> integrando estratégia, operações e resultados. Somos especialistas em Supply Chain, Comércio Exterior, Logística Internacional e Desenvolvimento de Negócios.
+              </p>
+              <p className="mb-6 text-gray-300">
+                Atuamos como o braço consultivo do Ecossistema OLV, oferecendo suporte completo para
+                empresas que querem importar, exportar, expandir seus negócios, operar com segurança e alta performance no
+                mercado global.
+              </p>
+              <p className="mb-6 text-gray-300">
+                Nossa missão é simplificar operações complexas, acelerar negócios e integrar estratégias com resultados.
+                Atuamos como uma extensão do seu negócio, sem ativos próprios, focando exclusivamente na entrega de valor.
+              </p>
+              <p className="text-[#d4af37] font-medium italic mb-6">
+                Do Radar SISCOMEX ao Embarque. Da Estratégia à Execução. Da Burocracia ao Resultado.
+              </p>
+            </div>
+            <div className="flex-shrink-0 md:w-1/3">
+              <div className="bg-[#0a0f1d] p-6 rounded-lg border border-[#2a3448] shadow-md">
+                <Image 
+                  src="/images/olv-internacional-banner.webp" 
+                  alt="OLV Internacional – Banner Hero" 
+                  width={400} 
+                  height={400} 
+                  className="rounded-lg" 
+                  priority
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Pilares de Atuação em mini-cards */}
+          <div className="mb-16">
+            <h3 className="text-2xl font-semibold mb-6 text-[#d4af37]">Pilares da Nossa Atuação</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              {keyPoints.map((point, index) => (
+                <div 
+                  key={index}
+                  className="bg-[#141c2f] p-4 rounded-lg border border-[#2a3448] shadow-md hover:border-[#d4af37] hover:shadow-lg transition-all duration-300"
+                >
+                  <div className="flex items-start mb-2">
+                    <Image src={point.icon} alt={point.title} width={20} height={20} className="mt-1 mr-3 flex-shrink-0" />
+                    <h4 className="text-gray-200 font-semibold">{point.title}</h4>
+                  </div>
+                  <p className="text-gray-400 text-sm pl-8">{point.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Nossas Soluções Estratégicas */}
+      <section className="section" id="servicos">
+        <div className="container">
+          <div className="section-heading mb-12">
+            <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-[#0a0f1d] border-2 border-[#d4af37] flex items-center justify-center">
+              <Image src="/icons/solutions-icon.svg" alt="Ícone de Soluções" width={40} height={40} className="text-[#d4af37]" />
+            </div>
+            <h2 className="text-3xl font-bold text-center">Nossas Soluções Estratégicas</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+            {/* Card 1 - Consultoria Estratégica em Comex */}
+            <div className="bg-[#141c2f] rounded-xl border border-[#2a3448] overflow-hidden shadow-xl hover:border-[#d4af37] hover:shadow-2xl transition-all duration-300">
+              <div className="p-8">
+                <div className="w-20 h-20 rounded-full bg-[#0a0f1d] border-2 border-[#d4af37] flex items-center justify-center mb-4">
+                  <Image src="/icons/strategy.svg" alt="Ícone de Estratégia" width={40} height={40} />
+                </div>
+                <h3 className="text-xl font-semibold mb-4 text-white">Consultoria Estratégica em Comex</h3>
+                <p className="text-gray-300 mb-4">
+                  Análise profunda de cenários, estruturação de operações internacionais e desenho de estratégias
+                  personalizadas para cada perfil de empresa. Desenvolvemos roadmaps completos para
+                  internacionalização segura, eficiente e escalável.
+                </p>
+                <ul className="space-y-3 mb-4">
+                  <li className="bg-[#1a2338] p-3 rounded-lg flex items-start border border-[#2a3448] hover:border-[#d4af37] hover:transform hover:translate-x-1 transition-all duration-200">
+                    <Image src="/icons/check.svg" alt="Checkmark" width={16} height={16} className="mt-1 mr-2 flex-shrink-0" />
+                    <span className="text-sm text-gray-300">Análise de viabilidade para mercados-alvo</span>
+                  </li>
+                  <li className="bg-[#1a2338] p-3 rounded-lg flex items-start border border-[#2a3448] hover:border-[#d4af37] hover:transform hover:translate-x-1 transition-all duration-200">
+                    <Image src="/icons/check.svg" alt="Checkmark" width={16} height={16} className="mt-1 mr-2 flex-shrink-0" />
+                    <span className="text-sm text-gray-300">Estruturação de modelos de negócio global</span>
+                  </li>
+                  <li className="bg-[#1a2338] p-3 rounded-lg flex items-start border border-[#2a3448] hover:border-[#d4af37] hover:transform hover:translate-x-1 transition-all duration-200">
+                    <Image src="/icons/check.svg" alt="Checkmark" width={16} height={16} className="mt-1 mr-2 flex-shrink-0" />
+                    <span className="text-sm text-gray-300">Planejamento estratégico internacional</span>
+                  </li>
+                </ul>
+                <Link href="/solucoes" className="mt-4 inline-block text-[#d4af37] hover:underline">Ver mais soluções →</Link>
+              </div>
+            </div>
+
+            {/* Card 2 - Soluções Operacionais para Exportação e Importação */}
+            <div className="bg-[#141c2f] rounded-xl border border-[#2a3448] overflow-hidden shadow-xl hover:border-[#d4af37] hover:shadow-2xl transition-all duration-300">
+              <div className="p-8">
+                <div className="w-20 h-20 rounded-full bg-[#0a0f1d] border-2 border-[#d4af37] flex items-center justify-center mb-4">
+                  <Image src="/icons/operations.svg" alt="Ícone de Operações" width={40} height={40} />
+                </div>
+                <h3 className="text-xl font-semibold mb-4 text-white">Soluções Operacionais para Exportação e Importação</h3>
+                <p className="text-gray-300 mb-4">
+                  Condução completa de todos os processos operacionais de comércio exterior, desde
+                  habilitações e registros até o fechamento de câmbio, documentação e desembaraço
+                  aduaneiro, com foco em conformidade e eficiência.
+                </p>
+                <ul className="space-y-3 mb-4">
+                  <li className="bg-[#1a2338] p-3 rounded-lg flex items-start border border-[#2a3448] hover:border-[#d4af37] hover:transform hover:translate-x-1 transition-all duration-200">
+                    <Image src="/icons/check.svg" alt="Checkmark" width={16} height={16} className="mt-1 mr-2 flex-shrink-0" />
+                    <span className="text-sm text-gray-300">Habilitação e manutenção de Radar SISCOMEX</span>
+                  </li>
+                  <li className="bg-[#1a2338] p-3 rounded-lg flex items-start border border-[#2a3448] hover:border-[#d4af37] hover:transform hover:translate-x-1 transition-all duration-200">
+                    <Image src="/icons/check.svg" alt="Checkmark" width={16} height={16} className="mt-1 mr-2 flex-shrink-0" />
+                    <span className="text-sm text-gray-300">Operações completas de importação e exportação</span>
+                  </li>
+                  <li className="bg-[#1a2338] p-3 rounded-lg flex items-start border border-[#2a3448] hover:border-[#d4af37] hover:transform hover:translate-x-1 transition-all duration-200">
+                    <Image src="/icons/check.svg" alt="Checkmark" width={16} height={16} className="mt-1 mr-2 flex-shrink-0" />
+                    <span className="text-sm text-gray-300">Gestão documental e análise de parametrização</span>
+                  </li>
+                </ul>
+                <Link href="/solucoes" className="mt-4 inline-block text-[#d4af37] hover:underline">Ver mais soluções →</Link>
+              </div>
+            </div>
+
+            {/* Card 3 - Gestão de Supply Chain Integrado */}
+            <div className="bg-[#141c2f] rounded-xl border border-[#2a3448] overflow-hidden shadow-xl hover:border-[#d4af37] hover:shadow-2xl transition-all duration-300">
+              <div className="p-8">
+                <div className="w-20 h-20 rounded-full bg-[#0a0f1d] border-2 border-[#d4af37] flex items-center justify-center mb-4">
+                  <Image src="/icons/supply-chain.svg" alt="Ícone Supply Chain" width={40} height={40} />
+                </div>
+                <h3 className="text-xl font-semibold mb-4 text-white">Gestão de Supply Chain Integrado</h3>
+                <p className="text-gray-300 mb-4">
+                  Planejamento e otimização de toda a cadeia de suprimentos internacional, desde
+                  a identificação de fornecedores até a entrega ao cliente final, com foco em
+                  redução de custos, minimização de riscos e aumento de eficiência.
+                </p>
+                <ul className="space-y-3 mb-4">
+                  <li className="bg-[#1a2338] p-3 rounded-lg flex items-start border border-[#2a3448] hover:border-[#d4af37] hover:transform hover:translate-x-1 transition-all duration-200">
+                    <Image src="/icons/check.svg" alt="Checkmark" width={16} height={16} className="mt-1 mr-2 flex-shrink-0" />
+                    <span className="text-sm text-gray-300">Gestão integrada de fornecedores globais</span>
+                  </li>
+                  <li className="bg-[#1a2338] p-3 rounded-lg flex items-start border border-[#2a3448] hover:border-[#d4af37] hover:transform hover:translate-x-1 transition-all duration-200">
+                    <Image src="/icons/check.svg" alt="Checkmark" width={16} height={16} className="mt-1 mr-2 flex-shrink-0" />
+                    <span className="text-sm text-gray-300">Otimização de fluxos logísticos internacionais</span>
+                  </li>
+                  <li className="bg-[#1a2338] p-3 rounded-lg flex items-start border border-[#2a3448] hover:border-[#d4af37] hover:transform hover:translate-x-1 transition-all duration-200">
+                    <Image src="/icons/check.svg" alt="Checkmark" width={16} height={16} className="mt-1 mr-2 flex-shrink-0" />
+                    <span className="text-sm text-gray-300">Controle de inventário e planejamento de demanda</span>
+                  </li>
+                </ul>
+                <Link href="/solucoes" className="mt-4 inline-block text-[#d4af37] hover:underline">Ver mais soluções →</Link>
+              </div>
+            </div>
+            
+            {/* Card 4 - Tecnologia Aplicada à Competitividade */}
+            <div className="bg-[#141c2f] rounded-xl border border-[#2a3448] overflow-hidden shadow-xl hover:border-[#d4af37] hover:shadow-2xl transition-all duration-300">
+              <div className="p-8">
+                <div className="w-20 h-20 rounded-full bg-[#0a0f1d] border-2 border-[#d4af37] flex items-center justify-center mb-4">
+                  <Image src="/icons/tech.svg" alt="Ícone de Tecnologia" width={40} height={40} />
+                </div>
+                <h3 className="text-xl font-semibold mb-4 text-white">Tecnologia Aplicada à Competitividade</h3>
+                <p className="text-gray-300 mb-4">
+                  Implementação de soluções tecnológicas e sistemas integrados para automatizar
+                  processos de comércio exterior, possibilitando maior controle, visibilidade
+                  e agilidade em todas as etapas da operação internacional.
+                </p>
+                <ul className="space-y-3 mb-4">
+                  <li className="bg-[#1a2338] p-3 rounded-lg flex items-start border border-[#2a3448] hover:border-[#d4af37] hover:transform hover:translate-x-1 transition-all duration-200">
+                    <Image src="/icons/check.svg" alt="Checkmark" width={16} height={16} className="mt-1 mr-2 flex-shrink-0" />
+                    <span className="text-sm text-gray-300">Dashboards de performance operacional</span>
+                  </li>
+                  <li className="bg-[#1a2338] p-3 rounded-lg flex items-start border border-[#2a3448] hover:border-[#d4af37] hover:transform hover:translate-x-1 transition-all duration-200">
+                    <Image src="/icons/check.svg" alt="Checkmark" width={16} height={16} className="mt-1 mr-2 flex-shrink-0" />
+                    <span className="text-sm text-gray-300">Automação de processos de comércio exterior</span>
+                  </li>
+                  <li className="bg-[#1a2338] p-3 rounded-lg flex items-start border border-[#2a3448] hover:border-[#d4af37] hover:transform hover:translate-x-1 transition-all duration-200">
+                    <Image src="/icons/check.svg" alt="Checkmark" width={16} height={16} className="mt-1 mr-2 flex-shrink-0" />
+                    <span className="text-sm text-gray-300">Soluções tecnológicas para rastreabilidade global</span>
+                  </li>
+                </ul>
+                <Link href="/solucoes" className="mt-4 inline-block text-[#d4af37] hover:underline">Ver mais soluções →</Link>
+              </div>
+            </div>
+            
+            {/* Card 5 - Compliance e Governança Estratégica */}
+            <div className="bg-[#141c2f] rounded-xl border border-[#2a3448] overflow-hidden shadow-xl hover:border-[#d4af37] hover:shadow-2xl transition-all duration-300">
+              <div className="p-8">
+                <div className="w-20 h-20 rounded-full bg-[#0a0f1d] border-2 border-[#d4af37] flex items-center justify-center mb-4">
+                  <Image src="/icons/compliance.svg" alt="Ícone de Compliance" width={40} height={40} />
+                </div>
+                <h3 className="text-xl font-semibold mb-4 text-white">Compliance e Governança Estratégica</h3>
+                <p className="text-gray-300 mb-4">
+                  Atuamos com estruturas completas de compliance e governança estratégica, tática e operacional, 
+                  incorporando inteligência normativa, auditoria contínua, gestão de riscos e formação de times 
+                  com foco em resultado. Não basta cumprir normas: é preciso transformar processos em vantagem competitiva.
+                </p>
+                <ul className="space-y-3 mb-4">
+                  <li className="bg-[#1a2338] p-3 rounded-lg flex items-start border border-[#2a3448] hover:border-[#d4af37] hover:transform hover:translate-x-1 transition-all duration-200">
+                    <Image src="/icons/check.svg" alt="Checkmark" width={16} height={16} className="mt-1 mr-2 flex-shrink-0" />
+                    <span className="text-sm text-gray-300">Governança corporativa em operações globais</span>
+                  </li>
+                  <li className="bg-[#1a2338] p-3 rounded-lg flex items-start border border-[#2a3448] hover:border-[#d4af37] hover:transform hover:translate-x-1 transition-all duration-200">
+                    <Image src="/icons/check.svg" alt="Checkmark" width={16} height={16} className="mt-1 mr-2 flex-shrink-0" />
+                    <span className="text-sm text-gray-300">Implementação de programas de integridade</span>
+                  </li>
+                  <li className="bg-[#1a2338] p-3 rounded-lg flex items-start border border-[#2a3448] hover:border-[#d4af37] hover:transform hover:translate-x-1 transition-all duration-200">
+                    <Image src="/icons/check.svg" alt="Checkmark" width={16} height={16} className="mt-1 mr-2 flex-shrink-0" />
+                    <span className="text-sm text-gray-300">Estruturação de controles e processos normativos</span>
+                  </li>
+                </ul>
+                <Link href="/solucoes" className="mt-4 inline-block text-[#d4af37] hover:underline">Ver mais soluções →</Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Mensagem Institucional sobre o Papel das Pessoas */}
+      <section className="bg-[#0a0f1d] py-16 my-12">
+        <div className="container max-w-4xl mx-auto px-4">
+          <div className="bg-[#141c2f] rounded-xl border border-[#2a3448] p-8 text-center shadow-xl">
+            <h3 className="text-[#d4af37] text-2xl font-semibold mb-6">O Fator Humano no Centro da Transformação</h3>
+            <p className="text-xl text-gray-200 mb-4 italic">
+              "Tecnologia, sistemas e processos não constroem resultados sozinhos.
+              São as pessoas — motivadas, preparadas e bem direcionadas — que movem estruturas, 
+              constroem propósitos e entregam valor real."
+            </p>
+            <p className="text-gray-300">
+              Na OLV Internacional, o centro de toda solução sempre será o humano.
+            </p>
+          </div>
+        </div>
+      </section>
+    </MainLayout>
+  );
+}

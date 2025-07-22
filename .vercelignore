@@ -1,0 +1,2 @@
+# Ignore legacy static HTML files at project root to avoid SEO duplication
+/*.html 

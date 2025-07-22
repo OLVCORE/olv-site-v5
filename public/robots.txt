@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://olvinternacional.com.br/sitemap.xml 
