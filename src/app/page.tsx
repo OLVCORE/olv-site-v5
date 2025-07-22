@@ -533,10 +533,14 @@ export default function HomePage() {
               <div className="grid grid-cols-2 md:grid-cols-5 gap-6 mb-8">
                 <div className="bg-[#0a0f1d] p-4 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300 flex items-center justify-center">
                   <div className="text-center">
-                    <div className="w-16 h-16 bg-[#d4af37]/20 rounded-full flex items-center justify-center mb-2 mx-auto">
-                      <svg className="w-8 h-8 text-[#d4af37]" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm0 2h12v8H4V6z" clipRule="evenodd" />
-                      </svg>
+                    <div className="w-20 h-20 bg-white rounded-lg flex items-center justify-center mb-2 mx-auto p-2">
+                      <Image 
+                        src="/images/partners/volkswagen-logo.svg" 
+                        alt="Volkswagen Logo" 
+                        width={64} 
+                        height={64} 
+                        className="object-contain"
+                      />
                     </div>
                     <p className="text-white font-semibold text-sm">Volkswagen</p>
                   </div>
@@ -544,10 +548,14 @@ export default function HomePage() {
                 
                 <div className="bg-[#0a0f1d] p-4 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300 flex items-center justify-center">
                   <div className="text-center">
-                    <div className="w-16 h-16 bg-[#d4af37]/20 rounded-full flex items-center justify-center mb-2 mx-auto">
-                      <svg className="w-8 h-8 text-[#d4af37]" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
-                      </svg>
+                    <div className="w-20 h-20 bg-white rounded-lg flex items-center justify-center mb-2 mx-auto p-2">
+                      <Image 
+                        src="/images/partners/ericsson-logo.svg" 
+                        alt="Ericsson Logo" 
+                        width={64} 
+                        height={64} 
+                        className="object-contain"
+                      />
                     </div>
                     <p className="text-white font-semibold text-sm">Ericsson</p>
                   </div>
@@ -555,10 +563,14 @@ export default function HomePage() {
                 
                 <div className="bg-[#0a0f1d] p-4 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300 flex items-center justify-center">
                   <div className="text-center">
-                    <div className="w-16 h-16 bg-[#d4af37]/20 rounded-full flex items-center justify-center mb-2 mx-auto">
-                      <svg className="w-8 h-8 text-[#d4af37]" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
-                      </svg>
+                    <div className="w-20 h-20 bg-white rounded-lg flex items-center justify-center mb-2 mx-auto p-2">
+                      <Image 
+                        src="/images/partners/lupatech-logo.svg" 
+                        alt="Lupatech Logo" 
+                        width={64} 
+                        height={64} 
+                        className="object-contain"
+                      />
                     </div>
                     <p className="text-white font-semibold text-sm">Lupatech</p>
                   </div>
@@ -566,10 +578,14 @@ export default function HomePage() {
                 
                 <div className="bg-[#0a0f1d] p-4 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300 flex items-center justify-center">
                   <div className="text-center">
-                    <div className="w-16 h-16 bg-[#d4af37]/20 rounded-full flex items-center justify-center mb-2 mx-auto">
-                      <svg className="w-8 h-8 text-[#d4af37]" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
-                      </svg>
+                    <div className="w-20 h-20 bg-white rounded-lg flex items-center justify-center mb-2 mx-auto p-2">
+                      <Image 
+                        src="/images/partners/san-antonio-logo.svg" 
+                        alt="San Antonio Logo" 
+                        width={64} 
+                        height={64} 
+                        className="object-contain"
+                      />
                     </div>
                     <p className="text-white font-semibold text-sm">San Antonio</p>
                   </div>
@@ -577,10 +593,14 @@ export default function HomePage() {
                 
                 <div className="bg-[#0a0f1d] p-4 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300 flex items-center justify-center">
                   <div className="text-center">
-                    <div className="w-16 h-16 bg-[#d4af37]/20 rounded-full flex items-center justify-center mb-2 mx-auto">
-                      <svg className="w-8 h-8 text-[#d4af37]" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
-                      </svg>
+                    <div className="w-20 h-20 bg-white rounded-lg flex items-center justify-center mb-2 mx-auto p-2">
+                      <Image 
+                        src="/images/partners/komatsu-logo.svg" 
+                        alt="Komatsu Logo" 
+                        width={64} 
+                        height={64} 
+                        className="object-contain"
+                      />
                     </div>
                     <p className="text-white font-semibold text-sm">Komatsu</p>
                   </div>
