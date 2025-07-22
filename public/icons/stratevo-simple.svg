@@ -1,0 +1,10 @@
+<!-- Salve este conteúdo em icons/stratevo-simple.svg -->
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 3L21 7.5V12C21 16.5563 16.9706 20.25 12 20.25C7.02944 20.25 3 16.5563 3 12V7.5L12 3Z" stroke="#D4AF37" stroke-width="2"/>
+    <path d="M12 6L18 9V12C18 15.3137 15.3137 18 12 18C8.68629 18 6 15.3137 6 12V9L12 6Z" stroke="#D4AF37" stroke-width="2"/>
+    <path d="M12 9L15 10.5V12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12V10.5L12 9Z" stroke="#D4AF37" stroke-width="2"/>
+    <circle cx="12" cy="12" r="1.5" stroke="#D4AF37" stroke-width="2"/>
+    <path d="M12 4.5V19.5" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 2"/>
+    <path d="M4.5 12H19.5" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 2"/>
+</svg>

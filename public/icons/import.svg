@@ -1,0 +1,8 @@
+<!-- Salve este conteúdo em icons/import.svg -->
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12 16H52C54.2091 16 56 17.7909 56 20V44C56 46.2091 54.2091 48 52 48H12C9.79086 48 8 46.2091 8 44V20C8 17.7909 9.79086 16 12 16Z" stroke="currentColor" stroke-width="2" fill="none"/>
+  <path d="M32 28V40M32 40L26 34M32 40L38 34" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M16 52H48M32 48V52" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M20 24H12M52 24H44" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg>

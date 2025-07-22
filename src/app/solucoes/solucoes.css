@@ -1,0 +1,64 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.solucoes-page {
+  min-height: 100vh;
+  padding: 2rem;
+  background-color: white;
+}
+
+.solucoes-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.solucoes-heading {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #0066cc;
+  margin-bottom: 1.5rem;
+}
+
+.solucoes-section {
+  background-color: #f5f5f5;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
+}
+
+.solucoes-section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.solucoes-paragraph {
+  color: #333;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.solucoes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.solucoes-card {
+  background-color: #e6f0ff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border: 1px solid #cce0ff;
+}
+
+.solucoes-card-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #003366;
+  margin-bottom: 0.75rem;
+} 

@@ -1,0 +1,15 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# Bloqueia arquivos proibidos
+if git diff --cached --name-only | grep -E '(^node_modules/|\.env|\.tsbuildinfo|\.log$|\.bak$|\.zip$|\.tar$|\.exe$|\.dll$|\.bin$|\.mp4$|\.mp3$|\.mov$|\.avi$|\.jpg$|\.jpeg$|\.png$|\.webp$|\.gif$|\.pdf$|\.docx$|\.xlsx$|\.pptx$|\.gitattributes$|\.DS_Store$|^public/|^components/|^styles/|^layouts/)' ; then
+  echo "❌ Commit bloqueado: arquivos proibidos ou áreas blindadas detectadas."
+  exit 1
+fi
+
+# Bloqueia arquivos grandes (>5MB)
+if git diff --cached --name-only | xargs -I{} bash -c 'if [ -f "{}" ] && [ $(stat -c%s "{}") -gt 5242880 ]; then echo "❌ Commit bloqueado: arquivo grande detectado: {}"; exit 1; fi' ; then
+  exit 1
+fi
+
+echo "✅ Pré-commit: integridade validada." 

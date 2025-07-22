@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 61.94 61.94" id="facebook">
+  <defs>
+    <radialGradient id="a" cx="30.76" cy="-20.37" r="55.64" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#00abe5"></stop>
+      <stop offset="1" stop-color="#1b75bc"></stop>
+    </radialGradient>
+    <linearGradient id="b" x1="267.77" x2="267.77" y1="-650.79" y2="-687.97" gradientTransform="translate(-236.8 700.35)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#c1e8fb"></stop>
+      <stop offset=".23" stop-color="#daf1fd"></stop>
+      <stop offset=".49" stop-color="#eff9fe"></stop>
+      <stop offset=".75" stop-color="#fbfdff"></stop>
+      <stop offset="1" stop-color="#fff"></stop>
+    </linearGradient>
+  </defs>
+  <g>
+    <rect width="61.94" height="61.94" fill="url(#a)" rx="16.96"></rect>
+    <path fill="#fff" d="M26,31H22.35V24.44c1,0,2,0,3,0,.47,0,.58-.14.58-.6,0-1.49,0-3,.06-4.46a7.15,7.15,0,0,1,3-5.71,8.18,8.18,0,0,1,4.74-1.29c1.77,0,3.53,0,5.3,0,.22,0,.43,0,.43.31,0,2,0,4,0,6.06h-1c-1.12,0-2.24,0-3.36,0a1.34,1.34,0,0,0-1.41,1.35c-.08,1.32,0,2.66,0,4,0,.09.28.26.44.26,1.64,0,3.29,0,4.94,0l.5,0c-.23,2.18-.45,4.33-.67,6.53H33.71V49.56H26Z"></path>
+    <path fill="url(#b)" d="M26,31H22.35V24.44c1,0,2,0,3,0,.47,0,.58-.14.58-.6,0-1.49,0-3,.06-4.46a7.15,7.15,0,0,1,3-5.71,8.18,8.18,0,0,1,4.74-1.29c1.77,0,3.53,0,5.3,0,.22,0,.43,0,.43.31,0,2,0,4,0,6.06h-1c-1.12,0-2.24,0-3.36,0a1.34,1.34,0,0,0-1.41,1.35c-.08,1.32,0,2.66,0,4,0,.09.28.26.44.26,1.64,0,3.29,0,4.94,0l.5,0c-.23,2.18-.45,4.33-.67,6.53H33.71V49.56H26Z"></path>
+  </g>
+</svg>

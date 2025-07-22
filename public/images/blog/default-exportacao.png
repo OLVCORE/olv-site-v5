@@ -1,0 +1,6 @@
+<svg width="400" height="225" viewBox="0 0 400 225" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="225" fill="#1A1F36"/>
+  <path d="M200 112.5C200 129.069 186.569 142.5 170 142.5C153.431 142.5 140 129.069 140 112.5C140 95.9315 153.431 82.5 170 82.5C186.569 82.5 200 95.9315 200 112.5Z" fill="#D4AF37"/>
+  <path d="M260 112.5C260 129.069 246.569 142.5 230 142.5C213.431 142.5 200 129.069 200 112.5C200 95.9315 213.431 82.5 230 82.5C246.569 82.5 260 95.9315 260 112.5Z" fill="#D4AF37"/>
+  <text x="200" y="180" text-anchor="middle" fill="#FFFFFF" font-family="Inter, sans-serif" font-size="16">OLV Internacional</text>
+</svg> 
