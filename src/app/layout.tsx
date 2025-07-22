@@ -4,6 +4,8 @@ import "./globals.css";
 import 'tippy.js/dist/tippy.css';
 import { SITE_URL } from '@/lib/siteConfig';
 import { LocalBusinessSchema, OrganizationSchema } from '@/components/SeoSchema';
+import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics';
+import { WebVitals } from '@/components/analytics/WebVitals';
 // Internationalization temporarily disabled
 
 const inter = Inter({ subsets: ["latin"] });
@@ -199,6 +201,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         
         {children}
         {/* <CookieConsent /> */}
+        
+        {/* Google Analytics 4 */}
+        <GoogleAnalytics measurementId="G-XXXXXXXXXX" />
+        
+        {/* Core Web Vitals Monitor */}
+        <WebVitals />
       </body>
     </html>
   );
