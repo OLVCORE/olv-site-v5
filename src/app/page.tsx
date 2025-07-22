@@ -78,8 +78,8 @@ export default function HomePage() {
             <div className="flex-shrink-0 md:w-1/3">
               <div className="bg-[#0a0f1d] p-4 rounded-lg border border-[#2a3448] shadow-md">
                 <HomeImage 
-                  src="/images/olv-internacional-banner.webp" 
-                  alt="OLV Internacional – Especialistas em Supply Chain Industrial" 
+                  src="/images/hero-industrial-factory.jpg" 
+                  alt="Fábrica Industrial Moderna - OLV Internacional Especialistas em Supply Chain Industrial" 
                   width={460} 
                   height={460} 
                   className="rounded-lg" 
@@ -510,6 +510,156 @@ export default function HomePage() {
                       <p className="text-gray-300 text-sm font-bold">40% redução no lead time, 25% economia em custos logísticos</p>
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Credenciais Industriais */}
+      <section id="credenciais-industriais" className="section section-humano pt-6 pb-0 mb-0">
+        <div className="container">
+          <div className="bg-[#141c2f] rounded-lg border border-[#2a3448] overflow-hidden shadow-xl">
+            <div className="p-6">
+              <div className="text-center mb-8">
+                <h2 className="text-3xl font-extrabold text-white mb-4">Expertise Comprovada em Grandes Indústrias Globais</h2>
+                <p className="text-gray-300 text-lg text-center max-w-4xl mx-auto">
+                  35 anos de experiência aplicada em multinacionais industriais, agora disponível para PMEs
+                </p>
+              </div>
+              
+              {/* Logos das Empresas */}
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-6 mb-8">
+                <div className="bg-[#0a0f1d] p-4 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300 flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="w-16 h-16 bg-[#d4af37]/20 rounded-full flex items-center justify-center mb-2 mx-auto">
+                      <svg className="w-8 h-8 text-[#d4af37]" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm0 2h12v8H4V6z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <p className="text-white font-semibold text-sm">Volkswagen</p>
+                  </div>
+                </div>
+                
+                <div className="bg-[#0a0f1d] p-4 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300 flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="w-16 h-16 bg-[#d4af37]/20 rounded-full flex items-center justify-center mb-2 mx-auto">
+                      <svg className="w-8 h-8 text-[#d4af37]" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <p className="text-white font-semibold text-sm">Ericsson</p>
+                  </div>
+                </div>
+                
+                <div className="bg-[#0a0f1d] p-4 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300 flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="w-16 h-16 bg-[#d4af37]/20 rounded-full flex items-center justify-center mb-2 mx-auto">
+                      <svg className="w-8 h-8 text-[#d4af37]" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <p className="text-white font-semibold text-sm">Lupatech</p>
+                  </div>
+                </div>
+                
+                <div className="bg-[#0a0f1d] p-4 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300 flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="w-16 h-16 bg-[#d4af37]/20 rounded-full flex items-center justify-center mb-2 mx-auto">
+                      <svg className="w-8 h-8 text-[#d4af37]" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <p className="text-white font-semibold text-sm">San Antonio</p>
+                  </div>
+                </div>
+                
+                <div className="bg-[#0a0f1d] p-4 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300 flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="w-16 h-16 bg-[#d4af37]/20 rounded-full flex items-center justify-center mb-2 mx-auto">
+                      <svg className="w-8 h-8 text-[#d4af37]" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <p className="text-white font-semibold text-sm">Komatsu</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Estatísticas */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="bg-[#0a0f1d] p-6 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300 text-center">
+                  <div className="text-3xl font-bold text-[#d4af37] mb-2">200+</div>
+                  <p className="text-gray-300 text-sm">Projetos Industriais</p>
+                </div>
+                
+                <div className="bg-[#0a0f1d] p-6 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300 text-center">
+                  <div className="text-3xl font-bold text-[#d4af37] mb-2">50+</div>
+                  <p className="text-gray-300 text-sm">PMEs Transformadas</p>
+                </div>
+                
+                <div className="bg-[#0a0f1d] p-6 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300 text-center">
+                  <div className="text-3xl font-bold text-[#d4af37] mb-2">R$ 500M+</div>
+                  <p className="text-gray-300 text-sm">Em Economias Geradas</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Badges de Credibilidade */}
+      <section id="badges-credibilidade" className="section section-humano pt-6 pb-0 mb-0">
+        <div className="container">
+          <div className="bg-[#141c2f] rounded-lg border border-[#2a3448] overflow-hidden shadow-xl">
+            <div className="p-6">
+              <div className="text-center mb-8">
+                <h2 className="text-3xl font-extrabold text-white mb-4">Credibilidade Comprovada</h2>
+                <p className="text-gray-300 text-lg text-center max-w-4xl mx-auto">
+                  Reconhecimento e expertise validados por décadas de atuação no mercado industrial
+                </p>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="bg-[#0a0f1d] p-6 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300 text-center">
+                  <div className="w-16 h-16 bg-[#d4af37]/20 rounded-full flex items-center justify-center mb-4 mx-auto">
+                    <svg className="w-8 h-8 text-[#d4af37]" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-bold text-white mb-2">35 Anos de Experiência</h3>
+                  <p className="text-gray-300 text-sm">Expertise consolidada em Supply Chain e Comex</p>
+                </div>
+                
+                <div className="bg-[#0a0f1d] p-6 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300 text-center">
+                  <div className="w-16 h-16 bg-[#d4af37]/20 rounded-full flex items-center justify-center mb-4 mx-auto">
+                    <svg className="w-8 h-8 text-[#d4af37]" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-bold text-white mb-2">Especialistas em Supply Chain Industrial</h3>
+                  <p className="text-gray-300 text-sm">Foco exclusivo em operações industriais</p>
+                </div>
+                
+                <div className="bg-[#0a0f1d] p-6 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300 text-center">
+                  <div className="w-16 h-16 bg-[#d4af37]/20 rounded-full flex items-center justify-center mb-4 mx-auto">
+                    <svg className="w-8 h-8 text-[#d4af37]" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-bold text-white mb-2">Expertise em Multinacionais</h3>
+                  <p className="text-gray-300 text-sm">Experiência comprovada em grandes empresas</p>
+                </div>
+                
+                <div className="bg-[#0a0f1d] p-6 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300 text-center">
+                  <div className="w-16 h-16 bg-[#d4af37]/20 rounded-full flex items-center justify-center mb-4 mx-auto">
+                    <svg className="w-8 h-8 text-[#d4af37]" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-bold text-white mb-2">Foco em PMEs Industriais</h3>
+                  <p className="text-gray-300 text-sm">Soluções customizadas para médias empresas</p>
                 </div>
               </div>
             </div>

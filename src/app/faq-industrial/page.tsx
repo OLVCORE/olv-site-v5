@@ -1,6 +1,7 @@
 import React from 'react';
 import MainLayout from '../../components/layout/MainLayout';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export const metadata = {
   title: 'FAQ Industrial - Supply Chain e Comex para PMEs Industriais | OLV Internacional',
@@ -52,16 +53,33 @@ export default function FaqIndustrialPage() {
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white pt-[calc(var(--height-header)+1cm)]">
         {/* Hero Section */}
         <section className="py-16 px-4">
-          <div className="container max-w-6xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-extrabold mb-6 bg-gradient-to-r from-[#d4af37] to-[#2e8ce6] bg-clip-text text-transparent">
-              FAQ Industrial
-            </h1>
-            <p className="text-xl md:text-2xl text-slate-400/90 max-w-4xl mx-auto mb-8">
-              Perguntas Frequentes sobre Supply Chain e Comércio Exterior Industrial
-            </p>
-            <p className="text-lg text-slate-300 max-w-3xl mx-auto">
-              Respostas especializadas para PMEs industriais que buscam otimizar suas operações de comércio exterior e supply chain
-            </p>
+          <div className="container max-w-6xl mx-auto">
+            <div className="flex flex-col md:flex-row items-center gap-8">
+              <div className="flex-1 text-center md:text-left">
+                <h1 className="text-4xl md:text-6xl font-extrabold mb-6 bg-gradient-to-r from-[#d4af37] to-[#2e8ce6] bg-clip-text text-transparent">
+                  FAQ Industrial
+                </h1>
+                <p className="text-xl md:text-2xl text-slate-400/90 max-w-4xl mx-auto mb-8">
+                  Perguntas Frequentes sobre Supply Chain e Comércio Exterior Industrial
+                </p>
+                <p className="text-lg text-slate-300 max-w-3xl mx-auto">
+                  Respostas especializadas para PMEs industriais que buscam otimizar suas operações de comércio exterior e supply chain
+                </p>
+              </div>
+              <div className="flex-shrink-0 md:w-1/3">
+                <div className="bg-[#0a0f1d] p-4 rounded-lg border border-[#2a3448] shadow-md">
+                  <Image 
+                    src="/images/industrial-consultation.jpg" 
+                    alt="Consultoria Industrial - OLV Internacional" 
+                    width={400} 
+                    height={300} 
+                    className="rounded-lg" 
+                    priority={true}
+                    quality={85}
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
