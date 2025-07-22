@@ -607,21 +607,21 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Estatísticas */}
+              {/* Expertise Comprovada */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="bg-[#0a0f1d] p-6 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300 text-center">
-                  <div className="text-3xl font-bold text-[#d4af37] mb-2">200+</div>
-                  <p className="text-gray-300 text-sm">Projetos Industriais</p>
+                  <div className="text-3xl font-bold text-[#d4af37] mb-2">35+</div>
+                  <p className="text-gray-300 text-sm">Anos de Experiência</p>
                 </div>
                 
                 <div className="bg-[#0a0f1d] p-6 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300 text-center">
-                  <div className="text-3xl font-bold text-[#d4af37] mb-2">50+</div>
-                  <p className="text-gray-300 text-sm">PMEs Transformadas</p>
+                  <div className="text-3xl font-bold text-[#d4af37] mb-2">5</div>
+                  <p className="text-gray-300 text-sm">Multinacionais Industriais</p>
                 </div>
                 
                 <div className="bg-[#0a0f1d] p-6 rounded-lg border border-[#2a3448] hover:border-[#d4af37] transition-colors duration-300 text-center">
-                  <div className="text-3xl font-bold text-[#d4af37] mb-2">R$ 500M+</div>
-                  <p className="text-gray-300 text-sm">Em Economias Geradas</p>
+                  <div className="text-3xl font-bold text-[#d4af37] mb-2">100%</div>
+                  <p className="text-gray-300 text-sm">Foco em PMEs Industriais</p>
                 </div>
               </div>
             </div>
