@@ -26,7 +26,7 @@ export default function OptimizedImage({
   className = '',
   priority = false,
   quality = 85,
-  placeholder = 'blur',
+  placeholder = 'empty',
   blurDataURL,
   sizes,
   fill = false,
