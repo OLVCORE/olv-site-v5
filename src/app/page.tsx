@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import RadarHub from '../components/home/RadarHub';
 import HomeImage from '../components/home/HomeImage';
-import { AnimatedCard, FadeIn } from '../components/MicroInteractions';
+import { FadeIn } from '../components/MicroInteractions';
 import { OrganizationSchema, LocalBusinessSchema } from '../components/SeoSchema';
 
 
