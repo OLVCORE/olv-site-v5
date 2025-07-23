@@ -178,6 +178,25 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
         <Link href="/faq" className={`nav-item ${isActive('/faq') ? 'active' : ''}`} onClick={() => setNavOpen(false)}>FAQ</Link>
         <Link href="/contato" className={`nav-item ${isActive('/contato') ? 'active' : ''}`} onClick={() => setNavOpen(false)}>Contato</Link>
       </nav>
+
+      {/* Overlay search mobile */}
+      <div className={`search-overlay-mobile md:hidden ${searchOpen ? 'show' : ''}`}>
+        <div className="p-4">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold text-on-surface">Buscar</h3>
+            <button
+              onClick={() => setSearchOpen(false)}
+              className="p-2 rounded-full hover:bg-surface-light transition-colors"
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+          <GlobalSearch />
+        </div>
+      </div>
     </>
   );
 };
