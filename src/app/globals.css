@@ -2957,6 +2957,20 @@ body.theme-light .nav-menu-mobile .nav-item:hover {
     opacity: 1 !important;
     position: relative !important;
     z-index: 9999 !important;
+    width: 44px !important;
+    height: 44px !important;
+    background: #d4af37 !important;
+    border: 2px solid #d4af37 !important;
+    color: #000 !important;
+    border-radius: 8px !important;
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3) !important;
+  }
+
+  /* Forçar exibição do menu hambúrguer em qualquer tela mobile */
+  .mobile-nav-toggle {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
   }
 
   /* Overlay de pesquisa mobile */
@@ -3033,6 +3047,38 @@ body.theme-light .nav-menu-mobile .nav-item:hover {
 [class*="Vercel"],
 [class*="VERCEL"] {
   display: none !important;
+}
+
+/* ========================================
+   BOTÃO WHATSAPP OFICIAL
+   ======================================== */
+
+/* Botão WhatsApp flutuante */
+.whatsapp-button {
+  background: #25D366 !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 50% !important;
+  width: 60px !important;
+  height: 60px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3) !important;
+  transition: all 0.3s ease !important;
+  z-index: 1000 !important;
+}
+
+.whatsapp-button:hover {
+  transform: scale(1.1) !important;
+  box-shadow: 0 6px 16px rgba(37, 211, 102, 0.4) !important;
+}
+
+.whatsapp-button svg {
+  width: 28px !important;
+  height: 28px !important;
+  color: white !important;
 }
 
 /* ========================================
