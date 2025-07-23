@@ -69,6 +69,32 @@
 
   --logo-bg: #ffffff;
   --ticker-bg: #f8f9fa;
+
+  /* ========================================
+     VARIÁVEIS DE CORES OLV
+     ======================================== */
+
+  --olv-primary: #D4AF37;
+  --olv-secondary: #F4E4BC;
+  --olv-accent: #B8860B;
+  --olv-dark: #1a1a1a;
+  --olv-light: #ffffff;
+  --olv-gray-light: #f8f9fa;
+  --olv-gray-medium: #e9ecef;
+  --olv-text-primary: #1a1a1a;
+  --olv-text-secondary: #666666;
+}
+
+[data-theme="dark"] {
+  --olv-primary: #D4AF37;
+  --olv-secondary: #2a2a2a;
+  --olv-accent: #F4E4BC;
+  --olv-dark: #ffffff;
+  --olv-light: #1a1a1a;
+  --olv-gray-light: #2a2a2a;
+  --olv-gray-medium: #333333;
+  --olv-text-primary: #ffffff;
+  --olv-text-secondary: #cccccc;
 }
 
 @media (prefers-color-scheme: light) {
@@ -3081,6 +3107,36 @@ body.theme-light .nav-menu-mobile .nav-item:hover {
     right: 0 !important;
     left: auto !important;
     max-width: calc(100vw - 20px) !important;
+  }
+}
+
+/* ========================================
+   CLASSES UTILITÁRIAS RESPONSIVAS
+   ======================================== */
+
+/* Mobile only */
+.mobile-only {
+  display: none !important;
+}
+
+@media (max-width: 767px) {
+  .mobile-only {
+    display: block !important;
+  }
+  
+  .mobile-only.flex {
+    display: flex !important;
+  }
+}
+
+/* Desktop only */
+.desktop-only {
+  display: block !important;
+}
+
+@media (max-width: 767px) {
+  .desktop-only {
+    display: none !important;
   }
 }
 
