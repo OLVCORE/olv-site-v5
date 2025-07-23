@@ -2777,33 +2777,35 @@ body.theme-light .nav-menu-mobile .nav-item:hover {
    MOBILE FIXES - CORREÇÕES ESPECÍFICAS PARA MOBILE
    ======================================== */
 
-/* Força exibição do menu mobile em telas pequenas */
-@media (max-width: 767px) {
-  .mobile-nav-toggle {
-    display: flex !important;
-    position: relative !important;
-    z-index: 2600 !important;
-    width: 40px !important;
-    height: 40px !important;
-    border-radius: 6px !important;
-    background: var(--color-surface) !important;
-    border: 1px solid var(--color-accent) !important;
-    color: var(--color-accent) !important;
-    cursor: pointer !important;
-    transition: all 0.2s ease !important;
-    align-items: center !important;
-    justify-content: center !important;
-  }
+  /* Força exibição do menu mobile em telas pequenas */
+  @media (max-width: 767px) {
+    .mobile-nav-toggle {
+      display: flex !important;
+      position: relative !important;
+      z-index: 2600 !important;
+      width: 44px !important;
+      height: 44px !important;
+      border-radius: 8px !important;
+      background: var(--color-accent) !important;
+      border: 2px solid var(--color-accent) !important;
+      color: var(--color-on-primary) !important;
+      cursor: pointer !important;
+      transition: all 0.3s ease !important;
+      align-items: center !important;
+      justify-content: center !important;
+      box-shadow: 0 2px 8px rgba(212, 175, 55, 0.2) !important;
+    }
 
-  .mobile-nav-toggle:hover {
-    background: rgba(212, 175, 55, 0.1) !important;
-  }
+      .mobile-nav-toggle:hover {
+      transform: scale(1.05) !important;
+      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3) !important;
+    }
 
-  .mobile-nav-toggle svg {
-    width: 24px !important;
-    height: 24px !important;
-    color: var(--color-accent) !important;
-  }
+    .mobile-nav-toggle svg {
+      width: 20px !important;
+      height: 20px !important;
+      color: var(--color-on-primary) !important;
+    }
 
   .mobile-search-toggle {
     display: flex !important;
@@ -2965,6 +2967,8 @@ body.theme-light .nav-menu-mobile .nav-item:hover {
   .search-overlay-mobile.show {
     display: block !important;
   }
+
+
 }
 
 /* Animações do ticker */
