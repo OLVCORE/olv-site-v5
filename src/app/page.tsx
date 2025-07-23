@@ -142,15 +142,15 @@ export default function HomePage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {keyPoints.map((point, index) => (
                 <FadeIn key={index} delay={index * 0.1}>
-                  <AnimatedCard 
-                    className="bg-[#141c2f] p-3 rounded-lg border border-[#2a3448] shadow-md hover:border-[#d4af37] hover:shadow-lg transition-all duration-300"
+                  <div 
+                    className="bg-[#141c2f] p-3 rounded-lg border border-[#2a3448] shadow-md hover:border-[#d4af37] hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
                   >
                     <div className="flex items-start mb-1">
                       <HomeImage src={point.icon} alt={point.title} width={20} height={20} className="mt-1 mr-2 flex-shrink-0" />
                       <h4 className="text-gray-200 font-semibold">{point.title}</h4>
                     </div>
                     <p className="text-gray-400 text-sm pl-7">{point.description}</p>
-                  </AnimatedCard>
+                  </div>
                 </FadeIn>
               ))}
             </div>
