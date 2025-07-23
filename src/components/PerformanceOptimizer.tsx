@@ -91,7 +91,7 @@ export const useLazyLoad = (threshold: number = 0.1) => {
 };
 
 // Hook para debounce de eventos
-export const useDebounce = (callback: Function, delay: number) => {
+export const useDebounce = (callback: (...args: unknown[]) => void, delay: number) => {
   const timeoutRef = useRef<NodeJS.Timeout>();
 
   useEffect(() => {
