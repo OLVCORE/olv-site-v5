@@ -18,7 +18,7 @@ function main() {
     process.exit(1);
   }
   const content = fs.readFileSync(layoutPath, 'utf8');
-  const missing = requiredKeywords.filter((kw) => !content.includes(kw));
+  const missing = requiredKeywords.filter((kw) => !content.toLowerCase().includes(kw.toLowerCase()));
 
   if (missing.length) {
     console.error('❌ Palavras-chave ausentes em src/app/layout.tsx:', missing);
