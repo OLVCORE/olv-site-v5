@@ -33,7 +33,7 @@ export function AnimatedCard({ children, className = '', onClick, href, delay = 
       <CardComponent
         href={href}
         onClick={onClick}
-        className={`block bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer overflow-hidden ${className}`}
+        className={`block rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer overflow-hidden ${className}`}
         style={{
           transform: isHovered ? 'translateY(-8px)' : 'translateY(0)',
         }}
