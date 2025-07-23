@@ -10,6 +10,7 @@ export const GoogleAnalytics: React.FC<GoogleAnalyticsProps> = ({ measurementId 
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}
         strategy="afterInteractive"
+        defer
       />
       <Script id="google-analytics" strategy="afterInteractive">
         {`
@@ -22,7 +23,12 @@ export const GoogleAnalytics: React.FC<GoogleAnalyticsProps> = ({ measurementId 
             custom_map: {
               'custom_parameter_1': 'user_type',
               'custom_parameter_2': 'page_category'
-            }
+            },
+            // Performance optimizations
+            send_page_view: true,
+            anonymize_ip: true,
+            allow_google_signals: false,
+            allow_ad_personalization_signals: false
           });
         `}
       </Script>

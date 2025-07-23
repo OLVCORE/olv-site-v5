@@ -67,17 +67,17 @@ export default function UserMenu() {
   }, []);
 
   return (
-    <div className="user-menu-wrapper fixed top-3 right-3 lg:top-4 lg:right-4 z-[3000]">
+    <div className="user-menu-wrapper relative">
       <button
         aria-label="User menu"
-        className="flex items-center justify-center w-9 h-9 rounded-full border border-[var(--color-accent)] bg-[var(--color-surface)] text-[var(--color-accent)] hover:opacity-80 transition-colors"
+        className="flex items-center justify-center w-full h-full rounded-md border border-[var(--border-color)] bg-transparent text-[var(--color-accent)] hover:bg-[rgba(255,255,255,0.1)] transition-colors"
         onClick={() => setOpen((o) => !o)}
       >
         <FaUserCircle size={18} />
       </button>
 
       {open && (
-        <div className="mt-2 w-64 rounded-md border border-gray-600 bg-[var(--color-surface)] shadow-lg p-4 space-y-3">
+        <div className="absolute top-full right-0 mt-2 w-64 rounded-md border border-gray-600 bg-[var(--color-surface)] shadow-lg p-4 space-y-3 z-[3000]">
           {user && (
             <>
               {/* profile */}

@@ -2,6 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Performance optimizations */
+* {
+  box-sizing: border-box;
+}
+
+/* Optimize paint and layout */
+.transform-gpu {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Reduce layout shifts */
+img, video, canvas, audio, iframe, embed, object {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Optimize animations for performance */
+@media (prefers-reduced-motion: no-preference) {
+  .animate-optimized {
+    will-change: transform, opacity;
+  }
+}
+
+/* Content visibility for better performance */
+.content-visibility-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;
+}
+
 /* --------------------------------------------------
    Design Tokens – V2 (system colours)
    -------------------------------------------------- */
@@ -3749,28 +3779,47 @@ body.theme-light .nav-menu-mobile .nav-item:hover {
   .header-right {
     display: flex !important;
     align-items: center !important;
-    gap: 0.75rem !important;
+    gap: 0.5rem !important;
     flex: 0 0 auto !important;
+    justify-content: flex-end !important;
   }
   
   /* Lupa centralizada */
   .mobile-search-toggle {
-    width: 24px !important;
-    height: 24px !important;
+    width: 32px !important;
+    height: 32px !important;
     cursor: pointer !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 6px !important;
+    background: transparent !important;
+    transition: all 0.2s ease !important;
+    flex-shrink: 0 !important;
+  }
+  
+  .mobile-search-toggle:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
   }
   
   /* Ícone usuário centralizado */
   .user-menu-wrapper {
-    width: 28px !important;
-    height: 28px !important;
+    width: 32px !important;
+    height: 32px !important;
     cursor: pointer !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 6px !important;
+    background: transparent !important;
+    transition: all 0.2s ease !important;
+    flex-shrink: 0 !important;
+  }
+  
+  .user-menu-wrapper:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
   }
   
   /* Hambúrguer centralizado */
@@ -3780,6 +3829,15 @@ body.theme-light .nav-menu-mobile .nav-item:hover {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
+    border-radius: 6px !important;
+    background: transparent !important;
+    border: 1px solid var(--border-color) !important;
+    transition: all 0.2s ease !important;
+    flex-shrink: 0 !important;
+  }
+  
+  .hamburger-circle-container:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
   }
 }
 
@@ -4227,5 +4285,93 @@ body.theme-light .nav-menu-mobile .nav-item:hover {
 @media (max-width: 767px) {
   .main-content {
     margin-top: calc(60px + 35px + 0.5rem) !important;
+  }
+}
+
+/* Otimizações de performance para Core Web Vitals */
+
+/* Otimização de LCP */
+.hero-image {
+  content-visibility: auto;
+  contain-intrinsic-size: 800px 600px;
+}
+
+/* Otimização de CLS */
+.dynamic-content {
+  min-height: 200px;
+  contain: layout;
+}
+
+/* Otimização de FID */
+.interactive-element {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Redução de TBT */
+.heavy-component {
+  content-visibility: auto;
+  contain-intrinsic-size: 300px 200px;
+}
+
+/* Otimizações de imagem */
+img {
+  loading: lazy;
+  decoding: async;
+}
+
+img[src$=".jpg"], img[src$=".jpeg"] {
+  content-visibility: auto;
+}
+
+/* Otimização de fontes */
+@font-face {
+  font-family: 'Primary';
+  font-display: swap;
+  src: url('/fonts/primary.woff2') format('woff2');
+}
+
+/* Redução de layout shifts */
+.card-container {
+  contain: layout style paint;
+}
+
+.image-placeholder {
+  aspect-ratio: 16/9;
+  background: var(--placeholder-color);
+}
+
+/* Otimização de animações */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Cache de recursos estáticos */
+.static-resource {
+  cache-control: public, max-age=31536000, immutable;
+}
+
+/* Otimização de layout para SEO */
+.seo-optimized-section {
+  contain: layout style paint;
+  content-visibility: auto;
+}
+
+/* Melhoria de acessibilidade */
+@media (prefers-contrast: high) {
+  .text-gray-300 {
+    color: #ffffff !important;
+  }
+}
+
+/* Otimização para mobile */
+@media (max-width: 768px) {
+  .mobile-optimized {
+    content-visibility: auto;
+    contain-intrinsic-size: 200px 150px;
   }
 }
