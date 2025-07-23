@@ -4,9 +4,9 @@ import PlatformLayout from '../../components/platforms/PlatformLayout';
 import Icon from '../../components/icons/Icon';
 
 export const metadata = {
-  title: 'OLV CORE - Cockpit de Gestão 360° | OLV Internacional',
-  description: 'OLV CORE é o centro de comando do ecossistema OLV Internacional, oferecendo Business Intelligence integrado e gestão 360° para operações globais.',
-  keywords: 'business intelligence, cockpit de gestão, dashboards, indicadores de desempenho, BI comércio exterior, gestão 360, integração de dados',
+  title: 'OLV CORE - Cockpit de Gestão 360° para Setores Industriais | OLV Internacional',
+  description: 'OLV CORE é o centro de comando do ecossistema OLV Internacional, oferecendo Business Intelligence integrado e gestão 360° para operações de Supply Chain Global e Comércio Exterior de agroindústria, mineração, energia, petróleo e gás, metalurgia, bens de capital, máquinas e equipamentos, manufatura e logística industrial.',
+  keywords: 'business intelligence, cockpit de gestão, dashboards, indicadores de desempenho, BI comércio exterior, gestão 360, integração de dados, supply chain global, setores industriais',
   alternates: {
     canonical: 'https://olvinternacional.com.br/core'
   },

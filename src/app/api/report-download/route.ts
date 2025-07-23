@@ -17,7 +17,7 @@ async function sendMail(html: string) {
   });
   await transporter.sendMail({
     from: `Radar 360 – Simulador <no-reply@olvinternacional.com.br>`,
-    to: 'atendimento@olvinternacional.com.br',
+    to: 'consultores@olvinternacional.com.br',
     subject: `Lead Radar 360 – Simulador de Custos de Importação`,
     html,
   });
@@ -47,4 +47,4 @@ export async function POST(req: Request) {
     console.error('Error on report download registration', err);
     return NextResponse.json({ success: false }, { status: 500 });
   }
-} 
+}

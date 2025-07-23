@@ -78,7 +78,7 @@ export const SEO_CONFIG = {
   },
   
   contact: {
-    email: 'contato@olvinternacional.com.br',
+    email: 'consultores@olvinternacional.com.br',
     phone: '+55-11-99999-9999',
     address: {
       street: 'Rua Example, 123',

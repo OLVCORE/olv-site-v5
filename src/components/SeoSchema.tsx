@@ -17,7 +17,7 @@ export const OrganizationSchema: React.FC = () => {
     "contactPoint": {
       "@type": "ContactPoint",
       "contactType": "customer service",
-      "email": "contato@olvinternacional.com.br"
+      "email": "consultores@olvinternacional.com.br"
     },
     "sameAs": [
       "https://www.linkedin.com/company/olv-internacional",
@@ -41,7 +41,7 @@ export const LocalBusinessSchema: React.FC = () => {
     "description": "Consultoria especializada em Supply Chain Industrial e Comércio Exterior para PMEs",
     "url": "https://olvinternacional.com.br",
     "telephone": "+55-11-2675-1446",
-    "email": "contato@olvinternacional.com.br",
+    "email": "consultores@olvinternacional.com.br",
     "address": {
       "@type": "PostalAddress",
       "addressCountry": "BR",

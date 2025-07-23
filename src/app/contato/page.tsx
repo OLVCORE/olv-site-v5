@@ -3,9 +3,9 @@ import Link from 'next/link';
 import MainLayout from '../../components/layout/MainLayout';
 
 export const metadata = {
-  title: 'Contato | OLV Internacional',
-  description: 'Entre em contato com a OLV Internacional. Nossa equipe está pronta para oferecer soluções personalizadas para sua empresa.',
-  keywords: 'contato olv internacional, consultoria comércio exterior, fale com especialista comex',
+  title: 'Contato | OLV Internacional - Consultoria em Supply Chain Global para Setores Industriais',
+  description: 'Entre em contato com a OLV Internacional. Nossa equipe está pronta para oferecer soluções personalizadas em Supply Chain Global e Comércio Exterior para agroindústria, mineração, energia, petróleo e gás, metalurgia, bens de capital, máquinas e equipamentos, manufatura e logística industrial.',
+  keywords: 'contato olv internacional, consultoria supply chain global, consultoria comércio exterior, setores industriais, agroindústria, mineração, energia, petróleo e gás, metalurgia, bens de capital, máquinas e equipamentos, manufatura, logística industrial',
   alternates: {
     canonical: 'https://olvinternacional.com.br/contato'
   },
@@ -23,8 +23,8 @@ export default function ContatoPage() {
                 <span className="text-blue-400">📱</span> Fale com a OLV Internacional
               </h2>
               <p className="text-lg text-gray-300 mb-6">
-                Estamos aqui para conectar seu negócio ao mundo. Seja para tirar dúvidas, solicitar uma proposta 
-                ou conhecer melhor nossas soluções, nossa equipe está pronta para atendê-lo. Preencha o formulário 
+                Estamos aqui para conectar sua empresa dos setores industriais ao mundo. Seja para tirar dúvidas, solicitar uma proposta 
+                ou conhecer melhor nossas soluções em Supply Chain Global e Comércio Exterior, nossa equipe está pronta para atendê-lo. Preencha o formulário 
                 abaixo ou utilize um de nossos canais de atendimento direto para iniciar uma conversa sobre como 
                 podemos impulsionar suas operações internacionais.
               </p>
@@ -166,7 +166,7 @@ export default function ContatoPage() {
                       Atendimento
                     </h4>
                     <p className="text-gray-700 dark:text-gray-300 mb-1">
-                      <strong>E-mail:</strong> atendimento@olvinternacional.com.br
+                      <strong>E-mail:</strong> consultores@olvinternacional.com.br
                     </p>
                     <p className="text-gray-700 dark:text-gray-300">
                       <strong>Telefone:</strong> +55 (11) 2675-1446

@@ -7,15 +7,15 @@ import { OrganizationSchema } from '../../components/SeoSchema';
 import WhatsAppButton from '../../components/layout/WhatsAppButton';
 
 export const metadata = {
-  title: 'Sobre a OLV Internacional - Expertise em Internacionalização do Supply Chain Industrial',
-  description: 'Conheça a OLV Internacional: empresa especializada em internacionalização de Supply Chain e Comércio Exterior para empresas do setor industrial. 35 anos de expertise em regimes aduaneiros, importação e exportação.',
-  keywords: 'sobre OLV Internacional, expertise multinacional, empresas setor industrial, consultoria industrial, setores industriais, metodologia 4D, supply chain industrial, comércio exterior PME, consultoria estratégica industrial, empresas serviços industriais',
+  title: 'Sobre a OLV Internacional - Expertise em Supply Chain Global para Setores Industriais',
+  description: 'Conheça a OLV Internacional: empresa especializada em Supply Chain Global e Comércio Exterior para empresas dos setores industriais. 35 anos de expertise em regimes aduaneiros, importação e exportação.',
+  keywords: 'sobre OLV Internacional, expertise multinacional, empresas setor industrial, consultoria industrial, setores industriais, metodologia 4D, supply chain global, comércio exterior PME, consultoria estratégica industrial, empresas serviços industriais',
   alternates: {
     canonical: 'https://olvinternacional.com.br/sobre'
   },
   openGraph: {
-    title: 'Sobre a OLV Internacional - Expertise Multinacional para PMEs Industriais',
-    description: 'Conheça a OLV Internacional: empresa especializada em aplicar metodologias multinacionais em PMEs industriais de diversos setores.',
+    title: 'Sobre a OLV Internacional - Expertise Multinacional para Empresas Industriais',
+    description: 'Conheça a OLV Internacional: empresa especializada em aplicar metodologias multinacionais em empresas industriais de diversos setores.',
     url: 'https://olvinternacional.com.br/sobre',
     siteName: 'OLV Internacional',
     locale: 'pt_BR',
@@ -32,7 +32,7 @@ export const metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Sobre a OLV Internacional - Expertise Multinacional',
-    description: 'Conheça a OLV Internacional: empresa especializada em aplicar metodologias multinacionais em PMEs industriais.',
+    description: 'Conheça a OLV Internacional: empresa especializada em aplicar metodologias multinacionais em empresas industriais.',
     images: ['https://olv-site-v5.vercel.app/images/BANNER-HOME.jpeg']
   },
   robots: {
@@ -154,10 +154,10 @@ export default function Sobre() {
           <div className="flex flex-col md:flex-row items-center gap-4 mb-2 bg-[#141c2f] p-5 rounded-lg border border-[#2a3448] shadow-lg">
             <div className="flex-1">
               <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                Sobre a OLV Internacional: Especialistas em Internacionalização do Supply Chain Industrial
+                Sobre a OLV Internacional: Consultoria Especializada em Supply Chain Global para Setores Industriais
               </h1>
               <p className="text-lg text-gray-300 mb-4">
-                A <span className="text-[#d4af37] font-semibold">OLV Internacional</span> democratiza expertise em internacionalização de Supply Chain e Comércio Exterior para empresas que atuam no setor industrial e buscam expansão global.
+                A <span className="text-[#d4af37] font-semibold">OLV Internacional</span> é especializada em Supply Chain Global e Comércio Exterior para todos os setores industriais - agroindústria, mineração, energia, petróleo e gás, metalurgia, bens de capital, máquinas e equipamentos para exploração de serviços, manufatura e logística industrial, entre outros.
               </p>
               <p className="text-[#d4af37] font-medium italic mb-4">
                 Conheça a empresa que transforma operações industriais através da internacionalização estratégica desenvolvida em ambientes multinacionais complexos
@@ -194,7 +194,7 @@ export default function Sobre() {
               <AnimatedCard className="bg-[#141c2f] p-6 rounded-lg border border-[#2a3448] shadow-lg">
                 <h3 className="text-white font-bold text-xl mb-4">Nossa Essência</h3>
                 <p className="text-gray-300">
-                  A OLV Internacional é uma empresa de consultoria especializada exclusivamente em internacionalização de Supply Chain para empresas que atuam no setor industrial. Nossa missão é aplicar 35 anos de expertise em Comércio Exterior e regimes aduaneiros para acelerar a expansão global de empresas que tradicionalmente não têm acesso a metodologias avançadas de importação e exportação.
+                  A OLV Internacional é uma empresa de consultoria especializada em Supply Chain Global e Comércio Exterior para todos os setores industriais - agroindústria, mineração, energia, petróleo e gás, metalurgia, bens de capital, máquinas e equipamentos para exploração de serviços, manufatura e logística industrial, entre outros. Nossa missão é aplicar 35 anos de expertise em Comércio Exterior e regimes aduaneiros para acelerar a expansão global de empresas industriais.
                 </p>
               </AnimatedCard>
             </FadeIn>
@@ -203,7 +203,7 @@ export default function Sobre() {
               <AnimatedCard className="bg-[#141c2f] p-6 rounded-lg border border-[#2a3448] shadow-lg">
                 <h3 className="text-white font-bold text-xl mb-4">Nossa Diferenciação</h3>
                 <p className="text-gray-300">
-                  Enquanto grandes corporações aplicam metodologias avançadas de Supply Chain 4.0, JIT/JIS e S&OP com operações internacionais estruturadas, empresas do setor industrial operam com processos obsoletos de importação e exportação. A OLV Internacional elimina essa lacuna, oferecendo expertise em internacionalização de Supply Chain adaptada para a realidade de empresas de médio porte.
+                  Enquanto grandes corporações industriais aplicam metodologias avançadas de Supply Chain Global, JIT/JIS e S&OP com operações internacionais estruturadas, empresas dos setores industriais operam com processos obsoletos de importação e exportação. A OLV Internacional elimina essa lacuna, oferecendo expertise em Supply Chain Global adaptada para a realidade de empresas industriais de médio porte.
                 </p>
               </AnimatedCard>
             </FadeIn>
@@ -225,7 +225,7 @@ export default function Sobre() {
               <AnimatedCard className="bg-[#141c2f] p-6 rounded-lg border border-[#2a3448] shadow-lg">
                 <h3 className="text-white font-bold text-xl mb-4">Nossa Origem</h3>
                 <p className="text-gray-300">
-                  A expertise da OLV Internacional foi construída através de atuação executiva em operações internacionais de grandes multinacionais dos setores automotivo, telecomunicações, energia, bens de capital e alimentício, culminando com consultoria estratégica para internacionalização de Supply Chain em operações regionais complexas.
+                  A expertise da OLV Internacional foi construída através de atuação executiva em operações internacionais de grandes multinacionais dos setores automotivo, telecomunicações, energia, bens de capital, metalurgia e alimentício, culminando com consultoria estratégica para internacionalização de Supply Chain em operações industriais regionais complexas.
                 </p>
               </AnimatedCard>
             </FadeIn>
@@ -243,7 +243,7 @@ export default function Sobre() {
               <AnimatedCard className="bg-[#141c2f] p-6 rounded-lg border border-[#2a3448] shadow-lg">
                 <h3 className="text-white font-bold text-xl mb-4">Nossa Decisão Estratégica</h3>
                 <p className="text-gray-300">
-                  Reconhecendo o potencial inexplorado das empresas brasileiras que atuam no setor industrial para internacionalização, a OLV Internacional decidiu dedicar toda sua expertise em Comércio Exterior exclusivamente a este segmento, criando metodologias específicas para maximizar resultados em operações internacionais de empresas de médio porte.
+                  Reconhecendo o potencial inexplorado das empresas brasileiras que atuam no setor industrial para internacionalização, a OLV Internacional decidiu dedicar toda sua expertise em Comércio Exterior exclusivamente a este segmento, criando metodologias específicas para maximizar resultados em operações internacionais de empresas industriais de médio porte.
                 </p>
               </AnimatedCard>
             </FadeIn>
@@ -256,10 +256,10 @@ export default function Sobre() {
         <div className="container">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-[#d4af37] mb-4">
-              Metodologia OLV 4D: Inteligência Multinacional para PMEs
+              Metodologia OLV 4D: Inteligência Multinacional para Empresas Industriais
             </h2>
             <p className="text-lg text-gray-300 max-w-4xl mx-auto">
-              A OLV Internacional desenvolveu uma metodologia proprietária que integra 35 anos de expertise em internacionalização de Supply Chain e Comércio Exterior em um processo estruturado especificamente para empresas que atuam no setor industrial.
+              A OLV Internacional desenvolveu uma metodologia proprietária que integra 35 anos de expertise em Supply Chain Global e Comércio Exterior em um processo estruturado especificamente para empresas dos setores industriais.
             </p>
           </div>
 
@@ -289,7 +289,7 @@ export default function Sobre() {
               Expertise Aplicada em Diversos Setores Industriais
             </h2>
             <p className="text-lg text-gray-300 max-w-4xl mx-auto">
-              A OLV Internacional atende empresas que atuam no setor industrial com faturamento entre R$ 15M e R$ 150M em diversos segmentos da indústria brasileira, oferecendo expertise em internacionalização de Supply Chain e Comércio Exterior.
+              A OLV Internacional atende empresas dos setores industriais com faturamento entre R$ 15M e R$ 150M, oferecendo expertise em Supply Chain Global e Comércio Exterior para agroindústria, mineração, energia, petróleo e gás, metalurgia, bens de capital, máquinas e equipamentos, manufatura e logística industrial, entre outros.
             </p>
           </div>
 
@@ -342,7 +342,7 @@ export default function Sobre() {
               <AnimatedCard className="bg-[#141c2f] p-6 rounded-lg border border-[#2a3448] shadow-lg">
                 <h3 className="text-white font-bold text-xl mb-4">Nossa Estratégia Atual</h3>
                 <p className="text-gray-300">
-                  A OLV Internacional está reativando suas operações de consultoria com foco exclusivo em internacionalização de Supply Chain para empresas que atuam no setor industrial. Estamos selecionando empresas visionárias que valorizem expertise comprovada em Comércio Exterior e estejam prontas para implementar metodologias de operações nacionais e internacionais.
+                  A OLV Internacional está reativando suas operações de consultoria com foco em Supply Chain Global e Comércio Exterior para todos os setores industriais - agroindústria, mineração, energia, petróleo e gás, metalurgia, bens de capital, máquinas e equipamentos, manufatura e logística industrial, entre outros. Estamos selecionando empresas visionárias que valorizem expertise comprovada em Comércio Exterior.
                 </p>
               </AnimatedCard>
             </FadeIn>
@@ -351,7 +351,7 @@ export default function Sobre() {
               <AnimatedCard className="bg-[#141c2f] p-6 rounded-lg border border-[#2a3448] shadow-lg">
                 <h3 className="text-white font-bold text-xl mb-4">Nosso Processo de Seleção</h3>
                 <p className="text-gray-300">
-                  Buscamos parceiros do setor industrial comprometidos com transformação estratégica, dispostos a aplicar metodologias avançadas de Comércio Exterior e com visão de crescimento sustentável através de operações nacionais e internacionais.
+                  Buscamos parceiros dos setores industriais comprometidos com transformação estratégica, dispostos a aplicar metodologias avançadas de Comércio Exterior e com visão de crescimento sustentável através de operações nacionais e internacionais.
                 </p>
               </AnimatedCard>
             </FadeIn>
@@ -360,7 +360,7 @@ export default function Sobre() {
               <AnimatedCard className="bg-[#141c2f] p-6 rounded-lg border border-[#2a3448] shadow-lg">
                 <h3 className="text-white font-bold text-xl mb-4">Nossa Oferta Exclusiva</h3>
                 <p className="text-gray-300">
-                  Diagnóstico Industrial Gratuito para as primeiras PMEs qualificadas, com processo de qualificação rigoroso para garantir resultados excepcionais.
+                  Diagnóstico Industrial Gratuito para as primeiras empresas qualificadas dos setores industriais, com processo de qualificação rigoroso para garantir resultados excepcionais.
                 </p>
               </AnimatedCard>
             </FadeIn>
@@ -385,7 +385,7 @@ export default function Sobre() {
                 </div>
                 <h3 className="text-white font-bold text-lg mb-3">Diagnóstico Profundo</h3>
                 <p className="text-gray-300 text-sm">
-                  Análise completa da sua operação no setor industrial usando metodologias de auditoria multinacional para identificar oportunidades de otimização em operações nacionais e internacionais.
+                  Análise completa da sua operação nos setores industriais usando metodologias de auditoria multinacional para identificar oportunidades de otimização em operações nacionais e internacionais.
                 </p>
               </AnimatedCard>
             </FadeIn>
@@ -397,7 +397,7 @@ export default function Sobre() {
                 </div>
                 <h3 className="text-white font-bold text-lg mb-3">Estratégia Personalizada</h3>
                 <p className="text-gray-300 text-sm">
-                  Desenvolvimento de roadmap específico baseado em best practices do setor industrial, adaptado para sua realidade e objetivos de crescimento através de operações nacionais e internacionais.
+                  Desenvolvimento de roadmap específico baseado em best practices dos setores industriais, adaptado para sua realidade e objetivos de crescimento através de operações nacionais e internacionais.
                 </p>
               </AnimatedCard>
             </FadeIn>
@@ -438,7 +438,7 @@ export default function Sobre() {
             </h2>
             
             <p className="text-lg text-gray-300 mb-6 max-w-3xl mx-auto">
-              Se sua empresa do setor industrial busca aplicar expertise em internacionalização de Supply Chain para crescer de forma sustentável através de operações nacionais e internacionais, a OLV Internacional pode ser a parceira estratégica que você procura.
+              Se sua empresa dos setores industriais busca aplicar expertise em Supply Chain Global e Comércio Exterior para crescer de forma sustentável através de operações nacionais e internacionais, a OLV Internacional pode ser a parceira estratégica que você procura.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

@@ -139,7 +139,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 "@type": "ContactPoint",
                 "telephone": "+55-11-2675-1446",
                 "contactType": "customer service",
-                "email": "atendimento@olvinternacional.com.br",
+                "email": "consultores@olvinternacional.com.br",
                 "areaServed": "BR"
               }
             })

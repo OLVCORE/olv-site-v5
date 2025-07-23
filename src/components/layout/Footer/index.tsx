@@ -58,7 +58,7 @@ const Footer: React.FC = () => {
               <a href="https://www.youtube.com/@olvinternacional" target="_blank" rel="noopener noreferrer" className="bg-gray-800 p-2 rounded-full hover:opacity-90 transition-colors">
                 <Image src="/icons/youtube-original.svg" alt="YouTube" width={20} height={20} />
               </a>
-              <a href="mailto:atendimento@olvinternacional.com.br" className="bg-gray-800 p-2 rounded-full hover:opacity-90 transition-colors">
+              <a href="mailto:consultores@olvinternacional.com.br" className="bg-gray-800 p-2 rounded-full hover:opacity-90 transition-colors">
                 <Image src="/icons/email-original.svg" alt="E-mail" width={20} height={20} />
               </a>
             </div>
@@ -257,8 +257,8 @@ const Footer: React.FC = () => {
                 <FaEnvelope className="text-accent mt-1 mr-3 flex-shrink-0" size={16} />
                 <p className="text-sm text-white">
                   <span className="font-semibold">Projetos:</span> 
-                  <a href="mailto:comercial@olvinternacional.com.br" className="ml-1 text-gray-300 hover:text-white transition-colors">
-                    comercial@olvinternacional.com.br
+                  <a href="mailto:consultores@olvinternacional.com.br" className="ml-1 text-gray-300 hover:text-white transition-colors">
+                    consultores@olvinternacional.com.br
                   </a>
                 </p>
               </div>
@@ -268,8 +268,8 @@ const Footer: React.FC = () => {
                 <FaEnvelope className="text-accent mt-1 mr-3 flex-shrink-0" size={16} />
                 <p className="text-sm text-white">
                   <span className="font-semibold">Atendimento:</span> 
-                  <a href="mailto:atendimento@olvinternacional.com.br" className="ml-1 text-gray-300 hover:text-white transition-colors">
-                    atendimento@olvinternacional.com.br
+                  <a href="mailto:consultores@olvinternacional.com.br" className="ml-1 text-gray-300 hover:text-white transition-colors">
+                    consultores@olvinternacional.com.br
                   </a>
                 </p>
               </div>

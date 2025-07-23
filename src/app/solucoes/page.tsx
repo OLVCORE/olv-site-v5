@@ -4,9 +4,9 @@ import Image from 'next/image';
 import MainLayout from '../../components/layout/MainLayout';
 
 export const metadata = {
-  title: 'Soluções Estratégicas para Indústrias | Supply Chain Industrial e Comex | OLV Internacional',
-  description: 'Soluções especializadas em Supply Chain Industrial, Comex Industrial e otimização de processos para PMEs industriais. Reduza custos e aumente eficiência fabril.',
-  keywords: 'supply chain industrial, comex industrial, logística internacional fabril, otimização industrial, redução custos indústria, consultoria industrial, PMEs industriais',
+  title: 'Soluções Estratégicas para Setores Industriais | Supply Chain Global e Comex | OLV Internacional',
+  description: 'Soluções especializadas em Supply Chain Global e Comércio Exterior para agroindústria, mineração, energia, petróleo e gás, metalurgia, bens de capital, máquinas e equipamentos, manufatura e logística industrial.',
+  keywords: 'supply chain global, comex industrial, logística internacional fabril, otimização industrial, redução custos indústria, consultoria industrial, setores industriais',
   alternates: {
     canonical: 'https://olvinternacional.com.br/solucoes'
   }
@@ -22,12 +22,11 @@ export default function SolucoesPage() {
             <Image src="/icons/solutions-icon.svg" alt="Soluções" width={32} height={32} />
           </div>
           <h1 className="text-2xl md:text-3xl font-extrabold text-white">
-            Soluções Estratégicas para Indústrias Reais
+            Soluções Estratégicas em Supply Chain Global para Setores Industriais
           </h1>
         </div>
         <p className="text-base md:text-lg text-gray-300 max-w-2xl mx-auto mb-6">
-          Nossa missão não é oferecer consultoria genérica. É entregar operações completas, seguras, validadas em campo, e com foco total em resultado industrial.  
-          Da inteligência à execução. Da importação à monetização fabril.
+          Nossa missão é oferecer soluções especializadas em Supply Chain Global e Comércio Exterior para agroindústria, mineração, energia, petróleo e gás, metalurgia, bens de capital, máquinas e equipamentos, manufatura e logística industrial, entre outros. Da inteligência à execução. Da importação à monetização fabril.
         </p>
       </section>
 
@@ -36,7 +35,7 @@ export default function SolucoesPage() {
         <p className="text-center">
           ⚠️ Importar insumos junto com seus concorrentes destrói sua margem industrial.
           <Link href="/solucoes/importacao-exclusiva" className="font-semibold underline text-[#d4af37] hover:text-yellow-300 ml-1">
-            Descubra como dominar sua própria rota de importação industrial →
+            Descubra como dominar sua própria rota de importação para setores industriais →
           </Link>
         </p>
       </div>
@@ -48,13 +47,12 @@ export default function SolucoesPage() {
           <h2 className="text-2xl font-bold text-white mb-4">Nossa Expertise</h2>
           <p className="text-gray-300 mb-3">
             Bem-vindo ao portfólio de Soluções da OLV Internacional. Aqui você encontrará nossos serviços 
-            especializados para indústrias que buscam expandir, otimizar e transformar seus processos de comércio exterior
-            e operações internacionais.
+            especializados em Supply Chain Global e Comércio Exterior para agroindústria, mineração, energia, petróleo e gás, metalurgia, bens de capital, máquinas e equipamentos, manufatura e logística industrial, entre outros.
           </p>
           <p className="text-gray-300">
-            Nossa equipe de consultores experientes está pronta para apoiar sua indústria com soluções 
+            Nossa equipe de consultores experientes está pronta para apoiar empresas dos setores industriais (agroindústria, mineração, energia, petróleo e gás, metalurgia, bens de capital, máquinas e equipamentos, manufatura e logística industrial) com soluções 
             personalizadas em importação, exportação, logística internacional, compliance, planejamento tributário
-            e muito mais. Cada solução é desenhada para atender às necessidades específicas da sua fábrica,
+            e muito mais. Cada solução é desenhada para atender às necessidades específicas dos setores industriais,
             permitindo que você opere globalmente com segurança e eficiência.
           </p>
         </div>
@@ -69,20 +67,20 @@ export default function SolucoesPage() {
               </div>
               <h3 className="text-xl font-semibold mb-2 text-white">Indústria Exportadora Start-Up</h3>
               <p className="text-gray-300 mb-3 text-sm">
-                Guie sua indústria na jornada da primeira exportação com segurança e eficiência. Eliminamos a burocracia aduaneira e otimizamos seus processos internos de produção para o mercado global.
+                Guie sua empresa dos setores industriais na jornada da primeira exportação com segurança e eficiência. Eliminamos a burocracia aduaneira e otimizamos seus processos internos de produção para o mercado global.
               </p>
               <ul className="space-y-2 mb-3">
                                   <li className="bg-[#1a2338] p-2 rounded-lg flex items-start border border-[#2a3448] hover:border-[#d4af37] hover:transform hover:translate-x-1 transition-all duration-200">
                     <Image src="/icons/check.svg" alt="Checkmark" width={16} height={16} className="mt-1 mr-2 flex-shrink-0" />
-                    <span className="text-xs text-gray-300">Habilitação Radar ágil para sua fábrica</span>
+                    <span className="text-xs text-gray-300">Habilitação Radar ágil para empresas dos setores industriais</span>
                   </li>
                   <li className="bg-[#1a2338] p-2 rounded-lg flex items-start border border-[#2a3448] hover:border-[#d4af37] hover:transform hover:translate-x-1 transition-all duration-200">
                     <Image src="/icons/check.svg" alt="Checkmark" width={16} height={16} className="mt-1 mr-2 flex-shrink-0" />
-                    <span className="text-xs text-gray-300">Processos de exportação alinhados à produção</span>
+                    <span className="text-xs text-gray-300">Processos de exportação alinhados à produção industrial</span>
                   </li>
                   <li className="bg-[#1a2338] p-2 rounded-lg flex items-start border border-[#2a3448] hover:border-[#d4af37] hover:transform hover:translate-x-1 transition-all duration-200">
                     <Image src="/icons/check.svg" alt="Checkmark" width={16} height={16} className="mt-1 mr-2 flex-shrink-0" />
-                    <span className="text-xs text-gray-300">Redução de riscos de multas para indústrias iniciantes</span>
+                    <span className="text-xs text-gray-300">Redução de riscos de multas para empresas iniciantes em exportação</span>
                   </li>
               </ul>
               <Link href="/contato" className="inline-block text-[#d4af37] hover:underline text-sm">
@@ -97,14 +95,14 @@ export default function SolucoesPage() {
               <div className="w-14 h-14 rounded-full bg-[#0a0f1d] border-2 border-[#d4af37] flex items-center justify-center mb-3">
                 <Image src="/icons/operations.svg" alt="Ícone de Operações" width={28} height={28} />
               </div>
-              <h3 className="text-xl font-semibold mb-2 text-white">Otimização Contínua da Cadeia Industrial</h3>
+              <h3 className="text-xl font-semibold mb-2 text-white">Otimização Contínua da Cadeia</h3>
               <p className="text-gray-300 mb-3 text-sm">
-                Suporte especializado para otimizar o fluxo de importação e exportação de componentes e produtos acabados. Garantimos agilidade e controle de custos para sua linha de produção.
+                Suporte especializado para otimizar o fluxo de importação e exportação de componentes e produtos acabados. Garantimos agilidade e controle de custos para empresas dos setores industriais.
               </p>
               <ul className="space-y-2 mb-3">
                                   <li className="bg-[#1a2338] p-2 rounded-lg flex items-start border border-[#2a3448] hover:border-[#d4af37] hover:transform hover:translate-x-1 transition-all duration-200">
                     <Image src="/icons/check.svg" alt="Checkmark" width={16} height={16} className="mt-1 mr-2 flex-shrink-0" />
-                    <span className="text-xs text-gray-300">Redução de custos com frete para insumos industriais</span>
+                    <span className="text-xs text-gray-300">Redução de custos com frete para insumos dos setores industriais</span>
                   </li>
                   <li className="bg-[#1a2338] p-2 rounded-lg flex items-start border border-[#2a3448] hover:border-[#d4af37] hover:transform hover:translate-x-1 transition-all duration-200">
                     <Image src="/icons/check.svg" alt="Checkmark" width={16} height={16} className="mt-1 mr-2 flex-shrink-0" />
@@ -112,7 +110,7 @@ export default function SolucoesPage() {
                   </li>
                   <li className="bg-[#1a2338] p-2 rounded-lg flex items-start border border-[#2a3448] hover:border-[#d4af37] hover:transform hover:translate-x-1 transition-all duration-200">
                     <Image src="/icons/check.svg" alt="Checkmark" width={16} height={16} className="mt-1 mr-2 flex-shrink-0" />
-                    <span className="text-xs text-gray-300">Gestão de estoque otimizada para demanda fabril</span>
+                    <span className="text-xs text-gray-300">Gestão de estoque otimizada para demanda dos setores industriais</span>
                   </li>
               </ul>
               <Link href="/contato" className="inline-block text-[#d4af37] hover:underline text-sm">
@@ -127,9 +125,9 @@ export default function SolucoesPage() {
               <div className="w-14 h-14 rounded-full bg-[#0a0f1d] border-2 border-[#d4af37] flex items-center justify-center mb-3">
                 <Image src="/icons/supply-chain.svg" alt="Ícone Supply Chain" width={28} height={28} />
               </div>
-              <h3 className="text-xl font-semibold mb-2 text-white">Logística 3PL Industrial</h3>
+              <h3 className="text-xl font-semibold mb-2 text-white">Logística 3PL</h3>
               <p className="text-gray-300 mb-3 text-sm">
-                Gerenciamento total de fretes, armazenagem e desembaraço de matéria-prima, insumos e maquinário. Sua fábrica foca na produção, nós cuidamos da logística global.
+                Gerenciamento total de fretes, armazenagem e desembaraço de matéria-prima, insumos e maquinário. Sua empresa dos setores industriais foca na produção, nós cuidamos da logística global.
               </p>
               <ul className="space-y-2 mb-3">
                                   <li className="bg-[#1a2338] p-2 rounded-lg flex items-start border border-[#2a3448] hover:border-[#d4af37] hover:transform hover:translate-x-1 transition-all duration-200">
@@ -138,11 +136,11 @@ export default function SolucoesPage() {
                   </li>
                   <li className="bg-[#1a2338] p-2 rounded-lg flex items-start border border-[#2a3448] hover:border-[#d4af37] hover:transform hover:translate-x-1 transition-all duration-200">
                     <Image src="/icons/check.svg" alt="Checkmark" width={16} height={16} className="mt-1 mr-2 flex-shrink-0" />
-                    <span className="text-xs text-gray-300">Redução de custos logísticos para manufatura</span>
+                    <span className="text-xs text-gray-300">Redução de custos logísticos para empresas dos setores industriais</span>
                   </li>
                   <li className="bg-[#1a2338] p-2 rounded-lg flex items-start border border-[#2a3448] hover:border-[#d4af37] hover:transform hover:translate-x-1 transition-all duration-200">
                     <Image src="/icons/check.svg" alt="Checkmark" width={16} height={16} className="mt-1 mr-2 flex-shrink-0" />
-                    <span className="text-xs text-gray-300">Visibilidade completa da cadeia de suprimentos da fábrica</span>
+                    <span className="text-xs text-gray-300">Visibilidade completa da cadeia de suprimentos dos setores industriais</span>
                   </li>
               </ul>
               <Link href="/contato" className="inline-block text-[#d4af37] hover:underline text-sm">
@@ -157,22 +155,22 @@ export default function SolucoesPage() {
               <div className="w-14 h-14 rounded-full bg-[#0a0f1d] border-2 border-[#d4af37] flex items-center justify-center mb-3">
                 <Image src="/icons/tech.svg" alt="Ícone de Tecnologia" width={28} height={28} />
               </div>
-              <h3 className="text-xl font-semibold mb-2 text-white">Supply Chain 4.0 Industrial</h3>
+              <h3 className="text-xl font-semibold mb-2 text-white">Supply Chain 4.0</h3>
               <p className="text-gray-300 mb-3 text-sm">
-                Modernize e digitalize toda a cadeia de suprimentos da sua indústria, integrando produção, logística e comex com IA e automação para ganhos exponenciais.
+                Modernize e digitalize toda a cadeia de suprimentos da sua empresa dos setores industriais, integrando importação, exportação, logística e comex com IA e automação para ganhos exponenciais.
               </p>
               <ul className="space-y-2 mb-3">
                                   <li className="bg-[#1a2338] p-2 rounded-lg flex items-start border border-[#2a3448] hover:border-[#d4af37] hover:transform hover:translate-x-1 transition-all duration-200">
                     <Image src="/icons/check.svg" alt="Checkmark" width={16} height={16} className="mt-1 mr-2 flex-shrink-0" />
-                    <span className="text-xs text-gray-300">Integração do chão de fábrica com a gestão de Supply Chain</span>
+                    <span className="text-xs text-gray-300">Simuladores inteligentes para calcular custos de importação e exportação</span>
                   </li>
                   <li className="bg-[#1a2338] p-2 rounded-lg flex items-start border border-[#2a3448] hover:border-[#d4af37] hover:transform hover:translate-x-1 transition-all duration-200">
                     <Image src="/icons/check.svg" alt="Checkmark" width={16} height={16} className="mt-1 mr-2 flex-shrink-0" />
-                    <span className="text-xs text-gray-300">Automação de processos para linhas de produção</span>
+                    <span className="text-xs text-gray-300">Plataforma Radar 360 com cotações em tempo real</span>
                   </li>
                   <li className="bg-[#1a2338] p-2 rounded-lg flex items-start border border-[#2a3448] hover:border-[#d4af37] hover:transform hover:translate-x-1 transition-all duration-200">
                     <Image src="/icons/check.svg" alt="Checkmark" width={16} height={16} className="mt-1 mr-2 flex-shrink-0" />
-                    <span className="text-xs text-gray-300">Melhora de previsibilidade de demanda para manufatura</span>
+                    <span className="text-xs text-gray-300">Automação de documentos aduaneiros e compliance</span>
                   </li>
               </ul>
               <Link href="/contato" className="inline-block text-[#d4af37] hover:underline text-sm">
@@ -187,18 +185,18 @@ export default function SolucoesPage() {
               <div className="w-14 h-14 rounded-full bg-[#0a0f1d] border-2 border-[#d4af37] flex items-center justify-center mb-3">
                 <Image src="/icons/compliance.svg" alt="Ícone de Compliance" width={28} height={28} />
               </div>
-              <h3 className="text-xl font-semibold mb-2 text-white">Consultoria Sênior Industrial In-House</h3>
+              <h3 className="text-xl font-semibold mb-2 text-white">Consultoria Sênior In-House</h3>
               <p className="text-gray-300 mb-3 text-sm">
-                Expertise da OLV Internacional com 35 anos de experiência em multinacionais industriais atuando lado a lado com sua equipe para otimizar operações críticas da sua fábrica.
+                Expertise da OLV Internacional com 35 anos de experiência em multinacionais dos setores industriais atuando lado a lado com sua equipe para otimizar operações críticas da sua empresa.
               </p>
               <ul className="space-y-2 mb-3">
                                   <li className="bg-[#1a2338] p-2 rounded-lg flex items-start border border-[#2a3448] hover:border-[#d4af37] hover:transform hover:translate-x-1 transition-all duration-200">
                     <Image src="/icons/check.svg" alt="Checkmark" width={16} height={16} className="mt-1 mr-2 flex-shrink-0" />
-                    <span className="text-xs text-gray-300">Aceleração de projetos de manufatura</span>
+                    <span className="text-xs text-gray-300">Aceleração de projetos dos setores industriais</span>
                   </li>
                   <li className="bg-[#1a2338] p-2 rounded-lg flex items-start border border-[#2a3448] hover:border-[#d4af37] hover:transform hover:translate-x-1 transition-all duration-200">
                     <Image src="/icons/check.svg" alt="Checkmark" width={16} height={16} className="mt-1 mr-2 flex-shrink-0" />
-                    <span className="text-xs text-gray-300">Transferência de conhecimento para equipe industrial</span>
+                    <span className="text-xs text-gray-300">Transferência de conhecimento para equipes dos setores industriais</span>
                   </li>
                   <li className="bg-[#1a2338] p-2 rounded-lg flex items-start border border-[#2a3448] hover:border-[#d4af37] hover:transform hover:translate-x-1 transition-all duration-200">
                     <Image src="/icons/check.svg" alt="Checkmark" width={16} height={16} className="mt-1 mr-2 flex-shrink-0" />
@@ -213,9 +211,9 @@ export default function SolucoesPage() {
 
           {/* CTA Filler Card - Transformação Internacional */}
           <div className="glass p-6 rounded-xl shadow-gold flex flex-col items-center text-center gap-4 hover:shadow-2xl transition-all duration-300">
-            <h3 className="text-xl font-bold text-gray-100 leading-tight">Pronto para Transformar sua Indústria Internacionalmente?</h3>
-            <p className="text-sm text-gray-300 max-w-xs">Fale com nossos consultores hoje mesmo e descubra como nossa estratégia e força tática podem impulsionar sua fábrica no comércio internacional.</p>
-            <Link href="/contato" className="btn btn-primary text-sm px-5 py-2">Solicite uma Consultoria Industrial</Link>
+            <h3 className="text-xl font-bold text-gray-100 leading-tight">Pronto para Transformar sua Empresa Internacionalmente?</h3>
+            <p className="text-sm text-gray-300 max-w-xs">Fale com nossos consultores hoje mesmo e descubra como nossa estratégia e força tática podem impulsionar sua empresa dos setores industriais no comércio internacional.</p>
+            <Link href="/contato" className="btn btn-primary text-sm px-5 py-2">Solicite uma Consultoria</Link>
           </div>
         </div>
 
@@ -223,7 +221,7 @@ export default function SolucoesPage() {
         <div className="mb-8">
           <h2 className="text-2xl font-bold text-white mb-6 text-center">Serviços Detalhados</h2>
           <p className="text-gray-300 mb-6 text-center max-w-4xl mx-auto">
-            Abaixo detalhamos nossos principais serviços em comércio exterior e gestão industrial. Cada solução pode ser personalizada de acordo com as necessidades específicas da sua indústria.
+            Abaixo detalhamos nossos principais serviços em Supply Chain Global e Comércio Exterior para agroindústria, mineração, energia, petróleo e gás, metalurgia, bens de capital, máquinas e equipamentos, manufatura e logística industrial, entre outros. Cada solução pode ser personalizada de acordo com as necessidades específicas dos setores industriais (agroindústria, mineração, energia, petróleo e gás, metalurgia, bens de capital, máquinas e equipamentos, manufatura e logística industrial).
           </p>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">

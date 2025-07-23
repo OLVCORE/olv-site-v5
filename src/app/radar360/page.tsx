@@ -6,9 +6,9 @@ import RealtimeQuotes from '../../components/radar/RealtimeQuotes';
 import CommoditiesQuotes from '../../components/radar/CommoditiesQuotes';
 
 export const metadata = {
-  title: 'Radar 360 | OLV Internacional - Dados, Inteligência e Simuladores',
-  description: 'Acesse o Radar 360 da OLV Internacional: dados em tempo real, inteligência de mercado e simuladores para otimizar suas operações de Supply Chain, Comércio Exterior e Logística Internacional.',
-  keywords: 'rastreabilidade aduaneira, monitoramento em tempo real comex, dashboard radar siscomex, inteligência operacional',
+  title: 'Radar 360 | OLV Internacional - Inteligência e Dados para Setores Industriais',
+  description: 'Acesse o Radar 360 da OLV Internacional: dados em tempo real, inteligência de mercado e simuladores para otimizar operações de Supply Chain Global e Comércio Exterior para agroindústria, mineração, energia, petróleo e gás, metalurgia, bens de capital, máquinas e equipamentos, manufatura e logística industrial.',
+  keywords: 'radar 360, dados tempo real, inteligência mercado, simuladores comex, supply chain global, setores industriais, agroindústria, mineração, energia, petróleo e gás, metalurgia, bens de capital, máquinas e equipamentos, manufatura, logística industrial',
   alternates: {
     canonical: 'https://olvinternacional.com.br/radar360'
   },
@@ -27,9 +27,9 @@ export default function Radar360Page() {
                 OLV Radar 360 – Central de Inteligência & Dados
               </h2>
               <p className="text-lg text-gray-300 mb-6">
-                Bem-vindo ao <strong>Radar&nbsp;360</strong>, nossa central de inteligência e dados para negócios internacionais. Aqui você encontra ferramentas essenciais para tomada de decisão: cotações em tempo real, simuladores de custos, indicadores econômicos e recursos estratégicos para operações globais.&nbsp;
+                Bem-vindo ao <strong>Radar&nbsp;360</strong>, nossa central de inteligência e dados para empresas dos setores industriais. Aqui você encontra ferramentas essenciais para tomada de decisão: cotações em tempo real, simuladores de custos, indicadores econômicos e recursos estratégicos para operações globais de Supply Chain e Comércio Exterior.&nbsp;
                 <br className="hidden md:block" />
-                Transforme dados em decisões inteligentes para seu negócio.
+                Transforme dados em decisões inteligentes para sua empresa dos setores industriais.
               </p>
               <Link 
                 href="/contato" 
@@ -96,7 +96,7 @@ export default function Radar360Page() {
               <section className="section p-0 mt-6 hidden lg:block">
                 <div className="glass p-6 rounded-2xl shadow-gold flex flex-col items-center text-center gap-4 card-hover">
                   <h3 className="text-lg font-bold text-gray-100">Radar&nbsp;360 é sua central de inteligência</h3>
-                  <p className="text-sm text-gray-300 max-w-md">Cotações em tempo real, simuladores e insights para decisões globais — totalmente integrados ao ecossistema OLV.</p>
+                  <p className="text-sm text-gray-300 max-w-md">Cotações em tempo real, simuladores e insights para decisões globais de empresas dos setores industriais — totalmente integrados ao ecossistema OLV.</p>
                   <Link href="/solucoes" className="btn btn-primary text-sm px-5 py-2">Explorar Soluções</Link>
                 </div>
               </section>
@@ -263,7 +263,7 @@ export default function Radar360Page() {
               Quer ir além dos dados?
             </h2>
             <p className="text-gray-700 dark:text-gray-300 mb-6 max-w-2xl mx-auto">
-              O Radar 360 é uma amostra da inteligência que a OLV Internacional entrega. Fale com nossos especialistas para soluções personalizadas.
+              O Radar 360 é uma amostra da inteligência que a OLV Internacional entrega para empresas dos setores industriais. Fale com nossos especialistas para soluções personalizadas em Supply Chain Global e Comércio Exterior.
             </p>
             <Link 
               href="/contato" 
