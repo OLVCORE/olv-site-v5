@@ -110,6 +110,23 @@ const nextConfig = {
         },
       };
     }
+
+    // Otimizações para AMP e Core Web Vitals
+    config.module.rules.push({
+      test: /\.(png|jpe?g|gif|svg|webp|avif)$/i,
+      use: [
+        {
+          loader: 'image-webpack-loader',
+          options: {
+            mozjpeg: { progressive: true },
+            optipng: { enabled: false },
+            pngquant: { quality: [0.65, 0.90], speed: 4 },
+            gifsicle: { interlaced: false },
+            webp: { quality: 75 }
+          }
+        }
+      ]
+    });
     
     return config;
   },
