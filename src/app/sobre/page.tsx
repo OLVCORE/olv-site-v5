@@ -7,6 +7,37 @@ import { AnimatedCard, FadeIn } from '../../components/MicroInteractions';
 import { OrganizationSchema } from '../../components/SeoSchema';
 import WhatsAppButton from '../../components/layout/WhatsAppButton';
 
+// Review Schema para testimonials
+const ReviewSchema = () => {
+  const reviewSchema = {
+    "@context": "https://schema.org",
+    "@type": "Review",
+    "itemReviewed": {
+      "@type": "Organization",
+      "name": "OLV Internacional"
+    },
+    "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": "5",
+      "bestRating": "5"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Cliente Industrial"
+    },
+    "reviewBody": "A OLV Internacional transformou nossa operação de importação, reduzindo custos em 30% e otimizando nosso supply chain industrial com expertise multinacional."
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(reviewSchema)
+      }}
+    />
+  );
+};
+
 export const metadata = {
   title: 'Sobre a OLV Internacional - Expertise em Internacionalização do Supply Chain Industrial',
   description: 'Conheça a OLV Internacional: empresa especializada em internacionalização de Supply Chain e Comércio Exterior para empresas do setor industrial. 35 anos de expertise em regimes aduaneiros, importação e exportação.',
@@ -455,6 +486,7 @@ export default function Sobre() {
         </section>
 
       <WhatsAppButton />
+      <ReviewSchema />
     </MainLayout>
   );
 } 

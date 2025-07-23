@@ -82,8 +82,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         
-        {/* Preload otimizado - apenas recursos essenciais */}
+        {/* Preload otimizado - recursos críticos para Core Web Vitals */}
         <link rel="preload" href="/images/BANNER-HOME.jpeg" as="image" type="image/jpeg" />
+        <link rel="preload" href="/images/olv-logo.jpeg" as="image" type="image/jpeg" />
+        <link rel="preload" href="/css/style.css" as="style" />
+        <link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         
         {/* Carregamento não-bloqueante do CSS legado */}
         <link rel="stylesheet" href="/css/style.css" media="screen and (min-width: 769px)" />
@@ -96,6 +99,21 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <meta name="language" content="Portuguese" />
         <meta name="geo.region" content="BR" />
         <meta name="geo.placename" content="São Paulo" />
+        <meta name="geo.position" content="-23.5505;-46.6333" />
+        <meta name="ICBM" content="-23.5505, -46.6333" />
+        <meta name="DC.title" content="OLV Internacional - Consultoria em Comércio Exterior" />
+        <meta name="DC.creator" content="OLV Internacional" />
+        <meta name="DC.subject" content="Consultoria em Comércio Exterior, Importação, Exportação, Logística Internacional" />
+        <meta name="DC.description" content="Consultoria especializada em Supply Chain Industrial e Comércio Exterior para PMEs" />
+        <meta name="DC.publisher" content="OLV Internacional" />
+        <meta name="DC.contributor" content="OLV Internacional" />
+        <meta name="DC.date" content="2024" />
+        <meta name="DC.type" content="Service" />
+        <meta name="DC.format" content="text/html" />
+        <meta name="DC.identifier" content="https://olvinternacional.com.br" />
+        <meta name="DC.language" content="pt-BR" />
+        <meta name="DC.coverage" content="Brasil" />
+        <meta name="DC.rights" content="OLV Internacional" />
 
         {/* Google Search Console Verification */}
         <meta name="google-site-verification" content="SEU_CODIGO_DE_VERIFICACAO_AQUI" />

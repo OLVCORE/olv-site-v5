@@ -22,6 +22,9 @@ const nextConfig = {
     minimumCacheTTL: 60,
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    // Otimizações para Core Web Vitals
+    unoptimized: false,
+    loader: 'default',
   },
   
   // Otimizações de compressão
