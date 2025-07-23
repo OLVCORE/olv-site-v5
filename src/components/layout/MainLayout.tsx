@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import Header from './Header/index';
 import Footer from './Footer/index';
 import Sidebar from './Sidebar/index';
-import WhatsAppButton from '../layout/WhatsAppButton';
 import Ticker from './Ticker';
 import { usePathname } from 'next/navigation';
 import BetaVersion from './BetaVersion';
@@ -115,9 +114,6 @@ const MainLayout: React.FC<MainLayoutProps> = ({
         <div className="h-12"></div>
         
         {showFooter && <Footer />}
-        
-        {/* Fixed buttons */}
-        <WhatsAppButton phoneNumber="551126751446" message="Olá! Vim do site da OLV Internacional e gostaria de saber mais sobre os serviços." />
       </div>
     </div>
   );
