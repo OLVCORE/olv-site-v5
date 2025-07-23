@@ -33,11 +33,11 @@ const MobileFloatingMenu: React.FC<MobileFloatingMenuProps> = ({ className = '' 
         aria-label="Abrir menu principal"
         title="Menu Principal"
       >
-        {/* Ícone hambúrguer elegante */}
-        <div className="flex flex-col gap-1">
-          <div className="w-5 h-0.5 bg-white rounded-full"></div>
-          <div className="w-5 h-0.5 bg-white rounded-full"></div>
-          <div className="w-5 h-0.5 bg-white rounded-full"></div>
+        {/* Ícone hambúrguer ELEGANTE */}
+        <div className="flex flex-col gap-1.5">
+          <div className="w-6 h-0.5 bg-[#1a1a1a] rounded-full shadow-sm"></div>
+          <div className="w-6 h-0.5 bg-[#1a1a1a] rounded-full shadow-sm"></div>
+          <div className="w-6 h-0.5 bg-[#1a1a1a] rounded-full shadow-sm"></div>
         </div>
       </button>
 

@@ -3144,26 +3144,31 @@ body.theme-light .nav-menu-mobile .nav-item:hover {
    BOTÃO WHATSAPP OFICIAL
    ======================================== */
 
-/* Botão WhatsApp flutuante */
+/* Botão WhatsApp flutuante ELEGANTE */
 .whatsapp-button {
   background: #25D366 !important;
   color: white !important;
-  border: none !important;
+  border: 2px solid rgba(255, 255, 255, 0.2) !important;
   border-radius: 50% !important;
-  width: 60px !important;
-  height: 60px !important;
+  width: 56px !important;
+  height: 56px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   cursor: pointer !important;
-  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3) !important;
-  transition: all 0.3s ease !important;
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3), 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
   z-index: 1000 !important;
+  backdrop-filter: blur(10px) !important;
 }
 
 .whatsapp-button:hover {
   transform: scale(1.1) !important;
-  box-shadow: 0 6px 16px rgba(37, 211, 102, 0.4) !important;
+  box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4), 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+.whatsapp-button:active {
+  transform: scale(0.95) !important;
 }
 
 .whatsapp-button svg {
@@ -3224,24 +3229,35 @@ body.theme-light .nav-menu-mobile .nav-item:hover {
    MENU FLUTUANTE MOBILE - CORREÇÃO DEFINITIVA
    ======================================== */
 
-/* Menu Mobile - Posicionamento fixo */
+/* Menu Mobile - Posicionamento fixo ELEGANTE */
 .mobile-menu-floating {
   position: fixed !important;
   left: 20px !important;
-  bottom: 60px !important;
+  bottom: 80px !important; /* Ajustado para não sobrepor */
   z-index: 1000 !important;
-  width: 50px !important;
-  height: 50px !important;
+  width: 56px !important;
+  height: 56px !important;
   border-radius: 50% !important;
-  background: var(--olv-primary) !important;
-  color: white !important;
-  border: none !important;
+  background: linear-gradient(135deg, #D4AF37 0%, #F4E4BC 50%, #B8860B 100%) !important;
+  color: #1a1a1a !important;
+  border: 2px solid rgba(255, 255, 255, 0.2) !important;
   cursor: pointer !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
-  transition: all 0.3s ease !important;
-  display: flex !important; /* SEMPRE VISÍVEL NO MOBILE */
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3), 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  display: flex !important;
   align-items: center !important;
   justify-content: center !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.mobile-menu-floating:hover {
+  transform: scale(1.1) !important;
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4), 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+  background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #F4E4BC 100%) !important;
+}
+
+.mobile-menu-floating:active {
+  transform: scale(0.95) !important;
 }
 
 /* Mostrar menu flutuante apenas no mobile */
@@ -3258,6 +3274,147 @@ body.theme-light .nav-menu-mobile .nav-item:hover {
   .mobile-menu-floating {
     display: none !important;
   }
+}
+
+/* ========================================
+   BOTÃO LGPD GOADOPT - POSICIONAMENTO CORRIGIDO
+   ======================================== */
+
+/* Botão LGPD injetado pelo GoAdopt */
+[data-adopt-button],
+.adopt-button,
+#adopt-button {
+  position: fixed !important;
+  right: 20px !important;
+  bottom: 140px !important; /* Ajustado para não sobrepor */
+  z-index: 1000 !important;
+  width: 56px !important;
+  height: 56px !important;
+  border-radius: 50% !important;
+  background: linear-gradient(135deg, #D4AF37 0%, #F4E4BC 50%, #B8860B 100%) !important;
+  color: #1a1a1a !important;
+  border: 2px solid rgba(255, 255, 255, 0.2) !important;
+  cursor: pointer !important;
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3), 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+[data-adopt-button]:hover,
+.adopt-button:hover,
+#adopt-button:hover {
+  transform: scale(1.1) !important;
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4), 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+[data-adopt-button]:active,
+.adopt-button:active,
+#adopt-button:active {
+  transform: scale(0.95) !important;
+}
+
+/* ========================================
+   CARDS SIMULADORES - CORREÇÃO TEMA ESCURO
+   ======================================== */
+
+/* Cards simuladores - Legibilidade no tema escuro */
+.simulator-card,
+.simulator-item,
+.platform-card {
+  background: var(--olv-light) !important;
+  border: 1px solid var(--olv-gray-medium) !important;
+  color: var(--olv-text-primary) !important;
+}
+
+.simulator-card h3,
+.simulator-item h3,
+.platform-card h3 {
+  color: var(--olv-text-primary) !important;
+  font-weight: 600 !important;
+}
+
+.simulator-card p,
+.simulator-item p,
+.platform-card p {
+  color: var(--olv-text-secondary) !important;
+  line-height: 1.6 !important;
+}
+
+/* Tema escuro específico para cards */
+[data-theme="dark"] .simulator-card,
+[data-theme="dark"] .simulator-item,
+[data-theme="dark"] .platform-card {
+  background: #2a2a2a !important;
+  border-color: #444 !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .simulator-card h3,
+[data-theme="dark"] .simulator-item h3,
+[data-theme="dark"] .platform-card h3 {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .simulator-card p,
+[data-theme="dark"] .simulator-item p,
+[data-theme="dark"] .platform-card p {
+  color: #cccccc !important;
+}
+
+/* Cards específicos do Radar 360 */
+.radar-card {
+  background: var(--olv-light) !important;
+  border: 1px solid var(--olv-gray-medium) !important;
+  border-radius: 12px !important;
+  padding: 1.5rem !important;
+  margin-bottom: 1rem !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+  transition: all 0.3s ease !important;
+}
+
+.radar-card:hover {
+  border-color: var(--olv-primary) !important;
+  box-shadow: 0 4px 16px rgba(212, 175, 55, 0.15) !important;
+  transform: translateY(-2px) !important;
+}
+
+.radar-card-header {
+  color: var(--olv-primary) !important;
+  font-weight: 600 !important;
+  margin-bottom: 0.75rem !important;
+  font-size: 1.1rem !important;
+}
+
+.radar-card-content {
+  color: var(--olv-text-primary) !important;
+  line-height: 1.6 !important;
+}
+
+.radar-card-meta {
+  color: var(--olv-text-secondary) !important;
+  font-size: 0.875rem !important;
+  margin-top: 0.75rem !important;
+  padding-top: 0.75rem !important;
+  border-top: 1px solid var(--olv-gray-medium) !important;
+}
+
+/* Tema escuro para cards Radar 360 */
+[data-theme="dark"] .radar-card {
+  background: #2a2a2a !important;
+  border-color: #444 !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .radar-card-header {
+  color: var(--olv-primary) !important;
+}
+
+[data-theme="dark"] .radar-card-content {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .radar-card-meta {
+  color: #cccccc !important;
 }
 
 /* ========================================
