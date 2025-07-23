@@ -153,13 +153,15 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
 
           {/* Ícone menu mobile elegante */}
           <button
-            className={`mobile-menu-icon mobile-only ${navOpen ? 'active' : ''}`}
+            className={`hamburger-circle-container mobile-only ${navOpen ? 'active' : ''}`}
             aria-label="Abrir menu principal"
             onClick={() => setNavOpen(!navOpen)}
           >
-            <div className="mobile-menu-line"></div>
-            <div className="mobile-menu-line"></div>
-            <div className="mobile-menu-line"></div>
+            <div className="hamburger-glass-icon">
+              <div className="hamburger-line glass-line-1"></div>
+              <div className="hamburger-line glass-line-2"></div>
+              <div className="hamburger-line glass-line-3"></div>
+            </div>
           </button>
         </div>
       </header>

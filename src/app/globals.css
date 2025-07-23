@@ -3508,3 +3508,200 @@ body.theme-light .nav-menu-mobile .nav-item:hover {
   background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(59, 130, 246, 0.1));
   border-color: rgba(99, 102, 241, 0.3);
 }
+
+/* ========================================
+   ÍCONE HAMBÚRGUER GLASSMORPHISM
+   ======================================== */
+
+.hamburger-circle-container {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, 
+    rgba(212, 175, 55, 0.1) 0%,
+    rgba(244, 228, 188, 0.05) 50%,
+    rgba(212, 175, 55, 0.1) 100%);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  box-shadow: 
+    0 8px 32px rgba(212, 175, 55, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.hamburger-circle-container::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, 
+    transparent, 
+    rgba(212, 175, 55, 0.1), 
+    transparent);
+  transform: rotate(-45deg);
+  transition: transform 0.6s ease;
+  opacity: 0;
+}
+
+.hamburger-circle-container:hover::before {
+  transform: rotate(-45deg) translate(50%, 50%);
+  opacity: 1;
+}
+
+.hamburger-glass-icon {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 2px;
+}
+
+.hamburger-line {
+  width: 18px;
+  height: 2px;
+  background: linear-gradient(90deg, 
+    #D4AF37 0%,
+    #F4E4BC 50%,
+    #D4AF37 100%);
+  border-radius: 2px;
+  box-shadow: 
+    0 1px 3px rgba(212, 175, 55, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.hamburger-line::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.6), 
+    transparent);
+  transition: left 0.6s ease;
+}
+
+.hamburger-circle-container:hover .hamburger-line::before {
+  left: 100%;
+}
+
+/* Efeitos hover no container */
+.hamburger-circle-container:hover {
+  transform: translateY(-2px) scale(1.05);
+  background: linear-gradient(135deg, 
+    rgba(212, 175, 55, 0.15) 0%,
+    rgba(244, 228, 188, 0.08) 50%,
+    rgba(212, 175, 55, 0.15) 100%);
+  border-color: rgba(212, 175, 55, 0.5);
+  box-shadow: 
+    0 12px 40px rgba(212, 175, 55, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* Efeitos hover nas linhas */
+.hamburger-circle-container:hover .hamburger-line {
+  background: linear-gradient(90deg, 
+    #F4E4BC 0%,
+    #FFFFFF 50%,
+    #F4E4BC 100%);
+  box-shadow: 
+    0 2px 8px rgba(212, 175, 55, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  transform: scaleX(1.1);
+}
+
+/* Animação de clique */
+.hamburger-circle-container:active {
+  transform: translateY(0) scale(0.98);
+  background: linear-gradient(135deg, 
+    rgba(212, 175, 55, 0.2) 0%,
+    rgba(244, 228, 188, 0.1) 50%,
+    rgba(212, 175, 55, 0.2) 100%);
+}
+
+/* Estado ativo (menu aberto) */
+.hamburger-circle-container.active {
+  background: linear-gradient(135deg, 
+    rgba(212, 175, 55, 0.2) 0%,
+    rgba(244, 228, 188, 0.1) 50%,
+    rgba(212, 175, 55, 0.2) 100%);
+  border-color: rgba(212, 175, 55, 0.6);
+  box-shadow: 
+    0 12px 40px rgba(212, 175, 55, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.hamburger-circle-container.active .hamburger-line {
+  background: linear-gradient(90deg, 
+    #F4E4BC 0%,
+    #FFFFFF 50%,
+    #F4E4BC 100%);
+  box-shadow: 
+    0 2px 8px rgba(212, 175, 55, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .hamburger-circle-container {
+    width: 44px;
+    height: 44px;
+  }
+  
+  .hamburger-line {
+    width: 16px;
+    height: 2px;
+  }
+}
+
+/* Tema escuro */
+[data-theme="dark"] .hamburger-circle-container {
+  background: linear-gradient(135deg, 
+    rgba(212, 175, 55, 0.15) 0%,
+    rgba(42, 42, 42, 0.8) 50%,
+    rgba(212, 175, 55, 0.15) 100%);
+  border-color: rgba(212, 175, 55, 0.4);
+}
+
+[data-theme="dark"] .hamburger-circle-container:hover {
+  background: linear-gradient(135deg, 
+    rgba(212, 175, 55, 0.2) 0%,
+    rgba(42, 42, 42, 0.9) 50%,
+    rgba(212, 175, 55, 0.2) 100%);
+}
+
+/* Acessibilidade */
+@media (prefers-reduced-motion: reduce) {
+  .hamburger-circle-container {
+    transition: none;
+  }
+  
+  .hamburger-line {
+    transition: none;
+  }
+  
+  .hamburger-circle-container::before {
+    transition: none;
+  }
+  
+  .hamburger-line::before {
+    transition: none;
+  }
+}
