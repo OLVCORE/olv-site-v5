@@ -19,10 +19,33 @@ export default function AuthModal({ isOpen, onClose }: Props) {
     return () => document.removeEventListener('keydown', handleKey);
   }, [onClose]);
 
+  // Close on overlay click
+  const handleOverlayClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-[4000] p-4">
+    <div 
+      className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-[4000] p-4"
+      onClick={handleOverlayClick}
+    >
       <AuthCard mode={mode} onModeChange={setMode} onClose={onClose} />
     </div>
   );

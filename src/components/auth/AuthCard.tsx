@@ -72,9 +72,9 @@ export default function AuthCard({ mode, onModeChange, onClose }: Props) {
   }
 
   return (
-    <div className="auth-card border border-[var(--color-gold)] shadow-lg rounded-lg md:rounded-l-lg overflow-hidden w-full max-w-5xl grid grid-cols-1 md:grid-cols-2">
+    <div className="auth-card border border-[var(--color-gold)] shadow-lg rounded-lg md:rounded-l-lg overflow-hidden w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 max-h-[85vh] md:max-h-[80vh]">
       {/* Form */}
-      <div className="p-8 md:p-10 flex flex-col justify-center space-y-6 text-[var(--color-on-surface-opposite)]">
+      <div className="p-8 md:p-10 flex flex-col justify-center space-y-6 text-[var(--color-on-surface-opposite)] overflow-hidden">
         <div>
           <h1 className="text-2xl font-semibold mb-1">{mode === 'login' ? 'Bem-vindo!' : 'Criar sua conta'}</h1>
           <p className="text-sm opacity-80">Que bom ter você aqui</p>
@@ -82,7 +82,7 @@ export default function AuthCard({ mode, onModeChange, onClose }: Props) {
 
         {error && <p className="text-sm text-red-500">{error}</p>}
 
-        <div className="space-y-4 max-h-[55vh] overflow-y-auto pr-2">
+        <div className="space-y-4 overflow-y-auto flex-1 pr-2 max-h-[60vh] md:max-h-[50vh]">
           {mode === 'signup' && (
             <>
               <div className="grid grid-cols-2 gap-2">

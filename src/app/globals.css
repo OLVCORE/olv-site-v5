@@ -3705,3 +3705,198 @@ body.theme-light .nav-menu-mobile .nav-item:hover {
     transition: none;
   }
 }
+
+/* ========================================
+   CORREÇÃO CRÍTICA MOBILE - HEADER E TICKER
+   ======================================== */
+
+/* Header mobile - alinhamento central obrigatório */
+@media (max-width: 767px) {
+  .header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 0.75rem 1rem !important;
+    height: 60px !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    background: var(--color-surface) !important;
+    border-bottom: 1px solid var(--color-accent) !important;
+    margin-bottom: 0 !important; /* SEM gap com ticker */
+    flex-wrap: nowrap !important; /* EVITA quebra de linha */
+    z-index: 9998 !important;
+  }
+  
+  .header-left {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    flex: 0 0 auto !important;
+  }
+  
+  .logo {
+    height: 36px !important;
+    width: 36px !important;
+    display: block !important;
+  }
+  
+  .header-center {
+    display: none !important; /* Menu desktop oculto */
+  }
+  
+  .header-right {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+    flex: 0 0 auto !important;
+  }
+  
+  /* Lupa centralizada */
+  .mobile-search-toggle {
+    width: 24px !important;
+    height: 24px !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  
+  /* Ícone usuário centralizado */
+  .user-menu-wrapper {
+    width: 28px !important;
+    height: 28px !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  
+  /* Hambúrguer centralizado */
+  .hamburger-circle-container {
+    width: 32px !important;
+    height: 32px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+}
+
+/* Ticker imediatamente após cabeçalho - SEM GAP */
+.ticker {
+  position: fixed !important;
+  top: 60px !important; /* Altura exata do header mobile */
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 9997 !important;
+  background: var(--color-surface) !important;
+  border-bottom: 1px solid var(--color-accent) !important;
+  height: 35px !important; /* Altura otimizada */
+  display: flex !important;
+  align-items: center !important;
+  overflow: hidden !important;
+  margin-top: 0 !important; /* ZERO gap */
+  margin-bottom: 0 !important;
+}
+
+@media (max-width: 767px) {
+  .ticker {
+    height: 35px !important;
+    margin-top: 0 !important; /* ZERO gap */
+  }
+}
+
+/* ========================================
+   MODAL RESPONSIVO - CORREÇÃO CRÍTICA
+   ======================================== */
+
+/* Overlay para fechar ao clicar fora */
+.fixed.inset-0.bg-black\/30.backdrop-blur-sm {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: rgba(0, 0, 0, 0.5) !important;
+  z-index: 9998 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Modal responsivo e flutuante */
+.auth-card {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 90% !important;
+  max-width: 400px !important;
+  max-height: 85vh !important; /* Altura máxima da tela */
+  background: var(--color-surface-opposite) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3) !important;
+  z-index: 9999 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  overflow: hidden !important;
+}
+
+/* Conteúdo do modal com scroll */
+.auth-card .space-y-4 {
+  max-height: calc(85vh - 8rem) !important; /* Altura máxima menos padding */
+  overflow-y: auto !important; /* Scroll vertical obrigatório */
+  -webkit-overflow-scrolling: touch !important; /* Scroll suave iOS */
+  padding-right: 0.5rem !important;
+}
+
+/* Mobile específico */
+@media (max-width: 767px) {
+  .auth-card {
+    width: 95% !important;
+    max-width: 350px !important;
+    max-height: 90vh !important;
+    top: 50% !important;
+    left: 50% !important;
+  }
+  
+  .auth-card .space-y-4 {
+    max-height: calc(90vh - 6rem) !important;
+    padding-right: 0.25rem !important;
+  }
+  
+  .auth-card .p-8 {
+    padding: 1.5rem !important;
+  }
+}
+
+/* Botão fechar */
+.auth-card .absolute {
+  position: absolute !important;
+  top: 1rem !important;
+  right: 1rem !important;
+  width: 32px !important;
+  height: 32px !important;
+  background: none !important;
+  border: none !important;
+  font-size: 1.5rem !important;
+  cursor: pointer !important;
+  color: var(--color-on-surface-opposite) !important;
+  z-index: 10000 !important;
+}
+
+/* ========================================
+   CORREÇÃO MAIN CONTENT - ESPAÇAMENTO
+   ======================================== */
+
+/* Main content com espaçamento correto */
+.main-content {
+  margin-top: calc(60px + 35px + 1rem) !important; /* Header + Ticker + gap */
+}
+
+@media (max-width: 767px) {
+  .main-content {
+    margin-top: calc(60px + 35px + 0.5rem) !important;
+  }
+}
