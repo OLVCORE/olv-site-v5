@@ -3221,5 +3221,45 @@ body.theme-light .nav-menu-mobile .nav-item:hover {
 }
 
 /* ========================================
+   MENU FLUTUANTE MOBILE - CORREÇÃO DEFINITIVA
+   ======================================== */
+
+/* Menu Mobile - Posicionamento fixo */
+.mobile-menu-floating {
+  position: fixed !important;
+  left: 20px !important;
+  bottom: 60px !important;
+  z-index: 1000 !important;
+  width: 50px !important;
+  height: 50px !important;
+  border-radius: 50% !important;
+  background: var(--olv-primary) !important;
+  color: white !important;
+  border: none !important;
+  cursor: pointer !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  transition: all 0.3s ease !important;
+  display: flex !important; /* SEMPRE VISÍVEL NO MOBILE */
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Mostrar menu flutuante apenas no mobile */
+@media (max-width: 767px) {
+  .mobile-menu-floating {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+}
+
+/* NUNCA mostrar no desktop */
+@media (min-width: 768px) {
+  .mobile-menu-floating {
+    display: none !important;
+  }
+}
+
+/* ========================================
    FIM DAS CORREÇÕES MOBILE
    ======================================== */
