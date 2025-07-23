@@ -187,6 +187,63 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             })
           }}
         />
+
+        {/* Product/Service Schema para serviços OLV */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Service",
+              "name": "Consultoria em Comércio Exterior",
+              "description": "Consultoria especializada em importação, exportação e logística internacional para PMEs",
+              "provider": {
+                "@type": "Organization",
+                "name": "OLV Internacional"
+              },
+              "serviceType": "Consultoria Empresarial",
+              "areaServed": "BR",
+              "hasOfferCatalog": {
+                "@type": "OfferCatalog",
+                "name": "Serviços OLV",
+                "itemListElement": [
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Consultoria em Importação",
+                      "description": "Orientação completa para importação de insumos e produtos acabados"
+                    }
+                  },
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Consultoria em Exportação",
+                      "description": "Suporte completo para exportação de produtos brasileiros"
+                    }
+                  },
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Logística Internacional",
+                      "description": "Otimização de supply chain e logística internacional"
+                    }
+                  },
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Planejamento Tributário",
+                      "description": "Otimização fiscal e tributária para operações de comércio exterior"
+                    }
+                  }
+                ]
+              }
+            })
+          }}
+        />
       </head>
       <body className={`${inter.className} theme-dark`}>
         {/* Google Tag Manager (noscript) */}
@@ -208,6 +265,25 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         
         {/* Core Web Vitals Monitor */}
         <WebVitals />
+        
+        {/* Service Worker Registration */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                  navigator.serviceWorker.register('/sw.js')
+                    .then(function(registration) {
+                      console.log('SW registered: ', registration);
+                    })
+                    .catch(function(registrationError) {
+                      console.log('SW registration failed: ', registrationError);
+                    });
+                });
+              }
+            `
+          }}
+        />
         
         {/* Botão Flutuante WhatsApp */}
         <FloatingWhatsAppButton phoneNumber="551126751446" message="Olá! Vim do site da OLV Internacional e gostaria de saber mais sobre os serviços." />

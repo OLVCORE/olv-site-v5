@@ -10,6 +10,8 @@ const nextConfig = {
         },
       },
     },
+    // Otimizações de CSS crítico
+    optimizePackageImports: ['@heroicons/react', 'lucide-react'],
   },
   
   // Otimizações de imagens
