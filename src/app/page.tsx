@@ -99,17 +99,6 @@ export default function HomePage() {
               <p className="mb-2 text-gray-300">
                 Nossa abordagem visa simplificar operações complexas, otimizar processos industriais e integrar estratégias com resultados práticos. Atuamos como extensão da sua equipe, sem ativos próprios, focando exclusivamente na entrega de valor e resultados mensuráveis.
               </p>
-              <div className="flex flex-wrap gap-3 mt-4">
-                <Link href="/faq" className="inline-flex items-center px-4 py-2 bg-[#d4af37] text-black font-semibold rounded-lg hover:bg-[#b8941f] transition-colors">
-                  Ver FAQ Completo
-                </Link>
-                <Link href="/simuladores" className="inline-flex items-center px-4 py-2 border border-[#d4af37] text-[#d4af37] font-semibold rounded-lg hover:bg-[#d4af37] hover:text-black transition-colors">
-                  Simuladores Gratuitos
-                </Link>
-                <Link href="/sobre" className="inline-flex items-center px-4 py-2 border border-gray-400 text-gray-300 font-semibold rounded-lg hover:bg-gray-700 transition-colors">
-                  Sobre a OLV
-                </Link>
-              </div>
               <p className="text-[#d4af37] font-medium italic mb-4">
                 Do planejamento estratégico à execução operacional. Da análise de viabilidade aos resultados concretos.
               </p>

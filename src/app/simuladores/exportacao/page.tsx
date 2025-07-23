@@ -19,8 +19,8 @@ export default function SimuladorExportacaoPage() {
       <div className="container mx-auto px-4 py-16">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-          Simulador de Custos de Exportação
-        </h1>
+            Simulador de Custos de Exportação
+          </h1>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
             Calcule receita líquida e crédito Reintegra para suas operações de exportação
           </p>
@@ -32,7 +32,7 @@ export default function SimuladorExportacaoPage() {
               <div className="text-6xl mb-4">🚢</div>
               <h2 className="text-2xl font-semibold text-white mb-4">
                 Simulador em Desenvolvimento
-            </h2>
+              </h2>
               <p className="text-gray-300 mb-8">
                 Este simulador está sendo desenvolvido para calcular receita líquida e crédito Reintegra 
                 para operações de exportação. Em breve estará disponível.

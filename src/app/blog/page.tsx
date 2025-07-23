@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import MainLayout from '../../components/layout/MainLayout';
 import { getAllPosts, getCategoryCounts } from '@/lib/posts';
-
+import dynamic from 'next/dynamic';
 import BlogImage from '../../components/blog/BlogImage';
 import { CATEGORIES } from '@/lib/blogConfig';
 
@@ -38,22 +38,11 @@ function getImageUrl(post: { cover_url?: string, category?: string }) {
   return map[post.category || 'Outros'] || '/images/blog/default-news.svg';
 }
 
-// Componente de busca será renderizado no client-side
-const BlogSearchClient = () => {
-  const [BlogSearch, setBlogSearch] = React.useState<any>(null);
-  
-  React.useEffect(() => {
-    import('../../components/blog/BlogSearch').then((module) => {
-      setBlogSearch(() => module.default);
-    });
-  }, []);
-  
-  if (!BlogSearch) {
-    return <div className="animate-pulse bg-gray-700 h-12 rounded-lg"></div>;
-  }
-  
-  return <BlogSearch posts={[]} />;
-};
+// Importa dinamicamente o componente de busca (Client Component)
+const BlogSearch = dynamic(() => import('../../components/blog/BlogSearch'), { 
+  ssr: false,
+  loading: () => <div className="animate-pulse bg-gray-700 h-12 rounded-lg"></div>
+});
 
 // Força revalidação a cada 5 minutos para posts novos
 export const revalidate = 300;
@@ -100,7 +89,7 @@ export default async function BlogPage({ searchParams }: { searchParams: { page?
                   global.
                 </p>
                 {/* Componente de busca client-side */}
-                <BlogSearchClient />
+                <BlogSearch posts={list} />
               </div>
             </div>
           </section>

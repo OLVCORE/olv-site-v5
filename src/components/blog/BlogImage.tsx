@@ -31,8 +31,6 @@ export default function BlogImage({
       alt={alt}
       className={className}
       onError={handleError}
-      loading="lazy"
-      decoding="async"
     />
   );
 } 
