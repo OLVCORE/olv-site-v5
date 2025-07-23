@@ -2786,14 +2786,15 @@ body.theme-light .nav-menu-mobile .nav-item:hover {
       width: 44px !important;
       height: 44px !important;
       border-radius: 8px !important;
-      background: var(--color-accent) !important;
-      border: 2px solid var(--color-accent) !important;
-      color: var(--color-on-primary) !important;
+      background: #d4af37 !important;
+      border: 2px solid #d4af37 !important;
+      color: #000 !important;
       cursor: pointer !important;
       transition: all 0.3s ease !important;
       align-items: center !important;
       justify-content: center !important;
-      box-shadow: 0 2px 8px rgba(212, 175, 55, 0.2) !important;
+      box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3) !important;
+      margin-left: 8px !important;
     }
 
       .mobile-nav-toggle:hover {
@@ -2804,7 +2805,7 @@ body.theme-light .nav-menu-mobile .nav-item:hover {
     .mobile-nav-toggle svg {
       width: 20px !important;
       height: 20px !important;
-      color: var(--color-on-primary) !important;
+      color: #000 !important;
     }
 
   .mobile-search-toggle {
@@ -2949,6 +2950,15 @@ body.theme-light .nav-menu-mobile .nav-item:hover {
     display: none !important;
   }
 
+  /* GARANTIR que o menu hambúrguer apareça */
+  .header-right .mobile-nav-toggle {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 9999 !important;
+  }
+
   /* Overlay de pesquisa mobile */
   .search-overlay-mobile {
     position: fixed !important;
@@ -2995,6 +3005,33 @@ body.theme-light .nav-menu-mobile .nav-item:hover {
 }
 
 .sidebar-overlay {
+  display: none !important;
+}
+
+/* ========================================
+   OCULTAR TOOLBAR DO VERCEL
+   ======================================== */
+
+/* Ocultar toolbar do Vercel em produção */
+[data-vercel-toolbar] {
+  display: none !important;
+}
+
+/* Ocultar elementos do Vercel */
+[data-vercel-toolbar],
+[data-vercel-toolbar] *,
+.vercel-toolbar,
+.vercel-toolbar * {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Ocultar qualquer elemento que contenha "vercel" no nome da classe */
+[class*="vercel"],
+[class*="Vercel"],
+[class*="VERCEL"] {
   display: none !important;
 }
 
