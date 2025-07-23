@@ -2982,5 +2982,22 @@ body.theme-light .nav-menu-mobile .nav-item:hover {
 }
 
 /* ========================================
+   SIDEBAR DESATIVADO TEMPORARIAMENTE
+   ======================================== */
+
+/* Sidebar desativado temporariamente - oculto mas mantido para uso futuro */
+.mobile-sidebar-toggle {
+  display: none !important;
+}
+
+.sidebar {
+  display: none !important;
+}
+
+.sidebar-overlay {
+  display: none !important;
+}
+
+/* ========================================
    FIM DAS CORREÇÕES MOBILE
    ======================================== */
