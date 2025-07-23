@@ -20,6 +20,7 @@
     "validate:launch": "npx tsx scripts/validateLaunchReadiness.ts"
   },
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "@react-three/fiber": "^8.18.0",
     "@supabase/supabase-js": "^2.50.3",
     "@tippyjs/react": "^4.2.6",
