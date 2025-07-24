@@ -63,14 +63,14 @@ export default function CommoditiesQuotes() {
               </th>
             </tr>
           </thead>
-          <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-100 dark:divide-gray-800">
+          <tbody className="bg-gray-800 dark:bg-gray-800 divide-y divide-gray-700 dark:divide-gray-700">
             {cards.map((c) => (
-              <tr key={c.label} className="hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                <td className="px-4 py-2 flex items-center gap-2 text-gray-900 dark:text-gray-100 whitespace-nowrap">
+              <tr key={c.label} className="hover:bg-gray-700 dark:hover:bg-gray-700 transition-colors">
+                <td className="px-4 py-2 flex items-center gap-2 text-gray-100 dark:text-gray-100 whitespace-nowrap">
                   <Icon src={c.icon} alt="icon" size="xs" className="text-sky-600 dark:text-sky-400" />
                   {c.label}
                 </td>
-                <td className="px-4 py-2 text-right text-gray-900 dark:text-gray-100 font-medium">
+                <td className="px-4 py-2 text-right text-gray-100 dark:text-gray-100 font-medium">
                   {c.value !== null ? formatBRL(c.value as number) : '—'}
                 </td>
               </tr>

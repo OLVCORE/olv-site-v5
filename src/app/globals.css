@@ -1000,6 +1000,15 @@ body.theme-light .glass {
   -webkit-backdrop-filter: blur(10px);
 }
 
+/* Dark theme glass cards - melhor contraste */
+body.theme-dark .glass {
+  background: linear-gradient(145deg, rgba(18, 22, 31, 0.95) 0%, rgba(30, 38, 55, 0.95) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 18px rgba(212, 175, 55, 0.12);
+}
+
 /* ---------- Unified Container ---------- */
 .container {
   @apply max-w-6xl mx-auto px-4;
