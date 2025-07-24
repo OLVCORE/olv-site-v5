@@ -134,13 +134,18 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
             <GlobalSearch />
           </div>
 
-          {/* User Menu (avatar + settings) */}
-          <div className="user-menu-wrapper">
+          {/* User Menu (avatar + settings) - desktop */}
+          <div className="user-menu-wrapper desktop-only">
             <UserMenu />
           </div>
 
           {/* Ícones mobile alinhados */}
           <div className="mobile-icons-container md:hidden flex items-center gap-3">
+            {/* User Menu mobile */}
+            <div className="user-menu-mobile">
+              <UserMenu />
+            </div>
+
             {/* Botão BUSCAR – apenas mobile */}
             <button
               className="mobile-search-toggle"
@@ -152,11 +157,6 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
               </svg>
             </button>
-
-            {/* User Menu mobile */}
-            <div className="user-menu-mobile">
-              <UserMenu />
-            </div>
           </div>
 
           {/* Ícone menu mobile elegante */}
