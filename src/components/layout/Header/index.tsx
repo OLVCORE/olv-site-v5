@@ -139,26 +139,6 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
             <UserMenu />
           </div>
 
-          {/* Ícones mobile alinhados */}
-          <div className="mobile-icons-container md:hidden flex items-center gap-3">
-            {/* User Menu mobile */}
-            <div className="user-menu-mobile">
-              <UserMenu />
-            </div>
-
-            {/* Botão BUSCAR – apenas mobile */}
-            <button
-              className="mobile-search-toggle"
-              aria-label="Abrir busca"
-              onClick={() => setSearchOpen(!searchOpen)}
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              </svg>
-            </button>
-          </div>
-
           {/* Ícone menu mobile elegante */}
           <button
             className={`hamburger-circle-container mobile-only ${navOpen ? 'active' : ''}`}
