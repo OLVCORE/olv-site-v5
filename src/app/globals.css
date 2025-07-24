@@ -2,6 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Performance optimizations */
+* {
+  box-sizing: border-box;
+}
+
+/* Optimize paint and layout */
+.transform-gpu {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Reduce layout shifts */
+img, video, canvas, audio, iframe, embed, object {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Optimize animations for performance */
+@media (prefers-reduced-motion: no-preference) {
+  .animate-optimized {
+    will-change: transform, opacity;
+  }
+}
+
+/* Content visibility for better performance */
+.content-visibility-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;
+}
+
 /* --------------------------------------------------
    Design Tokens – V2 (system colours)
    -------------------------------------------------- */
@@ -3749,28 +3779,47 @@ body.theme-light .nav-menu-mobile .nav-item:hover {
   .header-right {
     display: flex !important;
     align-items: center !important;
-    gap: 0.75rem !important;
+    gap: 0.5rem !important;
     flex: 0 0 auto !important;
+    justify-content: flex-end !important;
   }
   
   /* Lupa centralizada */
   .mobile-search-toggle {
-    width: 24px !important;
-    height: 24px !important;
+    width: 32px !important;
+    height: 32px !important;
     cursor: pointer !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 6px !important;
+    background: transparent !important;
+    transition: all 0.2s ease !important;
+    flex-shrink: 0 !important;
+  }
+  
+  .mobile-search-toggle:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
   }
   
   /* Ícone usuário centralizado */
   .user-menu-wrapper {
-    width: 28px !important;
-    height: 28px !important;
+    width: 32px !important;
+    height: 32px !important;
     cursor: pointer !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 6px !important;
+    background: transparent !important;
+    transition: all 0.2s ease !important;
+    flex-shrink: 0 !important;
+  }
+  
+  .user-menu-wrapper:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
   }
   
   /* Hambúrguer centralizado */
@@ -3780,6 +3829,15 @@ body.theme-light .nav-menu-mobile .nav-item:hover {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
+    border-radius: 6px !important;
+    background: transparent !important;
+    border: 1px solid var(--border-color) !important;
+    transition: all 0.2s ease !important;
+    flex-shrink: 0 !important;
+  }
+  
+  .hamburger-circle-container:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
   }
 }
 
@@ -3825,65 +3883,21 @@ body.theme-light .nav-menu-mobile .nav-item:hover {
   transition: all 0.3s ease !important;
 }
 
-/* Modal responsivo e flutuante */
-.auth-card {
-  position: fixed !important;
-  top: 50% !important;
-  left: 50% !important;
-  transform: translate(-50%, -50%) !important;
-  width: 90% !important;
-  max-width: 400px !important;
-  max-height: 85vh !important; /* Altura máxima da tela */
-  background: var(--color-surface-opposite) !important;
-  border-radius: 16px !important;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3) !important;
-  z-index: 9999 !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-  overflow: hidden !important;
-}
-
-/* Conteúdo do modal com scroll */
+/* Auth card responsivo - apenas melhorias de scroll */
 .auth-card .space-y-4 {
-  max-height: calc(85vh - 8rem) !important; /* Altura máxima menos padding */
-  overflow-y: auto !important; /* Scroll vertical obrigatório */
-  -webkit-overflow-scrolling: touch !important; /* Scroll suave iOS */
-  padding-right: 0.5rem !important;
+  max-height: calc(85vh - 8rem);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
-/* Mobile específico */
 @media (max-width: 767px) {
-  .auth-card {
-    width: 95% !important;
-    max-width: 350px !important;
-    max-height: 90vh !important;
-    top: 50% !important;
-    left: 50% !important;
-  }
-  
   .auth-card .space-y-4 {
-    max-height: calc(90vh - 6rem) !important;
-    padding-right: 0.25rem !important;
+    max-height: calc(90vh - 6rem);
   }
   
   .auth-card .p-8 {
-    padding: 1.5rem !important;
+    padding: 1.5rem;
   }
-}
-
-/* Botão fechar */
-.auth-card .absolute {
-  position: absolute !important;
-  top: 1rem !important;
-  right: 1rem !important;
-  width: 32px !important;
-  height: 32px !important;
-  background: none !important;
-  border: none !important;
-  font-size: 1.5rem !important;
-  cursor: pointer !important;
-  color: var(--color-on-surface-opposite) !important;
-  z-index: 10000 !important;
 }
 
 /* ========================================
@@ -3898,5 +3912,422 @@ body.theme-light .nav-menu-mobile .nav-item:hover {
 @media (max-width: 767px) {
   .main-content {
     margin-top: calc(60px + 35px + 0.5rem) !important;
+  }
+}
+
+/* ========================================
+   CORREÇÃO CRÍTICA URGENTE - MOBILE E RADAR 360
+   ======================================== */
+
+/* ========================================
+   1. ALINHAMENTO PERFEITO DO CABEÇALHO MOBILE
+   ======================================== */
+
+/* Cabeçalho mobile - alinhamento em paralelo obrigatório */
+@media (max-width: 767px) {
+  .header {
+    display: flex !important;
+    align-items: center !important; /* ALINHAMENTO VERTICAL PERFEITO */
+    justify-content: space-between !important;
+    padding: 0.75rem 1rem !important;
+    height: 60px !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    background: var(--color-surface) !important;
+    border-bottom: 1px solid var(--color-accent) !important;
+    margin-bottom: 0 !important;
+    flex-wrap: nowrap !important; /* EVITA quebra de linha */
+    z-index: 9998 !important;
+  }
+  
+  .header-left {
+    display: flex !important;
+    align-items: center !important; /* CENTRALIZAÇÃO VERTICAL */
+    gap: 0.5rem !important;
+    flex: 0 0 auto !important;
+    height: 100% !important; /* ALTURA TOTAL */
+  }
+  
+  .logo {
+    height: 36px !important;
+    width: 36px !important;
+    display: block !important;
+    object-fit: contain !important;
+  }
+  
+  .header-right {
+    display: flex !important;
+    align-items: center !important; /* CENTRALIZAÇÃO VERTICAL */
+    gap: 0.75rem !important;
+    flex: 0 0 auto !important;
+    height: 100% !important; /* ALTURA TOTAL */
+  }
+  
+  /* TODOS os ícones na mesma altura */
+  .mobile-search-toggle,
+  .user-menu-wrapper,
+  .hamburger-circle-container {
+    width: 32px !important;
+    height: 32px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    flex-shrink: 0 !important; /* NÃO encolher */
+  }
+  
+  /* Garantir que todos estejam na linha de base */
+  .header-left > *,
+  .header-right > * {
+    align-self: center !important; /* FORÇAR CENTRALIZAÇÃO */
+  }
+}
+
+/* ========================================
+   2. REMOVER ÍCONE HAMBÚRGUER FLUTUANTE
+   ======================================== */
+
+/* DESATIVAR e OCULTAR ícone hambúrguer flutuante */
+.mobile-menu-floating,
+.floating-hamburger,
+.hamburger-float {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Garantir que APENAS o hambúrguer do cabeçalho seja visível */
+@media (max-width: 767px) {
+  .header .hamburger-circle-container {
+    display: flex !important;
+  }
+  
+  /* Ocultar TODOS os outros hambúrgueres */
+  .mobile-menu-floating,
+  .floating-hamburger,
+  .hamburger-float,
+  [class*="float"][class*="hamburger"],
+  [class*="hamburger"][class*="float"] {
+    display: none !important;
+  }
+}
+
+/* ========================================
+   3. TICKER SUAVE NO MOBILE
+   ======================================== */
+
+/* Ticker com movimento suave - APENAS MOBILE */
+@media (max-width: 767px) {
+  .ticker {
+    width: 100% !important;
+    height: 35px !important;
+    background: var(--color-surface) !important;
+    border-bottom: 1px solid var(--color-accent) !important;
+    display: flex !important;
+    align-items: center !important;
+    overflow: hidden !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    position: fixed !important;
+    top: 60px !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 9997 !important;
+  }
+  
+  .ticker-inner {
+    display: flex !important;
+    align-items: center !important;
+    height: 100% !important;
+    animation: scroll-left-smooth 45s linear infinite !important; /* MAIS LENTO */
+    white-space: nowrap !important;
+  }
+  
+  .ticker-inner p {
+    font-size: 0.875rem !important;
+    color: var(--color-on-surface) !important;
+    padding: 0 2rem !important;
+    line-height: 1.2 !important;
+  }
+  
+  /* Animação suave para mobile */
+  @keyframes scroll-left-smooth {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+}
+
+/* ========================================
+   4. RADAR 360 - CORREÇÃO MODO ESCURO
+   ======================================== */
+
+/* Radar 360 - Modo escuro legível */
+[data-theme="dark"] .radar-360-page,
+[data-theme="dark"] .radar-container {
+  background: #1a1a1a !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .radar-card {
+  background: #2a2a2a !important;
+  border: 1px solid #404040 !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+[data-theme="dark"] .radar-card-header {
+  color: #D4AF37 !important; /* Dourado OLV */
+  font-weight: 600 !important;
+}
+
+[data-theme="dark"] .radar-card-content {
+  color: #e0e0e0 !important;
+  line-height: 1.6 !important;
+}
+
+[data-theme="dark"] .radar-card-meta {
+  color: #b0b0b0 !important;
+  border-top: 1px solid #404040 !important;
+}
+
+[data-theme="dark"] .radar-title {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .radar-subtitle {
+  color: #cccccc !important;
+}
+
+[data-theme="dark"] .radar-section {
+  background: #2a2a2a !important;
+  border: 1px solid #404040 !important;
+}
+
+[data-theme="dark"] .radar-text {
+  color: #e0e0e0 !important;
+}
+
+[data-theme="dark"] .radar-link {
+  color: #D4AF37 !important;
+}
+
+[data-theme="dark"] .radar-link:hover {
+  color: #F4E4BC !important;
+}
+
+/* ========================================
+   5. QUADROS DE COTAÇÕES - PALETA OLV
+   ======================================== */
+
+/* Quadros de cotações com paleta OLV */
+.cotacao-card,
+.commodity-card,
+.quote-card,
+.radar-card,
+.glass {
+  background: linear-gradient(135deg, 
+    rgba(212, 175, 55, 0.05) 0%,
+    rgba(244, 228, 188, 0.03) 50%,
+    rgba(212, 175, 55, 0.05) 100%) !important;
+  border: 1px solid rgba(212, 175, 55, 0.2) !important;
+  border-radius: 12px !important;
+  padding: 1.5rem !important;
+  margin-bottom: 1rem !important;
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.1) !important;
+  transition: all 0.3s ease !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.cotacao-card::before,
+.commodity-card::before,
+.quote-card::before,
+.radar-card::before,
+.glass::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 4px !important;
+  height: 100% !important;
+  background: linear-gradient(180deg, #D4AF37, #F4E4BC) !important;
+}
+
+.cotacao-card:hover,
+.commodity-card:hover,
+.quote-card:hover,
+.radar-card:hover,
+.glass:hover {
+  border-color: rgba(212, 175, 55, 0.4) !important;
+  box-shadow: 0 4px 16px rgba(212, 175, 55, 0.2) !important;
+  transform: translateY(-2px) !important;
+}
+
+.cotacao-header,
+.radar-card h2,
+.radar-card h3 {
+  color: #D4AF37 !important;
+  font-weight: 600 !important;
+  margin-bottom: 0.75rem !important;
+  font-size: 1.1rem !important;
+}
+
+.cotacao-value {
+  color: var(--text-primary) !important;
+  font-size: 1.25rem !important;
+  font-weight: 700 !important;
+}
+
+.cotacao-change.positive {
+  color: #28a745 !important;
+}
+
+.cotacao-change.negative {
+  color: #dc3545 !important;
+}
+
+.cotacao-meta {
+  color: var(--text-secondary) !important;
+  font-size: 0.875rem !important;
+  margin-top: 0.75rem !important;
+  padding-top: 0.75rem !important;
+  border-top: 1px solid rgba(212, 175, 55, 0.1) !important;
+}
+
+/* Modo escuro para cotações */
+[data-theme="dark"] .cotacao-card,
+[data-theme="dark"] .commodity-card,
+[data-theme="dark"] .quote-card,
+[data-theme="dark"] .radar-card,
+[data-theme="dark"] .glass {
+  background: linear-gradient(135deg, 
+    rgba(212, 175, 55, 0.1) 0%,
+    rgba(42, 42, 42, 0.8) 50%,
+    rgba(212, 175, 55, 0.1) 100%) !important;
+  border-color: rgba(212, 175, 55, 0.3) !important;
+}
+
+[data-theme="dark"] .cotacao-header,
+[data-theme="dark"] .radar-card h2,
+[data-theme="dark"] .radar-card h3 {
+  color: #F4E4BC !important;
+}
+
+[data-theme="dark"] .cotacao-value {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .cotacao-meta {
+  color: #cccccc !important;
+  border-top-color: rgba(212, 175, 55, 0.2) !important;
+}
+
+/* ========================================
+   6. CORREÇÃO MAIN CONTENT - ESPAÇAMENTO
+   ======================================== */
+
+/* Main content com espaçamento correto */
+.main-content {
+  margin-top: calc(60px + 35px + 1rem) !important; /* Header + Ticker + gap */
+}
+
+@media (max-width: 767px) {
+  .main-content {
+    margin-top: calc(60px + 35px + 0.5rem) !important;
+  }
+}
+
+/* Otimizações de performance para Core Web Vitals */
+
+/* Otimização de LCP */
+.hero-image {
+  content-visibility: auto;
+  contain-intrinsic-size: 800px 600px;
+}
+
+/* Otimização de CLS */
+.dynamic-content {
+  min-height: 200px;
+  contain: layout;
+}
+
+/* Otimização de FID */
+.interactive-element {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Redução de TBT */
+.heavy-component {
+  content-visibility: auto;
+  contain-intrinsic-size: 300px 200px;
+}
+
+/* Otimizações de imagem */
+img {
+  loading: lazy;
+  decoding: async;
+}
+
+img[src$=".jpg"], img[src$=".jpeg"] {
+  content-visibility: auto;
+}
+
+/* Otimização de fontes */
+@font-face {
+  font-family: 'Primary';
+  font-display: swap;
+  src: url('/fonts/primary.woff2') format('woff2');
+}
+
+/* Redução de layout shifts */
+.card-container {
+  contain: layout style paint;
+}
+
+.image-placeholder {
+  aspect-ratio: 16/9;
+  background: var(--placeholder-color);
+}
+
+/* Otimização de animações */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Cache de recursos estáticos */
+.static-resource {
+  cache-control: public, max-age=31536000, immutable;
+}
+
+/* Otimização de layout para SEO */
+.seo-optimized-section {
+  contain: layout style paint;
+  content-visibility: auto;
+}
+
+/* Melhoria de acessibilidade */
+@media (prefers-contrast: high) {
+  .text-gray-300 {
+    color: #ffffff !important;
+  }
+}
+
+/* Otimização para mobile */
+@media (max-width: 768px) {
+  .mobile-optimized {
+    content-visibility: auto;
+    contain-intrinsic-size: 200px 150px;
   }
 }

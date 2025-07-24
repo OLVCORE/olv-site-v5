@@ -56,7 +56,7 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
       <header className="header">
         <div className="header-left">
           <Link href="/" className="logo-container" title="OLV Internacional">
-            <OptimizedImage 
+                        <OptimizedImage
               src="/images/olv-logo.jpeg" 
               alt="OLV Internacional" 
               width={56} 
