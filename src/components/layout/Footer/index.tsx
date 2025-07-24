@@ -247,7 +247,24 @@ const Footer: React.FC = () => {
                   <p className="text-sm text-white font-semibold mb-1">Telefone:</p>
                   <div className="flex items-center">
                     <p className="text-sm text-gray-300">+55 11 2675 1446</p>
-                    <FaWhatsapp className="ml-2 text-accent" size={14} />
+                  </div>
+                </div>
+              </div>
+              
+              {/* WhatsApp */}
+              <div className="flex">
+                <FaWhatsapp className="text-accent mt-1 mr-3 flex-shrink-0" size={16} />
+                <div>
+                  <p className="text-sm text-white font-semibold mb-1">WhatsApp:</p>
+                  <div className="flex items-center">
+                    <a 
+                      href="https://wa.me/5511999244444?text=Olá! Vim do site da OLV Internacional e gostaria de saber mais sobre os serviços de comércio exterior." 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-sm text-gray-300 hover:text-white transition-colors"
+                    >
+                      +55 11 99924-4444
+                    </a>
                   </div>
                 </div>
               </div>

@@ -11,7 +11,7 @@ interface WhatsAppButtonProps {
 
 const WhatsAppButton: React.FC<WhatsAppButtonProps> = ({
   position = 'bottom-right',
-  phoneNumber = '551126751446',
+  phoneNumber = '5511999244444',
   message = 'Olá! Vim do site da OLV Internacional e gostaria de saber mais sobre os serviços.',
 }) => {
   const positionClasses = {

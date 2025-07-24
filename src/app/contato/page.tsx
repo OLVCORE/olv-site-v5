@@ -196,7 +196,7 @@ export default function ContatoPage() {
 
                   <div className="flex flex-wrap gap-4 mt-6">
                     <a 
-                      href="https://wa.me/551126751446" 
+                      href="https://wa.me/5511999244444?text=Olá! Vim do site da OLV Internacional e gostaria de saber mais sobre os serviços de comércio exterior." 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="flex items-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors"

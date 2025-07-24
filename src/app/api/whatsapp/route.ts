@@ -6,7 +6,7 @@ export async function POST(request: NextRequest) {
     const { message, name, email, phone, service } = body;
 
     // Número do WhatsApp da OLV Internacional
-    const whatsappNumber = '551126751446';
+    const whatsappNumber = '5511999244444';
     
     // Mensagem padrão
     const defaultMessage = `Olá! Sou ${name || 'interessado'} e gostaria de saber mais sobre ${service || 'os serviços da OLV Internacional'}.`;
@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
 
 export async function GET() {
   // Número do WhatsApp da OLV Internacional
-  const whatsappNumber = '551126751446';
+  const whatsappNumber = '5511999244444';
   
   // Mensagem padrão para contato direto
   const defaultMessage = 'Olá! Gostaria de saber mais sobre os serviços da OLV Internacional.';

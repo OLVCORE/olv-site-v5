@@ -6,7 +6,7 @@ import { SITE_URL } from '@/lib/siteConfig';
 import { LocalBusinessSchema, OrganizationSchema } from '@/components/SeoSchema';
 import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics';
 import { WebVitals } from '@/components/analytics/WebVitals';
-import { FloatingWhatsAppButton } from '@/components/WhatsAppButton';
+import WhatsAppButton from '@/components/layout/WhatsAppButton';
 import MobileFloatingMenu from '@/components/MobileFloatingMenu';
 // Internationalization temporarily disabled
 
@@ -211,7 +211,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <WebVitals />
         
         {/* Botão Flutuante WhatsApp */}
-        <FloatingWhatsAppButton phoneNumber="551126751446" message="Olá! Vim do site da OLV Internacional e gostaria de saber mais sobre os serviços." />
+        <WhatsAppButton phoneNumber="5511999244444" message="Olá! Vim do site da OLV Internacional e gostaria de saber mais sobre os serviços." />
         
         {/* Menu Flutuante Mobile */}
         <MobileFloatingMenu />
