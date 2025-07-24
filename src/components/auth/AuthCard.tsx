@@ -159,8 +159,16 @@ export default function AuthCard({ mode, onModeChange, onClose }: Props) {
       </div>
 
       {/* banner */}
-      <div className="hidden md:block relative rounded-r-lg overflow-hidden h-full">
-        <Image src="/images/BANNER-HOME.jpeg" alt="banner" fill className="object-cover" />
+      <div className="hidden md:block relative rounded-r-lg overflow-hidden h-full w-full">
+        <Image 
+          src="/images/BANNER-HOME.jpeg" 
+          alt="banner" 
+          fill 
+          className="object-cover object-left" 
+          sizes="(max-width: 768px) 100vw, 50vw"
+          priority={true}
+          style={{ objectPosition: 'left center' }}
+        />
       </div>
     </div>
   );

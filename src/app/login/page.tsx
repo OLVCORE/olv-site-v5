@@ -99,8 +99,16 @@ export default function LoginPage() {
         </div>
 
         {/* Banner */}
-        <div className="hidden md:block relative rounded-r-lg overflow-hidden">
-          <Image src="/images/BANNER-HOME.jpeg" alt="OLV banner" fill className="object-cover" />
+        <div className="hidden md:block relative rounded-r-lg overflow-hidden h-full w-full">
+          <Image 
+            src="/images/BANNER-HOME.jpeg" 
+            alt="OLV banner" 
+            fill 
+            className="object-cover object-left" 
+            sizes="(max-width: 768px) 100vw, 50vw"
+            priority={true}
+            style={{ objectPosition: 'left center' }}
+          />
         </div>
       </div>
     </div>
