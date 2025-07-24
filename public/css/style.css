@@ -560,6 +560,37 @@ img {
 }
 
 /* ==========================================
+   ÍCONES MOBILE ALINHADOS
+   ========================================== */
+.mobile-icons-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mobile-search-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  color: var(--txt);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mobile-search-toggle:hover {
+  color: var(--accent);
+}
+
+.user-menu-mobile {
+  display: flex;
+  align-items: center;
+}
+
+/* ==========================================
    BOTÕES FLUTUANTES
    ========================================== */
 .floating-buttons {
