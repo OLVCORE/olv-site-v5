@@ -72,17 +72,17 @@ export default function AuthCard({ mode, onModeChange, onClose }: Props) {
   }
 
   return (
-    <div className="auth-card border border-[var(--color-gold)] shadow-lg rounded-lg md:rounded-l-lg overflow-hidden w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 max-h-[85vh] md:max-h-[80vh]">
+    <div className="auth-card border border-[var(--color-gold)] shadow-lg rounded-lg md:rounded-l-lg overflow-hidden w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 max-h-[calc(100vh-2rem)] md:max-h-[calc(100vh-4rem)]">
       {/* Form */}
-      <div className="p-8 md:p-10 flex flex-col justify-center space-y-6 text-[var(--color-on-surface-opposite)] overflow-hidden">
-        <div>
-          <h1 className="text-2xl font-semibold mb-1">{mode === 'login' ? 'Bem-vindo!' : 'Criar sua conta'}</h1>
-          <p className="text-sm opacity-80">Que bom ter você aqui</p>
-        </div>
+      <div className="p-6 md:p-8 lg:p-10 flex flex-col justify-center space-y-4 md:space-y-6 text-[var(--color-on-surface-opposite)] overflow-y-auto">
+                  <div>
+            <h1 className="text-2xl font-semibold mb-1">{mode === 'login' ? 'Bem-vindo!' : 'Criar sua conta'}</h1>
+            <p className="text-sm opacity-80">Que bom ter você aqui</p>
+          </div>
 
         {error && <p className="text-sm text-red-500">{error}</p>}
 
-        <div className="space-y-4 overflow-y-auto flex-1 pr-2 max-h-[60vh] md:max-h-[50vh]">
+        <div className="space-y-4 overflow-y-auto flex-1 pr-2">
           {mode === 'signup' && (
             <>
               <div className="grid grid-cols-2 gap-2">

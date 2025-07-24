@@ -43,7 +43,7 @@ export default function AuthModal({ isOpen, onClose }: Props) {
 
   return (
     <div 
-      className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-[4000] p-4"
+      className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-start justify-center z-[4000] p-2 md:p-4 pt-4 md:pt-8"
       onClick={handleOverlayClick}
     >
       <AuthCard mode={mode} onModeChange={setMode} onClose={onClose} />
