@@ -14,28 +14,11 @@ export const metadata = {
 export default function VenturesPage() {
   return (
     <PlatformLayout
-      title="VENTURES"
-      subtitle="Desenvolvimento de Negócios e Investimentos Internacionais"
-      description="Identificamos e desenvolvemos oportunidades de investimento, parcerias estratégicas e expansão internacional para empresas industriais."
-      icon="/icons/ventures.svg"
-      features={[
-        {
-          title: "Identificação de Oportunidades",
-          description: "Análise de mercado para identificar oportunidades de investimento e expansão internacional"
-        },
-        {
-          title: "Desenvolvimento de Parcerias",
-          description: "Facilitação de parcerias estratégicas entre empresas brasileiras e internacionais"
-        },
-        {
-          title: "Due Diligence",
-          description: "Avaliação completa de riscos e oportunidades em investimentos internacionais"
-        },
-        {
-          title: "Estratégia de Expansão",
-          description: "Planejamento estratégico para expansão internacional e entrada em novos mercados"
-        }
-      ]}
+      platformName="VENTURES"
+      platformLogo="/icons/ventures.svg"
+      platformDescription="Desenvolvimento de Negócios e Investimentos Internacionais"
+      platformIntro="Identificamos e desenvolvemos oportunidades de investimento, parcerias estratégicas e expansão internacional para empresas industriais."
+      platformColor="#1e40af"
     >
       {/* Conteúdo adicional específico do VENTURES */}
       <section className="py-16">
