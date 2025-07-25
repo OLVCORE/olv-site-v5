@@ -24,35 +24,35 @@ export default function SimuladoresPage() {
     {
       title: 'Simulador de Exportação',
       description: 'Simule receitas e custos de exportação com análise de competitividade',
-      icon: '/icons/export.svg',
+      icon: '/icons/export-glass.svg',
       href: '/simuladores/exportacao',
       features: ['Receita bruta', 'Custos de exportação', 'Análise de competitividade', 'Incentivos fiscais']
     },
     {
       title: 'Conversor de Câmbio',
       description: 'Conversão em tempo real de moedas com histórico de cotações',
-      icon: '/icons/currency-exchange.svg',
+      icon: '/icons/currency-exchange-glass.svg',
       href: '/simuladores/cambio',
       features: ['Cotações em tempo real', 'Histórico de câmbio', 'Múltiplas moedas', 'Gráficos de variação']
     },
     {
       title: 'Calculadora de Frete',
       description: 'Compare custos de frete marítimo, aéreo e terrestre internacional',
-      icon: '/icons/logistics.svg',
+      icon: '/icons/logistics-glass.svg',
       href: '/simuladores/frete-full',
       features: ['Frete marítimo', 'Frete aéreo', 'Frete terrestre', 'Comparativo de modalidades']
     },
     {
       title: 'Simulador Tributário',
       description: 'Calcule impostos e benefícios fiscais para operações de comércio exterior',
-      icon: '/icons/compliance.svg',
+      icon: '/icons/compliance-glass.svg',
       href: '/simuladores/tributario-light',
       features: ['ICMS', 'IPI', 'PIS/COFINS', 'Benefícios fiscais']
     },
     {
       title: 'Calculadora de Cubagem',
       description: 'Otimize o aproveitamento de espaço em contêineres e cargas',
-      icon: '/icons/warehouse.svg',
+      icon: '/icons/warehouse-glass.svg',
       href: '/simuladores/cubagem',
       features: ['Cálculo de volume', 'Otimização de espaço', 'Diferentes tipos de contêiner', 'Carga mista']
     }
