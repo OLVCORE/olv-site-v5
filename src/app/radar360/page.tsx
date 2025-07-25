@@ -17,7 +17,7 @@ export const metadata = {
 export default function Radar360Page() {
   return (
     <MainLayout>
-      <div className="main-content pt-24 md:pt-28">
+      <div className="main-content pt-24 md:pt-28 radar-360-page">
         {/* SEÇÃO HERO RADAR 360 */}
         <section className="section">
           <div className="container">
