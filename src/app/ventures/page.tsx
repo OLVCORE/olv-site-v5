@@ -1,5 +1,4 @@
 import React from 'react';
-import Link from 'next/link';
 import dynamic from 'next/dynamic';
 const PlatformLayout = dynamic(() => import('../../components/platforms/PlatformLayout'));
 
