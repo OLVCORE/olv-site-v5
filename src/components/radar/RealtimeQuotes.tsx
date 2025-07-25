@@ -59,22 +59,22 @@ export default function RealtimeQuotes({ symbols }: Props) {
           <tr>
             <th
               scope="col"
-              className="px-4 py-2 text-left font-semibold text-gray-700 dark:text-gray-300 whitespace-nowrap"
+              className="px-4 py-2 text-left font-semibold text-gray-900 dark:text-gray-300 whitespace-nowrap"
             >
               Moeda
             </th>
             <th
               scope="col"
-              className="px-4 py-2 text-right font-semibold text-gray-700 dark:text-gray-300"
+              className="px-4 py-2 text-right font-semibold text-gray-900 dark:text-gray-300"
             >
               Cotação (BRL)
             </th>
           </tr>
         </thead>
-        <tbody className="bg-gray-800 dark:bg-gray-800 divide-y divide-gray-700 dark:divide-gray-700">
+        <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
           {symbolList.map((sym) => (
-            <tr key={sym} className="hover:bg-gray-700 dark:hover:bg-gray-700 transition-colors">
-              <td className="px-4 py-2 flex items-center gap-2 text-gray-100 dark:text-gray-100 whitespace-nowrap">
+            <tr key={sym} className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+              <td className="px-4 py-2 flex items-center gap-2 text-black dark:text-gray-100 whitespace-nowrap">
                 <Icon
                   src="/icons/currency-exchange.svg"
                   alt="icon"
@@ -83,7 +83,7 @@ export default function RealtimeQuotes({ symbols }: Props) {
                 />
                 {labelMap[sym]}
               </td>
-              <td className="px-4 py-2 text-right text-gray-100 dark:text-gray-100 font-medium">
+              <td className="px-4 py-2 text-right text-black dark:text-gray-100 font-medium">
                 {formatBRL(rates[sym])}
               </td>
             </tr>

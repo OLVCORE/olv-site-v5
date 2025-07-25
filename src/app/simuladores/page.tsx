@@ -1,15 +1,14 @@
 import React from 'react';
 import Link from 'next/link';
-import { Metadata } from 'next';
+import MainLayout from '../../components/layout/MainLayout';
+import Icon from '../../components/icons/Icon';
 
-export const metadata: Metadata = {
-  title: 'Simuladores - OLV Internacional',
-  description: 'Ferramentas para cálculo de custos de importação, exportação, frete internacional e câmbio.',
-  keywords: 'simuladores, importação, exportação, frete, câmbio, custos, cálculo',
-  openGraph: {
-    title: 'Simuladores - OLV Internacional',
-    description: 'Ferramentas para cálculo de custos de importação, exportação, frete internacional e câmbio.',
-    type: 'website',
+export const metadata = {
+  title: 'Simuladores de Comércio Exterior | OLV Internacional - Ferramentas de Cálculo para Comex',
+  description: 'Ferramentas gratuitas para simular custos de importação, exportação, câmbio, frete internacional e tributação. Calculadoras especializadas para comércio exterior e supply chain industrial.',
+  keywords: 'simuladores comércio exterior, calculadora importação, calculadora exportação, simulador câmbio, calculadora frete internacional, simulador tributário comex, ferramentas cálculo comex, simuladores gratuitos importação exportação',
+  alternates: {
+    canonical: 'https://olvinternacional.com.br/simuladores'
   },
 };
 
@@ -17,102 +16,147 @@ export default function SimuladoresPage() {
   const simuladores = [
     {
       title: 'Simulador de Importação',
-      description: 'Calcule impostos, fretes e taxas para importação',
+      description: 'Calcule custos completos de importação incluindo impostos, frete e despesas aduaneiras',
+      icon: '/icons/import.svg',
       href: '/simuladores/importacao',
-      icon: '📦',
-      color: 'bg-blue-500'
+      features: ['Cálculo de impostos', 'Frete internacional', 'Despesas aduaneiras', 'Custos portuários']
     },
     {
       title: 'Simulador de Exportação',
-      description: 'Calcule receita líquida e crédito Reintegra',
+      description: 'Simule receitas e custos de exportação com análise de competitividade',
+      icon: '/icons/export.svg',
       href: '/simuladores/exportacao',
-      icon: '🚢',
-      color: 'bg-green-500'
+      features: ['Receita bruta', 'Custos de exportação', 'Análise de competitividade', 'Incentivos fiscais']
     },
     {
-      title: 'Simulador Cambial',
-      description: 'Converta valores entre diferentes moedas',
+      title: 'Conversor de Câmbio',
+      description: 'Conversão em tempo real de moedas com histórico de cotações',
+      icon: '/icons/currency.svg',
       href: '/simuladores/cambio',
-      icon: '💱',
-      color: 'bg-yellow-500'
+      features: ['Cotações em tempo real', 'Histórico de câmbio', 'Múltiplas moedas', 'Gráficos de variação']
     },
     {
-      title: 'Simulador de Frete',
-      description: 'Calcule custos de frete marítimo e aéreo',
+      title: 'Calculadora de Frete',
+      description: 'Compare custos de frete marítimo, aéreo e terrestre internacional',
+      icon: '/icons/freight.svg',
       href: '/simuladores/frete-full',
-      icon: '🚚',
-      color: 'bg-purple-500'
+      features: ['Frete marítimo', 'Frete aéreo', 'Frete terrestre', 'Comparativo de modalidades']
     },
     {
       title: 'Simulador Tributário',
-      description: 'Calcule impostos e taxas de importação',
+      description: 'Calcule impostos e benefícios fiscais para operações de comércio exterior',
+      icon: '/icons/tax.svg',
       href: '/simuladores/tributario-light',
-      icon: '📊',
-      color: 'bg-red-500'
+      features: ['ICMS', 'IPI', 'PIS/COFINS', 'Benefícios fiscais']
     },
     {
       title: 'Calculadora de Cubagem',
-      description: 'Calcule volume e peso de cargas',
+      description: 'Otimize o aproveitamento de espaço em contêineres e cargas',
+      icon: '/icons/cube.svg',
       href: '/simuladores/cubagem',
-      icon: '⚖️',
-      color: 'bg-indigo-500'
+      features: ['Cálculo de volume', 'Otimização de espaço', 'Diferentes tipos de contêiner', 'Carga mista']
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900">
-      <div className="container mx-auto px-4 py-16">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-            Simuladores
-          </h1>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Ferramentas especializadas para cálculo de custos em comércio exterior
-          </p>
-        </div>
+    <MainLayout>
+      <div className="main-content pt-24 md:pt-28">
+        {/* Hero Section */}
+        <section className="text-center py-16 bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
+          <div className="container mx-auto px-4">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-white">
+              Simuladores de Comércio Exterior
+            </h1>
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
+              Ferramentas gratuitas e especializadas para calcular custos, simular operações e otimizar suas estratégias de comércio internacional
+            </p>
+          </div>
+        </section>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {simuladores.map((simulador, index) => (
-            <Link
-              key={index}
-              href={simulador.href}
-              className="group block"
-            >
-              <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105">
-                <div className="flex items-center mb-4">
-                  <div className={`w-12 h-12 rounded-lg flex items-center justify-center text-2xl mr-4 ${simulador.color}`}>
-                    {simulador.icon}
+        {/* Simuladores Grid */}
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {simuladores.map((simulador, index) => (
+                <div key={index} className="glass card-hover p-6 rounded-xl">
+                  <div className="flex items-center mb-4">
+                    <Icon src={simulador.icon} alt={`${simulador.title} Icon`} size="lg" className="mr-3" />
+                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{simulador.title}</h3>
                   </div>
-                  <h3 className="text-xl font-semibold text-white group-hover:text-[#d4af37] transition-colors">
-                    {simulador.title}
-                  </h3>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">{simulador.description}</p>
+                  <ul className="mb-6 space-y-2">
+                    {simulador.features.map((feature, featureIndex) => (
+                      <li key={featureIndex} className="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                        <Icon src="/icons/check.svg" alt="Check" size="sm" className="mr-2 text-green-500" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                  <Link 
+                    href={simulador.href}
+                    className="btn btn-primary w-full text-center"
+                  >
+                    Acessar Simulador
+                  </Link>
                 </div>
-                <p className="text-gray-300 text-sm leading-relaxed">
-                  {simulador.description}
-                </p>
-                <div className="mt-4 flex items-center text-[#d4af37] text-sm font-medium">
-                  Acessar simulador
-                  <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
-        <div className="text-center mt-12">
-          <Link
-            href="/radar360"
-            className="inline-flex items-center px-6 py-3 bg-[#d4af37] text-gray-900 font-semibold rounded-lg hover:bg-[#b8941f] transition-colors"
-          >
-            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-            </svg>
-            Voltar ao Radar 360
-          </Link>
-        </div>
+        {/* CTA Section */}
+        <section className="py-16 bg-gray-50 dark:bg-gray-900">
+          <div className="container mx-auto px-4 text-center">
+            <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">
+              Precisa de Consultoria Especializada?
+            </h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
+              Nossos especialistas estão prontos para ajudar você a otimizar suas operações de comércio exterior
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/contato" className="btn btn-primary">
+                Fale com um Especialista
+              </Link>
+              <Link href="/sobre" className="btn btn-secondary">
+                Conheça Nossa Metodologia
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Schema.org JSON-LD para Ferramentas */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "ItemList",
+              "name": "Simuladores de Comércio Exterior",
+              "description": "Ferramentas gratuitas para simular custos de importação, exportação, câmbio, frete internacional e tributação",
+              "url": "https://olvinternacional.com.br/simuladores",
+              "numberOfItems": simuladores.length,
+              "itemListElement": simuladores.map((simulador, index) => ({
+                "@type": "ListItem",
+                "position": index + 1,
+                "item": {
+                  "@type": "SoftwareApplication",
+                  "name": simulador.title,
+                  "description": simulador.description,
+                  "url": `https://olvinternacional.com.br${simulador.href}`,
+                  "applicationCategory": "BusinessApplication",
+                  "operatingSystem": "Web Browser",
+                  "offers": {
+                    "@type": "Offer",
+                    "price": "0",
+                    "priceCurrency": "BRL",
+                    "availability": "https://schema.org/InStock"
+                  }
+                }
+              }))
+            })
+          }}
+        />
       </div>
-    </div>
+    </MainLayout>
   );
 } 

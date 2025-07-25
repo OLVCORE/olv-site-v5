@@ -90,16 +90,23 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <link rel="stylesheet" href="/css/style.css" media="screen and (min-width: 769px)" />
 
         {/* Metadados adicionais para otimização de intenção do usuário */}
-        <meta name="google-site-verification" content="verificação-do-site" />
         <meta name="author" content="OLV Internacional" />
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <meta name="revisit-after" content="7 days" />
-        <meta name="language" content="Portuguese" />
+        <meta name="language" content="pt-BR" />
         <meta name="geo.region" content="BR" />
         <meta name="geo.placename" content="São Paulo" />
-
-        {/* Google Search Console Verification */}
+        <meta name="geo.position" content="-23.5505;-46.6333" />
+        <meta name="ICBM" content="-23.5505, -46.6333" />
+        
+        {/* Google Search Console Verification - ATUALIZAR COM CÓDIGO REAL */}
         <meta name="google-site-verification" content="SEU_CODIGO_DE_VERIFICACAO_AQUI" />
+        
+        {/* Bing Webmaster Tools */}
+        <meta name="msvalidate.01" content="SEU_CODIGO_BING_AQUI" />
+        
+        {/* Yandex Webmaster */}
+        <meta name="yandex-verification" content="SEU_CODIGO_YANDEX_AQUI" />
 
         {/* LGPD GoAdopt */}
         <meta name="adopt-website-id" content="1d3503e5-6e70-4135-906f-6c9840d27875" />
@@ -189,7 +196,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           }}
         />
       </head>
-      <body className={`${inter.className} theme-dark`}>
+      <body className={inter.className}>
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe 

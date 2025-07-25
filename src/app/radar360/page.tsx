@@ -4,6 +4,7 @@ import MainLayout from '../../components/layout/MainLayout';
 import Icon from '../../components/icons/Icon';
 import RealtimeQuotes from '../../components/radar/RealtimeQuotes';
 import CommoditiesQuotes from '../../components/radar/CommoditiesQuotes';
+import FloatingSimulatorButton from '../../components/FloatingSimulatorButton';
 
 export const metadata = {
   title: 'Radar 360 | OLV Internacional - Inteligência e Dados para Setores Industriais',
@@ -253,6 +254,24 @@ export default function Radar360Page() {
               <p className="text-gray-700 dark:text-gray-300 mb-2">Atualizações sobre Comércio Exterior, Logística, Supply Chain, Economia e PMEs.</p>
               <small className="text-yellow-600 dark:text-yellow-400">🚧 Feed automatizado em desenvolvimento.</small>
             </div>
+          </div>
+        </section>
+
+        {/* Botão Acessar Simuladores */}
+        <section className="section mt-3">
+          <div className="glass p-6 rounded-2xl shadow-gold card-hover text-center">
+            <h2 className="text-xl md:text-2xl font-bold mb-4 text-gray-900 dark:text-white">
+              🧮 Ferramentas de Cálculo Especializadas
+            </h2>
+            <p className="text-gray-700 dark:text-gray-300 mb-6 max-w-2xl mx-auto">
+              Acesse nossos simuladores gratuitos para calcular custos de importação, exportação, câmbio, frete internacional e tributação. Ferramentas especializadas para otimizar suas operações de comércio exterior.
+            </p>
+            <Link 
+              href="/simuladores" 
+              className="btn btn-primary font-bold py-3 px-6 text-lg"
+            >
+              🚀 Acessar Simuladores
+            </Link>
           </div>
         </section>
 

@@ -55,22 +55,22 @@ export default function CommoditiesQuotes() {
         <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700 text-sm md:text-base">
           <thead className="bg-gray-50 dark:bg-gray-800">
             <tr>
-              <th className="px-4 py-2 text-left font-semibold text-gray-700 dark:text-gray-300 whitespace-nowrap">
+              <th className="px-4 py-2 text-left font-semibold text-gray-900 dark:text-gray-300 whitespace-nowrap">
                 Commodity
               </th>
-              <th className="px-4 py-2 text-right font-semibold text-gray-700 dark:text-gray-300">
+              <th className="px-4 py-2 text-right font-semibold text-gray-900 dark:text-gray-300">
                 Preço (BRL)
               </th>
             </tr>
           </thead>
-          <tbody className="bg-gray-800 dark:bg-gray-800 divide-y divide-gray-700 dark:divide-gray-700">
+          <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
             {cards.map((c) => (
-              <tr key={c.label} className="hover:bg-gray-700 dark:hover:bg-gray-700 transition-colors">
-                <td className="px-4 py-2 flex items-center gap-2 text-gray-100 dark:text-gray-100 whitespace-nowrap">
+              <tr key={c.label} className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                <td className="px-4 py-2 flex items-center gap-2 text-black dark:text-gray-100 whitespace-nowrap">
                   <Icon src={c.icon} alt="icon" size="xs" className="text-sky-600 dark:text-sky-400" />
                   {c.label}
                 </td>
-                <td className="px-4 py-2 text-right text-gray-100 dark:text-gray-100 font-medium">
+                <td className="px-4 py-2 text-right text-black dark:text-gray-100 font-medium">
                   {c.value !== null ? formatBRL(c.value as number) : '—'}
                 </td>
               </tr>
