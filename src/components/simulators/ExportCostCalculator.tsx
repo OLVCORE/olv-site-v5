@@ -647,7 +647,34 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
           </div>
         </div>
         
-        <button type="submit" className="btn btn-primary mt-2 w-full">Calcular</button>
+        <div className="flex gap-2 mt-2">
+          <button type="submit" className="btn btn-primary flex-1">Calcular</button>
+          <button 
+            type="button" 
+            onClick={() => {
+              // ZERAR todos os campos
+              Object.keys(inputRefs.current).forEach(key => {
+                const input = inputRefs.current[key];
+                if (input) input.value = '';
+              });
+              // Resetar todos os estados
+              setSelectedNcm(null);
+              setNcmSearch('');
+              setResult(null);
+              setShowScenarios(false);
+              setShowTemplates(false);
+              setShowHistory(false);
+              setShowMarkupCalculator(false);
+              setSelectedTemplate(null);
+              // Resetar valores de markup e margem
+              setMarkupPercentage('20');
+              setProfitMarginPercentage('16.67');
+            }}
+            className="btn bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md transition-colors"
+          >
+            🗑️ Limpar Tudo
+          </button>
+        </div>
       </form>
 
       {/* Coluna 3 – Resultado */}
@@ -795,22 +822,57 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
             </div>
 
             {/* Explicação da Diferença */}
-            <div className="text-xs text-purple-600 dark:text-purple-400 bg-purple-100 dark:bg-purple-900/30 p-2 rounded">
-              <div className="font-semibold mb-1">💡 Diferença entre Markup e Margem:</div>
-              <div className="space-y-1">
-                <div><strong>Markup:</strong> Percentual sobre o <strong>custo</strong> (Custo + Markup = Preço)</div>
-                <div><strong>Margem:</strong> Percentual sobre o <strong>preço final</strong> (Preço - Custo = Lucro)</div>
-                <div><strong>Exemplo:</strong> 20% markup = 16.67% margem (20/120 = 16.67%)</div>
+            <div className="text-sm text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-800/50 p-3 rounded-lg border border-gray-200 dark:border-gray-700">
+              <div className="font-semibold mb-2 text-gray-900 dark:text-white flex items-center gap-1">
+                <span className="text-yellow-500">💡</span>
+                Diferença entre Markup e Margem:
+              </div>
+              <div className="space-y-2">
+                <div className="flex items-start gap-2">
+                  <span className="text-blue-600 font-semibold">•</span>
+                  <div>
+                    <strong className="text-gray-900 dark:text-white">Markup:</strong> 
+                    <span className="text-gray-600 dark:text-gray-400"> Percentual sobre o <strong>custo</strong> (Custo + Markup = Preço)</span>
+                  </div>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="text-green-600 font-semibold">•</span>
+                  <div>
+                    <strong className="text-gray-900 dark:text-white">Margem:</strong> 
+                    <span className="text-gray-600 dark:text-gray-400"> Percentual sobre o <strong>preço final</strong> (Preço - Custo = Lucro)</span>
+                  </div>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="text-purple-600 font-semibold">•</span>
+                  <div>
+                    <strong className="text-gray-900 dark:text-white">Exemplo:</strong> 
+                    <span className="text-gray-600 dark:text-gray-400"> 20% markup = 16.67% margem (20/120 = 16.67%)</span>
+                  </div>
+                </div>
               </div>
             </div>
 
             {/* Status de Rentabilidade */}
-            <div className="mt-3 pt-2 border-t border-purple-300 dark:border-purple-700">
-              <div className="flex justify-between">
-                <span>Status da Operação:</span>
-                <span className={`font-semibold ${result.revenueUSD > toNumber(getVal('fob')) ? 'text-green-600' : 'text-red-600'}`}>
-                  {result.revenueUSD > toNumber(getVal('fob')) ? '✅ Lucrativa' : '⚠️ Precisa Otimização'}
-                </span>
+            <div className="mt-4 pt-3 border-t border-gray-300 dark:border-gray-600">
+              <div className="flex justify-between items-center">
+                <span className="text-gray-700 dark:text-gray-300 font-medium">Status da Operação:</span>
+                <div className={`flex items-center gap-2 px-3 py-1 rounded-full font-semibold text-sm ${
+                  result.revenueUSD > toNumber(getVal('fob')) 
+                    ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 border border-green-200 dark:border-green-800' 
+                    : 'bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-200 border border-orange-200 dark:border-orange-800'
+                }`}>
+                  {result.revenueUSD > toNumber(getVal('fob')) ? (
+                    <>
+                      <span className="text-green-600">✅</span>
+                      <span>Lucrativa</span>
+                    </>
+                  ) : (
+                    <>
+                      <span className="text-orange-600">⚠️</span>
+                      <span>Precisa Otimização</span>
+                    </>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -820,17 +882,30 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
             <button
               type="button"
               onClick={() => setShowScenarios(!showScenarios)}
-              className="text-sm text-accent hover:underline"
+              className="text-sm text-gray-700 dark:text-gray-300 hover:text-accent dark:hover:text-accent transition-colors font-medium flex items-center gap-1"
             >
+              <span className="text-accent">📊</span>
               {showScenarios ? 'Ocultar' : 'Ver'} cenários otimista/pessimista
             </button>
             {showScenarios && (
-              <div className="mt-2 space-y-2 text-xs">
-                <div className="p-2 bg-green-50 dark:bg-green-900/20 rounded">
-                  <strong>Cenário Otimista (+10%):</strong> {usd(result.scenarioOptimistic.revenueUSD)} / {brl(result.scenarioOptimistic.revenueBRL)}
+              <div className="mt-3 space-y-3">
+                <div className="p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-green-600">📈</span>
+                    <strong className="text-green-800 dark:text-green-200">Cenário Otimista (+10%):</strong>
+                  </div>
+                  <div className="text-sm text-green-700 dark:text-green-300">
+                    {usd(result.scenarioOptimistic.revenueUSD)} / {brl(result.scenarioOptimistic.revenueBRL)}
+                  </div>
                 </div>
-                <div className="p-2 bg-red-50 dark:bg-red-900/20 rounded">
-                  <strong>Cenário Pessimista (-10%):</strong> {usd(result.scenarioPessimistic.revenueUSD)} / {brl(result.scenarioPessimistic.revenueBRL)}
+                <div className="p-3 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-red-600">📉</span>
+                    <strong className="text-red-800 dark:text-red-200">Cenário Pessimista (-10%):</strong>
+                  </div>
+                  <div className="text-sm text-red-700 dark:text-red-300">
+                    {usd(result.scenarioPessimistic.revenueUSD)} / {brl(result.scenarioPessimistic.revenueBRL)}
+                  </div>
                 </div>
               </div>
             )}
@@ -851,36 +926,50 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
             ⚠️ Valores aproximados. Para cálculos precisos e otimização, consulte nossos especialistas.
           </p>
 
-          {/* Botões de ação */}
-          <div className="space-y-2">
-            <div className="flex gap-2">
+          {/* Botões de Ação Elegantes */}
+          <div className="mt-6 space-y-4">
+            {/* Seção de Download */}
+            <div className="flex items-center gap-3">
               <select 
                 value={fileType} 
                 onChange={(e) => setFileType(e.target.value as 'pdf' | 'xls')} 
-                className="border border-accent rounded-md bg-gray-100 dark:bg-gray-700 p-2 text-sm text-gray-900 dark:text-white focus:ring-accent focus:border-accent"
+                className="glass px-4 py-2 rounded-lg text-white shadow-gold card-hover transition-all duration-300 border border-accent/20 backdrop-blur-sm text-sm bg-transparent"
               >
-                <option value="pdf">PDF</option>
-                <option value="xls">XLS</option>
+                <option value="pdf" className="bg-gray-800 text-white">📄 PDF</option>
+                <option value="xls" className="bg-gray-800 text-white">📊 XLS</option>
               </select>
-              <button type="button" className="btn bg-accent text-[#0a0f1d] hover:bg-[#b9952e]" onClick={exportReport}>
-                Baixar
+              <button 
+                type="button" 
+                onClick={exportReport}
+                className="glass px-6 py-2 rounded-lg text-white shadow-gold card-hover transition-all duration-300 flex items-center gap-2 border border-accent/20 backdrop-blur-sm text-sm font-medium"
+              >
+                <span className="text-accent">⬇️</span>
+                Baixar Relatório
               </button>
             </div>
-            
-            <button
-              type="button"
-              onClick={() => {
-                const name = prompt('Nome para salvar esta simulação:');
-                if (name) saveSimulation(name);
-              }}
-              className="btn bg-green-600 hover:bg-green-700 text-white w-full"
-            >
-              💾 Salvar Simulação
-            </button>
-            
-            <a href="/contato" className="btn btn-gold animate-gold-pulse w-full text-center">
-              Falar com Especialista
-            </a>
+
+            {/* Botões de Ação Principais */}
+            <div className="flex flex-col sm:flex-row gap-3">
+              <button 
+                type="button"
+                onClick={() => {
+                  const name = prompt('Nome para salvar a simulação:');
+                  if (name && result) saveSimulation(name);
+                }}
+                className="glass px-6 py-3 rounded-lg text-white shadow-gold card-hover transition-all duration-300 flex items-center justify-center gap-2 border border-green-500/20 backdrop-blur-sm text-sm font-medium bg-gradient-to-r from-green-600/20 to-green-700/20"
+              >
+                <span className="text-green-400">💾</span>
+                Salvar Simulação
+              </button>
+              
+              <a 
+                href="/contato" 
+                className="glass px-6 py-3 rounded-lg text-white shadow-gold card-hover transition-all duration-300 flex items-center justify-center gap-2 border border-accent/20 backdrop-blur-sm text-sm font-medium bg-gradient-to-r from-accent/20 to-accent/30 animate-pulse"
+              >
+                <span className="text-accent">💬</span>
+                Falar com Especialista
+              </a>
+            </div>
           </div>
 
           <Image src="/images/BANNER-HOME.jpeg" alt="Banner OLV" width={1200} height={300} className="mt-8 rounded-lg w-full" />
