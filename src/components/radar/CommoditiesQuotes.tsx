@@ -6,14 +6,17 @@ import Icon from '../icons/Icon';
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
 export default function CommoditiesQuotes() {
-  const { data, error } = useSWR('/api/radar/commodities', fetcher, {
+  // Adicionar timestamp para forçar atualizações
+  const timestamp = Math.floor(Date.now() / 300000); // Muda a cada 5 minutos
+  const apiUrl = `/api/radar/commodities?t=${timestamp}`;
+
+  const { data, error } = useSWR(apiUrl, fetcher, {
     refreshInterval: 300_000, // 5 minutos
-    dedupingInterval: 0, // Sem deduplicação para garantir atualizações
-    focusThrottleInterval: 0, // Sem throttle no foco
     revalidateOnFocus: true, // Revalidar quando a aba ganha foco
     revalidateOnReconnect: true, // Revalidar quando reconecta
     errorRetryCount: 3, // Tentar 3 vezes em caso de erro
     errorRetryInterval: 5000, // Esperar 5s entre tentativas
+    keepPreviousData: false, // Não manter dados anteriores
   });
 
   if (error)

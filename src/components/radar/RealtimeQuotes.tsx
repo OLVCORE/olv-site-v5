@@ -35,17 +35,20 @@ export default function RealtimeQuotes({ symbols }: Props) {
 
   const symbolList = symbols && symbols.length > 0 ? symbols : defaultList;
 
+  // Adicionar timestamp para forçar atualizações
+  const timestamp = Math.floor(Date.now() / 180000); // Muda a cada 3 minutos
+  const apiUrl = `/api/radar/quotes?symbols=${symbolList.join(',')}&t=${timestamp}`;
+
   const { data, isValidating } = useSWR(
-    `/api/radar/quotes?symbols=${symbolList.join(',')}`,
+    apiUrl,
     fetcher,
     {
       refreshInterval: 180_000, // 3 minutos
-      dedupingInterval: 0, // Sem deduplicação para garantir atualizações
-      focusThrottleInterval: 0, // Sem throttle no foco
       revalidateOnFocus: true, // Revalidar quando a aba ganha foco
       revalidateOnReconnect: true, // Revalidar quando reconecta
       errorRetryCount: 3, // Tentar 3 vezes em caso de erro
       errorRetryInterval: 5000, // Esperar 5s entre tentativas
+      keepPreviousData: false, // Não manter dados anteriores
     }
   );
 
@@ -76,9 +79,14 @@ export default function RealtimeQuotes({ symbols }: Props) {
     <div className="overflow-x-auto">
       {/* Indicador de status e horário */}
       <div className="flex items-center justify-between mb-2 text-xs text-gray-500 dark:text-gray-400">
-        <span>
-          {isValidating ? '🔄 Atualizando...' : '✅ Atualizado'}
-        </span>
+        <div className="flex items-center gap-2">
+          <span>
+            {isValidating ? '🔄 Atualizando...' : '✅ Atualizado'}
+          </span>
+          {isValidating && (
+            <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-blue-500"></div>
+          )}
+        </div>
         {updatedAt && (
           <span>Última atualização: {updatedAt}</span>
         )}
