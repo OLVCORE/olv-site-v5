@@ -73,6 +73,11 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
     reintegraValue: number;
     drawbackValue: number;
     markup: number;
+    profitMargin: number;
+    markupValue: number;
+    profitMarginValue: number;
+    suggestedPriceWithMarkup: number;
+    actualProfit: number;
     scenarioOptimistic: {
       revenueUSD: number;
       revenueBRL: number;
@@ -107,9 +112,10 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
   const [showTemplates, setShowTemplates] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState<ProductTemplate | null>(null);
 
-  // Estados para markup
-  const [showMarkupCalculator, setShowMarkupCalculator] = useState(false);
-  const [markupPercentage, setMarkupPercentage] = useState('20');
+                // Estados para markup e margem
+              const [showMarkupCalculator, setShowMarkupCalculator] = useState(false);
+              const [markupPercentage, setMarkupPercentage] = useState('20');
+              const [profitMarginPercentage, setProfitMarginPercentage] = useState('16.67');
 
   // Estados para salvamento automático
   const [autoSaveEnabled, setAutoSaveEnabled] = useState(true);
@@ -349,6 +355,8 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
     const reintegraPct = toNumber(getVal('reintegra'));
     const drawbackPct = toNumber(getVal('drawback'));
     const exchange = toNumber(getVal('exchange')) || 1;
+    const markupPct = toNumber(markupPercentage);
+    const profitMarginPct = toNumber(profitMarginPercentage);
     setRate(exchange);
 
     const totalCosts = freight + insurance + inland + port + misc;
@@ -356,7 +364,14 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
     const drawbackValue = fob * (drawbackPct / 100);
     const revenueUSD = fob - totalCosts + reintegraValue + drawbackValue;
     const revenueBRL = revenueUSD * exchange;
-    const markup = ((revenueUSD - fob) / fob) * 100;
+
+    // Cálculos de Markup e Margem de Lucro
+    const markupValue = totalCosts * (markupPct / 100);
+    const suggestedPriceWithMarkup = totalCosts + markupValue;
+    const profitMarginValue = suggestedPriceWithMarkup * (profitMarginPct / 100);
+    const actualProfit = revenueUSD - totalCosts;
+    const actualMarkup = ((revenueUSD - fob) / fob) * 100;
+    const actualProfitMargin = ((actualProfit) / revenueUSD) * 100;
 
     // Cenários otimista e pessimista
     const scenarioOptimistic = {
@@ -374,7 +389,12 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
       revenueBRL, 
       reintegraValue, 
       drawbackValue, 
-      markup,
+      markup: actualMarkup,
+      profitMargin: actualProfitMargin,
+      markupValue,
+      profitMarginValue,
+      suggestedPriceWithMarkup,
+      actualProfit,
       scenarioOptimistic,
       scenarioPessimistic
     });
@@ -574,6 +594,59 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
         <Field name="drawback" label="Drawback" suffix="%" tip="Alíquota de drawback (0-100%)." />
         <Field name="exchange" label="Taxa USD → BRL" suffix="R$" tip="Cotação do dólar para conversão." />
         
+        {/* Seção de Markup e Margem */}
+        <div className="border-t border-gray-300 dark:border-gray-600 pt-4 mt-4">
+          <h4 className="text-sm font-semibold text-gray-800 dark:text-white mb-3">📊 Configurações de Rentabilidade</h4>
+          
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-200 dark:text-accent-light mb-1">
+                <span className="inline-flex items-center gap-1">
+                  Markup Desejado
+                  <InfoTooltip content="Percentual sobre o custo total para definir preço de venda sugerido" />
+                </span>
+              </label>
+              <div className="relative">
+                <input
+                  type="text"
+                  value={markupPercentage}
+                  onChange={(e) => setMarkupPercentage(e.target.value)}
+                  className="w-full rounded-md bg-gray-100 dark:bg-gray-700 border-none focus:ring-accent p-2 text-sm placeholder-gray-400 dark:placeholder-gray-500 text-gray-900 dark:text-white"
+                  placeholder="20"
+                />
+                <span className="absolute inset-y-0 right-3 flex items-center text-xs text-gray-500 pointer-events-none">
+                  %
+                </span>
+              </div>
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-200 dark:text-accent-light mb-1">
+                <span className="inline-flex items-center gap-1">
+                  Margem de Lucro
+                  <InfoTooltip content="Percentual de lucro sobre o preço de venda final" />
+                </span>
+              </label>
+              <div className="relative">
+                <input
+                  type="text"
+                  value={profitMarginPercentage}
+                  onChange={(e) => setProfitMarginPercentage(e.target.value)}
+                  className="w-full rounded-md bg-gray-100 dark:bg-gray-700 border-none focus:ring-accent p-2 text-sm placeholder-gray-400 dark:placeholder-gray-500 text-gray-900 dark:text-white"
+                  placeholder="16.67"
+                />
+                <span className="absolute inset-y-0 right-3 flex items-center text-xs text-gray-500 pointer-events-none">
+                  %
+                </span>
+              </div>
+            </div>
+          </div>
+          
+          <div className="mt-2 p-2 bg-blue-50 dark:bg-blue-900/20 rounded text-xs text-blue-800 dark:text-blue-200">
+            <strong>💡 Dica:</strong> Markup é sobre o custo, Margem é sobre o preço final. Ex: 20% markup = 16.67% margem.
+          </div>
+        </div>
+        
         <button type="submit" className="btn btn-primary mt-2 w-full">Calcular</button>
       </form>
 
@@ -677,18 +750,64 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
             </div>
           </div>
 
-          {/* Análise de Rentabilidade */}
+          {/* Análise de Rentabilidade Detalhada */}
           <div className="mb-4 p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
             <h4 className="font-semibold text-purple-800 dark:text-purple-200 mb-2">📊 Análise de Rentabilidade</h4>
-            <div className="text-sm text-purple-700 dark:text-purple-300">
+            
+            {/* Resultado Real */}
+            <div className="text-sm text-purple-700 dark:text-purple-300 mb-3">
+              <div className="font-semibold mb-2 text-purple-800 dark:text-purple-200">💰 Resultado Real da Operação:</div>
               <div className="flex justify-between mb-1">
-                <span>Markup sobre FOB:</span>
+                <span>• Lucro Real:</span>
+                <span className={`font-semibold ${result.actualProfit >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                  {result.actualProfit >= 0 ? '+' : ''}{usd(result.actualProfit)}
+                </span>
+              </div>
+              <div className="flex justify-between mb-1">
+                <span>• Markup Real (sobre FOB):</span>
                 <span className={`font-semibold ${result.markup >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                   {result.markup >= 0 ? '+' : ''}{result.markup.toFixed(2)}%
                 </span>
               </div>
               <div className="flex justify-between">
-                <span>Rentabilidade:</span>
+                <span>• Margem Real (sobre receita):</span>
+                <span className={`font-semibold ${result.profitMargin >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                  {result.profitMargin >= 0 ? '+' : ''}{result.profitMargin.toFixed(2)}%
+                </span>
+              </div>
+            </div>
+
+            {/* Sugestão de Preço */}
+            <div className="text-sm text-purple-700 dark:text-purple-300 mb-3">
+              <div className="font-semibold mb-2 text-purple-800 dark:text-purple-200">🎯 Sugestão de Preço (com Markup {markupPercentage}%):</div>
+              <div className="flex justify-between mb-1">
+                <span>• Preço Sugerido:</span>
+                <span className="font-semibold text-blue-600">{usd(result.suggestedPriceWithMarkup)}</span>
+              </div>
+              <div className="flex justify-between mb-1">
+                <span>• Valor do Markup:</span>
+                <span className="font-semibold text-blue-600">+{usd(result.markupValue)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>• Margem Resultante:</span>
+                <span className="font-semibold text-blue-600">{profitMarginPercentage}%</span>
+              </div>
+            </div>
+
+            {/* Explicação da Diferença */}
+            <div className="text-xs text-purple-600 dark:text-purple-400 bg-purple-100 dark:bg-purple-900/30 p-2 rounded">
+              <div className="font-semibold mb-1">💡 Diferença entre Markup e Margem:</div>
+              <div className="space-y-1">
+                <div><strong>Markup:</strong> Percentual sobre o <strong>custo</strong> (Custo + Markup = Preço)</div>
+                <div><strong>Margem:</strong> Percentual sobre o <strong>preço final</strong> (Preço - Custo = Lucro)</div>
+                <div><strong>Exemplo:</strong> 20% markup = 16.67% margem (20/120 = 16.67%)</div>
+              </div>
+            </div>
+
+            {/* Status de Rentabilidade */}
+            <div className="mt-3 pt-2 border-t border-purple-300 dark:border-purple-700">
+              <div className="flex justify-between">
+                <span>Status da Operação:</span>
                 <span className={`font-semibold ${result.revenueUSD > toNumber(getVal('fob')) ? 'text-green-600' : 'text-red-600'}`}>
                   {result.revenueUSD > toNumber(getVal('fob')) ? '✅ Lucrativa' : '⚠️ Precisa Otimização'}
                 </span>
