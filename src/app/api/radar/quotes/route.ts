@@ -73,7 +73,16 @@ export async function GET(req: NextRequest) {
 
   // Headers para evitar cache e garantir dados frescos
   return Response.json(
-    { rates: result, base: 'BRL', updatedAt: Date.now() },
+    { 
+      rates: result, 
+      base: 'BRL', 
+      updatedAt: Date.now(),
+      sources: {
+        fiat: 'European Central Bank (ECB)',
+        crypto: 'CoinGecko',
+        fallback: 'ExchangeRate-API'
+      }
+    },
     {
       headers: {
         'Cache-Control': 'no-cache, no-store, must-revalidate',

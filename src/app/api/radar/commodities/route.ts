@@ -43,7 +43,7 @@ export async function GET(req: NextRequest) {
 
     // Headers para evitar cache e garantir dados frescos
     return Response.json(
-      { prices: pricesBRL, base: 'BRL', updatedAt: Date.now(), source:'financialmodelingprep.com' },
+      { prices: pricesBRL, base: 'BRL', updatedAt: Date.now(), source:'Yahoo Finance' },
       {
         headers: {
           'Cache-Control': 'no-cache, no-store, must-revalidate',

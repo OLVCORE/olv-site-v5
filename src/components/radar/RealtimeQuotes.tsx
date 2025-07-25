@@ -7,7 +7,12 @@ const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
 function formatBRL(value: number | null | undefined) {
   return typeof value === 'number'
-    ? value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+    ? value.toLocaleString('pt-BR', { 
+        style: 'currency', 
+        currency: 'BRL',
+        minimumFractionDigits: 4,
+        maximumFractionDigits: 4
+      })
     : '—';
 }
 
@@ -115,6 +120,20 @@ export default function RealtimeQuotes({ symbols }: Props) {
           ))}
         </tbody>
       </table>
+      
+      {/* Rodapé com fontes de dados */}
+      <div className="mt-3 text-xs text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-gray-700 pt-2">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div className="flex items-center gap-4">
+            <span>📊 Fontes:</span>
+            <span>💱 Moedas: European Central Bank (ECB)</span>
+            <span>₿ Crypto: CoinGecko</span>
+          </div>
+          <span className="text-xs opacity-75">
+            Dados em tempo real • Atualização automática
+          </span>
+        </div>
+      </div>
     </div>
   );
 } 
