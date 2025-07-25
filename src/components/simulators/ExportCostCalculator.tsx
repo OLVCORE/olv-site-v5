@@ -476,29 +476,29 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
       {/* Coluna 2 – Formulário */}
       <form onSubmit={handleSubmit} className="space-y-4 order-1 lg:order-1">
         {/* Barra de ferramentas */}
-        <div className="flex flex-wrap gap-2 mb-4">
+        <div className="flex items-center gap-1 mb-3">
           <button
             type="button"
             onClick={() => setShowTemplates(true)}
-            className="btn btn-sm bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
+            className="glass px-2 py-1 rounded-md text-white shadow-gold card-hover transition-all duration-300 flex items-center gap-1 border border-accent/20 backdrop-blur-sm text-xs"
           >
-            <img src="/icons/templates-glass.svg" alt="Templates" className="w-4 h-4" />
+            <img src="/icons/templates-glass.svg" alt="Templates" className="w-3 h-3" />
             Templates
           </button>
           <button
             type="button"
             onClick={() => setShowHistory(true)}
-            className="btn btn-sm bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
+            className="glass px-2 py-1 rounded-md text-white shadow-gold card-hover transition-all duration-300 flex items-center gap-1 border border-accent/20 backdrop-blur-sm text-xs"
           >
-            <img src="/icons/history-glass.svg" alt="Histórico" className="w-4 h-4" />
+            <img src="/icons/history-glass.svg" alt="Histórico" className="w-3 h-3" />
             Histórico
           </button>
           <button
             type="button"
             onClick={() => setShowMarkupCalculator(true)}
-            className="btn btn-sm bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
+            className="glass px-2 py-1 rounded-md text-white shadow-gold card-hover transition-all duration-300 flex items-center gap-1 border border-accent/20 backdrop-blur-sm text-xs"
           >
-            <img src="/icons/markup-glass.svg" alt="Markup" className="w-4 h-4" />
+            <img src="/icons/markup-glass.svg" alt="Markup" className="w-3 h-3" />
             Markup
           </button>
           <label className="flex items-center gap-2 text-sm">
@@ -583,23 +583,118 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
           ref={resultRef}
           className={`bg-gray-100 dark:bg-gray-700 p-4 rounded-lg text-sm md:text-base order-2 lg:order-${showQuotes ? '3' : '2'}`}
         >
-          <h3 className="font-semibold text-lg mb-2 text-gray-800 dark:text-white">Resultado</h3>
+          <h3 className="font-semibold text-lg mb-3 text-gray-800 dark:text-white flex items-center gap-2">
+            📊 Análise Completa de Exportação
+          </h3>
           
           {selectedNcm && (
-            <div className="mb-3 p-2 bg-blue-50 dark:bg-blue-900/20 rounded text-xs text-blue-800 dark:text-blue-200">
-              <strong>NCM:</strong> {selectedNcm.code} - {selectedNcm.description}
+            <div className="mb-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-sm text-blue-800 dark:text-blue-200">
+              <strong>📋 Produto:</strong> {selectedNcm.code} - {selectedNcm.description}
             </div>
           )}
 
-          <table className="w-full text-left text-gray-700 dark:text-gray-300 text-sm mb-4">
-            <tbody>
-              <tr><td className="pr-4">Crédito Reintegra</td><td>{usd(result.reintegraValue)}</td><td>{brl(result.reintegraValue * rate)}</td></tr>
-              <tr><td className="pr-4">Crédito Drawback</td><td>{usd(result.drawbackValue)}</td><td>{brl(result.drawbackValue * rate)}</td></tr>
-              <tr><td className="pr-4">Custos Totais</td><td>{usd(result.totalCosts)}</td><td>{brl(result.totalCosts * rate)}</td></tr>
-              <tr className="font-bold border-t"><td className="pr-4">Receita Líquida</td><td>{usd(result.revenueUSD)}</td><td>{brl(result.revenueBRL)}</td></tr>
-              <tr><td className="pr-4">Markup</td><td colSpan={2}>{result.markup.toFixed(2)}%</td></tr>
-            </tbody>
-          </table>
+          {/* Passo 1: Valor Base */}
+          <div className="mb-4 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
+            <h4 className="font-semibold text-green-800 dark:text-green-200 mb-2">💰 1. Valor FOB (Base de Cálculo)</h4>
+            <div className="text-sm text-green-700 dark:text-green-300">
+              <div className="flex justify-between">
+                <span>Valor da mercadoria:</span>
+                <span className="font-semibold">{usd(toNumber(getVal('fob')))} / {brl(toNumber(getVal('fob')) * rate)}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Passo 2: Custos Detalhados */}
+          <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 rounded-lg">
+            <h4 className="font-semibold text-red-800 dark:text-red-200 mb-2">💸 2. Custos de Exportação</h4>
+            <div className="text-sm text-red-700 dark:text-red-300 space-y-1">
+              <div className="flex justify-between">
+                <span>• Frete Internacional:</span>
+                <span>{usd(toNumber(getVal('freight')))}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>• Seguro:</span>
+                <span>{usd(toNumber(getVal('insurance')))}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>• Frete Interno:</span>
+                <span>{usd(toNumber(getVal('inland')))}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>• Taxas Portuárias:</span>
+                <span>{usd(toNumber(getVal('port')))}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>• Outras Despesas:</span>
+                <span>{usd(toNumber(getVal('misc')))}</span>
+              </div>
+              <div className="border-t pt-1 mt-2 flex justify-between font-semibold">
+                <span>Total de Custos:</span>
+                <span>{usd(result.totalCosts)} / {brl(result.totalCosts * rate)}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Passo 3: Benefícios Fiscais */}
+          <div className="mb-4 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
+            <h4 className="font-semibold text-yellow-800 dark:text-yellow-200 mb-2">🎯 3. Benefícios Fiscais (Incentivos)</h4>
+            <div className="text-sm text-yellow-700 dark:text-yellow-300 space-y-1">
+              <div className="flex justify-between">
+                <span>• Crédito Reintegra ({getVal('reintegra')}%):</span>
+                <span className="font-semibold text-green-600">+{usd(result.reintegraValue)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>• Crédito Drawback ({getVal('drawback')}%):</span>
+                <span className="font-semibold text-green-600">+{usd(result.drawbackValue)}</span>
+              </div>
+              <div className="border-t pt-1 mt-2 flex justify-between font-semibold">
+                <span>Total de Benefícios:</span>
+                <span className="text-green-600">+{usd(result.reintegraValue + result.drawbackValue)} / +{brl((result.reintegraValue + result.drawbackValue) * rate)}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Passo 4: Resultado Final */}
+          <div className="mb-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+            <h4 className="font-semibold text-blue-800 dark:text-blue-200 mb-2">📈 4. Resultado Final</h4>
+            <div className="text-sm text-blue-700 dark:text-blue-300 space-y-2">
+              <div className="flex justify-between">
+                <span>Valor FOB:</span>
+                <span>{usd(toNumber(getVal('fob')))}</span>
+              </div>
+              <div className="flex justify-between text-red-600">
+                <span>- Custos Totais:</span>
+                <span>-{usd(result.totalCosts)}</span>
+              </div>
+              <div className="flex justify-between text-green-600">
+                <span>+ Benefícios Fiscais:</span>
+                <span>+{usd(result.reintegraValue + result.drawbackValue)}</span>
+              </div>
+              <div className="border-t pt-2 mt-2 flex justify-between font-bold text-lg">
+                <span>= Receita Líquida:</span>
+                <span className="text-green-600">{usd(result.revenueUSD)} / {brl(result.revenueBRL)}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Análise de Rentabilidade */}
+          <div className="mb-4 p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+            <h4 className="font-semibold text-purple-800 dark:text-purple-200 mb-2">📊 Análise de Rentabilidade</h4>
+            <div className="text-sm text-purple-700 dark:text-purple-300">
+              <div className="flex justify-between mb-1">
+                <span>Markup sobre FOB:</span>
+                <span className={`font-semibold ${result.markup >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                  {result.markup >= 0 ? '+' : ''}{result.markup.toFixed(2)}%
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span>Rentabilidade:</span>
+                <span className={`font-semibold ${result.revenueUSD > toNumber(getVal('fob')) ? 'text-green-600' : 'text-red-600'}`}>
+                  {result.revenueUSD > toNumber(getVal('fob')) ? '✅ Lucrativa' : '⚠️ Precisa Otimização'}
+                </span>
+              </div>
+            </div>
+          </div>
 
           {/* Comparação de cenários */}
           <div className="mb-4">
@@ -622,8 +717,19 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
             )}
           </div>
 
+          {/* Call-to-Action Persuasivo */}
+          <div className="mb-4 p-3 bg-gradient-to-r from-accent/10 to-accent/5 rounded-lg border border-accent/20">
+            <h4 className="font-semibold text-accent mb-2">🚀 Quer Otimizar Sua Exportação?</h4>
+            <div className="text-sm text-gray-700 dark:text-gray-300 space-y-1">
+              <p>• <strong>Reduzir custos</strong> com negociação de fretes</p>
+              <p>• <strong>Maximizar benefícios</strong> fiscais (Reintegra/Drawback)</p>
+              <p>• <strong>Otimizar NCM</strong> para alíquotas corretas</p>
+              <p>• <strong>Consultoria especializada</strong> em comércio exterior</p>
+            </div>
+          </div>
+
           <p className="text-xs text-yellow-600 dark:text-yellow-400 mb-4">
-            Valores aproximados. Consulte seu despachante para detalhes fiscais.
+            ⚠️ Valores aproximados. Para cálculos precisos e otimização, consulte nossos especialistas.
           </p>
 
           {/* Botões de ação */}
