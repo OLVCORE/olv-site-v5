@@ -17,7 +17,7 @@ export default function SimuladoresPage() {
     {
       title: 'Simulador de Importação',
       description: 'Calcule custos completos de importação incluindo impostos, frete e despesas aduaneiras',
-      icon: '/icons/import.svg',
+      icon: '/icons/import-glass.svg',
       href: '/simuladores/importacao',
       features: ['Cálculo de impostos', 'Frete internacional', 'Despesas aduaneiras', 'Custos portuários']
     },
@@ -31,28 +31,28 @@ export default function SimuladoresPage() {
     {
       title: 'Conversor de Câmbio',
       description: 'Conversão em tempo real de moedas com histórico de cotações',
-      icon: '/icons/currency.svg',
+      icon: '/icons/currency-exchange.svg',
       href: '/simuladores/cambio',
       features: ['Cotações em tempo real', 'Histórico de câmbio', 'Múltiplas moedas', 'Gráficos de variação']
     },
     {
       title: 'Calculadora de Frete',
       description: 'Compare custos de frete marítimo, aéreo e terrestre internacional',
-      icon: '/icons/freight.svg',
+      icon: '/icons/logistics.svg',
       href: '/simuladores/frete-full',
       features: ['Frete marítimo', 'Frete aéreo', 'Frete terrestre', 'Comparativo de modalidades']
     },
     {
       title: 'Simulador Tributário',
       description: 'Calcule impostos e benefícios fiscais para operações de comércio exterior',
-      icon: '/icons/tax.svg',
+      icon: '/icons/compliance.svg',
       href: '/simuladores/tributario-light',
       features: ['ICMS', 'IPI', 'PIS/COFINS', 'Benefícios fiscais']
     },
     {
       title: 'Calculadora de Cubagem',
       description: 'Otimize o aproveitamento de espaço em contêineres e cargas',
-      icon: '/icons/cube.svg',
+      icon: '/icons/warehouse.svg',
       href: '/simuladores/cubagem',
       features: ['Cálculo de volume', 'Otimização de espaço', 'Diferentes tipos de contêiner', 'Carga mista']
     }
@@ -87,7 +87,7 @@ export default function SimuladoresPage() {
                   <ul className="mb-6 space-y-2">
                     {simulador.features.map((feature, featureIndex) => (
                       <li key={featureIndex} className="flex items-center text-sm text-gray-500 dark:text-gray-400">
-                        <Icon src="/icons/check.svg" alt="Check" size="sm" className="mr-2 text-green-500" />
+                        <span className="mr-2 text-green-500">✓</span>
                         {feature}
                       </li>
                     ))}
