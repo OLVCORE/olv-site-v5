@@ -4,7 +4,6 @@ import MainLayout from '../../components/layout/MainLayout';
 import Icon from '../../components/icons/Icon';
 import RealtimeQuotes from '../../components/radar/RealtimeQuotes';
 import CommoditiesQuotes from '../../components/radar/CommoditiesQuotes';
-import FloatingSimulatorButton from '../../components/FloatingSimulatorButton';
 
 export const metadata = {
   title: 'Radar 360 | OLV Internacional - Inteligência e Dados para Setores Industriais',
