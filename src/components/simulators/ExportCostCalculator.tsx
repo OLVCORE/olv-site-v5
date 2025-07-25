@@ -480,23 +480,26 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
           <button
             type="button"
             onClick={() => setShowTemplates(true)}
-            className="btn btn-sm bg-blue-600 hover:bg-blue-700 text-white"
+            className="btn btn-sm bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
           >
-            📋 Templates
+            <img src="/icons/templates-glass.svg" alt="Templates" className="w-4 h-4" />
+            Templates
           </button>
           <button
             type="button"
             onClick={() => setShowHistory(true)}
-            className="btn btn-sm bg-green-600 hover:bg-green-700 text-white"
+            className="btn btn-sm bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
           >
-            💾 Histórico
+            <img src="/icons/history-glass.svg" alt="Histórico" className="w-4 h-4" />
+            Histórico
           </button>
           <button
             type="button"
             onClick={() => setShowMarkupCalculator(true)}
-            className="btn btn-sm bg-purple-600 hover:bg-purple-700 text-white"
+            className="btn btn-sm bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
           >
-            📈 Markup
+            <img src="/icons/markup-glass.svg" alt="Markup" className="w-4 h-4" />
+            Markup
           </button>
           <label className="flex items-center gap-2 text-sm">
             <input
