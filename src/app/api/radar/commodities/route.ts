@@ -1,5 +1,6 @@
 export const runtime = 'nodejs';
-export const revalidate = 600; // 10 min
+// Removido revalidate para evitar conflito com SWR
+// export const revalidate = 600; // 10 min
 
 import { NextRequest } from 'next/server';
 
@@ -40,7 +41,18 @@ export async function GET(req: NextRequest) {
       pricesBRL[sym]= usdToBrl? (val as number)*usdToBrl : val;
     });
 
-    return Response.json({ prices: pricesBRL, base: 'BRL', updatedAt: Date.now(), source:'financialmodelingprep.com' });
+    // Headers para evitar cache e garantir dados frescos
+    return Response.json(
+      { prices: pricesBRL, base: 'BRL', updatedAt: Date.now(), source:'financialmodelingprep.com' },
+      {
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0',
+          'X-Updated-At': Date.now().toString(),
+        }
+      }
+    );
   } catch (e) {
     return Response.json({ error: 'failed', message: (e as Error).message }, { status: 500 });
   }

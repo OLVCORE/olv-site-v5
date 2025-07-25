@@ -7,7 +7,13 @@ const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
 export default function CommoditiesQuotes() {
   const { data, error } = useSWR('/api/radar/commodities', fetcher, {
-    refreshInterval: 300_000,
+    refreshInterval: 300_000, // 5 minutos
+    dedupingInterval: 0, // Sem deduplicação para garantir atualizações
+    focusThrottleInterval: 0, // Sem throttle no foco
+    revalidateOnFocus: true, // Revalidar quando a aba ganha foco
+    revalidateOnReconnect: true, // Revalidar quando reconecta
+    errorRetryCount: 3, // Tentar 3 vezes em caso de erro
+    errorRetryInterval: 5000, // Esperar 5s entre tentativas
   });
 
   if (error)

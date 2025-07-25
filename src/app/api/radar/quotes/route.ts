@@ -1,5 +1,6 @@
 export const runtime = 'nodejs';
-export const revalidate = 300; // 5 minutes
+// Removido revalidate para evitar conflito com SWR
+// export const revalidate = 300; // 5 minutes
 
 import { NextRequest } from 'next/server';
 
@@ -70,5 +71,16 @@ export async function GET(req: NextRequest) {
     result['BTC'] = await fetchBtcRate();
   }
 
-  return Response.json({ rates: result, base: 'BRL', updatedAt: Date.now() });
+  // Headers para evitar cache e garantir dados frescos
+  return Response.json(
+    { rates: result, base: 'BRL', updatedAt: Date.now() },
+    {
+      headers: {
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0',
+        'X-Updated-At': Date.now().toString(),
+      }
+    }
+  );
 } 

@@ -34,7 +34,13 @@ export default function RealtimeQuotes({ symbols }: Props) {
     `/api/radar/quotes?symbols=${symbolList.join(',')}`,
     fetcher,
     {
-      refreshInterval: 180_000,
+      refreshInterval: 180_000, // 3 minutos
+      dedupingInterval: 0, // Sem deduplicação para garantir atualizações
+      focusThrottleInterval: 0, // Sem throttle no foco
+      revalidateOnFocus: true, // Revalidar quando a aba ganha foco
+      revalidateOnReconnect: true, // Revalidar quando reconecta
+      errorRetryCount: 3, // Tentar 3 vezes em caso de erro
+      errorRetryInterval: 5000, // Esperar 5s entre tentativas
     }
   );
 
@@ -52,8 +58,27 @@ export default function RealtimeQuotes({ symbols }: Props) {
     BTC: 'Bitcoin (BTC)',
   };
 
+  // Formatar horário da última atualização
+  const updatedAt = data?.updatedAt
+    ? new Date(data.updatedAt).toLocaleTimeString('pt-BR', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+      })
+    : null;
+
   return (
     <div className="overflow-x-auto">
+      {/* Indicador de status e horário */}
+      <div className="flex items-center justify-between mb-2 text-xs text-gray-500 dark:text-gray-400">
+        <span>
+          {isValidating ? '🔄 Atualizando...' : '✅ Atualizado'}
+        </span>
+        {updatedAt && (
+          <span>Última atualização: {updatedAt}</span>
+        )}
+      </div>
+
       <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700 text-sm md:text-base">
         <thead className="bg-gray-50 dark:bg-gray-800">
           <tr>
@@ -90,9 +115,6 @@ export default function RealtimeQuotes({ symbols }: Props) {
           ))}
         </tbody>
       </table>
-      {isValidating && (
-        <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">Atualizando…</p>
-      )}
     </div>
   );
 } 
