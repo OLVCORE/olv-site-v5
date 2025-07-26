@@ -3,7 +3,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import InfoTooltip from '../ui/InfoTooltip';
 import Image from 'next/image';
-import RealtimeQuotes from '../radar/RealtimeQuotes';
 import SimulatorDisclaimer from './SimulatorDisclaimer';
 
 // Função toNumber global para uso em todo o componente
