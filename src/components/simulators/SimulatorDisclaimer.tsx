@@ -1,7 +1,6 @@
 "use client";
 
 import React from 'react';
-import Icon from '../icons/Icon';
 
 interface SimulatorDisclaimerProps {
   className?: string;
