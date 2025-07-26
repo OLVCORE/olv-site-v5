@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import InfoTooltip from '../ui/InfoTooltip';
 import Image from 'next/image';
 import SimulatorDisclaimer from './SimulatorDisclaimer';
-import { calculateExportCost, validarInputsExportacao, formatarValorExportacao, formatarPercentualExportacao, analisarCompetitividade, ExportCostInput, ExportCostOutput } from '@/lib/exportCost';
+import { calculateExportCost, validarInputsExportacao, ExportCostInput, ExportCostOutput } from '@/lib/exportCost';
 
 // Função toNumber global para uso em todo o componente
 const toNumber = (s:string)=>{
@@ -62,14 +62,14 @@ interface ProductTemplate {
   defaultMisc: string;
 }
 
-export default function ExportCostCalculator({showQuotes=true}:Props) {
+export default function ExportCostCalculator({showQuotes: _showQuotes=true}:Props) {
   const inputRefs = useRef<Record<string, HTMLInputElement | null>>({});
   const [result, setResult] = useState<ExportCostOutput | null>(null);
   const [rate, setRate] = useState(1);
   const [fileType, setFileType] = useState<'pdf' | 'xls'>('pdf');
   const resultRef = useRef<HTMLDivElement | null>(null);
   const [showForm, setShowForm] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [_submitted, setSubmitted] = useState(false);
   const contactRefs = useRef<Record<string, HTMLInputElement | HTMLTextAreaElement | HTMLInputElement | null>>({});
   
   // Estados para o seletor de NCM real
@@ -83,7 +83,7 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
   const [savedSimulations, setSavedSimulations] = useState<SavedSimulation[]>([]);
   const [showHistory, setShowHistory] = useState(false);
   const [showTemplates, setShowTemplates] = useState(false);
-  const [selectedTemplate, setSelectedTemplate] = useState<ProductTemplate | null>(null);
+  const [_selectedTemplate, setSelectedTemplate] = useState<ProductTemplate | null>(null);
 
   // Estados para o seletor de moedas
   const [selectedCurrency, setSelectedCurrency] = useState('USD');
@@ -186,7 +186,7 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
   };
   
   // Função para obter símbolo da moeda
-  const getCurrencySymbol = (currency: string) => {
+  const _getCurrencySymbol = (currency: string) => {
     const currencyMap: Record<string, string> = {
       'USD': '$',
       'EUR': '€',
@@ -206,7 +206,7 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
   };
 
   // Função para buscar cotações em tempo real
-  const fetchCurrencyRates = async () => {
+  const _fetchCurrencyRates = async () => {
     try {
       const symbols = availableCurrencies.map(c => c.code).join(',');
       const response = await fetch(`/api/radar/quotes?symbols=${symbols}`);
@@ -411,7 +411,7 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
     fetchRates();
     const interval = setInterval(fetchRates, 300000); // A cada 5 minutos
     return () => clearInterval(interval);
-  }, [selectedCurrency, isManualRate]);
+  }, [selectedCurrency, isManualRate, availableCurrencies]);
 
   // Buscar NCM quando o usuário digita
   useEffect(() => {
@@ -598,7 +598,7 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
             onClick={() => setShowTemplates(true)}
             className="glass px-2 py-1 rounded-md text-white shadow-gold card-hover transition-all duration-300 flex items-center gap-1 border border-accent/20 backdrop-blur-sm text-xs"
           >
-            <img src="/icons/templates-glass.svg" alt="Templates" className="w-3 h-3" />
+                            <Image src="/icons/templates-glass.svg" alt="Templates" width={12} height={12} />
             Templates
           </button>
           <button
@@ -606,7 +606,7 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
             onClick={() => setShowHistory(true)}
             className="glass px-2 py-1 rounded-md text-white shadow-gold card-hover transition-all duration-300 flex items-center gap-1 border border-accent/20 backdrop-blur-sm text-xs"
           >
-            <img src="/icons/history-glass.svg" alt="Histórico" className="w-3 h-3" />
+                            <Image src="/icons/history-glass.svg" alt="Histórico" width={12} height={12} />
             Histórico
           </button>
           <button
@@ -614,7 +614,7 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
             onClick={() => alert('Funcionalidade em desenvolvimento')}
             className="glass px-2 py-1 rounded-md text-white shadow-gold card-hover transition-all duration-300 flex items-center gap-1 border border-accent/20 backdrop-blur-sm text-xs"
           >
-            <img src="/icons/markup-glass.svg" alt="Markup" className="w-3 h-3" />
+                            <Image src="/icons/markup-glass.svg" alt="Markup" width={12} height={12} />
             Markup
           </button>
           <label className="flex items-center gap-2 text-sm">
