@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import InfoTooltip from '../ui/InfoTooltip';
 import Image from 'next/image';
 import SimulatorDisclaimer from './SimulatorDisclaimer';
+import { calculateExportCost, validarInputsExportacao, formatarValorExportacao, formatarPercentualExportacao, analisarCompetitividade, ExportCostInput, ExportCostOutput } from '@/lib/exportCost';
 
 // Função toNumber global para uso em todo o componente
 const toNumber = (s:string)=>{
@@ -44,14 +45,7 @@ interface SavedSimulation {
     exchange: string;
     selectedCurrency: string;
   };
-  result: {
-    totalCosts: number;
-    revenueUSD: number;
-    revenueBRL: number;
-    reintegraValue: number;
-    drawbackValue: number;
-    markup: number;
-  };
+  result: ExportCostOutput;
 }
 
 // Interface para template de produto
@@ -70,27 +64,7 @@ interface ProductTemplate {
 
 export default function ExportCostCalculator({showQuotes=true}:Props) {
   const inputRefs = useRef<Record<string, HTMLInputElement | null>>({});
-  const [result, setResult] = useState<null | {
-    totalCosts: number;
-    revenueUSD: number;
-    revenueBRL: number;
-    reintegraValue: number;
-    drawbackValue: number;
-    markup: number;
-    profitMargin: number;
-    markupValue: number;
-    profitMarginValue: number;
-    suggestedPriceWithMarkup: number;
-    actualProfit: number;
-    scenarioOptimistic: {
-      revenueUSD: number;
-      revenueBRL: number;
-    };
-    scenarioPessimistic: {
-      revenueUSD: number;
-      revenueBRL: number;
-    };
-  }>(null);
+  const [result, setResult] = useState<ExportCostOutput | null>(null);
   const [rate, setRate] = useState(1);
   const [fileType, setFileType] = useState<'pdf' | 'xls'>('pdf');
   const resultRef = useRef<HTMLDivElement | null>(null);
@@ -467,60 +441,42 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    const fob = toNumber(getVal('fob'));
-    const freight = toNumber(getVal('freight'));
-    const insurance = toNumber(getVal('insurance'));
-    const inland = toNumber(getVal('inland'));
-    const port = toNumber(getVal('port'));
-    const misc = toNumber(getVal('misc'));
-    const reintegra = toNumber(getVal('reintegra')) || 0;
-    const drawback = toNumber(getVal('drawback')) || 0;
-    const exchange = getCurrentRate();
-
-    const totalCosts = fob + freight + insurance + inland + port + misc;
-    const revenueUSD = fob;
-    const revenueBRL = revenueUSD * exchange;
-    
-    const reintegraValue = revenueUSD * (reintegra / 100);
-    const drawbackValue = revenueUSD * (drawback / 100);
-    
-    const markup = 20; // Markup padrão de 20%
-    const markupValue = revenueUSD * (markup / 100);
-    const profitMargin = 15; // Margem de lucro padrão de 15%
-    const profitMarginValue = revenueUSD * (profitMargin / 100);
-    
-    const suggestedPriceWithMarkup = revenueUSD + markupValue;
-    const actualProfit = revenueUSD - totalCosts + reintegraValue + drawbackValue;
-    
-    const scenarioOptimistic = {
-      revenueUSD: revenueUSD * 1.1,
-      revenueBRL: revenueUSD * 1.1 * exchange
-    };
-    
-    const scenarioPessimistic = {
-      revenueUSD: revenueUSD * 0.9,
-      revenueBRL: revenueUSD * 0.9 * exchange
+    // Preparar dados para o motor de cálculo
+    const inputs: ExportCostInput = {
+      ncm: selectedNcm?.code,
+      valor_fob_usd: toNumber(getVal('fob')),
+      frete_internacional_usd: toNumber(getVal('freight')),
+      seguro_usd: toNumber(getVal('insurance')),
+      frete_interno_usd: toNumber(getVal('inland')),
+      taxas_portuarias_usd: toNumber(getVal('port')),
+      outras_despesas_usd: toNumber(getVal('misc')),
+      reintegra_percent: toNumber(getVal('reintegra')) || 0,
+      drawback_percent: toNumber(getVal('drawback')) || 0,
+      markup_desejado: toNumber(getVal('markup')) || 20, // Markup do usuário ou padrão 20%
+      margem_lucro: toNumber(getVal('margem')) || 15, // Margem do usuário ou padrão 15%
+      exchangeRate: getCurrentRate()
     };
 
-    setRate(exchange);
-    setResult({
-      totalCosts,
-      revenueUSD,
-      revenueBRL,
-      reintegraValue,
-      drawbackValue,
-      markup,
-      profitMargin,
-      markupValue,
-      profitMarginValue,
-      suggestedPriceWithMarkup,
-      actualProfit,
-      scenarioOptimistic,
-      scenarioPessimistic
-    });
-    
-    // ✅ VALORES MANTIDOS - usuário pode editar e recalcular
-    // ✅ Só serão limpos quando clicar em "Limpar Tudo"
+    // Validar inputs
+    const validacao = validarInputsExportacao(inputs);
+    if (!validacao.valido) {
+      alert(`Erro de validação: ${validacao.alertas.map(a => a.mensagem).join(', ')}`);
+      return;
+    }
+
+    try {
+      // Executar cálculo usando o motor oficial
+      const resultado = calculateExportCost(inputs);
+      
+      setRate(inputs.exchangeRate);
+      setResult(resultado);
+      
+      // ✅ VALORES MANTIDOS - usuário pode editar e recalcular
+      // ✅ Só serão limpos quando clicar em "Limpar Tudo"
+    } catch (error) {
+      console.error('Erro no cálculo:', error);
+      alert('Erro ao calcular. Verifique os dados inseridos.');
+    }
   };
 
   // Funções de formatação e validação
@@ -818,10 +774,12 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
                 </span>
               </label>
               <div className="relative">
-                              <input
-                type="text"
-                value="20"
-                onChange={() => alert('Funcionalidade em desenvolvimento')}
+                <input
+                  ref={(el) => { inputRefs.current.markup = el; }}
+                  type="text"
+                  defaultValue="20"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
                   className="w-full rounded-md bg-gray-100 dark:bg-gray-700 border-none focus:ring-accent p-2 text-sm placeholder-gray-400 dark:placeholder-gray-500 text-gray-900 dark:text-white"
                   placeholder="20"
                 />
@@ -839,10 +797,12 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
                 </span>
               </label>
               <div className="relative">
-                              <input
-                type="text"
-                value="15"
-                onChange={() => alert('Funcionalidade em desenvolvimento')}
+                <input
+                  ref={(el) => { inputRefs.current.margem = el; }}
+                  type="text"
+                  defaultValue="15"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
                   className="w-full rounded-md bg-gray-100 dark:bg-gray-700 border-none focus:ring-accent p-2 text-sm placeholder-gray-400 dark:placeholder-gray-500 text-gray-900 dark:text-white"
                   placeholder="16.67"
                 />
@@ -954,7 +914,7 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
                 <div className="flex justify-between items-center py-3 bg-gray-50 dark:bg-gray-700 rounded-lg px-3">
                   <span className="font-semibold text-gray-900 dark:text-white">Total de Custos:</span>
                   <span className="font-bold text-gray-900 dark:text-white">
-                    {formatCurrency(result.totalCosts)} / {brl(result.totalCosts * rate)}
+                    {formatCurrency(result.secao2.total_custos.usd)} / {brl(result.secao2.total_custos.brl)}
                   </span>
                 </div>
               </div>
@@ -971,19 +931,19 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
                 <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
                   <span className="text-gray-700 dark:text-gray-300">Crédito Reintegra ({getVal('reintegra')}%):</span>
                   <span className="font-medium text-green-600 dark:text-green-400">
-                    {formatCurrency(result.reintegraValue)} / {brl(result.reintegraValue * rate)}
+                    {formatCurrency(result.secao3.credito_reintegra.usd)} / {brl(result.secao3.credito_reintegra.brl)}
                   </span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
                   <span className="text-gray-700 dark:text-gray-300">Crédito Drawback ({getVal('drawback')}%):</span>
                   <span className="font-medium text-green-600 dark:text-green-400">
-                    {formatCurrency(result.drawbackValue)} / {brl(result.drawbackValue * rate)}
+                    {formatCurrency(result.secao3.credito_drawback.usd)} / {brl(result.secao3.credito_drawback.brl)}
                   </span>
                 </div>
                 <div className="flex justify-between items-center py-3 bg-gray-50 dark:bg-gray-700 rounded-lg px-3">
                   <span className="font-semibold text-gray-900 dark:text-white">Total de Benefícios:</span>
                   <span className="font-bold text-green-600 dark:text-green-400">
-                    {formatCurrency(result.reintegraValue + result.drawbackValue)} / {brl((result.reintegraValue + result.drawbackValue) * rate)}
+                    {formatCurrency(result.secao3.total_beneficios.usd)} / {brl(result.secao3.total_beneficios.brl)}
                   </span>
                 </div>
               </div>
@@ -1006,19 +966,19 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
                 <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
                   <span className="text-gray-700 dark:text-gray-300">- Custos Totais:</span>
                   <span className="font-medium text-red-600 dark:text-red-400">
-                    -{formatCurrency(result.totalCosts)} / -{brl(result.totalCosts * rate)}
+                    -{formatCurrency(result.secao2.total_custos.usd)} / -{brl(result.secao2.total_custos.brl)}
                   </span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
                   <span className="text-gray-700 dark:text-gray-300">+ Benefícios Fiscais:</span>
                   <span className="font-medium text-green-600 dark:text-green-400">
-                    +{formatCurrency(result.reintegraValue + result.drawbackValue)} / +{brl((result.reintegraValue + result.drawbackValue) * rate)}
+                    +{formatCurrency(result.secao3.total_beneficios.usd)} / +{brl(result.secao3.total_beneficios.brl)}
                   </span>
                 </div>
                 <div className="flex justify-between items-center py-4 bg-gray-50 dark:bg-gray-700 rounded-lg px-3">
                   <span className="font-bold text-gray-900 dark:text-white text-lg">Receita Líquida:</span>
                   <span className="font-bold text-xl text-green-600 dark:text-green-400">
-                    {formatCurrency(result.revenueUSD)} / {brl(result.revenueBRL)}
+                    {formatCurrency(result.secao4.receita_liquida.usd)} / {brl(result.secao4.receita_liquida.brl)}
                   </span>
                 </div>
               </div>
@@ -1033,21 +993,33 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
             <div className="border border-gray-200 dark:border-gray-600 border-t-0 rounded-b-lg p-4 bg-white dark:bg-gray-800">
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
-                  <span className="text-gray-700 dark:text-gray-300">Lucro Real:</span>
-                  <span className={`font-medium ${result.actualProfit >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
-                    {result.actualProfit >= 0 ? '+' : ''}{formatCurrency(result.actualProfit)} / {result.actualProfit >= 0 ? '+' : ''}{brl(result.actualProfit * rate)}
+                  <span className="text-gray-700 dark:text-gray-300">Custo Real:</span>
+                  <span className="font-medium text-gray-900 dark:text-white">
+                    {formatCurrency(result.custo_real_usd)} / {brl(result.custo_real_brl)}
                   </span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
-                  <span className="text-gray-700 dark:text-gray-300">Markup Real (sobre FOB):</span>
-                  <span className={`font-medium ${result.markup >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
-                    {result.markup >= 0 ? '+' : ''}{result.markup.toFixed(2)}%
+                  <span className="text-gray-700 dark:text-gray-300">Lucro Real:</span>
+                  <span className={`font-medium ${result.secao5.lucro_real.usd >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
+                    {result.secao5.lucro_real.usd >= 0 ? '+' : ''}{formatCurrency(result.secao5.lucro_real.usd)} / {result.secao5.lucro_real.usd >= 0 ? '+' : ''}{brl(result.secao5.lucro_real.brl)}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
+                  <span className="text-gray-700 dark:text-gray-300">Markup Real (sobre custo):</span>
+                  <span className={`font-medium ${result.secao5.markup_real.valor >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
+                    {result.secao5.markup_real.valor >= 0 ? '+' : ''}{result.secao5.markup_real.valor.toFixed(2)}%
+                    <span className="text-xs text-gray-500 ml-2">
+                      ({result.secao5.markup_real.status === 'atingido' ? '✅' : '⚠️'} Meta: {result.secao5.markup_real.comparacao_desejado}%)
+                    </span>
                   </span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
                   <span className="text-gray-700 dark:text-gray-300">Margem Real (sobre receita):</span>
-                  <span className={`font-medium ${result.profitMargin >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
-                    {result.profitMargin >= 0 ? '+' : ''}{result.profitMargin.toFixed(2)}%
+                  <span className={`font-medium ${result.secao5.margem_real.valor >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
+                    {result.secao5.margem_real.valor >= 0 ? '+' : ''}{result.secao5.margem_real.valor.toFixed(2)}%
+                    <span className="text-xs text-gray-500 ml-2">
+                      ({result.secao5.margem_real.status === 'atingido' ? '✅' : '⚠️'} Meta: {result.secao5.margem_real.comparacao_desejado}%)
+                    </span>
                   </span>
                 </div>
                 
@@ -1055,19 +1027,26 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
                 <div className="flex justify-between items-center py-3 bg-gray-50 dark:bg-gray-700 rounded-lg px-3">
                   <span className="font-semibold text-gray-900 dark:text-white">Status da Exportação:</span>
                   <div className={`flex items-center gap-2 px-3 py-1 rounded-full font-semibold text-sm ${
-                    result.revenueUSD > toNumber(getVal('fob')) 
+                    result.secao5.status_exportacao.includes('Viável')
                       ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 border border-green-200 dark:border-green-800' 
-                      : 'bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-200 border border-orange-200 dark:border-orange-800'
+                      : result.secao5.status_exportacao.includes('Otimização')
+                      ? 'bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-200 border border-orange-200 dark:border-orange-800'
+                      : 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200 border border-red-200 dark:border-red-800'
                   }`}>
-                    {result.revenueUSD > toNumber(getVal('fob')) ? (
+                    {result.secao5.status_exportacao.includes('Viável') ? (
                       <>
                         <span className="text-green-600">✅</span>
                         <span>Lucrativa</span>
                       </>
-                    ) : (
+                    ) : result.secao5.status_exportacao.includes('Otimização') ? (
                       <>
                         <span className="text-orange-600">⚠️</span>
                         <span>Precisa Otimização</span>
+                      </>
+                    ) : (
+                      <>
+                        <span className="text-red-600">❌</span>
+                        <span>Não Viável</span>
                       </>
                     )}
                   </div>
@@ -1075,6 +1054,64 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
               </div>
             </div>
           </div>
+
+          {/* Seção 6: Preços Sugeridos */}
+          <div className="mb-6">
+            <div className="bg-gray-50 dark:bg-gray-700 px-4 py-3 rounded-t-lg border border-gray-200 dark:border-gray-600">
+              <h4 className="font-semibold text-gray-900 dark:text-white text-lg">6. Preços Sugeridos</h4>
+            </div>
+            <div className="border border-gray-200 dark:border-gray-600 border-t-0 rounded-b-lg p-4 bg-white dark:bg-gray-800">
+              <div className="space-y-3 text-sm">
+                <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
+                  <span className="text-gray-700 dark:text-gray-300">Preço Atual (FOB):</span>
+                  <span className="font-medium text-gray-900 dark:text-white">
+                    {formatCurrency(result.secao6.preco_atual.usd)} / {brl(result.secao6.preco_atual.brl)}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
+                  <span className="text-gray-700 dark:text-gray-300">{result.secao6.preco_markup_desejado.label}:</span>
+                  <span className="font-medium text-blue-600 dark:text-blue-400">
+                    {formatCurrency(result.secao6.preco_markup_desejado.usd)} / {brl(result.secao6.preco_markup_desejado.brl)}
+                    <span className="text-xs text-gray-500 ml-2">
+                      (+{formatCurrency(result.secao6.preco_markup_desejado.diferenca_usd)} / +{result.secao6.preco_markup_desejado.diferenca_percent.toFixed(1)}%)
+                    </span>
+                  </span>
+                </div>
+                <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
+                  <span className="text-gray-700 dark:text-gray-300">{result.secao6.preco_margem_desejada.label}:</span>
+                  <span className="font-medium text-purple-600 dark:text-purple-400">
+                    {formatCurrency(result.secao6.preco_margem_desejada.usd)} / {brl(result.secao6.preco_margem_desejada.brl)}
+                    <span className="text-xs text-gray-500 ml-2">
+                      (+{formatCurrency(result.secao6.preco_margem_desejada.diferenca_usd)} / +{result.secao6.preco_margem_desejada.diferenca_percent.toFixed(1)}%)
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Alertas e Recomendações */}
+          {result.alertas && result.alertas.length > 0 && (
+            <div className="mb-6">
+              <div className="bg-gray-50 dark:bg-gray-700 px-4 py-3 rounded-t-lg border border-gray-200 dark:border-gray-600">
+                <h4 className="font-semibold text-gray-900 dark:text-white text-lg">⚠️ Alertas e Recomendações</h4>
+              </div>
+              <div className="border border-gray-200 dark:border-gray-600 border-t-0 rounded-b-lg p-4 bg-white dark:bg-gray-800">
+                <div className="space-y-2 text-sm">
+                  {result.alertas.map((alerta, index) => (
+                    <div key={index} className={`flex items-start gap-2 p-2 rounded-lg ${
+                      alerta.tipo === 'erro' ? 'bg-red-50 dark:bg-red-900/20 text-red-800 dark:text-red-200' :
+                      alerta.tipo === 'aviso' ? 'bg-yellow-50 dark:bg-yellow-900/20 text-yellow-800 dark:text-yellow-200' :
+                      'bg-blue-50 dark:bg-blue-900/20 text-blue-800 dark:text-blue-200'
+                    }`}>
+                      <span className="text-sm mt-0.5">{alerta.icone}</span>
+                      <span>{alerta.mensagem}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
 
 
 
@@ -1187,7 +1224,7 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
                     {sim.timestamp.toLocaleString('pt-BR')}
                   </div>
                   <div className="text-xs text-accent">
-                    NCM: {sim.data.ncm} | Receita: {formatCurrency(sim.result.revenueUSD)}
+                    NCM: {sim.data.ncm} | Receita: {formatCurrency(sim.result.secao4.receita_liquida.usd)}
                   </div>
                 </div>
               ))}
