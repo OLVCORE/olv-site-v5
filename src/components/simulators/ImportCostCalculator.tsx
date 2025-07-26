@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { calculateImportCost } from '../../lib/importCost';
 import Image from 'next/image';
 import InfoTooltip from '../ui/InfoTooltip';
@@ -79,6 +79,10 @@ export default function ImportCostCalculator({showQuotes=true}:Props) {
   const resultRef = useRef<HTMLDivElement|null>(null);
   const [showForm,setShowForm]=useState(false);
   const [submitted,setSubmitted]=useState(false);
+  
+  // Cache de cálculos para otimização
+  const calculationCache = useRef<Map<string, ReturnType<typeof calculateImportCost>>>(new Map());
+  const [isCalculating, setIsCalculating] = useState(false);
 
   // Estados para o seletor de moedas
   const [selectedCurrency, setSelectedCurrency] = useState('USD');
@@ -172,6 +176,32 @@ export default function ImportCostCalculator({showQuotes=true}:Props) {
   // mantém , ou . como separador decimal; remove caracteres inválidos
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.currentTarget.value = e.currentTarget.value.replace(/[^0-9.,]/g, '');
+    
+    // Validação em tempo real para campos críticos
+    const fieldName = e.currentTarget.name;
+    const value = toNumber(e.currentTarget.value);
+    
+    // Validar alíquotas em tempo real
+    if (['ii', 'ipi', 'pis', 'cofins', 'icms'].includes(fieldName)) {
+      if (value < 0 || value > 100) {
+        e.currentTarget.classList.add('border-red-500', 'bg-red-50');
+        e.currentTarget.classList.remove('border-gray-300', 'bg-gray-100');
+      } else {
+        e.currentTarget.classList.remove('border-red-500', 'bg-red-50');
+        e.currentTarget.classList.add('border-gray-300', 'bg-gray-100');
+      }
+    }
+    
+    // Validar valores negativos
+    if (['fob', 'freight', 'insurance', 'customs', 'misc'].includes(fieldName)) {
+      if (value < 0) {
+        e.currentTarget.classList.add('border-red-500', 'bg-red-50');
+        e.currentTarget.classList.remove('border-gray-300', 'bg-gray-100');
+      } else {
+        e.currentTarget.classList.remove('border-red-500', 'bg-red-50');
+        e.currentTarget.classList.add('border-gray-300', 'bg-gray-100');
+      }
+    }
   };
 
   // format value to pt-BR style (10.000,00) when input loses focus
@@ -244,7 +274,14 @@ export default function ImportCostCalculator({showQuotes=true}:Props) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    calcularComCache();
+  };
+
+  // Função de cálculo com cache e debounce
+  const calcularComCache = useCallback(() => {
     const getVal=(key:string)=> inputRefs.current[key]?.value||'';
+    
+    // Preparar dados para o novo motor de cálculo
     const parsed = {
       fob: toNumber(getVal('fob')),
       freight: toNumber(getVal('freight')),
@@ -256,16 +293,73 @@ export default function ImportCostCalculator({showQuotes=true}:Props) {
       icms: toNumber(getVal('icms'))||0,
       customs: toNumber(getVal('customs')),
       misc: toNumber(getVal('misc')),
+      exchangeRate: toNumber(getVal('exchange'))||1,
+      ncm: selectedNcm?.code || undefined
     };
-    const usdRes=calculateImportCost(parsed);
-    const r= toNumber(getVal('exchange'))||1;
-    setRate(r);
-    setExtras({customs:parsed.customs,misc:parsed.misc});
-    setResult(usdRes);
+
+    // Gerar chave única para cache
+    const cacheKey = JSON.stringify(parsed);
     
-    // ✅ VALORES MANTIDOS - usuário pode editar e recalcular
-    // ✅ Só serão limpos quando clicar em "Limpar Tudo"
-  };
+    // Verificar cache primeiro
+    if (calculationCache.current.has(cacheKey)) {
+      const cachedResult = calculationCache.current.get(cacheKey)!;
+      setResult(cachedResult);
+      setRate(parsed.exchangeRate);
+      setExtras({customs:parsed.customs,misc:parsed.misc});
+      return;
+    }
+
+    // Se não está no cache, calcular
+    setIsCalculating(true);
+    
+    try {
+      // Usar o novo motor de cálculo com validações
+      const resultado = calculateImportCost(parsed);
+      
+      // Salvar no cache (máximo 100 entradas)
+      if (calculationCache.current.size >= 100) {
+        const firstKey = calculationCache.current.keys().next().value;
+        calculationCache.current.delete(firstKey);
+      }
+      calculationCache.current.set(cacheKey, resultado);
+      
+      setResult(resultado);
+      setRate(parsed.exchangeRate);
+      setExtras({customs:parsed.customs,misc:parsed.misc});
+      
+      // ✅ VALORES MANTIDOS - usuário pode editar e recalcular
+      // ✅ Só serão limpos quando clicar em "Limpar Tudo"
+    } catch (error) {
+      // Tratamento de erro com feedback visual
+      const errorMessage = error instanceof Error ? error.message : 'Erro no cálculo';
+      alert(`Erro: ${errorMessage}`);
+      console.error('Erro no cálculo de importação:', error);
+    } finally {
+      setIsCalculating(false);
+    }
+  }, [selectedNcm]);
+
+  // Debounce para cálculo automático
+  const debouncedCalculate = useCallback(
+    debounce(() => {
+      if (autoSaveEnabled) {
+        calcularComCache();
+      }
+    }, 1000),
+    [calcularComCache, autoSaveEnabled]
+  );
+
+  // Função debounce
+  function debounce<T extends (...args: any[]) => any>(
+    func: T,
+    wait: number
+  ): (...args: Parameters<T>) => void {
+    let timeout: NodeJS.Timeout;
+    return (...args: Parameters<T>) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func(...args), wait);
+    };
+  }
 
   const brl = (v:number)=> v.toLocaleString('pt-BR', {style:'currency',currency:'BRL', minimumFractionDigits: 2, maximumFractionDigits: 4});
   
@@ -316,6 +410,20 @@ export default function ImportCostCalculator({showQuotes=true}:Props) {
     }
     // nenhum separador decimal
     return parseFloat(value.replace(/[^0-9]/g,''))||0;
+  };
+
+  // Função para atualizar indicadores de validação
+  const atualizarIndicadorValidacao = (fieldName: string, isValid: boolean) => {
+    const indicator = document.querySelector(`[data-field="${fieldName}"]`) as HTMLElement;
+    if (indicator) {
+      if (isValid) {
+        indicator.classList.remove('bg-red-500', 'bg-yellow-500');
+        indicator.classList.add('bg-green-500');
+      } else {
+        indicator.classList.remove('bg-green-500', 'bg-yellow-500');
+        indicator.classList.add('bg-red-500');
+      }
+    }
   };
 
   // Função para buscar NCM na API TTCE (simulada)
@@ -478,7 +586,7 @@ export default function ImportCostCalculator({showQuotes=true}:Props) {
           onChange={handleChange}
           onBlur={handleBlur}
           ref={(el) => { inputRefs.current[name] = el; }}
-          className="w-full rounded-md bg-gray-100 dark:bg-gray-700 border-none focus:ring-accent p-2 pr-12 text-sm placeholder-gray-400 dark:placeholder-gray-500 text-gray-900 dark:text-white"
+          className="w-full rounded-md bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-accent focus:border-accent p-2 pr-12 text-sm placeholder-gray-400 dark:placeholder-gray-500 text-gray-900 dark:text-white transition-all duration-200"
           placeholder="0,00"
         />
         {suffix && (
@@ -486,6 +594,10 @@ export default function ImportCostCalculator({showQuotes=true}:Props) {
             {suffix}
           </span>
         )}
+        {/* Indicador de validação */}
+        <div className="absolute inset-y-0 right-8 flex items-center">
+          <div className="w-2 h-2 rounded-full bg-gray-300 validation-indicator" data-field={name}></div>
+        </div>
       </div>
     </label>
   );
@@ -792,11 +904,25 @@ export default function ImportCostCalculator({showQuotes=true}:Props) {
         <Field name="misc" label="Outras Despesas" suffix={selectedCurrency} tip="Qualquer outro custo não previsto no cálculo." />
         
         <div className="flex gap-2 mt-2">
-          <button type="submit" className="btn btn-primary flex-1">Calcular</button>
+          <button 
+            type="submit" 
+            className="btn btn-primary flex-1 flex items-center justify-center gap-2"
+            disabled={isCalculating}
+          >
+            {isCalculating ? (
+              <>
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                Calculando...
+              </>
+            ) : (
+              'Calcular'
+            )}
+          </button>
           <button 
             type="button" 
             onClick={clearAllFields}
             className="btn bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md transition-colors"
+            disabled={isCalculating}
           >
             🗑️ Limpar Tudo
           </button>
@@ -807,6 +933,57 @@ export default function ImportCostCalculator({showQuotes=true}:Props) {
           ref={resultRef}
           className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-6 rounded-lg shadow-lg text-sm md:text-base col-span-2"
         >
+          {/* Sistema de Alertas */}
+          {result.alertas && result.alertas.length > 0 && (
+            <div className="mb-6 space-y-3">
+              {result.alertas.map((alerta, index) => (
+                <div
+                  key={index}
+                  className={`p-4 rounded-lg border-l-4 ${
+                    alerta.tipo === 'erro'
+                      ? 'bg-red-50 dark:bg-red-900/20 border-red-500 text-red-700 dark:text-red-300'
+                      : alerta.tipo === 'aviso'
+                      ? 'bg-yellow-50 dark:bg-yellow-900/20 border-yellow-500 text-yellow-700 dark:text-yellow-300'
+                      : 'bg-blue-50 dark:bg-blue-900/20 border-blue-500 text-blue-700 dark:text-blue-300'
+                  }`}
+                >
+                  <div className="flex items-start gap-3">
+                    <span className="text-lg flex-shrink-0">{alerta.icone}</span>
+                    <div className="flex-1">
+                      <p className="font-medium">{alerta.mensagem}</p>
+                      {alerta.campo && (
+                        <p className="text-sm opacity-75 mt-1">
+                          Campo: {alerta.campo}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Status da Simulação */}
+          <div className={`mb-6 p-4 rounded-lg border ${
+            result.status === 'valido'
+              ? 'bg-green-50 dark:bg-green-900/20 border-green-500 text-green-700 dark:text-green-300'
+              : result.status === 'aviso'
+              ? 'bg-yellow-50 dark:bg-yellow-900/20 border-yellow-500 text-yellow-700 dark:text-yellow-300'
+              : 'bg-red-50 dark:bg-red-900/20 border-red-500 text-red-700 dark:text-red-300'
+          }`}>
+            <div className="flex items-center gap-2">
+              <span className="text-lg">
+                {result.status === 'valido' ? '✅' : result.status === 'aviso' ? '⚠️' : '🚫'}
+              </span>
+              <span className="font-semibold">
+                {result.status === 'valido' 
+                  ? 'Simulação Válida' 
+                  : result.status === 'aviso' 
+                  ? 'Simulação com Avisos' 
+                  : 'Simulação com Erros'}
+              </span>
+            </div>
+          </div>
           {/* Cabeçalho Corporativo */}
           <div className="border-b border-gray-200 dark:border-gray-700 pb-4 mb-6">
             <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
@@ -998,34 +1175,48 @@ export default function ImportCostCalculator({showQuotes=true}:Props) {
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
                   <span className="text-gray-700 dark:text-gray-300">Carga Tributária Total:</span>
-                  <span className="font-semibold text-gray-900 dark:text-white">{((result.totalTaxes / result.finalCost) * 100).toFixed(1)}%</span>
+                  <span className="font-semibold text-gray-900 dark:text-white">{result.cargaTributaria}%</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
                   <span className="text-gray-700 dark:text-gray-300">Impacto dos Tributos:</span>
-                  <span className="font-semibold text-gray-900 dark:text-white">{((result.totalTaxes / result.cif) * 100).toFixed(1)}% sobre CIF</span>
+                  <span className="font-semibold text-gray-900 dark:text-white">{result.impactoTributos}% sobre CIF</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
                   <span className="text-gray-700 dark:text-gray-300">Custo Adicional:</span>
-                  <span className="font-semibold text-gray-900 dark:text-white">{((result.finalCost - result.cif) / result.cif * 100).toFixed(1)}% sobre CIF</span>
+                  <span className="font-semibold text-gray-900 dark:text-white">{result.custoAdicional}% sobre CIF</span>
                 </div>
                 
-                {/* Status de Viabilidade */}
+                {/* Status de Viabilidade Melhorado */}
                 <div className="flex justify-between items-center py-3 bg-gray-50 dark:bg-gray-700 rounded-lg px-3">
                   <span className="font-semibold text-gray-900 dark:text-white">Status da Importação:</span>
                   <div className={`flex items-center gap-2 px-3 py-1 rounded-full font-semibold text-sm ${
-                    ((result.totalTaxes / result.finalCost) * 100) < 50 
-                      ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 border border-green-200 dark:border-green-800' 
-                      : 'bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-200 border border-orange-200 dark:border-orange-800'
+                    result.cargaTributaria <= 20
+                      ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 border border-green-200 dark:border-green-800'
+                      : result.cargaTributaria <= 40
+                      ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 border border-blue-200 dark:border-blue-800'
+                      : result.cargaTributaria <= 60
+                      ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200 border border-yellow-200 dark:border-yellow-800'
+                      : 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200 border border-red-200 dark:border-red-800'
                   }`}>
-                    {((result.totalTaxes / result.finalCost) * 100) < 50 ? (
+                    {result.cargaTributaria <= 20 ? (
                       <>
                         <span className="text-green-600">✅</span>
-                        <span>Viável</span>
+                        <span>Baixa Carga Tributária</span>
+                      </>
+                    ) : result.cargaTributaria <= 40 ? (
+                      <>
+                        <span className="text-blue-600">✅</span>
+                        <span>Carga Tributária Moderada</span>
+                      </>
+                    ) : result.cargaTributaria <= 60 ? (
+                      <>
+                        <span className="text-yellow-600">⚠️</span>
+                        <span>Alta Carga Tributária</span>
                       </>
                     ) : (
                       <>
-                        <span className="text-orange-600">⚠️</span>
-                        <span>Alta Carga Tributária</span>
+                        <span className="text-red-600">🚫</span>
+                        <span>Carga Tributária Muito Alta</span>
                       </>
                     )}
                   </div>
