@@ -2,9 +2,9 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { calculateImportCost } from '../../lib/importCost';
-import RealtimeQuotes from '../radar/RealtimeQuotes';
 import Image from 'next/image';
 import InfoTooltip from '../ui/InfoTooltip';
+import SimulatorDisclaimer from './SimulatorDisclaimer';
 
 interface Props { showQuotes?: boolean }
 
@@ -223,6 +223,7 @@ export default function ImportCostCalculator({showQuotes=true}:Props) {
     if (inputRefs.current.exchange) {
       const rate = currencyRates[currency] || 0;
       inputRefs.current.exchange.value = rate.toFixed(4);
+      setRate(rate);
     }
   };
 
@@ -266,8 +267,37 @@ export default function ImportCostCalculator({showQuotes=true}:Props) {
     // ✅ Só serão limpos quando clicar em "Limpar Tudo"
   };
 
-  const brl = (v:number)=> v.toLocaleString('pt-BR', {style:'currency',currency:'BRL'});
-  const usd = (v:number)=> v.toLocaleString('en-US',{style:'currency',currency:'USD'});
+  const brl = (v:number)=> v.toLocaleString('pt-BR', {style:'currency',currency:'BRL', minimumFractionDigits: 2, maximumFractionDigits: 4});
+  
+  // Função dinâmica para formatação na moeda selecionada
+  const formatCurrency = (v: number, currency: string = selectedCurrency) => {
+    return v.toLocaleString('pt-BR', {
+      style: 'currency', 
+      currency: currency, 
+      minimumFractionDigits: 2, 
+      maximumFractionDigits: 4
+    });
+  };
+  
+  // Função para obter símbolo da moeda
+  const getCurrencySymbol = (currency: string) => {
+    const currencyMap: Record<string, string> = {
+      'USD': '$',
+      'EUR': '€',
+      'GBP': '£',
+      'CNY': '¥',
+      'JPY': '¥',
+      'ARS': '$',
+      'CLP': '$',
+      'MXN': '$',
+      'CAD': '$',
+      'AUD': '$',
+      'CHF': 'CHF',
+      'BRL': 'R$',
+      'BTC': '₿'
+    };
+    return currencyMap[currency] || currency;
+  };
 
   // Função toNumber global para uso em todo o componente
   const toNumber = (s:string)=>{
@@ -417,8 +447,8 @@ export default function ImportCostCalculator({showQuotes=true}:Props) {
           setCurrencyRates(data.rates);
           // Atualizar taxa de câmbio selecionada
           const currentRate = data.rates[selectedCurrency];
-          if (currentRate && inputRefs.current.exchange) {
-            inputRefs.current.exchange.value = currentRate.toFixed(2);
+          if (currentRate && !isManualRate && inputRefs.current.exchange) {
+            inputRefs.current.exchange.value = currentRate.toFixed(4);
             setRate(currentRate);
           }
         }
@@ -430,7 +460,7 @@ export default function ImportCostCalculator({showQuotes=true}:Props) {
     fetchRates();
     const interval = setInterval(fetchRates, 300000); // A cada 5 minutos
     return () => clearInterval(interval);
-  }, [selectedCurrency]);
+  }, [selectedCurrency, isManualRate]);
 
   // Função para obter valor do input
   const getVal = (key: string) => inputRefs.current[key]?.value || '';
@@ -460,30 +490,7 @@ export default function ImportCostCalculator({showQuotes=true}:Props) {
     </label>
   );
 
-  // Atualizar taxas de câmbio e auto-preencher
-  useEffect(() => {
-    const fetchRates = async () => {
-      try {
-        const response = await fetch('/api/radar/quotes?symbols=USD,EUR,GBP,CNY');
-        const data = await response.json();
-        if (data.rates) {
-          setCurrencyRates(data.rates);
-          // Atualizar taxa de câmbio selecionada
-          const currentRate = data.rates[selectedCurrency];
-          if (currentRate && inputRefs.current.exchange) {
-            inputRefs.current.exchange.value = currentRate.toFixed(2);
-            setRate(currentRate);
-          }
-        }
-      } catch (error) {
-        console.error('Erro ao buscar taxas:', error);
-      }
-    };
-    
-    fetchRates();
-    const interval = setInterval(fetchRates, 300000); // A cada 5 minutos
-    return () => clearInterval(interval);
-  }, [selectedCurrency]);
+
 
   // Efeito para buscar NCM ao digitar
   useEffect(() => {
@@ -613,13 +620,13 @@ export default function ImportCostCalculator({showQuotes=true}:Props) {
 
   return (
     <>
-    <div className={`grid gap-8 ${showQuotes ? 'lg:grid-cols-[10cm_minmax(0,1fr)_15cm]' : 'lg:grid-cols-[10cm_15cm]'}`}> 
-      {showQuotes && (
-        <div className="order-3 lg:order-1">
-          <RealtimeQuotes symbols={[ 'USD', 'EUR', 'GBP', 'CNY' ]} />
-        </div>
-      )}
-      <form onSubmit={handleSubmit} className="space-y-4 order-1 lg:order-1">
+    <div className="grid gap-8 lg:grid-cols-[10cm_minmax(0,1fr)_15cm]">
+      {/* Disclaimer Compacto no Início */}
+      <div className="col-span-full mb-4">
+        <SimulatorDisclaimer variant="compact" />
+      </div>
+      
+      <form onSubmit={handleSubmit} className="space-y-4">
         {/* Barra de ferramentas */}
         <div className="flex items-center gap-1 mb-3">
           <button
@@ -798,7 +805,7 @@ export default function ImportCostCalculator({showQuotes=true}:Props) {
       {result && (
         <div
           ref={resultRef}
-          className={`bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-6 rounded-lg shadow-lg text-sm md:text-base order-2 lg:order-${showQuotes ? '3' : '2'}`}
+          className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-6 rounded-lg shadow-lg text-sm md:text-base col-span-2"
         >
           {/* Cabeçalho Corporativo */}
           <div className="border-b border-gray-200 dark:border-gray-700 pb-4 mb-6">
@@ -832,25 +839,25 @@ export default function ImportCostCalculator({showQuotes=true}:Props) {
                 <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
                   <span className="text-gray-700 dark:text-gray-300">Valor FOB:</span>
                   <span className="font-medium text-gray-900 dark:text-white">
-                    {usd(toNumber(getVal('fob')))} / {brl(toNumber(getVal('fob')) * rate)}
+                    {formatCurrency(toNumber(getVal('fob')))} / {brl(toNumber(getVal('fob')) * rate)}
                   </span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
                   <span className="text-gray-700 dark:text-gray-300">Frete Internacional:</span>
                   <span className="font-medium text-gray-900 dark:text-white">
-                    {usd(toNumber(getVal('freight')))} / {brl(toNumber(getVal('freight')) * rate)}
+                    {formatCurrency(toNumber(getVal('freight')))} / {brl(toNumber(getVal('freight')) * rate)}
                   </span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
                   <span className="text-gray-700 dark:text-gray-300">Seguro:</span>
                   <span className="font-medium text-gray-900 dark:text-white">
-                    {usd(toNumber(getVal('insurance')))} / {brl(toNumber(getVal('insurance')) * rate)}
+                    {formatCurrency(toNumber(getVal('insurance')))} / {brl(toNumber(getVal('insurance')) * rate)}
                   </span>
                 </div>
                 <div className="flex justify-between items-center py-3 bg-gray-50 dark:bg-gray-700 rounded-lg px-3">
                   <span className="font-semibold text-gray-900 dark:text-white">Valor CIF Total:</span>
                   <span className="font-bold text-lg text-gray-900 dark:text-white">
-                    {usd(result.cif)} / {brl(result.cif * rate)}
+                    {formatCurrency(result.cif)} / {brl(result.cif * rate)}
                   </span>
                 </div>
               </div>
@@ -867,19 +874,19 @@ export default function ImportCostCalculator({showQuotes=true}:Props) {
                 <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
                   <span className="text-gray-700 dark:text-gray-300">Despesas Aduaneiras:</span>
                   <span className="font-medium text-gray-900 dark:text-white">
-                    {usd(extras.customs)} / {brl(extras.customs * rate)}
+                    {formatCurrency(extras.customs)} / {brl(extras.customs * rate)}
                   </span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
                   <span className="text-gray-700 dark:text-gray-300">Outras Despesas:</span>
                   <span className="font-medium text-gray-900 dark:text-white">
-                    {usd(extras.misc)} / {brl(extras.misc * rate)}
+                    {formatCurrency(extras.misc)} / {brl(extras.misc * rate)}
                   </span>
                 </div>
                 <div className="flex justify-between items-center py-3 bg-gray-50 dark:bg-gray-700 rounded-lg px-3">
                   <span className="font-semibold text-gray-900 dark:text-white">Total Custos Logísticos:</span>
                   <span className="font-bold text-gray-900 dark:text-white">
-                    {usd(extras.customs + extras.misc)} / {brl((extras.customs + extras.misc) * rate)}
+                    {formatCurrency(extras.customs + extras.misc)} / {brl((extras.customs + extras.misc) * rate)}
                   </span>
                 </div>
               </div>
@@ -896,31 +903,31 @@ export default function ImportCostCalculator({showQuotes=true}:Props) {
                 <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
                   <span className="text-gray-700 dark:text-gray-300">Imposto de Importação ({getVal('ii')}%):</span>
                   <span className="font-medium text-gray-900 dark:text-white">
-                    {usd(result.iiValue)} / {brl(result.iiValue * rate)}
+                    {formatCurrency(result.iiValue)} / {brl(result.iiValue * rate)}
                   </span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
                   <span className="text-gray-700 dark:text-gray-300">IPI ({getVal('ipi')}%):</span>
                   <span className="font-medium text-gray-900 dark:text-white">
-                    {usd(result.ipiValue)} / {brl(result.ipiValue * rate)}
+                    {formatCurrency(result.ipiValue)} / {brl(result.ipiValue * rate)}
                   </span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
                   <span className="text-gray-700 dark:text-gray-300">PIS ({getVal('pis')}%):</span>
                   <span className="font-medium text-gray-900 dark:text-white">
-                    {usd(result.pisValue)} / {brl(result.pisValue * rate)}
+                    {formatCurrency(result.pisValue)} / {brl(result.pisValue * rate)}
                   </span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
                   <span className="text-gray-700 dark:text-gray-300">COFINS ({getVal('cofins')}%):</span>
                   <span className="font-medium text-gray-900 dark:text-white">
-                    {usd(result.cofinsValue)} / {brl(result.cofinsValue * rate)}
+                    {formatCurrency(result.cofinsValue)} / {brl(result.cofinsValue * rate)}
                   </span>
                 </div>
                 <div className="flex justify-between items-center py-3 bg-gray-50 dark:bg-gray-700 rounded-lg px-3">
                   <span className="font-semibold text-gray-900 dark:text-white">Total Tributos Federais:</span>
                   <span className="font-bold text-gray-900 dark:text-white">
-                    {usd(result.iiValue + result.ipiValue + result.pisValue + result.cofinsValue)} / {brl((result.iiValue + result.ipiValue + result.pisValue + result.cofinsValue) * rate)}
+                    {formatCurrency(result.iiValue + result.ipiValue + result.pisValue + result.cofinsValue)} / {brl((result.iiValue + result.ipiValue + result.pisValue + result.cofinsValue) * rate)}
                   </span>
                 </div>
               </div>
@@ -937,13 +944,13 @@ export default function ImportCostCalculator({showQuotes=true}:Props) {
                 <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
                   <span className="text-gray-700 dark:text-gray-300">ICMS ({getVal('icms')}%):</span>
                   <span className="font-medium text-gray-900 dark:text-white">
-                    {usd(result.icmsValue)} / {brl(result.icmsValue * rate)}
+                    {formatCurrency(result.icmsValue)} / {brl(result.icmsValue * rate)}
                   </span>
                 </div>
                 <div className="flex justify-between items-center py-3 bg-gray-50 dark:bg-gray-700 rounded-lg px-3">
                   <span className="font-semibold text-gray-900 dark:text-white">Total Tributos Estaduais:</span>
                   <span className="font-bold text-gray-900 dark:text-white">
-                    {usd(result.icmsValue)} / {brl(result.icmsValue * rate)}
+                    {formatCurrency(result.icmsValue)} / {brl(result.icmsValue * rate)}
                   </span>
                 </div>
               </div>
@@ -958,24 +965,24 @@ export default function ImportCostCalculator({showQuotes=true}:Props) {
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
                   <span className="text-gray-700 dark:text-gray-300">Valor CIF:</span>
-                  <span className="font-medium text-gray-900 dark:text-white">{usd(result.cif)}</span>
+                  <span className="font-medium text-gray-900 dark:text-white">{formatCurrency(result.cif)}</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
                   <span className="text-gray-700 dark:text-gray-300">+ Custos Logísticos:</span>
-                  <span className="font-medium text-red-600 dark:text-red-400">+{usd(extras.customs + extras.misc)}</span>
+                  <span className="font-medium text-red-600 dark:text-red-400">+{formatCurrency(extras.customs + extras.misc)}</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
                   <span className="text-gray-700 dark:text-gray-300">+ Tributos Federais:</span>
-                  <span className="font-medium text-red-600 dark:text-red-400">+{usd(result.iiValue + result.ipiValue + result.pisValue + result.cofinsValue)}</span>
+                  <span className="font-medium text-red-600 dark:text-red-400">+{formatCurrency(result.iiValue + result.ipiValue + result.pisValue + result.cofinsValue)}</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
                   <span className="text-gray-700 dark:text-gray-300">+ Tributos Estaduais:</span>
-                  <span className="font-medium text-red-600 dark:text-red-400">+{usd(result.icmsValue)}</span>
+                  <span className="font-medium text-red-600 dark:text-red-400">+{formatCurrency(result.icmsValue)}</span>
                 </div>
                 <div className="flex justify-between items-center py-4 bg-gray-50 dark:bg-gray-700 rounded-lg px-3">
                   <span className="font-bold text-gray-900 dark:text-white text-lg">Custo Final:</span>
                   <span className="font-bold text-xl text-red-600 dark:text-red-400">
-                    {usd(result.finalCost)} / {brl(result.finalCost * rate)}
+                    {formatCurrency(result.finalCost)} / {brl(result.finalCost * rate)}
                   </span>
                 </div>
               </div>
@@ -1130,7 +1137,7 @@ export default function ImportCostCalculator({showQuotes=true}:Props) {
                   <div>
                     <div className="font-medium text-gray-900 dark:text-white">{sim.name}</div>
                     <div className="text-gray-600 dark:text-gray-400 text-sm">
-                      {new Date(sim.timestamp).toLocaleString()} - {usd(sim.result.finalCost)}
+                      {new Date(sim.timestamp).toLocaleString()} - {formatCurrency(sim.result.finalCost)}
                     </div>
                   </div>
                   <div className="flex gap-2">
@@ -1191,6 +1198,11 @@ export default function ImportCostCalculator({showQuotes=true}:Props) {
         </form>
       </div>
     )}
+
+    {/* Disclaimer Detalhado no Final */}
+    <div className="col-span-full mt-8">
+      <SimulatorDisclaimer variant="detailed" />
+    </div>
     </>
   );
 } 

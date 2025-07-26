@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import InfoTooltip from '../ui/InfoTooltip';
+import SimulatorDisclaimer from './SimulatorDisclaimer';
 
 const CURRENCIES = [
   'USD',
@@ -77,6 +78,9 @@ export default function CurrencyConverter() {
 
   return (
     <div className="space-y-6">
+      {/* Disclaimer Compacto */}
+      <SimulatorDisclaimer variant="compact" />
+      
       {/* Form */}
       <div className="grid md:grid-cols-2 gap-4">
         <label className="block text-sm font-medium text-gray-200 dark:text-accent-light">

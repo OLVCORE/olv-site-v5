@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import VolumesTable from './VolumesTable';
+import SimulatorDisclaimer from './SimulatorDisclaimer';
 
 interface Estimate {
   air: number;
@@ -305,6 +306,9 @@ export default function FreightCalculatorLight() {
 
   return (
     <div className="space-y-6">
+      {/* Disclaimer Compacto */}
+      <SimulatorDisclaimer variant="compact" />
+      
       <h2 className="text-2xl font-semibold mb-4">Calculadora de Fretes (Versão Light)</h2>
       <form onSubmit={handleSubmit} className="grid md:grid-cols-2 gap-8">
         {/* Coluna 1 – Entradas */}

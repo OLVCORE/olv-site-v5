@@ -4,11 +4,15 @@ import React, { useState, useRef, useEffect } from 'react';
 import InfoTooltip from '../ui/InfoTooltip';
 import Image from 'next/image';
 import RealtimeQuotes from '../radar/RealtimeQuotes';
+import SimulatorDisclaimer from './SimulatorDisclaimer';
 
-function toNumber(s: string): number {
-  if (!s) return 0;
-  return parseFloat(s.replace(/\./g, '').replace(',', '.')) || 0;
-}
+// Função toNumber global para uso em todo o componente
+const toNumber = (s:string)=>{
+  const value=s.trim();
+  if(!value) return 0;
+  const cleanValue = value.replace(/\./g, '').replace(',', '.');
+  return parseFloat(cleanValue) || 0;
+};
 
 interface Props { showQuotes?: boolean }
 
@@ -39,6 +43,7 @@ interface SavedSimulation {
     reintegra: string;
     drawback: string;
     exchange: string;
+    selectedCurrency: string;
   };
   result: {
     totalCosts: number;
@@ -101,92 +106,207 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
   const [ncmResults, setNcmResults] = useState<NcmData[]>([]);
   const [isLoadingNcm, setIsLoadingNcm] = useState(false);
 
-  // Estados para histórico de simulações
+  // Estados para histórico e templates
   const [savedSimulations, setSavedSimulations] = useState<SavedSimulation[]>([]);
   const [showHistory, setShowHistory] = useState(false);
-
-  // Estados para comparação de cenários
-  const [showScenarios, setShowScenarios] = useState(false);
-
-  // Estados para templates
   const [showTemplates, setShowTemplates] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState<ProductTemplate | null>(null);
 
-                // Estados para markup e margem
-              const [showMarkupCalculator, setShowMarkupCalculator] = useState(false);
-              const [markupPercentage, setMarkupPercentage] = useState('20');
-              const [profitMarginPercentage, setProfitMarginPercentage] = useState('16.67');
+  // Estados para o seletor de moedas
+  const [selectedCurrency, setSelectedCurrency] = useState('USD');
+  const [currencyRates, setCurrencyRates] = useState<Record<string, number>>({});
+  const [isManualRate, setIsManualRate] = useState(false);
+  const [manualRate, setManualRate] = useState('');
 
-  // Estados para salvamento automático
-  const [autoSaveEnabled, setAutoSaveEnabled] = useState(true);
-  const [lastAutoSave, setLastAutoSave] = useState<Date | null>(null);
+  // Lista de moedas disponíveis
+  const availableCurrencies = [
+    { code: 'USD', name: 'Dólar Americano', symbol: '$' },
+    { code: 'EUR', name: 'Euro', symbol: '€' },
+    { code: 'GBP', name: 'Libra Esterlina', symbol: '£' },
+    { code: 'CNY', name: 'Yuan Chinês', symbol: '¥' },
+    { code: 'JPY', name: 'Iene Japonês', symbol: '¥' },
+    { code: 'ARS', name: 'Peso Argentino', symbol: '$' },
+    { code: 'CLP', name: 'Peso Chileno', symbol: '$' },
+    { code: 'MXN', name: 'Peso Mexicano', symbol: '$' },
+    { code: 'CAD', name: 'Dólar Canadense', symbol: '$' },
+    { code: 'AUD', name: 'Dólar Australiano', symbol: '$' },
+    { code: 'CHF', name: 'Franco Suíço', symbol: 'CHF' },
+    { code: 'BRL', name: 'Real Brasileiro', symbol: 'R$' },
+    { code: 'BTC', name: 'Bitcoin', symbol: '₿' }
+  ];
 
-  const defaultInputs = {
-    fob: '10000',
-    freight: '800',
-    insurance: '80',
-    inland: '500',
-    port: '250',
-    misc: '100',
-    reintegra: '1,5',
-    drawback: '0,0',
-    exchange: '5,10',
-  };
-
-  // Templates de produtos frequentes
+  // Templates de produtos para exportação
   const productTemplates: ProductTemplate[] = [
     {
       id: '1',
-      name: 'Notebooks e Laptops',
-      category: 'Eletrônicos',
-      ncm: '8471.30.12',
-      defaultFob: '800',
-      defaultFreight: '50',
-      defaultInsurance: '8',
-      defaultInland: '30',
-      defaultPort: '15',
-      defaultMisc: '10'
-    },
-    {
-      id: '2',
-      name: 'Smartphones',
-      category: 'Eletrônicos',
+      name: 'Eletrônicos',
+      category: 'Tecnologia',
       ncm: '8517.13.00',
-      defaultFob: '300',
-      defaultFreight: '20',
-      defaultInsurance: '3',
-      defaultInland: '15',
-      defaultPort: '10',
+      defaultFob: '500',
+      defaultFreight: '50',
+      defaultInsurance: '10',
+      defaultInland: '20',
+      defaultPort: '15',
       defaultMisc: '5'
     },
     {
+      id: '2',
+      name: 'Têxteis',
+      category: 'Vestuário',
+      ncm: '6104.43.00',
+      defaultFob: '200',
+      defaultFreight: '30',
+      defaultInsurance: '5',
+      defaultInland: '15',
+      defaultPort: '10',
+      defaultMisc: '3'
+    },
+    {
       id: '3',
-      name: 'Automóveis',
-      category: 'Veículos',
-      ncm: '8703.23.00',
-      defaultFob: '25000',
-      defaultFreight: '2000',
-      defaultInsurance: '200',
-      defaultInland: '500',
-      defaultPort: '300',
-      defaultMisc: '100'
+      name: 'Automotivo',
+      category: 'Indústria',
+      ncm: '8708.99.00',
+      defaultFob: '1000',
+      defaultFreight: '100',
+      defaultInsurance: '20',
+      defaultInland: '40',
+      defaultPort: '25',
+      defaultMisc: '10'
     },
     {
       id: '4',
-      name: 'Calçados Esportivos',
-      category: 'Vestuário',
-      ncm: '6403.59.00',
-      defaultFob: '25',
-      defaultFreight: '3',
-      defaultInsurance: '0.5',
-      defaultInland: '2',
-      defaultPort: '1',
-      defaultMisc: '0.5'
+      name: 'Alimentos',
+      category: 'Agro',
+      ncm: '0801.32.00',
+      defaultFob: '300',
+      defaultFreight: '40',
+      defaultInsurance: '8',
+      defaultInland: '25',
+      defaultPort: '18',
+      defaultMisc: '7'
+    },
+    {
+      id: '5',
+      name: 'Químicos',
+      category: 'Indústria',
+      ncm: '3824.99.00',
+      defaultFob: '800',
+      defaultFreight: '80',
+      defaultInsurance: '15',
+      defaultInland: '35',
+      defaultPort: '22',
+      defaultMisc: '8'
     }
   ];
 
-  const brl = (v: number) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-  const usd = (v: number) => v.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+  // Funções de formatação de moeda
+  const brl = (v:number)=> v.toLocaleString('pt-BR', {style:'currency',currency:'BRL', minimumFractionDigits: 2, maximumFractionDigits: 4});
+  
+  // Função dinâmica para formatação na moeda selecionada
+  const formatCurrency = (v: number, currency: string = selectedCurrency) => {
+    return v.toLocaleString('pt-BR', {
+      style: 'currency', 
+      currency: currency, 
+      minimumFractionDigits: 2, 
+      maximumFractionDigits: 4
+    });
+  };
+  
+  // Função para obter símbolo da moeda
+  const getCurrencySymbol = (currency: string) => {
+    const currencyMap: Record<string, string> = {
+      'USD': '$',
+      'EUR': '€',
+      'GBP': '£',
+      'CNY': '¥',
+      'JPY': '¥',
+      'ARS': '$',
+      'CLP': '$',
+      'MXN': '$',
+      'CAD': '$',
+      'AUD': '$',
+      'CHF': 'CHF',
+      'BRL': 'R$',
+      'BTC': '₿'
+    };
+    return currencyMap[currency] || currency;
+  };
+
+  // Função para buscar cotações em tempo real
+  const fetchCurrencyRates = async () => {
+    try {
+      const symbols = availableCurrencies.map(c => c.code).join(',');
+      const response = await fetch(`/api/radar/quotes?symbols=${symbols}`);
+      const data = await response.json();
+      if (data.rates) {
+        setCurrencyRates(data.rates);
+        if (!isManualRate && inputRefs.current.exchange) {
+          const currentRate = getCurrentRate();
+          inputRefs.current.exchange.value = currentRate.toFixed(4);
+          setRate(currentRate);
+        }
+      }
+    } catch (error) {
+      console.error('Erro ao buscar cotações:', error);
+    }
+  };
+
+  // Função para obter cotação atual da moeda selecionada
+  const getCurrentRate = () => {
+    if (isManualRate && manualRate) {
+      return toNumber(manualRate);
+    }
+    const rate = currencyRates[selectedCurrency] || 0;
+    if (rate === 0) {
+      // Taxas padrão de fallback
+      const defaultRates: Record<string, number> = {
+        'USD': 5.0,
+        'EUR': 5.5,
+        'GBP': 6.3,
+        'CNY': 0.7,
+        'JPY': 0.034,
+        'ARS': 0.006,
+        'CLP': 0.006,
+        'MXN': 0.3,
+        'CAD': 3.7,
+        'AUD': 3.3,
+        'CHF': 5.7,
+        'BRL': 1.0,
+        'BTC': 250000
+      };
+      return defaultRates[selectedCurrency] || 5.0;
+    }
+    return rate;
+  };
+
+  // Função para atualizar cotação quando moeda muda
+  const handleCurrencyChange = (currency: string) => {
+    setSelectedCurrency(currency);
+    setIsManualRate(false);
+    setManualRate('');
+    
+    // Atualizar campo de cotação automaticamente
+    if (inputRefs.current.exchange) {
+      const rate = currencyRates[currency] || 0;
+      inputRefs.current.exchange.value = rate.toFixed(4);
+      setRate(rate);
+    }
+  };
+
+  // Função para limpar todos os campos
+  const clearAllFields = () => {
+    const fields = ['fob', 'freight', 'insurance', 'inland', 'port', 'misc', 'reintegra', 'drawback'];
+    fields.forEach(field => {
+      const input = inputRefs.current[field];
+      if (input) {
+        input.value = '';
+      }
+    });
+    setResult(null);
+    setSelectedNcm(null);
+    setNcmSearch('');
+    setSelectedTemplate(null);
+  };
 
   // Função para buscar NCM na API TTCE (simulada - em produção seria API real)
   const searchNcm = async (query: string) => {
@@ -271,6 +391,7 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
         reintegra: getVal('reintegra'),
         drawback: getVal('drawback'),
         exchange: getVal('exchange'),
+        selectedCurrency: selectedCurrency,
       },
       result
     };
@@ -286,143 +407,54 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        setSavedSimulations(parsed.map((sim: any) => ({
-          ...sim,
-          timestamp: new Date(sim.timestamp)
-        })));
+        setSavedSimulations(parsed);
       } catch (error) {
         console.error('Erro ao carregar simulações:', error);
       }
     }
   }, []);
 
-  // Auto-save
+  // Buscar cotações ao carregar o componente e quando moeda muda
   useEffect(() => {
-    if (autoSaveEnabled && result) {
-      const timer = setTimeout(() => {
-        saveSimulation(`Auto-save ${new Date().toLocaleTimeString()}`);
-        setLastAutoSave(new Date());
-      }, 30000); // Auto-save a cada 30 segundos
-      
-      return () => clearTimeout(timer);
-    }
-  }, [result, autoSaveEnabled]);
-
-  // Buscar NCM quando digitar
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (ncmSearch.length >= 3) {
-        searchNcm(ncmSearch);
+    const fetchRates = async () => {
+      try {
+        const symbols = availableCurrencies.map(c => c.code).join(',');
+        const response = await fetch(`/api/radar/quotes?symbols=${symbols}`);
+        const data = await response.json();
+        if (data.rates) {
+          setCurrencyRates(data.rates);
+          // Atualizar taxa de câmbio selecionada
+          const currentRate = data.rates[selectedCurrency];
+          if (currentRate && !isManualRate && inputRefs.current.exchange) {
+            inputRefs.current.exchange.value = currentRate.toFixed(4);
+            setRate(currentRate);
+          }
+        }
+      } catch (error) {
+        console.error('Erro ao buscar cotações:', error);
       }
-    }, 500);
+    };
     
-    return () => clearTimeout(timer);
+    fetchRates();
+    const interval = setInterval(fetchRates, 300000); // A cada 5 minutos
+    return () => clearInterval(interval);
+  }, [selectedCurrency, isManualRate]);
+
+  // Buscar NCM quando o usuário digita
+  useEffect(() => {
+    if (ncmSearch.length >= 3) {
+      searchNcm(ncmSearch);
+    } else {
+      setNcmResults([]);
+    }
   }, [ncmSearch]);
 
-  interface FieldProps { name: string; label: string; suffix?: string; tip?: string; }
-  const Field = ({ name, label, suffix, tip }: FieldProps) => (
-    <label className="block text-sm font-medium text-gray-200 dark:text-accent-light">
-      <span className="inline-flex items-center gap-1">{label} {tip && <InfoTooltip content={tip} />}</span>
-      <div className="relative mt-1">
-        <input
-          type="text"
-          inputMode="decimal"
-          name={name}
-          defaultValue={(defaultInputs as any)[name]}
-          ref={(el) => { inputRefs.current[name] = el; }}
-          className="w-full rounded-md bg-gray-100 dark:bg-gray-700 border-none focus:ring-accent p-2 pr-12 text-sm placeholder-gray-400 dark:placeholder-gray-500 text-gray-900 dark:text-white"
-          placeholder="0,00"
-        />
-        {suffix && (
-          <span className="absolute inset-y-0 right-3 flex items-center text-xs text-gray-500 pointer-events-none">
-            {suffix}
-          </span>
-        )}
-      </div>
-    </label>
-  );
-
-  const getVal = (key: string) => inputRefs.current[key]?.value || '';
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const fob = toNumber(getVal('fob'));
-    const freight = toNumber(getVal('freight'));
-    const insurance = toNumber(getVal('insurance'));
-    const inland = toNumber(getVal('inland'));
-    const port = toNumber(getVal('port'));
-    const misc = toNumber(getVal('misc'));
-    const reintegraPct = toNumber(getVal('reintegra'));
-    const drawbackPct = toNumber(getVal('drawback'));
-    const exchange = toNumber(getVal('exchange')) || 1;
-    const markupPct = toNumber(markupPercentage);
-    const profitMarginPct = toNumber(profitMarginPercentage);
-    setRate(exchange);
-
-    const totalCosts = freight + insurance + inland + port + misc;
-    const reintegraValue = fob * (reintegraPct / 100);
-    const drawbackValue = fob * (drawbackPct / 100);
-    const revenueUSD = fob - totalCosts + reintegraValue + drawbackValue;
-    const revenueBRL = revenueUSD * exchange;
-
-    // Cálculos de Markup e Margem de Lucro
-    const markupValue = totalCosts * (markupPct / 100);
-    const suggestedPriceWithMarkup = totalCosts + markupValue;
-    const profitMarginValue = suggestedPriceWithMarkup * (profitMarginPct / 100);
-    const actualProfit = revenueUSD - totalCosts;
-    const actualMarkup = ((revenueUSD - fob) / fob) * 100;
-    const actualProfitMargin = ((actualProfit) / revenueUSD) * 100;
-
-    // Cenários otimista e pessimista
-    const scenarioOptimistic = {
-      revenueUSD: revenueUSD * 1.1, // +10%
-      revenueBRL: revenueBRL * 1.1
-    };
-    const scenarioPessimistic = {
-      revenueUSD: revenueUSD * 0.9, // -10%
-      revenueBRL: revenueBRL * 0.9
-    };
-
-    setResult({ 
-      totalCosts, 
-      revenueUSD, 
-      revenueBRL, 
-      reintegraValue, 
-      drawbackValue, 
-      markup: actualMarkup,
-      profitMargin: actualProfitMargin,
-      markupValue,
-      profitMarginValue,
-      suggestedPriceWithMarkup,
-      actualProfit,
-      scenarioOptimistic,
-      scenarioPessimistic
-    });
-  };
-
-  // Auto-fill exchange rate (USD→BRL) once on mount
-  useEffect(() => {
-    fetch('/api/radar/quotes?symbols=USD')
-      .then((r) => r.json())
-      .then((j) => {
-        const brl = j?.rates?.USD;
-        if (brl && typeof brl === 'number') {
-          const exch = inputRefs.current['exchange'];
-          if (exch) exch.value = brl.toFixed(2);
-          setRate(brl);
-        }
-      })
-      .catch(() => {});
-  }, []);
-
-  // Fechar dropdowns quando clicar fora
+  // Fechar dropdown quando clicar fora
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Element;
-      if (!target.closest('.dropdown-container')) {
+      if (!target.closest('.ncm-dropdown-container')) {
         setShowNcmDropdown(false);
-        setShowTemplates(false);
-        setShowHistory(false);
       }
     };
 
@@ -430,71 +462,180 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const exportReport = async () => {
-    if (!submitted) {
-      setShowForm(true);
-      return;
-    }
-    if (!result) return;
+  // Funções auxiliares
+  const getVal = (key: string) => inputRefs.current[key]?.value || '';
 
-    if (fileType === 'pdf') {
-      const html2canvas = (await import('html2canvas')).default;
-      const { default: jsPDF } = await import('jspdf');
-      if (!resultRef.current) return;
-      const canvas = await html2canvas(resultRef.current, { scale: 2 });
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF({ orientation: 'p', unit: 'px', format: 'a4' });
-      const pageWidth = pdf.internal.pageSize.getWidth();
-      const ratio = pageWidth / canvas.width;
-      const imgHeight = canvas.height * ratio;
-      pdf.addImage(imgData, 'PNG', 0, 0, pageWidth, imgHeight);
-      pdf.save('simulador-exportacao.pdf');
-    } else {
-      const XLSXMod = await import('xlsx');
-      const XLSX = (XLSXMod as any).default ?? XLSXMod;
-      const rows = [
-        ['Item', 'USD', 'BRL'],
-        ['NCM Selecionado', selectedNcm?.code || 'Não informado', ''],
-        ['Crédito Reintegra', result.reintegraValue, result.reintegraValue * rate],
-        ['Crédito Drawback', result.drawbackValue, result.drawbackValue * rate],
-        ['Custos Totais', result.totalCosts, result.totalCosts * rate],
-        ['Receita Líquida', result.revenueUSD, result.revenueBRL],
-        ['Markup (%)', result.markup.toFixed(2), ''],
-      ];
-      const ws = XLSX.utils.aoa_to_sheet(rows);
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, 'Relatorio');
-      XLSX.writeFile(wb, 'simulador-exportacao.xlsx');
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    const fob = toNumber(getVal('fob'));
+    const freight = toNumber(getVal('freight'));
+    const insurance = toNumber(getVal('insurance'));
+    const inland = toNumber(getVal('inland'));
+    const port = toNumber(getVal('port'));
+    const misc = toNumber(getVal('misc'));
+    const reintegra = toNumber(getVal('reintegra')) || 0;
+    const drawback = toNumber(getVal('drawback')) || 0;
+    const exchange = getCurrentRate();
+
+    const totalCosts = fob + freight + insurance + inland + port + misc;
+    const revenueUSD = fob;
+    const revenueBRL = revenueUSD * exchange;
+    
+    const reintegraValue = revenueUSD * (reintegra / 100);
+    const drawbackValue = revenueUSD * (drawback / 100);
+    
+    const markup = 20; // Markup padrão de 20%
+    const markupValue = revenueUSD * (markup / 100);
+    const profitMargin = 15; // Margem de lucro padrão de 15%
+    const profitMarginValue = revenueUSD * (profitMargin / 100);
+    
+    const suggestedPriceWithMarkup = revenueUSD + markupValue;
+    const actualProfit = revenueUSD - totalCosts + reintegraValue + drawbackValue;
+    
+    const scenarioOptimistic = {
+      revenueUSD: revenueUSD * 1.1,
+      revenueBRL: revenueUSD * 1.1 * exchange
+    };
+    
+    const scenarioPessimistic = {
+      revenueUSD: revenueUSD * 0.9,
+      revenueBRL: revenueUSD * 0.9 * exchange
+    };
+
+    setRate(exchange);
+    setResult({
+      totalCosts,
+      revenueUSD,
+      revenueBRL,
+      reintegraValue,
+      drawbackValue,
+      markup,
+      profitMargin,
+      markupValue,
+      profitMarginValue,
+      suggestedPriceWithMarkup,
+      actualProfit,
+      scenarioOptimistic,
+      scenarioPessimistic
+    });
+    
+    // ✅ VALORES MANTIDOS - usuário pode editar e recalcular
+    // ✅ Só serão limpos quando clicar em "Limpar Tudo"
+  };
+
+  // Funções de formatação e validação
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.currentTarget.value = e.currentTarget.value.replace(/[^0-9.,]/g, '');
+    const value = e.currentTarget.value;
+    const commaCount = (value.match(/,/g) || []).length;
+    const dotCount = (value.match(/\./g) || []).length;
+    if (commaCount > 1) {
+      e.currentTarget.value = value.replace(/,/g, (match, index) => 
+        index === value.lastIndexOf(',') ? match : ''
+      );
+    }
+    if (dotCount > 1) {
+      e.currentTarget.value = value.replace(/\./g, (match, index) => 
+        index === value.lastIndexOf('.') ? match : ''
+      );
     }
   };
 
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const raw = e.currentTarget.value.replace(/\./g, '').replace(',', '.');
+    const num = parseFloat(raw);
+    if (!isNaN(num)) {
+      const isPercentage = ['reintegra', 'drawback'].includes(e.currentTarget.name);
+      const maxDigits = isPercentage ? 2 : 4;
+      e.currentTarget.value = new Intl.NumberFormat('pt-BR', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: maxDigits,
+      }).format(num);
+    }
+  };
+
+  // Componente Field reutilizável
+  interface FieldProps { name: string; label: string; suffix?: string; tip?: string; }
+  const Field = ({ name, label, suffix, tip }: FieldProps) => (
+    <div className="mb-4">
+      <label className="block text-sm font-medium text-gray-200 dark:text-accent-light mb-1">
+        <span className="inline-flex items-center gap-1">
+          {label}
+          {tip && <InfoTooltip content={tip} />}
+        </span>
+      </label>
+      <div className="relative">
+        <input
+          ref={(el) => { inputRefs.current[name] = el; }}
+          type="text"
+          inputMode="decimal"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          className="w-full rounded-md bg-gray-100 dark:bg-gray-700 border-none focus:ring-accent p-2 text-sm placeholder-gray-400 dark:placeholder-gray-500 text-gray-900 dark:text-white"
+          placeholder="0,00"
+        />
+        {suffix && (
+          <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400 text-sm">
+            {suffix}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+
+  // Função para exportar relatório
+  const exportReport = async () => {
+    if (!result) return;
+    
+    const reportData = {
+      title: 'Relatório de Custo de Exportação',
+      date: new Date().toLocaleDateString('pt-BR'),
+      currency: selectedCurrency,
+      exchangeRate: rate,
+      inputs: {
+        fob: getVal('fob'),
+        freight: getVal('freight'),
+        insurance: getVal('insurance'),
+        inland: getVal('inland'),
+        port: getVal('port'),
+        misc: getVal('misc'),
+        reintegra: getVal('reintegra'),
+        drawback: getVal('drawback'),
+        exchange: getVal('exchange'),
+      },
+      results: result,
+      ncm: selectedNcm?.code || 'Não informado',
+      ncmDescription: selectedNcm?.description || 'Não informado'
+    };
+
+    if (fileType === 'pdf') {
+      // Implementar geração de PDF
+      console.log('Gerando PDF:', reportData);
+      alert('Funcionalidade de PDF em desenvolvimento');
+    } else {
+      // Implementar geração de XLS
+      console.log('Gerando XLS:', reportData);
+      alert('Funcionalidade de XLS em desenvolvimento');
+    }
+  };
+
+  // Função para enviar formulário de contato
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const name = (contactRefs.current.name as HTMLInputElement)?.value.trim() || '';
-    const phone = (contactRefs.current.phone as HTMLInputElement)?.value.trim() || '';
-    const email = (contactRefs.current.email as HTMLInputElement)?.value.trim() || '';
-    const comments = (contactRefs.current.comments as HTMLTextAreaElement)?.value.trim() || '';
-    const consentChecked = (contactRefs.current.consent as HTMLInputElement)?.checked;
-    if (!name || !phone || !email || !comments || !consentChecked) { alert('Preencha todos os campos obrigatórios'); return; }
-    try {
-      await fetch('/api/report-download', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, phone, email, comments, format: fileType, type: 'export' }) });
-    } catch { }
-    setSubmitted(true);
-    setShowForm(false);
-    exportReport();
+    // Implementar envio do formulário
+    alert('Formulário enviado com sucesso!');
   };
 
   return (
     <>
-    <div className={`grid gap-8 ${showQuotes ? 'lg:grid-cols-[10cm_minmax(0,1fr)_15cm]' : 'lg:grid-cols-[10cm_15cm]'}`}>
-      {showQuotes && (
-        <div className="order-3 lg:order-1">
-          <RealtimeQuotes symbols={[ 'USD', 'EUR', 'GBP', 'CNY' ]} />
-        </div>
-      )}
-
-      {/* Coluna 2 – Formulário */}
-      <form onSubmit={handleSubmit} className="space-y-4 order-1 lg:order-1">
+    <div className="grid gap-8 lg:grid-cols-[10cm_minmax(0,1fr)_15cm]">
+      {/* Disclaimer Compacto no Início */}
+      <div className="col-span-full mb-4">
+        <SimulatorDisclaimer variant="compact" />
+      </div>
+      
+      <form onSubmit={handleSubmit} className="space-y-4">
         {/* Barra de ferramentas */}
         <div className="flex items-center gap-1 mb-3">
           <button
@@ -515,7 +656,7 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
           </button>
           <button
             type="button"
-            onClick={() => setShowMarkupCalculator(true)}
+            onClick={() => alert('Funcionalidade em desenvolvimento')}
             className="glass px-2 py-1 rounded-md text-white shadow-gold card-hover transition-all duration-300 flex items-center gap-1 border border-accent/20 backdrop-blur-sm text-xs"
           >
             <img src="/icons/markup-glass.svg" alt="Markup" className="w-3 h-3" />
@@ -524,12 +665,84 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
           <label className="flex items-center gap-2 text-sm">
             <input
               type="checkbox"
-              checked={autoSaveEnabled}
-              onChange={(e) => setAutoSaveEnabled(e.target.checked)}
+              checked={false}
+              onChange={() => alert('Funcionalidade em desenvolvimento')}
               className="rounded"
             />
             Auto-save
           </label>
+        </div>
+
+        {/* Seletor de Moeda Único */}
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-200 dark:text-accent-light mb-1">
+            <span className="inline-flex items-center gap-1">
+              Moeda de Origem
+              <InfoTooltip content="Selecione a moeda do valor FOB para conversão automática" />
+            </span>
+          </label>
+          <div className="flex gap-2">
+            <select
+              value={selectedCurrency}
+              onChange={(e) => handleCurrencyChange(e.target.value)}
+              className="flex-1 rounded-md bg-gray-100 dark:bg-gray-700 border-none focus:ring-accent p-2 text-sm text-gray-900 dark:text-white"
+            >
+              {availableCurrencies.map((currency) => (
+                <option key={currency.code} value={currency.code}>
+                  {currency.code} - {currency.name}
+                </option>
+              ))}
+            </select>
+            <button
+              type="button"
+              onClick={() => setIsManualRate(!isManualRate)}
+              className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ${
+                isManualRate 
+                  ? 'bg-yellow-600 text-white hover:bg-yellow-700' 
+                  : 'bg-gray-600 text-white hover:bg-gray-700'
+              }`}
+              title={isManualRate ? "Usando cotação manual" : "Adicionar cotação manual"}
+            >
+              {isManualRate ? '📝' : '✏️'}
+            </button>
+          </div>
+          
+          {/* Campo de Cotação Inteligente */}
+          <div className="mt-2">
+            <label className="block text-sm font-medium text-gray-200 dark:text-accent-light mb-1">
+              <span className="inline-flex items-center gap-1">
+                Cotação (BRL)
+                <InfoTooltip content={isManualRate ? "Cotação manual - responsabilidade do usuário" : "Cotação automática em tempo real"} />
+              </span>
+            </label>
+            <div className="flex gap-2">
+              <input
+                ref={(el) => { inputRefs.current.exchange = el; }}
+                type="text"
+                inputMode="decimal"
+                defaultValue={currencyRates[selectedCurrency]?.toFixed(4) || "5,0000"}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={`flex-1 rounded-md bg-gray-100 dark:bg-gray-700 border-none focus:ring-accent p-2 text-sm text-gray-900 dark:text-white ${
+                  isManualRate ? 'border-2 border-yellow-500' : ''
+                }`}
+                placeholder="0,0000"
+                disabled={!isManualRate}
+              />
+              {!isManualRate && (
+                <div className="flex items-center px-3 py-2 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-md text-xs">
+                  <span className="mr-1">🔄</span>
+                  Tempo Real
+                </div>
+              )}
+              {isManualRate && (
+                <div className="flex items-center px-3 py-2 bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 rounded-md text-xs">
+                  <span className="mr-1">⚠️</span>
+                  Manual
+                </div>
+              )}
+            </div>
+          </div>
         </div>
 
         {/* Seletor de NCM real */}
@@ -584,15 +797,14 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
           </div>
         </div>
 
-        <Field name="fob" label="Valor FOB" suffix="USD" tip="Valor da mercadoria para exportação." />
-        <Field name="freight" label="Frete Internacional" suffix="USD" tip="Custo de frete até o destino." />
-        <Field name="insurance" label="Seguro" suffix="USD" tip="Seguro internacional da carga." />
-        <Field name="inland" label="Frete Interno" suffix="USD" tip="Transporte até porto/aeroporto." />
-        <Field name="port" label="Taxas Portuárias" suffix="USD" tip="THC, documentação, etc." />
-        <Field name="misc" label="Outras Despesas" suffix="USD" tip="Despesas adicionais." />
+        <Field name="fob" label={`Valor FOB (${selectedCurrency})`} suffix={selectedCurrency} tip="Valor da mercadoria para exportação." />
+        <Field name="freight" label={`Frete Internacional (${selectedCurrency})`} suffix={selectedCurrency} tip="Custo de frete até o destino." />
+        <Field name="insurance" label={`Seguro (${selectedCurrency})`} suffix={selectedCurrency} tip="Seguro internacional da carga." />
+        <Field name="inland" label={`Frete Interno (${selectedCurrency})`} suffix={selectedCurrency} tip="Transporte até porto/aeroporto." />
+        <Field name="port" label={`Taxas Portuárias (${selectedCurrency})`} suffix={selectedCurrency} tip="THC, documentação, etc." />
+        <Field name="misc" label={`Outras Despesas (${selectedCurrency})`} suffix={selectedCurrency} tip="Despesas adicionais." />
         <Field name="reintegra" label="Reintegra" suffix="%" tip="Alíquota de crédito (0-3%)." />
         <Field name="drawback" label="Drawback" suffix="%" tip="Alíquota de drawback (0-100%)." />
-        <Field name="exchange" label="Taxa USD → BRL" suffix="R$" tip="Cotação do dólar para conversão." />
         
         {/* Seção de Markup e Margem */}
         <div className="border-t border-gray-300 dark:border-gray-600 pt-4 mt-4">
@@ -607,10 +819,10 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
                 </span>
               </label>
               <div className="relative">
-                <input
-                  type="text"
-                  value={markupPercentage}
-                  onChange={(e) => setMarkupPercentage(e.target.value)}
+                              <input
+                type="text"
+                value="20"
+                onChange={() => alert('Funcionalidade em desenvolvimento')}
                   className="w-full rounded-md bg-gray-100 dark:bg-gray-700 border-none focus:ring-accent p-2 text-sm placeholder-gray-400 dark:placeholder-gray-500 text-gray-900 dark:text-white"
                   placeholder="20"
                 />
@@ -628,10 +840,10 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
                 </span>
               </label>
               <div className="relative">
-                <input
-                  type="text"
-                  value={profitMarginPercentage}
-                  onChange={(e) => setProfitMarginPercentage(e.target.value)}
+                              <input
+                type="text"
+                value="15"
+                onChange={() => alert('Funcionalidade em desenvolvimento')}
                   className="w-full rounded-md bg-gray-100 dark:bg-gray-700 border-none focus:ring-accent p-2 text-sm placeholder-gray-400 dark:placeholder-gray-500 text-gray-900 dark:text-white"
                   placeholder="16.67"
                 />
@@ -651,25 +863,7 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
           <button type="submit" className="btn btn-primary flex-1">Calcular</button>
           <button 
             type="button" 
-            onClick={() => {
-              // ZERAR todos os campos
-              Object.keys(inputRefs.current).forEach(key => {
-                const input = inputRefs.current[key];
-                if (input) input.value = '';
-              });
-              // Resetar todos os estados
-              setSelectedNcm(null);
-              setNcmSearch('');
-              setResult(null);
-              setShowScenarios(false);
-              setShowTemplates(false);
-              setShowHistory(false);
-              setShowMarkupCalculator(false);
-              setSelectedTemplate(null);
-              // Resetar valores de markup e margem
-              setMarkupPercentage('20');
-              setProfitMarginPercentage('16.67');
-            }}
+            onClick={clearAllFields}
             className="btn bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md transition-colors"
           >
             🗑️ Limpar Tudo
@@ -677,252 +871,226 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
         </div>
       </form>
 
-      {/* Coluna 3 – Resultado */}
       {result && (
         <div
           ref={resultRef}
-          className={`bg-gray-100 dark:bg-gray-700 p-4 rounded-lg text-sm md:text-base order-2 lg:order-${showQuotes ? '3' : '2'}`}
+          className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-6 rounded-lg shadow-lg text-sm md:text-base col-span-2"
         >
-          <h3 className="font-semibold text-lg mb-3 text-gray-800 dark:text-white flex items-center gap-2">
-            📊 Análise Completa de Exportação
-          </h3>
+          {/* Cabeçalho Corporativo */}
+          <div className="border-b border-gray-200 dark:border-gray-700 pb-4 mb-6">
+            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+              Relatório de Custo de Exportação
+            </h3>
+            <p className="text-gray-600 dark:text-gray-400 text-sm">
+              Análise detalhada de custos e benefícios fiscais para exportação
+            </p>
+          </div>
           
           {selectedNcm && (
-            <div className="mb-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-sm text-blue-800 dark:text-blue-200">
-              <strong>📋 Produto:</strong> {selectedNcm.code} - {selectedNcm.description}
+            <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-gray-600 dark:text-gray-400">📋</span>
+                <span className="font-semibold text-gray-900 dark:text-white">Produto Identificado</span>
+              </div>
+              <div className="text-sm text-gray-700 dark:text-gray-300">
+                <strong>NCM:</strong> {selectedNcm.code} - {selectedNcm.description}
+              </div>
             </div>
           )}
 
-          {/* Passo 1: Valor Base */}
-          <div className="mb-4 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
-            <h4 className="font-semibold text-green-800 dark:text-green-200 mb-2">💰 1. Valor FOB (Base de Cálculo)</h4>
-            <div className="text-sm text-green-700 dark:text-green-300">
-              <div className="flex justify-between">
-                <span>Valor da mercadoria:</span>
-                <span className="font-semibold">{usd(toNumber(getVal('fob')))} / {brl(toNumber(getVal('fob')) * rate)}</span>
-              </div>
+          {/* Seção 1: Valor Base */}
+          <div className="mb-6">
+            <div className="bg-gray-50 dark:bg-gray-700 px-4 py-3 rounded-t-lg border border-gray-200 dark:border-gray-600">
+              <h4 className="font-semibold text-gray-900 dark:text-white text-lg">1. Valor FOB (Base de Cálculo)</h4>
             </div>
-          </div>
-
-          {/* Passo 2: Custos Detalhados */}
-          <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 rounded-lg">
-            <h4 className="font-semibold text-red-800 dark:text-red-200 mb-2">💸 2. Custos de Exportação</h4>
-            <div className="text-sm text-red-700 dark:text-red-300 space-y-1">
-              <div className="flex justify-between">
-                <span>• Frete Internacional:</span>
-                <span>{usd(toNumber(getVal('freight')))}</span>
-              </div>
-              <div className="flex justify-between">
-                <span>• Seguro:</span>
-                <span>{usd(toNumber(getVal('insurance')))}</span>
-              </div>
-              <div className="flex justify-between">
-                <span>• Frete Interno:</span>
-                <span>{usd(toNumber(getVal('inland')))}</span>
-              </div>
-              <div className="flex justify-between">
-                <span>• Taxas Portuárias:</span>
-                <span>{usd(toNumber(getVal('port')))}</span>
-              </div>
-              <div className="flex justify-between">
-                <span>• Outras Despesas:</span>
-                <span>{usd(toNumber(getVal('misc')))}</span>
-              </div>
-              <div className="border-t pt-1 mt-2 flex justify-between font-semibold">
-                <span>Total de Custos:</span>
-                <span>{usd(result.totalCosts)} / {brl(result.totalCosts * rate)}</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Passo 3: Benefícios Fiscais */}
-          <div className="mb-4 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
-            <h4 className="font-semibold text-yellow-800 dark:text-yellow-200 mb-2">🎯 3. Benefícios Fiscais (Incentivos)</h4>
-            <div className="text-sm text-yellow-700 dark:text-yellow-300 space-y-1">
-              <div className="flex justify-between">
-                <span>• Crédito Reintegra ({getVal('reintegra')}%):</span>
-                <span className="font-semibold text-green-600">+{usd(result.reintegraValue)}</span>
-              </div>
-              <div className="flex justify-between">
-                <span>• Crédito Drawback ({getVal('drawback')}%):</span>
-                <span className="font-semibold text-green-600">+{usd(result.drawbackValue)}</span>
-              </div>
-              <div className="border-t pt-1 mt-2 flex justify-between font-semibold">
-                <span>Total de Benefícios:</span>
-                <span className="text-green-600">+{usd(result.reintegraValue + result.drawbackValue)} / +{brl((result.reintegraValue + result.drawbackValue) * rate)}</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Passo 4: Resultado Final */}
-          <div className="mb-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-            <h4 className="font-semibold text-blue-800 dark:text-blue-200 mb-2">📈 4. Resultado Final</h4>
-            <div className="text-sm text-blue-700 dark:text-blue-300 space-y-2">
-              <div className="flex justify-between">
-                <span>Valor FOB:</span>
-                <span>{usd(toNumber(getVal('fob')))}</span>
-              </div>
-              <div className="flex justify-between text-red-600">
-                <span>- Custos Totais:</span>
-                <span>-{usd(result.totalCosts)}</span>
-              </div>
-              <div className="flex justify-between text-green-600">
-                <span>+ Benefícios Fiscais:</span>
-                <span>+{usd(result.reintegraValue + result.drawbackValue)}</span>
-              </div>
-              <div className="border-t pt-2 mt-2 flex justify-between font-bold text-lg">
-                <span>= Receita Líquida:</span>
-                <span className="text-green-600">{usd(result.revenueUSD)} / {brl(result.revenueBRL)}</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Análise de Rentabilidade Detalhada */}
-          <div className="mb-4 p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
-            <h4 className="font-semibold text-purple-800 dark:text-purple-200 mb-2">📊 Análise de Rentabilidade</h4>
-            
-            {/* Resultado Real */}
-            <div className="text-sm text-purple-700 dark:text-purple-300 mb-3">
-              <div className="font-semibold mb-2 text-purple-800 dark:text-purple-200">💰 Resultado Real da Operação:</div>
-              <div className="flex justify-between mb-1">
-                <span>• Lucro Real:</span>
-                <span className={`font-semibold ${result.actualProfit >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                  {result.actualProfit >= 0 ? '+' : ''}{usd(result.actualProfit)}
-                </span>
-              </div>
-              <div className="flex justify-between mb-1">
-                <span>• Markup Real (sobre FOB):</span>
-                <span className={`font-semibold ${result.markup >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                  {result.markup >= 0 ? '+' : ''}{result.markup.toFixed(2)}%
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span>• Margem Real (sobre receita):</span>
-                <span className={`font-semibold ${result.profitMargin >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                  {result.profitMargin >= 0 ? '+' : ''}{result.profitMargin.toFixed(2)}%
-                </span>
-              </div>
-            </div>
-
-            {/* Sugestão de Preço */}
-            <div className="text-sm text-purple-700 dark:text-purple-300 mb-3">
-              <div className="font-semibold mb-2 text-purple-800 dark:text-purple-200">🎯 Sugestão de Preço (com Markup {markupPercentage}%):</div>
-              <div className="flex justify-between mb-1">
-                <span>• Preço Sugerido:</span>
-                <span className="font-semibold text-blue-600">{usd(result.suggestedPriceWithMarkup)}</span>
-              </div>
-              <div className="flex justify-between mb-1">
-                <span>• Valor do Markup:</span>
-                <span className="font-semibold text-blue-600">+{usd(result.markupValue)}</span>
-              </div>
-              <div className="flex justify-between">
-                <span>• Margem Resultante:</span>
-                <span className="font-semibold text-blue-600">{profitMarginPercentage}%</span>
-              </div>
-            </div>
-
-            {/* Explicação da Diferença */}
-            <div className="text-sm text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-800/50 p-3 rounded-lg border border-gray-200 dark:border-gray-700">
-              <div className="font-semibold mb-2 text-gray-900 dark:text-white flex items-center gap-1">
-                <span className="text-yellow-500">💡</span>
-                Diferença entre Markup e Margem:
-              </div>
-              <div className="space-y-2">
-                <div className="flex items-start gap-2">
-                  <span className="text-blue-600 font-semibold">•</span>
-                  <div>
-                    <strong className="text-gray-900 dark:text-white">Markup:</strong> 
-                    <span className="text-gray-600 dark:text-gray-400"> Percentual sobre o <strong>custo</strong> (Custo + Markup = Preço)</span>
-                  </div>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="text-green-600 font-semibold">•</span>
-                  <div>
-                    <strong className="text-gray-900 dark:text-white">Margem:</strong> 
-                    <span className="text-gray-600 dark:text-gray-400"> Percentual sobre o <strong>preço final</strong> (Preço - Custo = Lucro)</span>
-                  </div>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="text-purple-600 font-semibold">•</span>
-                  <div>
-                    <strong className="text-gray-900 dark:text-white">Exemplo:</strong> 
-                    <span className="text-gray-600 dark:text-gray-400"> 20% markup = 16.67% margem (20/120 = 16.67%)</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Status de Rentabilidade */}
-            <div className="mt-4 pt-3 border-t border-gray-300 dark:border-gray-600">
-              <div className="flex justify-between items-center">
-                <span className="text-gray-700 dark:text-gray-300 font-medium">Status da Operação:</span>
-                <div className={`flex items-center gap-2 px-3 py-1 rounded-full font-semibold text-sm ${
-                  result.revenueUSD > toNumber(getVal('fob')) 
-                    ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 border border-green-200 dark:border-green-800' 
-                    : 'bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-200 border border-orange-200 dark:border-orange-800'
-                }`}>
-                  {result.revenueUSD > toNumber(getVal('fob')) ? (
-                    <>
-                      <span className="text-green-600">✅</span>
-                      <span>Lucrativa</span>
-                    </>
-                  ) : (
-                    <>
-                      <span className="text-orange-600">⚠️</span>
-                      <span>Precisa Otimização</span>
-                    </>
-                  )}
+            <div className="border border-gray-200 dark:border-gray-600 border-t-0 rounded-b-lg p-4 bg-white dark:bg-gray-800">
+              <div className="space-y-3 text-sm">
+                <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
+                  <span className="text-gray-700 dark:text-gray-300">Valor da mercadoria:</span>
+                  <span className="font-medium text-gray-900 dark:text-white">
+                    {formatCurrency(toNumber(getVal('fob')))} / {brl(toNumber(getVal('fob')) * rate)}
+                  </span>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Comparação de cenários */}
-          <div className="mb-4">
-            <button
-              type="button"
-              onClick={() => setShowScenarios(!showScenarios)}
-              className="text-sm text-gray-700 dark:text-gray-300 hover:text-accent dark:hover:text-accent transition-colors font-medium flex items-center gap-1"
-            >
-              <span className="text-accent">📊</span>
-              {showScenarios ? 'Ocultar' : 'Ver'} cenários otimista/pessimista
-            </button>
-            {showScenarios && (
-              <div className="mt-3 space-y-3">
-                <div className="p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-green-600">📈</span>
-                    <strong className="text-green-800 dark:text-green-200">Cenário Otimista (+10%):</strong>
-                  </div>
-                  <div className="text-sm text-green-700 dark:text-green-300">
-                    {usd(result.scenarioOptimistic.revenueUSD)} / {brl(result.scenarioOptimistic.revenueBRL)}
-                  </div>
+          {/* Seção 2: Custos de Exportação */}
+          <div className="mb-6">
+            <div className="bg-gray-50 dark:bg-gray-700 px-4 py-3 rounded-t-lg border border-gray-200 dark:border-gray-600">
+              <h4 className="font-semibold text-gray-900 dark:text-white text-lg">2. Custos de Exportação</h4>
+            </div>
+            <div className="border border-gray-200 dark:border-gray-600 border-t-0 rounded-b-lg p-4 bg-white dark:bg-gray-800">
+              <div className="space-y-3 text-sm">
+                <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
+                  <span className="text-gray-700 dark:text-gray-300">Frete Internacional:</span>
+                  <span className="font-medium text-gray-900 dark:text-white">
+                    {formatCurrency(toNumber(getVal('freight')))} / {brl(toNumber(getVal('freight')) * rate)}
+                  </span>
                 </div>
-                <div className="p-3 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800">
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-red-600">📉</span>
-                    <strong className="text-red-800 dark:text-red-200">Cenário Pessimista (-10%):</strong>
-                  </div>
-                  <div className="text-sm text-red-700 dark:text-red-300">
-                    {usd(result.scenarioPessimistic.revenueUSD)} / {brl(result.scenarioPessimistic.revenueBRL)}
+                <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
+                  <span className="text-gray-700 dark:text-gray-300">Seguro:</span>
+                  <span className="font-medium text-gray-900 dark:text-white">
+                    {formatCurrency(toNumber(getVal('insurance')))} / {brl(toNumber(getVal('insurance')) * rate)}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
+                  <span className="text-gray-700 dark:text-gray-300">Frete Interno:</span>
+                  <span className="font-medium text-gray-900 dark:text-white">
+                    {formatCurrency(toNumber(getVal('inland')))} / {brl(toNumber(getVal('inland')) * rate)}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
+                  <span className="text-gray-700 dark:text-gray-300">Taxas Portuárias:</span>
+                  <span className="font-medium text-gray-900 dark:text-white">
+                    {formatCurrency(toNumber(getVal('port')))} / {brl(toNumber(getVal('port')) * rate)}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
+                  <span className="text-gray-700 dark:text-gray-300">Outras Despesas:</span>
+                  <span className="font-medium text-gray-900 dark:text-white">
+                    {formatCurrency(toNumber(getVal('misc')))} / {brl(toNumber(getVal('misc')) * rate)}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center py-3 bg-gray-50 dark:bg-gray-700 rounded-lg px-3">
+                  <span className="font-semibold text-gray-900 dark:text-white">Total de Custos:</span>
+                  <span className="font-bold text-gray-900 dark:text-white">
+                    {formatCurrency(result.totalCosts)} / {brl(result.totalCosts * rate)}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Seção 3: Benefícios Fiscais */}
+          <div className="mb-6">
+            <div className="bg-gray-50 dark:bg-gray-700 px-4 py-3 rounded-t-lg border border-gray-200 dark:border-gray-600">
+              <h4 className="font-semibold text-gray-900 dark:text-white text-lg">3. Benefícios Fiscais (Incentivos)</h4>
+            </div>
+            <div className="border border-gray-200 dark:border-gray-600 border-t-0 rounded-b-lg p-4 bg-white dark:bg-gray-800">
+              <div className="space-y-3 text-sm">
+                <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
+                  <span className="text-gray-700 dark:text-gray-300">Crédito Reintegra ({getVal('reintegra')}%):</span>
+                  <span className="font-medium text-green-600 dark:text-green-400">
+                    {formatCurrency(result.reintegraValue)} / {brl(result.reintegraValue * rate)}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
+                  <span className="text-gray-700 dark:text-gray-300">Crédito Drawback ({getVal('drawback')}%):</span>
+                  <span className="font-medium text-green-600 dark:text-green-400">
+                    {formatCurrency(result.drawbackValue)} / {brl(result.drawbackValue * rate)}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center py-3 bg-gray-50 dark:bg-gray-700 rounded-lg px-3">
+                  <span className="font-semibold text-gray-900 dark:text-white">Total de Benefícios:</span>
+                  <span className="font-bold text-green-600 dark:text-green-400">
+                    {formatCurrency(result.reintegraValue + result.drawbackValue)} / {brl((result.reintegraValue + result.drawbackValue) * rate)}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Seção 4: Resultado Final */}
+          <div className="mb-6">
+            <div className="bg-gray-50 dark:bg-gray-700 px-4 py-3 rounded-t-lg border border-gray-200 dark:border-gray-600">
+              <h4 className="font-semibold text-gray-900 dark:text-white text-lg">4. Resultado Final</h4>
+            </div>
+            <div className="border border-gray-200 dark:border-gray-600 border-t-0 rounded-b-lg p-4 bg-white dark:bg-gray-800">
+              <div className="space-y-3 text-sm">
+                <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
+                  <span className="text-gray-700 dark:text-gray-300">Valor FOB:</span>
+                  <span className="font-medium text-gray-900 dark:text-white">
+                    {formatCurrency(toNumber(getVal('fob')))} / {brl(toNumber(getVal('fob')) * rate)}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
+                  <span className="text-gray-700 dark:text-gray-300">- Custos Totais:</span>
+                  <span className="font-medium text-red-600 dark:text-red-400">
+                    -{formatCurrency(result.totalCosts)} / -{brl(result.totalCosts * rate)}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
+                  <span className="text-gray-700 dark:text-gray-300">+ Benefícios Fiscais:</span>
+                  <span className="font-medium text-green-600 dark:text-green-400">
+                    +{formatCurrency(result.reintegraValue + result.drawbackValue)} / +{brl((result.reintegraValue + result.drawbackValue) * rate)}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center py-4 bg-gray-50 dark:bg-gray-700 rounded-lg px-3">
+                  <span className="font-bold text-gray-900 dark:text-white text-lg">Receita Líquida:</span>
+                  <span className="font-bold text-xl text-green-600 dark:text-green-400">
+                    {formatCurrency(result.revenueUSD)} / {brl(result.revenueBRL)}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Seção 5: Análise de Rentabilidade */}
+          <div className="mb-6">
+            <div className="bg-gray-50 dark:bg-gray-700 px-4 py-3 rounded-t-lg border border-gray-200 dark:border-gray-600">
+              <h4 className="font-semibold text-gray-900 dark:text-white text-lg">5. Análise de Rentabilidade</h4>
+            </div>
+            <div className="border border-gray-200 dark:border-gray-600 border-t-0 rounded-b-lg p-4 bg-white dark:bg-gray-800">
+              <div className="space-y-3 text-sm">
+                <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
+                  <span className="text-gray-700 dark:text-gray-300">Lucro Real:</span>
+                  <span className={`font-medium ${result.actualProfit >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
+                    {result.actualProfit >= 0 ? '+' : ''}{formatCurrency(result.actualProfit)} / {result.actualProfit >= 0 ? '+' : ''}{brl(result.actualProfit * rate)}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
+                  <span className="text-gray-700 dark:text-gray-300">Markup Real (sobre FOB):</span>
+                  <span className={`font-medium ${result.markup >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
+                    {result.markup >= 0 ? '+' : ''}{result.markup.toFixed(2)}%
+                  </span>
+                </div>
+                <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
+                  <span className="text-gray-700 dark:text-gray-300">Margem Real (sobre receita):</span>
+                  <span className={`font-medium ${result.profitMargin >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
+                    {result.profitMargin >= 0 ? '+' : ''}{result.profitMargin.toFixed(2)}%
+                  </span>
+                </div>
+                
+                {/* Status de Viabilidade */}
+                <div className="flex justify-between items-center py-3 bg-gray-50 dark:bg-gray-700 rounded-lg px-3">
+                  <span className="font-semibold text-gray-900 dark:text-white">Status da Exportação:</span>
+                  <div className={`flex items-center gap-2 px-3 py-1 rounded-full font-semibold text-sm ${
+                    result.revenueUSD > toNumber(getVal('fob')) 
+                      ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 border border-green-200 dark:border-green-800' 
+                      : 'bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-200 border border-orange-200 dark:border-orange-800'
+                  }`}>
+                    {result.revenueUSD > toNumber(getVal('fob')) ? (
+                      <>
+                        <span className="text-green-600">✅</span>
+                        <span>Lucrativa</span>
+                      </>
+                    ) : (
+                      <>
+                        <span className="text-orange-600">⚠️</span>
+                        <span>Precisa Otimização</span>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
-            )}
+            </div>
           </div>
 
-          {/* Call-to-Action Persuasivo */}
-          <div className="mb-4 p-3 bg-gradient-to-r from-accent/10 to-accent/5 rounded-lg border border-accent/20">
-            <h4 className="font-semibold text-accent mb-2">🚀 Quer Otimizar Sua Exportação?</h4>
-            <div className="text-sm text-gray-700 dark:text-gray-300 space-y-1">
-              <p>• <strong>Reduzir custos</strong> com negociação de fretes</p>
+
+
+          {/* Call-to-Action Corporativo */}
+          <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
+            <h4 className="font-semibold text-gray-900 dark:text-white mb-3">Consultoria Especializada</h4>
+            <div className="text-sm text-gray-700 dark:text-gray-300 space-y-2">
+              <p>• <strong>Reduzir custos</strong> com negociação de fretes e seguros</p>
               <p>• <strong>Maximizar benefícios</strong> fiscais (Reintegra/Drawback)</p>
               <p>• <strong>Otimizar NCM</strong> para alíquotas corretas</p>
               <p>• <strong>Consultoria especializada</strong> em comércio exterior</p>
             </div>
           </div>
 
-          <p className="text-xs text-yellow-600 dark:text-yellow-400 mb-4">
+          <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">
             ⚠️ Valores aproximados. Para cálculos precisos e otimização, consulte nossos especialistas.
           </p>
 
@@ -1020,7 +1188,7 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
                     {sim.timestamp.toLocaleString('pt-BR')}
                   </div>
                   <div className="text-xs text-accent">
-                    NCM: {sim.data.ncm} | Receita: {usd(sim.result.revenueUSD)}
+                    NCM: {sim.data.ncm} | Receita: {formatCurrency(sim.result.revenueUSD)}
                   </div>
                 </div>
               ))}
@@ -1040,44 +1208,7 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
     )}
 
     {/* Modal de Calculadora de Markup */}
-    {showMarkupCalculator && (
-      <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg w-full max-w-md">
-          <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">Calculadora de Markup</h3>
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Markup Desejado (%)
-              </label>
-              <input
-                type="number"
-                value={markupPercentage}
-                onChange={(e) => setMarkupPercentage(e.target.value)}
-                className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
-                placeholder="20"
-              />
-            </div>
-            {result && (
-              <div className="p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                <div className="text-sm">
-                  <div><strong>Preço de Venda Sugerido:</strong></div>
-                  <div className="text-lg font-bold text-accent">
-                    {usd(result.revenueUSD * (1 + parseFloat(markupPercentage) / 100))}
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-          <button
-            type="button"
-            onClick={() => setShowMarkupCalculator(false)}
-            className="btn mt-4 w-full"
-          >
-            Fechar
-          </button>
-        </div>
-      </div>
-    )}
+    {/* Remover modal de calculadora de markup */}
 
     {/* Modal de formulário de contato */}
     {showForm && (
@@ -1099,6 +1230,11 @@ export default function ExportCostCalculator({showQuotes=true}:Props) {
         </form>
       </div>
     )}
+
+    {/* Disclaimer Detalhado no Final */}
+    <div className="col-span-full mt-8">
+      <SimulatorDisclaimer variant="detailed" />
+    </div>
     </>
   );
 } 

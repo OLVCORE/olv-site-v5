@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import InfoTooltip from '../ui/InfoTooltip';
+import SimulatorDisclaimer from './SimulatorDisclaimer';
 
 function toNumber(s: string): number {
   if (!s) return 0;
@@ -70,6 +71,9 @@ export default function WeightVolumeConverter() {
 
   return (
     <div className="space-y-6">
+      {/* Disclaimer Compacto */}
+      <SimulatorDisclaimer variant="compact" />
+      
       <div className="grid md:grid-cols-3 gap-4">
         <Field name="length" label="Comprimento" suffix="cm" tip="Tamanho da caixa (lado maior)" />
         <Field name="width" label="Largura" suffix="cm" tip="Lado intermediário" />

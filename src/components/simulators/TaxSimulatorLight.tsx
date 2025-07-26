@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import SimulatorDisclaimer from './SimulatorDisclaimer';
 
 interface Result {
   rates: {
@@ -64,6 +65,9 @@ export default function TaxSimulatorLight() {
 
   return (
     <div className="space-y-6">
+      {/* Disclaimer Compacto */}
+      <SimulatorDisclaimer variant="compact" />
+      
       <h2 className="text-xl font-semibold">Simulador Tributário Comex (Light)</h2>
       <form onSubmit={handleSubmit} className="grid grid-cols-3 gap-4">
         <label className="flex flex-col text-sm col-span-1">
