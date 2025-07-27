@@ -134,14 +134,13 @@ export default function FreightCalculatorUltra({ className = '' }: FreightCalcul
 
       // IA Preditiva
       const aiInput: AIPredictionInput = {
-        route: {
-          origin: input.origin,
-          destination: input.destination
-        },
-        commodity: formData.commodity || 'general',
+        origin: input.origin,
+        destination: input.destination,
         weight: input.weight,
         volume: input.volume,
-        timeframe: 30
+        cargoType: 'general',
+        cargoValue: 10000,
+        serviceType: 'fcl'
       };
 
       const aiPrediction = await aiFreightPredictor.predictCosts(aiInput);
