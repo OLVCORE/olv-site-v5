@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Icon from '../icons/Icon';
+
 
 interface FreightCalculatorRealProps {
   className?: string;

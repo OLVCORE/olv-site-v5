@@ -1,9 +1,8 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { calculateFreightCost, FreightCostInput, FreightCostOutput } from '@/lib/freightCost';
+import { calculateFreightCost, FreightCostInput } from '@/lib/freightCost';
 import { aiFreightPredictor, AIPredictionInput } from '@/lib/aiFreightPredictor';
-import Icon from '../icons/Icon';
 
 interface FreightCalculatorUltraProps {
   className?: string;

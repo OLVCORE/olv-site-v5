@@ -1,6 +1,4 @@
 import React from 'react';
-import Link from 'next/link';
-import MainLayout from '../../../components/layout/MainLayout';
 import FreightCalculatorReal from '@/components/simulators/FreightCalculatorReal';
 import SimLayout from '@/components/simulators/SimLayout';
 import Icon from '@/components/icons/Icon';
