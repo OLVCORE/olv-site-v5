@@ -36,8 +36,8 @@ export default function FreightCalculatorReal({ className = '' }: FreightCalcula
     destino: '',
     peso: '',
     volume: '',
-    tipoServico: '',
-    moeda: '',
+    tipoServico: 'FCL',
+    moeda: 'USD',
     incoterm: 'FOB'
   });
 
@@ -264,41 +264,15 @@ export default function FreightCalculatorReal({ className = '' }: FreightCalcula
   };
 
   const aplicarNoSimuladorImportacao = () => {
-    console.log('📥 Aplicando no simulador de importação...');
-    
-    // Preparar dados de frete para o simulador de importação
-    const dadosFrete = {
-      freight: resultados.valor,
-      currency: resultados.moeda,
-      exchangeRate: taxaCambio,
-      source: 'Freight Simulator',
-      timestamp: new Date().toISOString()
-    };
-    
-    // Salvar dados no localStorage para o simulador de importação
-    localStorage.setItem('freightDataForImport', JSON.stringify(dadosFrete));
-    
-    // Redirecionar para o simulador de importação
-    window.location.href = '/simuladores/importacao?autoLoadFreight=true';
+    console.log('📥 Redirecionando para simulador de importação...');
+    // Apenas redirecionar para a página
+    window.location.href = '/simuladores/importacao';
   };
 
   const aplicarNoSimuladorExportacao = () => {
-    console.log('📤 Aplicando no simulador de exportação...');
-    
-    // Preparar dados de frete para o simulador de exportação
-    const dadosFrete = {
-      freight: resultados.valor,
-      currency: resultados.moeda,
-      exchangeRate: taxaCambio,
-      source: 'Freight Simulator',
-      timestamp: new Date().toISOString()
-    };
-    
-    // Salvar dados no localStorage para o simulador de exportação
-    localStorage.setItem('freightDataForExport', JSON.stringify(dadosFrete));
-    
-    // Redirecionar para o simulador de exportação
-    window.location.href = '/simuladores/exportacao?autoLoadFreight=true';
+    console.log('📤 Redirecionando para simulador de exportação...');
+    // Apenas redirecionar para a página
+    window.location.href = '/simuladores/exportacao';
   };
 
   const verificarAPIsNovamente = () => {
@@ -543,7 +517,7 @@ export default function FreightCalculatorReal({ className = '' }: FreightCalcula
         {/* Botão de Cálculo */}
         <button 
           onClick={calcularFreteReal}
-          disabled={isCalculating || !formData.origem || !formData.destino || !formData.peso || !formData.volume || !formData.tipoServico || !formData.moeda}
+          disabled={isCalculating || !formData.origem || !formData.destino || !formData.peso || !formData.volume}
           className="btn-calcular w-full mt-6 px-6 py-4 bg-gradient-to-r from-accent to-accent/80 text-white rounded-xl hover:from-accent/80 hover:to-accent/60 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 font-semibold"
         >
           {isCalculating ? (

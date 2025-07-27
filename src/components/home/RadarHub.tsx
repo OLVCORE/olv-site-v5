@@ -17,7 +17,7 @@ const sims = [
     highlight: true,
   },
   {
-    slug: '/simuladores/frete-full',
+    slug: '/simuladores/frete',
     title: 'Simulador de Frete Internacional e Nacional',
     desc: 'Compare custos aéreo, marítimo, rodoviário e ferroviário.',
     icon: '/icons/truck-gear.svg',

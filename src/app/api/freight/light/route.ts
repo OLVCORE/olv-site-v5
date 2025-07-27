@@ -46,6 +46,40 @@ export async function GET(req: NextRequest) {
     );
   }
 
+  return await calculateFreightCosts(origin, destination, weight, volume, containerType, modeParam);
+}
+
+export async function POST(req: NextRequest) {
+  try {
+    const body = await req.json();
+    
+    const { origin, destination, weight, volume, service } = body;
+    
+    if (!origin || !destination || !weight || !volume) {
+      return Response.json(
+        { error: 'Missing parameters' },
+        { status: 400, headers: { 'content-type': 'application/json' } }
+      );
+    }
+
+    // Converter service para containerType se necessário
+    let containerType = '40′ Dry';
+    if (service === 'FCL') {
+      containerType = '40′ Dry';
+    } else if (service === 'LCL') {
+      containerType = '20′ Dry';
+    }
+
+    return await calculateFreightCosts(origin, destination, weight, volume, containerType, 'all');
+  } catch (error) {
+    return Response.json(
+      { error: 'Invalid request body' },
+      { status: 400, headers: { 'content-type': 'application/json' } }
+    );
+  }
+}
+
+async function calculateFreightCosts(origin: string, destination: string, weight: number, volume: number, containerType: string, modeParam: string) {
   // Container metrics for possible cost multiplication
   const spec = CONTAINER_SPECS[containerType] || CONTAINER_SPECS['40′ Dry'];
   const containersByVol = Math.ceil(volume / spec.vol);

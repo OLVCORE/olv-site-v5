@@ -107,9 +107,7 @@ export default function ImportCostCalculator({showQuotes=true}:Props) {
   const [autoSaveEnabled, setAutoSaveEnabled] = useState(true);
   const [lastAutoSave, setLastAutoSave] = useState<Date | null>(null);
 
-  // Estados para integração com simulador de frete
-  const [freightDataLoaded, setFreightDataLoaded] = useState(false);
-  const [freightSource, setFreightSource] = useState<string>('');
+
 
   const contactRefs = useRef<{name?:HTMLInputElement|null,phone?:HTMLInputElement|null,email?:HTMLInputElement|null,comments?:HTMLTextAreaElement|null,consent?:HTMLInputElement|null}>({});
   const inputRefs = useRef<Record<string, HTMLInputElement | null>>({});
@@ -577,69 +575,7 @@ export default function ImportCostCalculator({showQuotes=true}:Props) {
   // Função para obter valor do input
   const getVal = (key: string) => inputRefs.current[key]?.value || '';
 
-  // Carregar dados de frete automaticamente
-  useEffect(() => {
-    const loadFreightData = () => {
-      try {
-        const freightData = localStorage.getItem('freightDataForImport');
-        if (freightData) {
-          const data = JSON.parse(freightData);
-          console.log('📥 Dados de frete carregados:', data);
-          
-          // Aplicar dados de frete nos campos
-          if (inputRefs.current.freight) {
-            inputRefs.current.freight.value = data.freight;
-          }
-          if (inputRefs.current.exchange) {
-            inputRefs.current.exchange.value = data.exchangeRate;
-          }
-          
-          // Atualizar moeda se necessário
-          if (data.currency && data.currency !== selectedCurrency) {
-            setSelectedCurrency(data.currency);
-          }
-          
-          setFreightDataLoaded(true);
-          setFreightSource(data.source);
-          
-          // Limpar dados do localStorage após carregar
-          localStorage.removeItem('freightDataForImport');
-          
-          // Mostrar notificação
-          showNotification('Dados de frete carregados automaticamente!', 'success');
-        }
-      } catch (error) {
-        console.error('❌ Erro ao carregar dados de frete:', error);
-      }
-    };
 
-    // Verificar se deve carregar dados de frete
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('autoLoadFreight') === 'true') {
-      loadFreightData();
-    }
-  }, [selectedCurrency]);
-
-  // Função para mostrar notificações
-  const showNotification = (message: string, type: 'success' | 'error' | 'info') => {
-    // Criar elemento de notificação
-    const notification = document.createElement('div');
-    notification.className = `fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 ${
-      type === 'success' ? 'bg-green-500 text-white' :
-      type === 'error' ? 'bg-red-500 text-white' :
-      'bg-blue-500 text-white'
-    }`;
-    notification.textContent = message;
-    
-    document.body.appendChild(notification);
-    
-    // Remover após 3 segundos
-    setTimeout(() => {
-      if (notification.parentNode) {
-        notification.parentNode.removeChild(notification);
-      }
-    }, 3000);
-  };
 
   interface FieldProps { name: string; label: string; suffix?: string; tip?: string; }
   const Field = ({ name, label, suffix, tip }: FieldProps) => (
@@ -809,12 +745,6 @@ export default function ImportCostCalculator({showQuotes=true}:Props) {
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Barra de ferramentas */}
         <div className="flex items-center gap-1 mb-3">
-          {freightDataLoaded && (
-            <div className="flex items-center gap-1 px-2 py-1 bg-green-500/20 border border-green-500/30 rounded text-xs text-green-400">
-              <span>📥</span>
-              <span>Frete Carregado</span>
-            </div>
-          )}
           <button
             type="button"
             onClick={() => setShowTemplates(true)}

@@ -39,7 +39,7 @@ export default function SimuladoresPage() {
       title: 'Calculadora de Frete',
       description: 'Compare custos de frete marítimo, aéreo e terrestre internacional',
       icon: '/icons/logistics-glass.svg',
-      href: '/simuladores/frete-full',
+      href: '/simuladores/frete',
       features: ['Frete marítimo', 'Frete aéreo', 'Frete terrestre', 'Comparativo de modalidades']
     },
     {
