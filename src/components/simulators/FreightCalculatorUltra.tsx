@@ -122,12 +122,12 @@ export default function FreightCalculatorUltra({ className = '' }: FreightCalcul
         destination: formData.destinationPort.split(' ')[0] || 'BRSSZ',
         weight: parseFloat(formData.weight) || volumetricWeight,
         volume: parseFloat(formData.length) * parseFloat(formData.width) * parseFloat(formData.height) / 1000000,
-        cargo_type: 'general',
-        cargo_value: 10000,
+        cargoType: 'general',
+        cargoValue: 10000,
         ncm: '',
         incoterm: formData.incoterm as any,
-        service_type: 'fcl',
-        exchange_rate: 5.2
+        serviceType: 'fcl',
+        exchangeRate: 5.2
       };
 
       const result = await calculateFreightCost(input);
