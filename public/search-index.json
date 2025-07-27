@@ -1120,20 +1120,20 @@
     "searchText": " export const metadata: metadata =  , };  export default function simuladorexportacaopage()             calculator=            guide=          />                 ); } "
   },
   {
+    "title": "Simulador de Frete Internacional | OLV Internacional",
+    "slug": "Projects/olv-site-v5/src/app/simuladores/frete",
+    "category": "Projects",
+    "section": "Projects",
+    "excerpt": "export const metadata =  ;  export default function FreightSimPage()             guide=          />                 ); }",
+    "searchText": " export const metadata =  ;  export default function freightsimpage()             guide=          />                 ); } "
+  },
+  {
     "title": "frete-full",
     "slug": "Projects/olv-site-v5/src/app/simuladores/frete-full",
     "category": "Projects",
     "section": "Projects",
-    "excerpt": "'use client';  type LoadPlan =  ;     usedVolume: number;     usedWeight: number;     packages:  [];   }[]; };  export default function FreightFullPage()  ,         body: JSON.stringify( ),       });       const data = await res.json();       setPlan(data);       setTab(2);     } catch (err)   finally     };    return (                              Simulador de Fretes – Versão FULL                                                            Voltar ao Radar 360                                              >           ))}                 >                             )}        `,                 length:parseFloat(r.length),                 width:parseFloat(r.width),                 height:parseFloat(r.height),                 weight:parseFloat(r.weight),                 quantity:parseInt(r.qty,10)               }));               setPackages(pkgs);             }}             maxLines=              premium=            />                                                       )}         –                   Peso usado:   kg • Volume usado:   m³                 Pacotes:    `)}                          ))}                 )}         />       )}               ); }",
-    "searchText": "'use client';  type loadplan =  ;     usedvolume: number;     usedweight: number;     packages:  [];   }[]; };  export default function freightfullpage()  ,         body: json.stringify( ),       });       const data = await res.json();       setplan(data);       settab(2);     } catch (err)   finally     };    return (                              simulador de fretes – versao full                                                            voltar ao radar 360                                              >           ))}                 >                             )}        `,                 length:parsefloat(r.length),                 width:parsefloat(r.width),                 height:parsefloat(r.height),                 weight:parsefloat(r.weight),                 quantity:parseint(r.qty,10)               }));               setpackages(pkgs);             }}             maxlines=              premium=            />                                                       )}         –                   peso usado:   kg • volume usado:   m³                 pacotes:    `)}                          ))}                 )}         />       )}               ); } "
-  },
-  {
-    "title": "Calculadora de Fretes – Versão Light",
-    "slug": "Projects/olv-site-v5/src/app/simuladores/frete-light",
-    "category": "Projects",
-    "section": "Projects",
-    "excerpt": "export const metadata =  ;    export const dynamic = 'force-dynamic';  export default function Page()  >                           ); }",
-    "searchText": " export const metadata =  ;    export const dynamic = 'force-dynamic';  export default function page()  >                           ); } "
+    "excerpt": "'use client';  export default function FreightFullPage()  >                                       ); }",
+    "searchText": "'use client';  export default function freightfullpage()  >                                       ); } "
   },
   {
     "title": "Simulador de Custos de Importação | OLV Internacional",
