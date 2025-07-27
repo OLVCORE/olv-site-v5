@@ -265,12 +265,40 @@ export default function FreightCalculatorReal({ className = '' }: FreightCalcula
 
   const aplicarNoSimuladorImportacao = () => {
     console.log('📥 Aplicando no simulador de importação...');
-    // Implementar integração com simulador de importação
+    
+    // Preparar dados de frete para o simulador de importação
+    const dadosFrete = {
+      freight: resultados.valor,
+      currency: resultados.moeda,
+      exchangeRate: taxaCambio,
+      source: 'Freight Simulator',
+      timestamp: new Date().toISOString()
+    };
+    
+    // Salvar dados no localStorage para o simulador de importação
+    localStorage.setItem('freightDataForImport', JSON.stringify(dadosFrete));
+    
+    // Redirecionar para o simulador de importação
+    window.location.href = '/simuladores/importacao?autoLoadFreight=true';
   };
 
   const aplicarNoSimuladorExportacao = () => {
     console.log('📤 Aplicando no simulador de exportação...');
-    // Implementar integração com simulador de exportação
+    
+    // Preparar dados de frete para o simulador de exportação
+    const dadosFrete = {
+      freight: resultados.valor,
+      currency: resultados.moeda,
+      exchangeRate: taxaCambio,
+      source: 'Freight Simulator',
+      timestamp: new Date().toISOString()
+    };
+    
+    // Salvar dados no localStorage para o simulador de exportação
+    localStorage.setItem('freightDataForExport', JSON.stringify(dadosFrete));
+    
+    // Redirecionar para o simulador de exportação
+    window.location.href = '/simuladores/exportacao?autoLoadFreight=true';
   };
 
   const verificarAPIsNovamente = () => {
