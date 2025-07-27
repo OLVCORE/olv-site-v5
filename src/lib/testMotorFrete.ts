@@ -25,10 +25,10 @@ export async function testarMotorFrete() {
   try {
     const resultado1 = await calculateFreightCost(teste1);
     console.log('✅ Teste 1 passou');
-    console.log(`   Custo Total: ${resultado1.secao5.resultado_final.custo_total.usd.toFixed(2)} USD`);
-    console.log(`   Tempo de Trânsito: ${resultado1.secao5.resultado_final.tempo_transito} dias`);
-    console.log(`   Container Recomendado: ${resultado1.secao2.analise_carga.tipo_container_recomendado}`);
-    console.log(`   Alertas: ${resultado1.alertas.length}`);
+    console.log(`   Custo Total: ${resultado1.totalCost.toFixed(2)} USD`);
+    console.log(`   Frete: ${resultado1.breakdown.freight.toFixed(2)} USD`);
+    console.log(`   Seguro: ${resultado1.breakdown.insurance.toFixed(2)} USD`);
+    console.log(`   Alfândega: ${resultado1.breakdown.customs.toFixed(2)} USD`);
   } catch (error) {
     console.log('❌ Teste 1 falhou:', error);
   }
@@ -53,9 +53,10 @@ export async function testarMotorFrete() {
   try {
     const resultado2 = await calculateFreightCost(teste2);
     console.log('✅ Teste 2 passou');
-    console.log(`   Custo Total: ${resultado2.secao5.resultado_final.custo_total.usd.toFixed(2)} USD`);
-    console.log(`   Custo por kg: ${resultado2.secao5.resultado_final.custo_por_kg.usd.toFixed(2)} USD/kg`);
-    console.log(`   Pegada de Carbono: ${resultado2.secao5.resultado_final.pegada_carbono.toFixed(1)} kg CO₂`);
+    console.log(`   Custo Total: ${resultado2.totalCost.toFixed(2)} USD`);
+    console.log(`   Frete: ${resultado2.breakdown.freight.toFixed(2)} USD`);
+    console.log(`   Seguro: ${resultado2.breakdown.insurance.toFixed(2)} USD`);
+    console.log(`   Taxa de Câmbio: ${resultado2.exchangeRate}`);
   } catch (error) {
     console.log('❌ Teste 2 falhou:', error);
   }
@@ -80,12 +81,10 @@ export async function testarMotorFrete() {
   try {
     const resultado3 = await calculateFreightCost(teste3);
     console.log('✅ Teste 3 passou');
-    console.log(`   Custo Total: ${resultado3.secao5.resultado_final.custo_total.usd.toFixed(2)} USD`);
-    console.log(`   Tempo de Trânsito: ${resultado3.secao5.resultado_final.tempo_transito} dias`);
-    console.log(`   Alertas: ${resultado3.alertas.length}`);
-    if (resultado3.alertas.length > 0) {
-      console.log(`   Primeiro alerta: ${resultado3.alertas[0].mensagem}`);
-    }
+    console.log(`   Custo Total: ${resultado3.totalCost.toFixed(2)} USD`);
+    console.log(`   Frete: ${resultado3.breakdown.freight.toFixed(2)} USD`);
+    console.log(`   Seguro: ${resultado3.breakdown.insurance.toFixed(2)} USD`);
+    console.log(`   Taxa de Câmbio: ${resultado3.exchangeRate}`);
   } catch (error) {
     console.log('❌ Teste 3 falhou:', error);
   }
