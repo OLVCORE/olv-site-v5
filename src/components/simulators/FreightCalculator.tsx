@@ -970,61 +970,23 @@ export default function FreightCalculator() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="text-center glass p-4 rounded-xl border border-accent/20">
                 <h5 className="text-sm font-medium text-gray-100 mb-2">Custo Total</h5>
-                <p className="text-2xl font-bold text-accent">${advancedResult.secao5.resultado_final.custo_total.usd.toFixed(2)}</p>
-                <p className="text-sm text-gray-300">R$ {advancedResult.secao5.resultado_final.custo_total.brl.toFixed(2)}</p>
+                <p className="text-2xl font-bold text-accent">${advancedResult.totalCost.toFixed(2)}</p>
+                <p className="text-sm text-gray-300">USD</p>
               </div>
               <div className="text-center glass p-4 rounded-xl border border-accent/20">
                 <h5 className="text-sm font-medium text-gray-100 mb-2">Custo por kg</h5>
-                <p className="text-2xl font-bold text-accent">${advancedResult.secao5.resultado_final.custo_por_kg.usd.toFixed(2)}</p>
-                <p className="text-sm text-gray-300">R$ {advancedResult.secao5.resultado_final.custo_por_kg.brl.toFixed(2)}</p>
+                <p className="text-2xl font-bold text-accent">${(advancedResult.totalCost / parseFloat(formData.weight)).toFixed(2)}</p>
+                <p className="text-sm text-gray-300">USD/kg</p>
               </div>
               <div className="text-center glass p-4 rounded-xl border border-accent/20">
                 <h5 className="text-sm font-medium text-gray-100 mb-2">Custo por m³</h5>
-                <p className="text-2xl font-bold text-accent">${advancedResult.secao5.resultado_final.custo_por_m3.usd.toFixed(2)}</p>
-                <p className="text-sm text-gray-300">R$ {advancedResult.secao5.resultado_final.custo_por_m3.brl.toFixed(2)}</p>
+                <p className="text-2xl font-bold text-accent">${(advancedResult.totalCost / parseFloat(formData.volume)).toFixed(2)}</p>
+                <p className="text-sm text-gray-300">USD/m³</p>
               </div>
             </div>
           </div>
 
-          {/* Seção 5: Comparativo de Modais */}
-          <div className="glass p-6 rounded-2xl shadow-gold card-hover">
-            <h4 className="text-lg font-medium text-gray-100 mb-4 flex items-center gap-2">
-              <Icon src="/icons/tools.svg" alt="Comparativo" size="sm" className="text-accent" />
-              ⚖️ Comparativo de Modais
-            </h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {advancedResult.secao6.comparativo_modais.map((modal, index) => (
-                <div key={index} className="glass border border-gray-700 rounded-xl p-4">
-                  <h5 className="font-medium text-gray-100 mb-2">{modal.modal}</h5>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span className="text-gray-400">Custo:</span>
-                      <span className="font-medium text-gray-100">${formatarValorFrete(modal.custo_total.usd)}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-400">Tempo:</span>
-                      <span className="font-medium text-gray-100">{modal.tempo_transito} dias</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-400">CO₂:</span>
-                      <span className="font-medium text-gray-100">{modal.pegada_carbono} kg</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-400">Custo/kg:</span>
-                      <span className="font-medium text-gray-100">${formatarValorFrete(modal.custo_por_kg.usd)}</span>
-                    </div>
-                  </div>
-                  {modal.recomendacao && (
-                    <div className="mt-3 glass p-2 rounded border border-accent/20 text-xs text-gray-100">
-                      {modal.recomendacao}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Seção 6: Resultado Final */}
+          {/* Resultado Final */}
           <div className="glass p-6 rounded-2xl shadow-gold card-hover">
             <h4 className="text-lg font-medium text-gray-100 mb-4 flex items-center gap-2">
               <Icon src="/icons/target.svg" alt="Resultado" size="sm" className="text-accent" />
@@ -1033,18 +995,18 @@ export default function FreightCalculator() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="text-center glass p-4 rounded-xl border border-accent/20">
                 <h5 className="text-sm font-medium text-gray-100 mb-2">Custo Total</h5>
-                <p className="text-2xl font-bold text-accent">${formatarValorFrete(advancedResult.secao5.resultado_final.custo_total.usd)}</p>
-                <p className="text-sm text-gray-300">R$ {formatarValorFrete(advancedResult.secao5.resultado_final.custo_total.brl)}</p>
+                <p className="text-2xl font-bold text-accent">${formatarValorFrete(advancedResult.totalCost)}</p>
+                <p className="text-sm text-gray-300">USD</p>
               </div>
               <div className="text-center glass p-4 rounded-xl border border-accent/20">
                 <h5 className="text-sm font-medium text-gray-100 mb-2">Custo por kg</h5>
-                <p className="text-2xl font-bold text-accent">${formatarValorFrete(advancedResult.secao5.resultado_final.custo_por_kg.usd)}</p>
-                <p className="text-sm text-gray-300">R$ {formatarValorFrete(advancedResult.secao5.resultado_final.custo_por_kg.brl)}</p>
+                <p className="text-2xl font-bold text-accent">${formatarValorFrete(advancedResult.totalCost / parseFloat(formData.weight))}</p>
+                <p className="text-sm text-gray-300">USD/kg</p>
               </div>
               <div className="text-center glass p-4 rounded-xl border border-accent/20">
                 <h5 className="text-sm font-medium text-gray-100 mb-2">Custo por m³</h5>
-                <p className="text-2xl font-bold text-accent">${formatarValorFrete(advancedResult.secao5.resultado_final.custo_por_m3.usd)}</p>
-                <p className="text-sm text-gray-300">R$ {formatarValorFrete(advancedResult.secao5.resultado_final.custo_por_m3.brl)}</p>
+                <p className="text-2xl font-bold text-accent">${formatarValorFrete(advancedResult.totalCost / parseFloat(formData.volume))}</p>
+                <p className="text-sm text-gray-300">USD/m³</p>
               </div>
             </div>
           </div>
@@ -1189,40 +1151,7 @@ export default function FreightCalculator() {
             </div>
           )}
 
-          {/* Alertas e Recomendações */}
-          {advancedResult.alertas.length > 0 && (
-            <div className="glass p-6 rounded-2xl shadow-gold card-hover">
-              <h4 className="text-lg font-medium text-gray-100 mb-4 flex items-center gap-2">
-                <Icon src="/icons/faq.svg" alt="Alertas" size="sm" className="text-accent" />
-                ⚠️ Alertas e Recomendações
-              </h4>
-              <div className="space-y-3">
-                {advancedResult.alertas.map((alerta, index) => (
-                  <div key={index} className={`glass p-3 rounded-lg border ${
-                    alerta.tipo === 'aviso' ? 'border-yellow-500/20' :
-                    alerta.tipo === 'erro' ? 'border-red-500/20' :
-                    'border-accent/20'
-                  }`}>
-                    <div className="flex">
-                      <div className="flex-shrink-0">
-                        {alerta.tipo === 'aviso' ? (
-                          <Icon src="/icons/faq.svg" alt="Aviso" size="sm" className="text-yellow-400" />
-                        ) : alerta.tipo === 'erro' ? (
-                          <Icon src="/icons/faq.svg" alt="Erro" size="sm" className="text-red-400" />
-                        ) : (
-                          <Icon src="/icons/faq.svg" alt="Info" size="sm" className="text-accent" />
-                        )}
-                      </div>
-                      <div className="ml-3">
-                        <p className="text-sm font-medium text-gray-100">{alerta.icone}</p>
-                        <p className="text-sm text-gray-300 mt-1">{alerta.mensagem}</p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
+
         </div>
       )}
     </div>
