@@ -143,7 +143,7 @@ export default function FreightCalculatorUltra({ className = '' }: FreightCalcul
         serviceType: 'fcl'
       };
 
-      const aiPrediction = await aiFreightPredictor.predictCosts(aiInput);
+      const aiPrediction = await aiFreightPredictor(aiInput);
 
       // Cenários otimizados
       const scenarios = generateOptimizationScenarios(result, aiPrediction);
