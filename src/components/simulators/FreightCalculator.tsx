@@ -234,12 +234,12 @@ export default function FreightCalculator() {
         destination: formData.destination,
         weight: parseFloat(formData.weight),
         volume: parseFloat(formData.volume),
-        cargo_type: formData.cargoType as 'general' | 'dangerous' | 'perishable' | 'high_value',
-        cargo_value: parseFloat(formData.cargoValue),
+        cargoType: formData.cargoType,
+        cargoValue: parseFloat(formData.cargoValue),
         ncm: formData.ncm,
-        incoterm: formData.incoterm as 'EXW' | 'FOB' | 'CIF' | 'DDP',
-        service_type: formData.serviceType as 'fcl' | 'lcl' | 'air_standard' | 'air_express',
-        exchange_rate: parseFloat(formData.exchangeRate)
+        incoterm: formData.incoterm,
+        serviceType: formData.serviceType,
+        exchangeRate: parseFloat(formData.exchangeRate)
       };
 
       const result = await calculateFreightCost(input);
@@ -417,17 +417,16 @@ export default function FreightCalculator() {
       console.log('🤖 [IA] Iniciando predição de custos...');
       
       const aiInput: AIPredictionInput = {
-        route: {
-          origin: shipmentData.origin,
-          destination: shipmentData.destination
-        },
-        commodity: shipmentData.cargoType || 'general',
+        origin: shipmentData.origin,
+        destination: shipmentData.destination,
         weight: parseFloat(shipmentData.weight) || 0,
         volume: parseFloat(shipmentData.volume) || 0,
-        timeframe: 30 // 30 dias de predição
+        cargoType: shipmentData.cargoType || 'general',
+        cargoValue: parseFloat(shipmentData.cargoValue) || 0,
+        serviceType: shipmentData.serviceType || 'fcl'
       };
       
-      const prediction = await aiFreightPredictor.predictCosts(aiInput);
+      const prediction = await aiFreightPredictor(aiInput);
       
       console.log('✅ [IA] Predição concluída:', prediction);
       setAiPrediction(prediction);
@@ -690,10 +689,7 @@ export default function FreightCalculator() {
       </div>
 
       {/* Guia de Incoterms */}
-      <IncotermGuide 
-        selectedIncoterm={formData.incoterm} 
-        onIncotermChange={handleIncotermChange} 
-      />
+      <IncotermGuide />
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -902,102 +898,63 @@ export default function FreightCalculator() {
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="text-center glass p-4 rounded-xl border border-accent/20">
-                <h5 className="text-sm font-medium text-gray-100 mb-2">Origem</h5>
-                <p className="text-lg font-bold text-accent">{advancedResult.secao1.dados_entrada.origem}</p>
+                <h5 className="text-sm font-medium text-gray-100 mb-2">Custo Total</h5>
+                <p className="text-lg font-bold text-accent">${advancedResult.totalCost.toFixed(2)}</p>
+                <p className="text-sm text-gray-300">USD</p>
               </div>
               <div className="text-center glass p-4 rounded-xl border border-accent/20">
-                <h5 className="text-sm font-medium text-gray-100 mb-2">Destino</h5>
-                <p className="text-lg font-bold text-accent">{advancedResult.secao1.dados_entrada.destino}</p>
+                <h5 className="text-sm font-medium text-gray-100 mb-2">Frete</h5>
+                <p className="text-lg font-bold text-accent">${advancedResult.breakdown.freight.toFixed(2)}</p>
+                <p className="text-sm text-gray-300">USD</p>
               </div>
               <div className="text-center glass p-4 rounded-xl border border-accent/20">
-                <h5 className="text-sm font-medium text-gray-100 mb-2">Peso</h5>
-                <p className="text-lg font-bold text-accent">{advancedResult.secao1.dados_entrada.peso.kg} kg</p>
-                <p className="text-sm text-gray-300">{advancedResult.secao1.dados_entrada.peso.lb} lb</p>
+                <h5 className="text-sm font-medium text-gray-100 mb-2">Seguro</h5>
+                <p className="text-lg font-bold text-accent">${advancedResult.breakdown.insurance.toFixed(2)}</p>
+                <p className="text-sm text-gray-300">USD</p>
               </div>
             </div>
           </div>
 
-          {/* Seção 2: Análise de Carga */}
-          <div className="glass p-6 rounded-2xl shadow-gold card-hover">
-            <h4 className="text-lg font-medium text-gray-100 mb-4 flex items-center gap-2">
-              <Icon src="/icons/chart.svg" alt="Análise" size="sm" className="text-accent" />
-              📦 Análise de Carga
-            </h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <h5 className="font-medium text-gray-100 mb-3">Características da Carga</h5>
-                <div className="space-y-2">
-                  <div className="flex justify-between items-center glass p-2 rounded border border-gray-700">
-                    <span className="text-sm text-gray-300">Tipo de Container</span>
-                    <span className="text-sm font-medium text-accent">{advancedResult.secao2.analise_carga.tipo_container_recomendado}</span>
-                  </div>
-                  <div className="flex justify-between items-center glass p-2 rounded border border-gray-700">
-                    <span className="text-sm text-gray-300">Ocupação</span>
-                    <span className="text-sm font-medium text-accent">{advancedResult.secao2.analise_carga.ocupacao_container}%</span>
-                  </div>
-                  <div className="flex justify-between items-center glass p-2 rounded border border-gray-700">
-                    <span className="text-sm text-gray-300">Densidade</span>
-                    <span className="text-sm font-medium text-accent">{advancedResult.secao2.analise_carga.densidade_carga} kg/m³</span>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <h5 className="font-medium text-gray-100 mb-3">Classificação</h5>
-                <div className="text-center">
-                  <div className="text-lg font-bold text-accent mb-2">
-                    {advancedResult.secao2.analise_carga.classificacao_carga}
-                  </div>
-                  <div className="text-sm text-gray-300">
-                    {advancedResult.secao2.analise_carga.restricoes_especiais.length > 0 ? 
-                      `Restrições: ${advancedResult.secao2.analise_carga.restricoes_especiais.join(', ')}` : 
-                      'Sem restrições especiais'
-                    }
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Seção 3: Custos de Frete */}
+          {/* Breakdown de Custos */}
           <div className="glass p-6 rounded-2xl shadow-gold card-hover">
             <h4 className="text-lg font-medium text-gray-100 mb-4 flex items-center gap-2">
               <Icon src="/icons/analytics.svg" alt="Custos" size="sm" className="text-accent" />
-              💰 Custos de Frete
+              💰 Breakdown de Custos
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <h5 className="font-medium text-gray-100 mb-3">Breakdown de Custos</h5>
+                <h5 className="font-medium text-gray-100 mb-3">Detalhamento</h5>
                 <div className="space-y-2">
                   <div className="flex justify-between items-center glass p-2 rounded border border-gray-700">
-                    <span className="text-sm text-gray-300">Tarifa Base</span>
-                    <span className="text-sm font-medium text-accent">${advancedResult.secao3.custos_frete.tarifa_base.usd.toFixed(2)}</span>
+                    <span className="text-sm text-gray-300">Frete</span>
+                    <span className="text-sm font-medium text-accent">${advancedResult.breakdown.freight.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between items-center glass p-2 rounded border border-gray-700">
-                    <span className="text-sm text-gray-300">BAF</span>
-                    <span className="text-sm font-medium text-accent">${advancedResult.secao3.custos_frete.baf.usd.toFixed(2)}</span>
+                    <span className="text-sm text-gray-300">Seguro</span>
+                    <span className="text-sm font-medium text-accent">${advancedResult.breakdown.insurance.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between items-center glass p-2 rounded border border-gray-700">
-                    <span className="text-sm text-gray-300">CAF</span>
-                    <span className="text-sm font-medium text-accent">${advancedResult.secao3.custos_frete.caf.usd.toFixed(2)}</span>
+                    <span className="text-sm text-gray-300">Despacho</span>
+                    <span className="text-sm font-medium text-accent">${advancedResult.breakdown.customs.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between items-center glass p-2 rounded border border-gray-700">
-                    <span className="text-sm text-gray-300">THC Origem</span>
-                    <span className="text-sm font-medium text-accent">${advancedResult.secao3.custos_frete.thc_origem.usd.toFixed(2)}</span>
+                    <span className="text-sm text-gray-300">Taxas Portuárias</span>
+                    <span className="text-sm font-medium text-accent">${advancedResult.breakdown.portFees.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between items-center glass p-2 rounded border border-gray-700">
-                    <span className="text-sm text-gray-300">THC Destino</span>
-                    <span className="text-sm font-medium text-accent">${advancedResult.secao3.custos_frete.thc_destino.usd.toFixed(2)}</span>
+                    <span className="text-sm text-gray-300">Documentação</span>
+                    <span className="text-sm font-medium text-accent">${advancedResult.breakdown.documentation.toFixed(2)}</span>
                   </div>
                 </div>
               </div>
               <div>
-                <h5 className="font-medium text-gray-100 mb-3">Total de Frete</h5>
+                <h5 className="font-medium text-gray-100 mb-3">Total</h5>
                 <div className="text-center">
                   <div className="text-3xl font-bold text-accent mb-2">
-                    ${advancedResult.secao3.custos_frete.total_frete.usd.toFixed(2)}
+                    ${advancedResult.totalCost.toFixed(2)}
                   </div>
                   <div className="text-sm text-gray-300">
-                    R$ {advancedResult.secao3.custos_frete.total_frete.brl.toFixed(2)}
+                    Taxa de Câmbio: {advancedResult.exchangeRate}
                   </div>
                 </div>
               </div>

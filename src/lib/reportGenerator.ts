@@ -1,6 +1,5 @@
 // Sistema de geração de relatórios para o simulador de frete
 import { jsPDF } from 'jspdf';
-import 'jspdf-autotable';
 import * as XLSX from 'xlsx';
 
 // Interfaces para dados de relatório
@@ -123,16 +122,27 @@ export async function generatePDFReport(data: FreightReportData): Promise<Blob> 
     `${item.percentage.toFixed(1)}%`
   ]);
   
-  (doc as any).autoTable({
-    startY: yPosition,
-    head: [['Componente', 'USD', 'BRL', '%']],
-    body: breakdownData,
-    theme: 'grid',
-    headStyles: { fillColor: [59, 130, 246] },
-    styles: { fontSize: smallFontSize }
+  // Cabeçalho da tabela
+  doc.setFontSize(smallFontSize);
+  doc.setFont('helvetica', 'bold');
+  doc.text('Componente', 20, yPosition);
+  doc.text('USD', 80, yPosition);
+  doc.text('BRL', 120, yPosition);
+  doc.text('%', 160, yPosition);
+  
+  yPosition += 5;
+  
+  // Dados da tabela
+  doc.setFont('helvetica', 'normal');
+  data.results.breakdown.forEach(item => {
+    doc.text(item.name, 20, yPosition);
+    doc.text(`$${item.usd.toFixed(2)}`, 80, yPosition);
+    doc.text(`R$ ${item.brl.toFixed(2)}`, 120, yPosition);
+    doc.text(`${item.percentage.toFixed(1)}%`, 160, yPosition);
+    yPosition += 5;
   });
   
-  yPosition = (doc as any).lastAutoTable.finalY + 10;
+  yPosition += 10;
   
   // Comparação de modais
   if (data.results.modalComparison.length > 0) {
@@ -150,16 +160,29 @@ export async function generatePDFReport(data: FreightReportData): Promise<Blob> 
       `${modal.reliability}%`
     ]);
     
-    (doc as any).autoTable({
-      startY: yPosition,
-      head: [['Modal', 'Custo', 'Tempo', 'Carbono', 'Confiabilidade']],
-      body: modalData,
-      theme: 'grid',
-      headStyles: { fillColor: [16, 185, 129] },
-      styles: { fontSize: smallFontSize }
+    // Cabeçalho da tabela de modais
+    doc.setFontSize(smallFontSize);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Modal', 20, yPosition);
+    doc.text('Custo', 60, yPosition);
+    doc.text('Tempo', 100, yPosition);
+    doc.text('Carbono', 140, yPosition);
+    doc.text('Confiabilidade', 180, yPosition);
+    
+    yPosition += 5;
+    
+    // Dados da tabela de modais
+    doc.setFont('helvetica', 'normal');
+    data.results.modalComparison.forEach(modal => {
+      doc.text(modal.modal, 20, yPosition);
+      doc.text(`$${modal.cost.toFixed(2)}`, 60, yPosition);
+      doc.text(`${modal.time} dias`, 100, yPosition);
+      doc.text(`${modal.carbon} kg CO₂`, 140, yPosition);
+      doc.text(`${modal.reliability}%`, 180, yPosition);
+      yPosition += 5;
     });
     
-    yPosition = (doc as any).lastAutoTable.finalY + 10;
+    yPosition += 10;
   }
   
   // Timeline
@@ -177,16 +200,27 @@ export async function generatePDFReport(data: FreightReportData): Promise<Blob> 
       `$${item.cost.toFixed(2)}`
     ]);
     
-    (doc as any).autoTable({
-      startY: yPosition,
-      head: [['Dia', 'Evento', 'Status', 'Custo']],
-      body: timelineData,
-      theme: 'grid',
-      headStyles: { fillColor: [245, 158, 11] },
-      styles: { fontSize: smallFontSize }
+    // Cabeçalho da tabela de timeline
+    doc.setFontSize(smallFontSize);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Dia', 20, yPosition);
+    doc.text('Evento', 50, yPosition);
+    doc.text('Status', 100, yPosition);
+    doc.text('Custo', 150, yPosition);
+    
+    yPosition += 5;
+    
+    // Dados da tabela de timeline
+    doc.setFont('helvetica', 'normal');
+    data.results.timeline.forEach(item => {
+      doc.text(`Dia ${item.day}`, 20, yPosition);
+      doc.text(item.event, 50, yPosition);
+      doc.text(item.status, 100, yPosition);
+      doc.text(`$${item.cost.toFixed(2)}`, 150, yPosition);
+      yPosition += 5;
     });
     
-    yPosition = (doc as any).lastAutoTable.finalY + 10;
+    yPosition += 10;
   }
   
   // Alertas
