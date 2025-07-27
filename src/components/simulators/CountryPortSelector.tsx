@@ -20,32 +20,20 @@ export default function CountryPortSelector({
   onDestinationChange
 }: CountryPortSelectorProps) {
   
-  // Função para renderizar opções de países agrupados por continente
+  // Função para renderizar opções de países
   const renderCountryOptions = (countries: Country[]) => {
-    const groupedByContinent = countries.reduce((acc, country) => {
-      if (!acc[country.continente]) {
-        acc[country.continente] = [];
-      }
-      acc[country.continente].push(country);
-      return acc;
-    }, {} as Record<string, Country[]>);
-
-    return Object.entries(groupedByContinent).map(([continent, countries]) => (
-      <optgroup key={continent} label={continent}>
-        {countries.map(country => (
-          <option key={country.codigo} value={country.codigo}>
-            {country.codigo} - {country.nome}
-          </option>
-        ))}
-      </optgroup>
+    return countries.map(country => (
+      <option key={country.code} value={country.code}>
+        {country.code} - {country.name}
+      </option>
     ));
   };
 
   // Função para renderizar opções de portos brasileiros
   const renderBrazilianPorts = () => {
     return portosBrasileiros.map(port => (
-      <option key={port.codigo} value={port.codigo}>
-        {port.nome} - {port.cidade}
+      <option key={port.code} value={port.code}>
+        {port.name}
       </option>
     ));
   };

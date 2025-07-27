@@ -62,7 +62,17 @@ export default function FreightCalculator() {
   ];
 
   // LISTA COMPLETA DE PAÍSES COMERCIAIS DO BRASIL
-  const paisesComerciais = [
+  // Definindo tipo próprio para países comerciais
+
+  type PaisComercial = {
+    codigo: string;
+    nome: string;
+    continente: string;
+    ranking_importacao?: number;
+    ranking_exportacao?: number;
+  };
+
+  const paisesComerciais: PaisComercial[] = [
     // PRINCIPAIS PARCEIROS COMERCIAIS (TOP 20)
     { codigo: 'CN', nome: 'China', continente: 'Ásia', ranking_importacao: 1, ranking_exportacao: 1 },
     { codigo: 'US', nome: 'Estados Unidos', continente: 'América do Norte', ranking_importacao: 2, ranking_exportacao: 2 },
