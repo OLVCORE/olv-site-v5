@@ -175,37 +175,19 @@ export default function FreightCalculatorReal({ className = '' }: FreightCalcula
 
   // Validação robusta em tempo real
   useEffect(() => {
-    if (formData.origem && formData.destino && modalTransporte) {
-      const englishModal = mapModalToEnglish(modalTransporte);
-      const validation = validateRoute(formData.origem, formData.destino, englishModal);
-      setRouteValidation(validation);
-      
-      // Atualizar validationErrors baseado na validação de rota
-      const newErrors = { ...validationErrors };
-      
-      if (!validation.isValid) {
-        validation.errors.forEach(error => {
-          if (error.includes('Origem')) {
-            newErrors.origem = error;
-          } else if (error.includes('Destino')) {
-            newErrors.destino = error;
-          } else {
-            // Erro geral de rota
-            newErrors.origem = error;
-          }
-        });
-      } else {
-        // Limpar erros de rota se validação passou
-        if (newErrors.origem && (newErrors.origem.includes('não encontrada') || newErrors.origem.includes('não suporta'))) {
-          delete newErrors.origem;
-        }
-        if (newErrors.destino && (newErrors.destino.includes('não encontrado') || newErrors.destino.includes('não suporta'))) {
-          delete newErrors.destino;
+    const validateRouteAsync = async () => {
+      if (formData.origem && formData.destino && modalTransporte) {
+        const englishModal = mapModalToEnglish(modalTransporte);
+        try {
+          const validation = await validateRoute(formData.origem, formData.destino, englishModal);
+          setRouteValidation(validation);
+        } catch (error) {
+          console.error('Erro na validação de rota:', error);
         }
       }
-      
-      setValidationErrors(newErrors);
-    }
+    };
+
+    validateRouteAsync();
   }, [formData.origem, formData.destino, modalTransporte]);
 
   // Função para buscar sugestões de origem
@@ -214,7 +196,7 @@ export default function FreightCalculatorReal({ className = '' }: FreightCalcula
     
     if (value.length >= 2) {
       const validation = validateLocationInput(value);
-      setOriginSuggestions(validation.suggestions);
+      setOriginSuggestions([]);
       setShowOriginSuggestions(true);
     } else {
       setOriginSuggestions([]);
@@ -228,7 +210,7 @@ export default function FreightCalculatorReal({ className = '' }: FreightCalcula
     
     if (value.length >= 2) {
       const validation = validateLocationInput(value);
-      setDestinationSuggestions(validation.suggestions);
+      setDestinationSuggestions([]);
       setShowDestinationSuggestions(true);
     } else {
       setDestinationSuggestions([]);
@@ -264,45 +246,11 @@ export default function FreightCalculatorReal({ className = '' }: FreightCalcula
     // Validação de origem
     if (!formData.origem.trim()) {
       errors.origem = 'Origem é obrigatória';
-    } else {
-      const originLocation = locations.find(loc => 
-        loc.code.toLowerCase() === formData.origem.toLowerCase()
-      );
-      if (!originLocation) {
-        errors.origem = 'Origem não encontrada na base de dados';
-      } else if (!originLocation.supported_modals.includes(englishModal)) {
-        errors.origem = `Origem não suporta modal ${modalTransporte}`;
-      }
     }
 
     // Validação de destino
     if (!formData.destino.trim()) {
       errors.destino = 'Destino é obrigatório';
-    } else {
-      const destinationLocation = locations.find(loc => 
-        loc.code.toLowerCase() === formData.destino.toLowerCase()
-      );
-      if (!destinationLocation) {
-        errors.destino = 'Destino não encontrado na base de dados';
-      } else if (!destinationLocation.supported_modals.includes(englishModal)) {
-        errors.destino = `Destino não suporta modal ${modalTransporte}`;
-      }
-    }
-
-    // Validação de rota se origem e destino estão preenchidos
-    if (formData.origem && formData.destino) {
-      const routeValidation = validateRoute(formData.origem, formData.destino, englishModal);
-      if (!routeValidation.isValid) {
-        routeValidation.errors.forEach(error => {
-          if (error.includes('Origem')) {
-            errors.origem = error;
-          } else if (error.includes('Destino')) {
-            errors.destino = error;
-          } else {
-            errors.origem = error; // Erro geral vai para origem
-          }
-        });
-      }
     }
 
     // Validação de peso
