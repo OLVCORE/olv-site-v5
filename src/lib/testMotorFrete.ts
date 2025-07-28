@@ -100,6 +100,7 @@ export async function testarMotorFrete() {
     volume: 0, // Volume zero
     cargoType: 'general',
     cargoValue: 0, // Valor zero
+    ncm: '00000000', // NCM inválido
     incoterm: 'FOB',
     serviceType: 'fcl',
     exchangeRate: 0 // Taxa zero
