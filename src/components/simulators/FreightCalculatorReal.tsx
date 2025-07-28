@@ -5,7 +5,6 @@ import {
   validateRoute, 
   validateLocationInput, 
   getLocationsByModal, 
-  locations,
   type Location,
   type ValidationResult 
 } from '@/lib/routeValidation';
