@@ -124,6 +124,7 @@ export async function testarMotorFrete() {
     volume: 20,
     cargoType: 'general',
     cargoValue: 8000,
+    ncm: '84713000', // NCM para equipamentos eletrônicos
     incoterm: 'FOB',
     serviceType: 'fcl',
     exchangeRate: 5.0
