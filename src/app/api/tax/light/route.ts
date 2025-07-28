@@ -7,7 +7,6 @@ async function fetchIBPT(ncm: string, uf: string) {
   try {
     const url = `https://ibpt.nfe.io/ncm/${uf.toLowerCase()}/${ncm}.json`;
     const res = await fetch(url, {
-      timeout: 10000, // 10 second timeout
       headers: {
         'User-Agent': 'OLV-Internacional-Tax-Calculator'
       }
