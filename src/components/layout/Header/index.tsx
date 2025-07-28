@@ -125,17 +125,23 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
             <Link href="/blog" className={`nav-item ${isActive('/blog') ? 'active' : ''}`} data-page="blog">Blog</Link>
             <Link href="/faq" className={`nav-item ${isActive('/faq') ? 'active' : ''}`} data-page="faq">FAQ</Link>
             <Link href="/contato" className={`nav-item ${isActive('/contato') ? 'active' : ''}`} data-page="contato">Contato</Link>
+            <Link href="/login" className={`nav-item ${isActive('/login') ? 'active' : ''}`} data-page="login" id="login-link">Login</Link>
           </nav>
         </div>
 
         <div className="header-right">
-          {/* Buscar (desktop only) */}
-          <div className="search-container desktop-only">
-            <GlobalSearch />
-          </div>
-
-          {/* User Menu (avatar + settings) - desktop */}
-          <div className="user-menu-wrapper desktop-only">
+          <GlobalSearch />
+          
+          {/* Botão de Login Direto */}
+          <Link 
+            href="/login" 
+            className="desktop-only px-4 py-2 bg-accent text-white rounded-lg hover:bg-accent/80 transition-colors font-medium"
+            id="desktop-login-link"
+          >
+            Login
+          </Link>
+          
+          <div className="user-area">
             <UserMenu />
           </div>
 
@@ -163,6 +169,7 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
         <Link href="/blog" className={`nav-item ${isActive('/blog') ? 'active' : ''}`} onClick={() => setNavOpen(false)}>Blog</Link>
         <Link href="/faq" className={`nav-item ${isActive('/faq') ? 'active' : ''}`} onClick={() => setNavOpen(false)}>FAQ</Link>
         <Link href="/contato" className={`nav-item ${isActive('/contato') ? 'active' : ''}`} onClick={() => setNavOpen(false)}>Contato</Link>
+        <Link href="/login" className={`nav-item ${isActive('/login') ? 'active' : ''}`} onClick={() => setNavOpen(false)} id="mobile-login-link">Login</Link>
       </nav>
 
       {/* Overlay search mobile */}

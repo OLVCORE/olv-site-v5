@@ -4961,3 +4961,347 @@ body.theme-light .radar-360-page table tbody td.font-medium {
     box-shadow: none !important;
   }
 }
+
+/* ===========================================
+   RESPONSIVE LAYOUT FIXES FOR TESTING
+   =========================================== */
+
+/* Ensure proper viewport handling */
+html {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Fix container overflow issues */
+.container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1200px;
+  }
+}
+
+/* Mobile first grid improvements */
+.grid {
+  display: grid;
+  gap: 1rem;
+  width: 100%;
+}
+
+@media (max-width: 767px) {
+  .grid-cols-1,
+  .grid-cols-2,
+  .grid-cols-3,
+  .grid-cols-4 {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .col-span-1,
+  .col-span-2,
+  .col-span-3,
+  .col-span-4 {
+    grid-column: span 1 !important;
+  }
+}
+
+/* Responsive text sizes */
+@media (max-width: 767px) {
+  h1 {
+    font-size: 1.5rem !important;
+    line-height: 1.4 !important;
+  }
+  
+  h2 {
+    font-size: 1.25rem !important;
+    line-height: 1.4 !important;
+  }
+  
+  h3 {
+    font-size: 1.125rem !important;
+    line-height: 1.4 !important;
+  }
+}
+
+/* Form improvements for mobile */
+@media (max-width: 767px) {
+  .form-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+  
+  .form-group {
+    margin-bottom: 1rem;
+  }
+  
+  input, select, textarea {
+    font-size: 16px !important; /* Prevent zoom on iOS */
+    width: 100% !important;
+    min-height: 44px !important; /* Touch target size */
+  }
+  
+  button {
+    min-height: 44px !important;
+    width: 100% !important;
+    font-size: 16px !important;
+  }
+}
+
+/* Header responsive fixes */
+@media (max-width: 768px) {
+  .header {
+    padding: 0.5rem !important;
+    min-height: 60px;
+  }
+  
+  .header-left,
+  .header-center,
+  .header-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .desktop-only {
+    display: none !important;
+  }
+  
+  .mobile-only {
+    display: flex !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .desktop-only {
+    display: block !important;
+  }
+  
+  .mobile-only {
+    display: none !important;
+  }
+}
+
+/* Navigation mobile improvements */
+@media (max-width: 768px) {
+  .nav-menu-mobile {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--color-surface);
+    z-index: 9999;
+    padding: 2rem 1rem;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+  
+  .nav-menu-mobile.show {
+    transform: translateX(0);
+  }
+  
+  .nav-menu-mobile .nav-item {
+    display: block;
+    padding: 1rem;
+    border-bottom: 1px solid var(--card-border);
+    color: var(--color-on-surface);
+    text-decoration: none;
+    font-size: 1.125rem;
+  }
+}
+
+/* Modal responsive fixes */
+@media (max-width: 768px) {
+  .modal-content,
+  .quotation-modal-content,
+  .incoterm-modal-content,
+  .report-modal-content {
+    margin: 1rem !important;
+    max-width: calc(100vw - 2rem) !important;
+    max-height: calc(100vh - 2rem) !important;
+    overflow-y: auto !important;
+  }
+}
+
+/* Table responsive improvements */
+@media (max-width: 767px) {
+  table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  thead {
+    display: none;
+  }
+  
+  tbody,
+  tr,
+  td {
+    display: block;
+    width: 100%;
+  }
+  
+  tr {
+    border: 1px solid var(--card-border);
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+  }
+  
+  td {
+    border: none !important;
+    padding: 0.25rem 0 !important;
+    text-align: left !important;
+  }
+  
+  td:before {
+    content: attr(data-label) ": ";
+    font-weight: bold;
+    color: var(--color-accent);
+  }
+}
+
+/* Flexbox improvements */
+@media (max-width: 767px) {
+  .flex {
+    flex-direction: column !important;
+  }
+  
+  .flex-row {
+    flex-direction: column !important;
+  }
+  
+  .flex-wrap {
+    flex-wrap: wrap !important;
+  }
+}
+
+/* Spacing improvements for mobile */
+@media (max-width: 767px) {
+  .space-y-6 > * + * {
+    margin-top: 1.5rem !important;
+  }
+  
+  .space-y-4 > * + * {
+    margin-top: 1rem !important;
+  }
+  
+  .space-y-2 > * + * {
+    margin-top: 0.5rem !important;
+  }
+  
+  .gap-4 {
+    gap: 1rem !important;
+  }
+  
+  .gap-6 {
+    gap: 1.5rem !important;
+  }
+}
+
+/* Touch target improvements */
+@media (max-width: 767px) {
+  a, button, input[type="submit"], input[type="button"], .clickable {
+    min-height: 44px;
+    min-width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: manipulation;
+  }
+}
+
+/* Prevent horizontal scrolling */
+* {
+  max-width: 100%;
+}
+
+img, video, iframe, embed {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --color-accent: #ffff00;
+    --card-border: #ffffff;
+  }
+}
+
+/* Focus improvements for keyboard navigation */
+*:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Dark mode specific responsive fixes */
+@media (prefers-color-scheme: dark) {
+  body:not(.theme-light) {
+    --color-background: #0d1117;
+    --color-surface: #11161e;
+    --color-on-surface: #d1d5db;
+  }
+}
+
+/* Print styles */
+@media print {
+  .header,
+  .footer,
+  .nav-menu-mobile,
+  .search-overlay,
+  button:not(.print-visible) {
+    display: none !important;
+  }
+  
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  
+  a {
+    color: black !important;
+  }
+}

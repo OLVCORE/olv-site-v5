@@ -46,7 +46,7 @@ const Footer: React.FC = () => {
               <a href="https://www.instagram.com/olvinternacional/" target="_blank" rel="noopener noreferrer" className="bg-gray-800 p-2 rounded-full hover:opacity-90 transition-colors">
                 <Image src="/icons/instagram-original.svg" alt="Instagram" width={20} height={20} />
               </a>
-              <a href="https://www.linkedin.com/company/26251289/admin/dashboard/" target="_blank" rel="noopener noreferrer" className="bg-gray-800 p-2 rounded-full hover:opacity-90 transition-colors">
+              <a href="https://www.linkedin.com/company/olv-internacional/" target="_blank" rel="noopener noreferrer" className="bg-gray-800 p-2 rounded-full hover:opacity-90 transition-colors">
                 <Image src="/icons/linkedin-original.svg" alt="LinkedIn" width={20} height={20} />
               </a>
               <a href="https://www.facebook.com/olvinternacional/" target="_blank" rel="noopener noreferrer" className="bg-gray-800 p-2 rounded-full hover:opacity-90 transition-colors">

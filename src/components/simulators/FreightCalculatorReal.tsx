@@ -1,7 +1,14 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-
+import { 
+  validateRoute, 
+  validateLocationInput, 
+  getLocationsByModal, 
+  locations,
+  type Location,
+  type ValidationResult 
+} from '@/lib/routeValidation';
 
 interface FreightCalculatorRealProps {
   className?: string;
@@ -17,7 +24,9 @@ interface APIStatus {
 export default function FreightCalculatorReal({ className = '' }: FreightCalculatorRealProps) {
   // Estados principais
   const [direcaoComercial, setDirecaoComercial] = useState<'importacao' | 'exportacao'>('importacao');
+  const [modalTransporte, setModalTransporte] = useState<'maritimo' | 'aereo' | 'rodoviario'>('maritimo');
   const [isCalculating, setIsCalculating] = useState(false);
+  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
   const [apiStatus, setApiStatus] = useState<APIStatus>({
     clima: 'checking',
     cambio: 'checking',
@@ -36,10 +45,18 @@ export default function FreightCalculatorReal({ className = '' }: FreightCalcula
     destino: '',
     peso: '',
     volume: '',
-    tipoServico: 'FCL',
+    tipoServico: '',
     moeda: 'USD',
-    incoterm: 'FOB'
+    incoterm: 'FOB',
+    valor: ''
   });
+
+  // Estados de validação robusta
+  const [routeValidation, setRouteValidation] = useState<ValidationResult | null>(null);
+  const [originSuggestions, setOriginSuggestions] = useState<Location[]>([]);
+  const [destinationSuggestions, setDestinationSuggestions] = useState<Location[]>([]);
+  const [showOriginSuggestions, setShowOriginSuggestions] = useState(false);
+  const [showDestinationSuggestions, setShowDestinationSuggestions] = useState(false);
 
   // Lista de países comerciais do Brasil
   const paisesComerciais = [
@@ -79,11 +96,262 @@ export default function FreightCalculatorReal({ className = '' }: FreightCalcula
     { codigo: 'BRMAO', nome: 'Manaus (AM)' }
   ];
 
+  // Aeroportos internacionais brasileiros
+  const aeroportosBrasileiros = [
+    { codigo: 'GRU', nome: 'Guarulhos (SP)' },
+    { codigo: 'GIG', nome: 'Galeão (RJ)' },
+    { codigo: 'VCP', nome: 'Viracopos (SP)' },
+    { codigo: 'BSB', nome: 'Brasília (DF)' },
+    { codigo: 'CNF', nome: 'Confins (MG)' },
+    { codigo: 'SSA', nome: 'Salvador (BA)' },
+    { codigo: 'REC', nome: 'Recife (PE)' },
+    { codigo: 'FOR', nome: 'Fortaleza (CE)' },
+    { codigo: 'POA', nome: 'Porto Alegre (RS)' },
+    { codigo: 'CWB', nome: 'Curitiba (PR)' }
+  ];
+
+  // Fronteiras terrestres
+  const fronteirasTerrestres = [
+    { codigo: 'URUACHU', nome: 'Aceguá (RS) - Uruguai' },
+    { codigo: 'ARGPRF', nome: 'Paso de los Libres (RS) - Argentina' },
+    { codigo: 'ARGSMC', nome: 'São Borja (RS) - Argentina' },
+    { codigo: 'PRYGUAI', nome: 'Guaíra (PR) - Paraguai' },
+    { codigo: 'BOLCORU', nome: 'Corumbá (MS) - Bolívia' },
+    { codigo: 'COLLETE', nome: 'Letícia (AM) - Colômbia' },
+    { codigo: 'VENBVST', nome: 'Boa Vista (RR) - Venezuela' },
+    { codigo: 'GUYBOAV', nome: 'Bonfim (RR) - Guiana' },
+    { codigo: 'SUROIP', nome: 'Oiapoque (AP) - Suriname' },
+    { codigo: 'PERGFRA', nome: 'Assis Brasil (AC) - Peru' }
+  ];
+
+  // Tipos de serviço por modal
+  const getTiposServico = () => {
+    switch (modalTransporte) {
+      case 'maritimo':
+        return [
+          { valor: 'FCL', nome: 'FCL - Container Completo (20/40 pés)' },
+          { valor: 'LCL', nome: 'LCL - Carga Fracionada' },
+          { valor: 'BREAKBULK', nome: 'Break Bulk - Carga Solta' },
+          { valor: 'RORO', nome: 'RoRo - Roll-on/Roll-off' }
+        ];
+      case 'aereo':
+        return [
+          { valor: 'EXPRESS', nome: 'Express - Entrega Expressa (1-3 dias)' },
+          { valor: 'STANDARD', nome: 'Standard - Entrega Padrão (5-7 dias)' },
+          { valor: 'ECONOMY', nome: 'Economy - Entrega Econômica (7-14 dias)' },
+          { valor: 'CHARTER', nome: 'Charter - Voo Fretado' }
+        ];
+      case 'rodoviario':
+        return [
+          { valor: 'LTL', nome: 'LTL - Less Than Truckload' },
+          { valor: 'FTL', nome: 'FTL - Full Truckload' },
+          { valor: 'GROUPAGE', nome: 'Groupage - Carga Agrupada' }
+        ];
+      default:
+        return [];
+    }
+  };
+
   // Verificar status das APIs
   useEffect(() => {
     verificarStatusAPIs();
     carregarMoedasReais();
   }, []);
+
+  // Atualizar tipos de serviço quando modal muda
+  useEffect(() => {
+    setFormData(prev => ({ ...prev, tipoServico: '' }));
+    setValidationErrors(prev => ({ ...prev, tipoServico: '' }));
+  }, [modalTransporte]);
+
+  // Função para mapear modal português para inglês
+  const mapModalToEnglish = (modal: 'maritimo' | 'aereo' | 'rodoviario'): 'maritime' | 'air' | 'road' => {
+    switch (modal) {
+      case 'maritimo': return 'maritime';
+      case 'aereo': return 'air';
+      case 'rodoviario': return 'road';
+    }
+  };
+
+  // Validação robusta em tempo real
+  useEffect(() => {
+    if (formData.origem && formData.destino && modalTransporte) {
+      const englishModal = mapModalToEnglish(modalTransporte);
+      const validation = validateRoute(formData.origem, formData.destino, englishModal);
+      setRouteValidation(validation);
+      
+      // Atualizar validationErrors baseado na validação de rota
+      const newErrors = { ...validationErrors };
+      
+      if (!validation.isValid) {
+        validation.errors.forEach(error => {
+          if (error.includes('Origem')) {
+            newErrors.origem = error;
+          } else if (error.includes('Destino')) {
+            newErrors.destino = error;
+          } else {
+            // Erro geral de rota
+            newErrors.origem = error;
+          }
+        });
+      } else {
+        // Limpar erros de rota se validação passou
+        if (newErrors.origem && (newErrors.origem.includes('não encontrada') || newErrors.origem.includes('não suporta'))) {
+          delete newErrors.origem;
+        }
+        if (newErrors.destino && (newErrors.destino.includes('não encontrado') || newErrors.destino.includes('não suporta'))) {
+          delete newErrors.destino;
+        }
+      }
+      
+      setValidationErrors(newErrors);
+    }
+  }, [formData.origem, formData.destino, modalTransporte]);
+
+  // Função para buscar sugestões de origem
+  const handleOriginSearch = (value: string) => {
+    setFormData(prev => ({ ...prev, origem: value }));
+    
+    if (value.length >= 2) {
+      const validation = validateLocationInput(value);
+      setOriginSuggestions(validation.suggestions);
+      setShowOriginSuggestions(true);
+    } else {
+      setOriginSuggestions([]);
+      setShowOriginSuggestions(false);
+    }
+  };
+
+  // Função para buscar sugestões de destino
+  const handleDestinationSearch = (value: string) => {
+    setFormData(prev => ({ ...prev, destino: value }));
+    
+    if (value.length >= 2) {
+      const validation = validateLocationInput(value);
+      setDestinationSuggestions(validation.suggestions);
+      setShowDestinationSuggestions(true);
+    } else {
+      setDestinationSuggestions([]);
+      setShowDestinationSuggestions(false);
+    }
+  };
+
+  // Função para selecionar origem
+  const selectOrigin = (location: Location) => {
+    setFormData(prev => ({ ...prev, origem: location.code }));
+    setShowOriginSuggestions(false);
+    setOriginSuggestions([]);
+  };
+
+  // Função para selecionar destino
+  const selectDestination = (location: Location) => {
+    setFormData(prev => ({ ...prev, destino: location.code }));
+    setShowDestinationSuggestions(false);
+    setDestinationSuggestions([]);
+  };
+
+  // Função para obter lista de localizações por modal
+  const getLocationOptions = () => {
+    const englishModal = mapModalToEnglish(modalTransporte);
+    return getLocationsByModal(englishModal);
+  };
+
+  // Validação aprimorada do formulário
+  const validateForm = (): boolean => {
+    const errors: Record<string, string> = {};
+    const englishModal = mapModalToEnglish(modalTransporte);
+
+    // Validação de origem
+    if (!formData.origem.trim()) {
+      errors.origem = 'Origem é obrigatória';
+    } else {
+      const originLocation = locations.find(loc => 
+        loc.code.toLowerCase() === formData.origem.toLowerCase()
+      );
+      if (!originLocation) {
+        errors.origem = 'Origem não encontrada na base de dados';
+      } else if (!originLocation.supported_modals.includes(englishModal)) {
+        errors.origem = `Origem não suporta modal ${modalTransporte}`;
+      }
+    }
+
+    // Validação de destino
+    if (!formData.destino.trim()) {
+      errors.destino = 'Destino é obrigatório';
+    } else {
+      const destinationLocation = locations.find(loc => 
+        loc.code.toLowerCase() === formData.destino.toLowerCase()
+      );
+      if (!destinationLocation) {
+        errors.destino = 'Destino não encontrado na base de dados';
+      } else if (!destinationLocation.supported_modals.includes(englishModal)) {
+        errors.destino = `Destino não suporta modal ${modalTransporte}`;
+      }
+    }
+
+    // Validação de rota se origem e destino estão preenchidos
+    if (formData.origem && formData.destino) {
+      const routeValidation = validateRoute(formData.origem, formData.destino, englishModal);
+      if (!routeValidation.isValid) {
+        routeValidation.errors.forEach(error => {
+          if (error.includes('Origem')) {
+            errors.origem = error;
+          } else if (error.includes('Destino')) {
+            errors.destino = error;
+          } else {
+            errors.origem = error; // Erro geral vai para origem
+          }
+        });
+      }
+    }
+
+    // Validação de peso
+    const peso = parseFloat(formData.peso);
+    if (!formData.peso || isNaN(peso) || peso <= 0) {
+      errors.peso = 'Peso deve ser um número válido maior que zero';
+    } else if (peso > 30000) {
+      errors.peso = 'Peso não pode exceder 30.000 kg';
+    }
+
+    // Validação de volume
+    const volume = parseFloat(formData.volume);
+    if (!formData.volume || isNaN(volume) || volume <= 0) {
+      errors.volume = 'Volume deve ser um número válido maior que zero';
+    } else if (volume > 100) {
+      errors.volume = 'Volume não pode exceder 100 m³';
+    }
+
+    // Validação específica por modal
+    if (modalTransporte === 'aereo') {
+      if (peso > 5000) {
+        errors.peso = 'Para frete aéreo, peso máximo é 5.000 kg';
+      }
+      if (volume > 20) {
+        errors.volume = 'Para frete aéreo, volume máximo é 20 m³';
+      }
+    }
+
+    // Validação de tipo de serviço
+    if (!formData.tipoServico) {
+      errors.tipoServico = 'Tipo de serviço é obrigatório';
+    }
+
+    // Validação de moeda
+    if (!formData.moeda) {
+      errors.moeda = 'Moeda é obrigatória';
+    }
+
+    // Validação de valor (opcional, mas se preenchido deve ser válido)
+    if (formData.valor) {
+      const valor = parseFloat(formData.valor);
+      if (isNaN(valor) || valor <= 0) {
+        errors.valor = 'Valor deve ser um número válido maior que zero';
+      }
+    }
+
+    setValidationErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
   const verificarStatusAPIs = async () => {
     console.log('🔍 Verificando status das APIs...');
@@ -192,7 +460,16 @@ export default function FreightCalculatorReal({ className = '' }: FreightCalcula
 
   const alternarDirecao = (direcao: 'importacao' | 'exportacao') => {
     setDirecaoComercial(direcao);
+    setFormData(prev => ({ ...prev, origem: '', destino: '' }));
+    setValidationErrors({});
     console.log(`🔄 Direção comercial alterada para: ${direcao}`);
+  };
+
+  const alternarModal = (modal: 'maritimo' | 'aereo' | 'rodoviario') => {
+    setModalTransporte(modal);
+    setFormData(prev => ({ ...prev, origem: '', destino: '', tipoServico: '' }));
+    setValidationErrors({});
+    console.log(`🔄 Modal de transporte alterado para: ${modal}`);
   };
 
   const handleMoedaChange = async (moeda: string) => {
@@ -201,6 +478,12 @@ export default function FreightCalculatorReal({ className = '' }: FreightCalcula
   };
 
   const calcularFreteReal = async () => {
+    // Validar formulário antes de prosseguir
+    if (!validateForm()) {
+      console.log('❌ Formulário inválido');
+      return;
+    }
+
     setIsCalculating(true);
     setResultados(null);
     setDadosIndisponiveis(false);
@@ -208,32 +491,56 @@ export default function FreightCalculatorReal({ className = '' }: FreightCalcula
     try {
       console.log('🎯 Iniciando cálculo com dados reais...');
       
-      // Verificar se temos dados mínimos necessários
-      if (!formData.origem || !formData.destino || !formData.peso || !formData.volume) {
-        throw new Error('Dados obrigatórios não preenchidos');
-      }
-
-      // Simular cálculo real (aqui seria integração com APIs de shipping lines)
       const peso = parseFloat(formData.peso);
       const volume = parseFloat(formData.volume);
       
-      // Cálculo baseado em dados reais de mercado (valores aproximados)
+      // Cálculo baseado em modal de transporte
       let custoBase = 0;
-      if (formData.tipoServico === 'FCL') {
-        // FCL: $2,500 - $4,500 por container (dependendo da rota)
-        custoBase = peso > 20000 ? 4500 : 2500;
-      } else {
-        // LCL: $150 - $300 por m³
-        custoBase = volume * 200;
+      let pesoVolumetrico = 0;
+
+      switch (modalTransporte) {
+        case 'maritimo':
+          // Marítimo: 1m³ = 1000kg
+          pesoVolumetrico = volume * 1000;
+          if (formData.tipoServico === 'FCL') {
+            custoBase = peso > 20000 ? 4500 : 2500;
+          } else {
+            custoBase = volume * 200;
+          }
+          break;
+        
+        case 'aereo':
+          // Aéreo: 1m³ = 167kg
+          pesoVolumetrico = volume * 167;
+          const pesoTaxavel = Math.max(peso, pesoVolumetrico);
+          if (formData.tipoServico === 'EXPRESS') {
+            custoBase = pesoTaxavel * 8.5;
+          } else if (formData.tipoServico === 'STANDARD') {
+            custoBase = pesoTaxavel * 6.2;
+          } else {
+            custoBase = pesoTaxavel * 4.8;
+          }
+          break;
+        
+        case 'rodoviario':
+          // Rodoviário: 1m³ = 300kg
+          pesoVolumetrico = volume * 300;
+          const pesoTaxavelRodo = Math.max(peso, pesoVolumetrico);
+          if (formData.tipoServico === 'FTL') {
+            custoBase = 2500; // Valor fixo por caminhão
+          } else {
+            custoBase = pesoTaxavelRodo * 1.5;
+          }
+          break;
       }
 
       // Ajustes baseados na rota
       const rota = `${formData.origem}-${formData.destino}`;
       let multiplicadorRota = 1.0;
       
-      if (rota.includes('CN')) multiplicadorRota = 1.2; // China mais cara
-      if (rota.includes('US')) multiplicadorRota = 1.1; // EUA moderado
-      if (rota.includes('EU')) multiplicadorRota = 1.3; // Europa mais cara
+      if (rota.includes('CN')) multiplicadorRota = 1.2;
+      if (rota.includes('US')) multiplicadorRota = 1.1;
+      if (rota.includes('EU')) multiplicadorRota = 1.3;
 
       const custoFinal = custoBase * multiplicadorRota;
 
@@ -244,6 +551,8 @@ export default function FreightCalculatorReal({ className = '' }: FreightCalcula
         fonte: 'Cálculo baseado em dados de mercado',
         timestamp: new Date().toLocaleString('pt-BR'),
         validade: '24 horas',
+        modal: modalTransporte,
+        pesoVolumetrico: pesoVolumetrico.toFixed(1),
         detalhes: {
           custoBase: custoBase.toFixed(2),
           multiplicadorRota: multiplicadorRota.toFixed(2),
@@ -265,13 +574,11 @@ export default function FreightCalculatorReal({ className = '' }: FreightCalcula
 
   const aplicarNoSimuladorImportacao = () => {
     console.log('📥 Redirecionando para simulador de importação...');
-    // Apenas redirecionar para a página
     window.location.href = '/simuladores/importacao';
   };
 
   const aplicarNoSimuladorExportacao = () => {
     console.log('📤 Redirecionando para simulador de exportação...');
-    // Apenas redirecionar para a página
     window.location.href = '/simuladores/exportacao';
   };
 
@@ -372,51 +679,173 @@ export default function FreightCalculatorReal({ className = '' }: FreightCalcula
           </div>
         </div>
 
+        {/* Seletor de Modal de Transporte */}
+        <div className="modal-transporte-container mb-6">
+          <h3 className="text-lg font-semibold text-gray-100 mb-4">Modal de Transporte</h3>
+          <div className="botoes-modal grid grid-cols-1 md:grid-cols-3 gap-4">
+            <button 
+              className={`btn-modal p-4 rounded-xl border-2 transition-all ${modalTransporte === 'maritimo' ? 'bg-blue-500/20 border-blue-500 text-blue-300' : 'bg-gray-700/50 border-gray-600 text-gray-300 hover:bg-gray-600/50'}`}
+              onClick={() => alternarModal('maritimo')}
+            >
+              <div className="flex flex-col items-center gap-2">
+                <span className="text-2xl">🚢</span>
+                <span className="font-semibold">MARÍTIMO</span>
+                <span className="text-xs">Container/Granel</span>
+              </div>
+            </button>
+            
+            <button 
+              className={`btn-modal p-4 rounded-xl border-2 transition-all ${modalTransporte === 'aereo' ? 'bg-purple-500/20 border-purple-500 text-purple-300' : 'bg-gray-700/50 border-gray-600 text-gray-300 hover:bg-gray-600/50'}`}
+              onClick={() => alternarModal('aereo')}
+            >
+              <div className="flex flex-col items-center gap-2">
+                <span className="text-2xl">✈️</span>
+                <span className="font-semibold">AÉREO</span>
+                <span className="text-xs">Express/Standard</span>
+              </div>
+            </button>
+            
+            <button 
+              className={`btn-modal p-4 rounded-xl border-2 transition-all ${modalTransporte === 'rodoviario' ? 'bg-green-500/20 border-green-500 text-green-300' : 'bg-gray-700/50 border-gray-600 text-gray-300 hover:bg-gray-600/50'}`}
+              onClick={() => alternarModal('rodoviario')}
+            >
+              <div className="flex flex-col items-center gap-2">
+                <span className="text-2xl">🚛</span>
+                <span className="font-semibold">RODOVIÁRIO</span>
+                <span className="text-xs">Caminhão/Carreta</span>
+              </div>
+            </button>
+          </div>
+        </div>
+
         {/* Campos de Input */}
         <div className="campos-input grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="campo-grupo">
-            <label className="block text-sm font-medium text-gray-300 mb-2">
-              Origem *
-            </label>
-            <select 
-              value={formData.origem}
-              onChange={(e) => setFormData(prev => ({ ...prev, origem: e.target.value }))}
-              className="w-full px-3 py-2 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent text-gray-100"
-              required
-            >
-              <option value="">Selecione a origem</option>
-              {direcaoComercial === 'importacao' ? 
-                paisesComerciais.map(pais => (
-                  <option key={pais.codigo} value={pais.codigo}>{pais.nome}</option>
-                )) :
-                portosBrasileiros.map(porto => (
-                  <option key={porto.codigo} value={porto.codigo}>{porto.nome}</option>
-                ))
-              }
-            </select>
-          </div>
+            {/* Origem */}
+            <div className="origin-input-container relative">
+              <label htmlFor="origem" className="block text-sm font-medium text-gray-300 mb-1">
+                Origem
+              </label>
+              <input
+                type="text"
+                id="origem"
+                value={formData.origem}
+                onChange={(e) => handleOriginSearch(e.target.value)}
+                onFocus={() => {
+                  if (formData.origem.length >= 2) {
+                    setShowOriginSuggestions(true);
+                  }
+                }}
+                onBlur={() => {
+                  // Delay para permitir clique nas sugestões
+                  setTimeout(() => setShowOriginSuggestions(false), 200);
+                }}
+                placeholder="Digite código ou nome da origem (ex: BRSSZ, Santos)"
+                className={`w-full px-3 py-2 bg-gray-800/50 border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent text-gray-100 ${
+                  validationErrors.origem ? 'border-red-500' : 'border-gray-700'
+                }`}
+                required
+              />
+              {validationErrors.origem && (
+                <p className="text-red-400 text-xs mt-1">{validationErrors.origem}</p>
+              )}
+              
+              {/* Dropdown de sugestões de origem */}
+              {showOriginSuggestions && originSuggestions.length > 0 && (
+                <div className="absolute z-10 w-full mt-1 bg-gray-700 border border-gray-600 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                  {originSuggestions.map((location, index) => (
+                    <div
+                      key={location.code}
+                      className="p-3 cursor-pointer hover:bg-gray-600 border-b border-gray-600 last:border-b-0"
+                      onClick={() => selectOrigin(location)}
+                    >
+                      <div className="font-medium text-gray-100">
+                        {location.name} ({location.code})
+                      </div>
+                      <div className="text-xs text-gray-400 mt-1">
+                        {location.country} • {location.type === 'port' ? 'Porto' : location.type === 'airport' ? 'Aeroporto' : 'Fronteira'}
+                        {location.supported_modals.includes(mapModalToEnglish(modalTransporte)) && (
+                          <span className="text-green-400 ml-2">✓ Suporta {modalTransporte}</span>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
 
-          <div className="campo-grupo">
-            <label className="block text-sm font-medium text-gray-300 mb-2">
-              Destino *
-            </label>
-            <select 
-              value={formData.destino}
-              onChange={(e) => setFormData(prev => ({ ...prev, destino: e.target.value }))}
-              className="w-full px-3 py-2 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent text-gray-100"
-              required
-            >
-              <option value="">Selecione o destino</option>
-              {direcaoComercial === 'importacao' ? 
-                portosBrasileiros.map(porto => (
-                  <option key={porto.codigo} value={porto.codigo}>{porto.nome}</option>
-                )) :
-                paisesComerciais.map(pais => (
-                  <option key={pais.codigo} value={pais.codigo}>{pais.nome}</option>
-                ))
-              }
-            </select>
-          </div>
+              {/* Aviso sobre validação de rota */}
+              {routeValidation && routeValidation.warnings.length > 0 && (
+                <div className="mt-2 p-2 bg-yellow-600/20 border border-yellow-600/30 rounded text-yellow-300 text-xs">
+                  {routeValidation.warnings.map((warning, index) => (
+                    <div key={index}>⚠️ {warning}</div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Destino */}
+            <div className="destination-input-container relative">
+              <label htmlFor="destino" className="block text-sm font-medium text-gray-300 mb-1">
+                Destino
+              </label>
+              <input
+                type="text"
+                id="destino"
+                value={formData.destino}
+                onChange={(e) => handleDestinationSearch(e.target.value)}
+                onFocus={() => {
+                  if (formData.destino.length >= 2) {
+                    setShowDestinationSuggestions(true);
+                  }
+                }}
+                onBlur={() => {
+                  // Delay para permitir clique nas sugestões
+                  setTimeout(() => setShowDestinationSuggestions(false), 200);
+                }}
+                placeholder="Digite código ou nome do destino (ex: USNYC, New York)"
+                className={`w-full px-3 py-2 bg-gray-800/50 border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent text-gray-100 ${
+                  validationErrors.destino ? 'border-red-500' : 'border-gray-700'
+                }`}
+                required
+              />
+              {validationErrors.destino && (
+                <p className="text-red-400 text-xs mt-1">{validationErrors.destino}</p>
+              )}
+              
+              {/* Dropdown de sugestões de destino */}
+              {showDestinationSuggestions && destinationSuggestions.length > 0 && (
+                <div className="absolute z-10 w-full mt-1 bg-gray-700 border border-gray-600 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                  {destinationSuggestions.map((location, index) => (
+                    <div
+                      key={location.code}
+                      className="p-3 cursor-pointer hover:bg-gray-600 border-b border-gray-600 last:border-b-0"
+                      onClick={() => selectDestination(location)}
+                    >
+                      <div className="font-medium text-gray-100">
+                        {location.name} ({location.code})
+                      </div>
+                      <div className="text-xs text-gray-400 mt-1">
+                        {location.country} • {location.type === 'port' ? 'Porto' : location.type === 'airport' ? 'Aeroporto' : 'Fronteira'}
+                        {location.supported_modals.includes(mapModalToEnglish(modalTransporte)) && (
+                          <span className="text-green-400 ml-2">✓ Suporta {modalTransporte}</span>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Sugestões de melhorias de rota */}
+              {routeValidation && routeValidation.suggestions.length > 0 && (
+                <div className="mt-2 p-2 bg-blue-600/20 border border-blue-600/30 rounded text-blue-300 text-xs">
+                  <div className="font-medium mb-1">💡 Sugestões:</div>
+                  {routeValidation.suggestions.slice(0, 2).map((suggestion, index) => (
+                    <div key={index} className="mb-1">
+                      • {suggestion.name}: {suggestion.reason}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
 
           <div className="campo-grupo">
             <label className="block text-sm font-medium text-gray-300 mb-2">
@@ -426,11 +855,18 @@ export default function FreightCalculatorReal({ className = '' }: FreightCalcula
               type="number" 
               value={formData.peso}
               onChange={(e) => setFormData(prev => ({ ...prev, peso: e.target.value }))}
-              min="1" 
+              min="0.1" 
+              max={modalTransporte === 'aereo' ? '5000' : '30000'}
               step="0.1" 
-              className="w-full px-3 py-2 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent text-gray-100"
+              className={`w-full px-3 py-2 bg-gray-800/50 border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent text-gray-100 ${validationErrors.peso ? 'border-red-500' : 'border-gray-700'}`}
               required
             />
+            {validationErrors.peso && (
+              <p className="text-red-400 text-xs mt-1">{validationErrors.peso}</p>
+            )}
+            <small className="text-gray-400 text-xs mt-1">
+              {modalTransporte === 'aereo' ? 'Máximo: 5.000 kg' : 'Máximo: 30.000 kg'}
+            </small>
           </div>
 
           <div className="campo-grupo">
@@ -441,11 +877,18 @@ export default function FreightCalculatorReal({ className = '' }: FreightCalcula
               type="number" 
               value={formData.volume}
               onChange={(e) => setFormData(prev => ({ ...prev, volume: e.target.value }))}
-              min="0.1" 
-              step="0.1" 
-              className="w-full px-3 py-2 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent text-gray-100"
+              min="0.001" 
+              max={modalTransporte === 'aereo' ? '20' : '100'}
+              step="0.001" 
+              className={`w-full px-3 py-2 bg-gray-800/50 border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent text-gray-100 ${validationErrors.volume ? 'border-red-500' : 'border-gray-700'}`}
               required
             />
+            {validationErrors.volume && (
+              <p className="text-red-400 text-xs mt-1">{validationErrors.volume}</p>
+            )}
+            <small className="text-gray-400 text-xs mt-1">
+              {modalTransporte === 'aereo' ? 'Máximo: 20 m³' : 'Máximo: 100 m³'}
+            </small>
           </div>
 
           <div className="campo-grupo">
@@ -455,13 +898,17 @@ export default function FreightCalculatorReal({ className = '' }: FreightCalcula
             <select 
               value={formData.tipoServico}
               onChange={(e) => setFormData(prev => ({ ...prev, tipoServico: e.target.value }))}
-              className="w-full px-3 py-2 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent text-gray-100"
+              className={`w-full px-3 py-2 bg-gray-800/50 border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent text-gray-100 ${validationErrors.tipoServico ? 'border-red-500' : 'border-gray-700'}`}
               required
             >
               <option value="">Selecione o tipo</option>
-              <option value="FCL">FCL - Container Completo</option>
-              <option value="LCL">LCL - Carga Fracionada</option>
+              {getTiposServico().map(tipo => (
+                <option key={tipo.valor} value={tipo.valor}>{tipo.nome}</option>
+              ))}
             </select>
+            {validationErrors.tipoServico && (
+              <p className="text-red-400 text-xs mt-1">{validationErrors.tipoServico}</p>
+            )}
           </div>
 
           <div className="campo-grupo">
@@ -471,7 +918,7 @@ export default function FreightCalculatorReal({ className = '' }: FreightCalcula
             <select 
               value={formData.moeda}
               onChange={(e) => handleMoedaChange(e.target.value)}
-              className="w-full px-3 py-2 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent text-gray-100"
+              className={`w-full px-3 py-2 bg-gray-800/50 border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent text-gray-100 ${validationErrors.moeda ? 'border-red-500' : 'border-gray-700'}`}
               required
             >
               <option value="">{moedas.length > 0 ? 'Selecione a moeda' : 'Carregando moedas...'}</option>
@@ -479,6 +926,9 @@ export default function FreightCalculatorReal({ className = '' }: FreightCalcula
                 <option key={moeda.codigo} value={moeda.codigo}>{moeda.codigo} - {moeda.nome}</option>
               ))}
             </select>
+            {validationErrors.moeda && (
+              <p className="text-red-400 text-xs mt-1">{validationErrors.moeda}</p>
+            )}
           </div>
 
           <div className="campo-grupo">
@@ -517,7 +967,7 @@ export default function FreightCalculatorReal({ className = '' }: FreightCalcula
         {/* Botão de Cálculo */}
         <button 
           onClick={calcularFreteReal}
-          disabled={isCalculating || !formData.origem || !formData.destino || !formData.peso || !formData.volume}
+          disabled={isCalculating}
           className="btn-calcular w-full mt-6 px-6 py-4 bg-gradient-to-r from-accent to-accent/80 text-white rounded-xl hover:from-accent/80 hover:to-accent/60 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 font-semibold"
         >
           {isCalculating ? (
@@ -546,15 +996,19 @@ export default function FreightCalculatorReal({ className = '' }: FreightCalcula
         <section className="results-section glass p-6 rounded-2xl shadow-gold mb-6">
           {/* Cotação Principal */}
           <div className="cotacao-principal text-center mb-8">
-            <h2 className="text-2xl font-bold text-gray-100 mb-4">💰 Cotação de Frete</h2>
+            <h2 className="text-2xl font-bold text-gray-100 mb-4">💰 Cotação de Frete - {modalTransporte.toUpperCase()}</h2>
             <div className="valor-principal mb-4">
               <span className="text-4xl font-bold text-accent">{resultados.moeda}</span>
               <span className="text-6xl font-bold text-accent ml-2">{resultados.valor}</span>
             </div>
-            <div className="detalhes-cotacao grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+            <div className="detalhes-cotacao grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
               <div className="detalhe p-3 bg-gray-700/30 rounded-lg">
-                <span className="text-gray-400">Fonte:</span>
-                <span className="text-gray-200 ml-2">{resultados.fonte}</span>
+                <span className="text-gray-400">Modal:</span>
+                <span className="text-gray-200 ml-2 capitalize">{resultados.modal}</span>
+              </div>
+              <div className="detalhe p-3 bg-gray-700/30 rounded-lg">
+                <span className="text-gray-400">Peso Volumétrico:</span>
+                <span className="text-gray-200 ml-2">{resultados.pesoVolumetrico} kg</span>
               </div>
               <div className="detalhe p-3 bg-gray-700/30 rounded-lg">
                 <span className="text-gray-400">Atualizado:</span>

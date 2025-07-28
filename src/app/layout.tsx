@@ -138,7 +138,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               "url": SITE_URL,
               "logo": `${SITE_URL}/images/olv-logo.jpeg`,
               "sameAs": [
-                "https://www.linkedin.com/company/26251289/admin/dashboard/",
+                "https://www.linkedin.com/company/olv-internacional/",
                 "https://www.instagram.com/olvinternacional",
                 "https://www.facebook.com/olvinternacional"
               ],

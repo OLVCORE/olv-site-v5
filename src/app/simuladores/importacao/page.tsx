@@ -34,7 +34,7 @@ export default function ImportSimPage() {
 
         <SimLayout
           quotes={<RealtimeQuotes symbols={['USD','EUR','GBP','CNY']} />}
-          calculator={<ImportSimWrapper><ImportCostCalculator /></ImportSimWrapper>}
+          calculator={<ImportSimWrapper><ImportCostCalculator showQuotes={false} /></ImportSimWrapper>}
           guide={(
             <div className="glass p-6 rounded-2xl shadow-gold card-hover">
               <h2 className="text-xl font-semibold text-gray-100 mb-4 flex items-center gap-2">

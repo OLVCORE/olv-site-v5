@@ -207,7 +207,7 @@ export default function ContatoPage() {
                       WhatsApp
                     </a>
                     <a 
-                      href="https://www.linkedin.com/company/26251289/admin/dashboard/" 
+                      href="https://www.linkedin.com/company/olv-internacional/" 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="flex items-center gap-2 btn btn-primary"
