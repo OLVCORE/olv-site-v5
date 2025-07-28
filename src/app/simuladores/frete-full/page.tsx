@@ -28,7 +28,7 @@ export default function FreightFullPage() {
       <div className="main-content pt-24 md:pt-28">
         <div className="container mx-auto px-4">
           
-          <!-- Development Banner -->
+          {/* Development Banner */}
           <div className="development-banner">
             <div className="banner-content">
               <span className="banner-icon">🚧</span>
@@ -37,13 +37,13 @@ export default function FreightFullPage() {
             </div>
           </div>
 
-          <!-- Title Section -->
+          {/* Title Section */}
           <div className="title-section">
             <h1>Simulador de Frete Internacional</h1>
             <p>Calcule custos de frete marítimo, aéreo e terrestre com dados em tempo real</p>
           </div>
 
-          <!-- Modal Navigation -->
+          {/* Modal Navigation */}
           <div className="modal-nav">
             <button className="modal-btn active" data-modal="maritime">
               <span className="modal-icon">🚢</span>
@@ -59,16 +59,16 @@ export default function FreightFullPage() {
             </button>
           </div>
 
-          <!-- Commercial Direction -->
+          {/* Commercial Direction */}
           <div className="direction-selector">
             <button className="direction-btn active" data-direction="import">Importação</button>
             <button className="direction-btn" data-direction="export">Exportação</button>
           </div>
 
-          <!-- Maritime Modal Content -->
+          {/* Maritime Modal Content */}
           <div className="modal-content active" id="maritime-modal">
             <form className="freight-form" id="maritime-form">
-              <!-- Route Section -->
+              {/* Route Section */}
               <div className="form-section">
                 <h3>Rota e Origem/Destino</h3>
                 <div className="form-grid">
@@ -87,7 +87,7 @@ export default function FreightFullPage() {
                 </div>
               </div>
 
-              <!-- Cargo Section -->
+              {/* Cargo Section */}
               <div className="form-section">
                 <h3>Carga e Dimensões</h3>
                 <div className="form-grid">
@@ -116,7 +116,7 @@ export default function FreightFullPage() {
                 </div>
               </div>
 
-              <!-- Service Type Section -->
+              {/* Service Type Section */}
               <div className="form-section">
                 <h3>Tipo de Serviço</h3>
                 <div className="form-group">
@@ -129,7 +129,7 @@ export default function FreightFullPage() {
                   </select>
                 </div>
                 
-                <!-- FCL Container Section -->
+                {/* FCL Container Section */}
                 <div className="container-section" id="fcl-container">
                   <h4>Especificações do Container</h4>
                   <div className="form-grid">
@@ -145,13 +145,13 @@ export default function FreightFullPage() {
                     </div>
                     <div className="form-group">
                       <label htmlFor="container-count">Quantidade</label>
-                      <input type="number" id="container-count" value="1" min="1" max="10" />
+                      <input type="number" id="container-count" defaultValue="1" min="1" max="10" />
                     </div>
                   </div>
                 </div>
               </div>
 
-              <!-- Incoterms Section -->
+              {/* Incoterms Section */}
               <div className="form-section">
                 <h3>Incoterms</h3>
                 <div className="form-group">
@@ -167,13 +167,13 @@ export default function FreightFullPage() {
                     <option value="cfr">CFR - Cost and Freight</option>
                     <option value="cif">CIF - Cost, Insurance and Freight</option>
                   </select>
-                  <button type="button" className="info-btn" onclick="showIncotermDetails()">
+                  <button type="button" className="info-btn" onClick={() => window.showIncotermDetails && window.showIncotermDetails()}>
                     <span>ℹ️</span> Ver Detalhes
                   </button>
                 </div>
               </div>
 
-              <!-- Calculate Button -->
+              {/* Calculate Button */}
               <div className="form-actions">
                 <button type="submit" className="calculate-btn" id="calculate-btn">
                   <span className="btn-icon">🚢</span>
@@ -183,10 +183,10 @@ export default function FreightFullPage() {
             </form>
           </div>
 
-          <!-- Air Modal Content -->
+          {/* Air Modal Content */}
           <div className="modal-content" id="air-modal">
             <form className="freight-form" id="air-form">
-              <!-- Route Section -->
+              {/* Route Section */}
               <div className="form-section">
                 <h3>Rota e Origem/Destino</h3>
                 <div className="form-grid">
@@ -203,7 +203,7 @@ export default function FreightFullPage() {
                 </div>
               </div>
 
-              <!-- Cargo Section -->
+              {/* Cargo Section */}
               <div className="form-section">
                 <h3>Carga e Dimensões</h3>
                 <div className="form-grid">
@@ -231,7 +231,7 @@ export default function FreightFullPage() {
                 </div>
               </div>
 
-              <!-- Service Type Section -->
+              {/* Service Type Section */}
               <div className="form-section">
                 <h3>Tipo de Serviço</h3>
                 <div className="form-group">
@@ -245,7 +245,7 @@ export default function FreightFullPage() {
                 </div>
               </div>
 
-              <!-- Incoterms Section -->
+              {/* Incoterms Section */}
               <div className="form-section">
                 <h3>Incoterms</h3>
                 <div className="form-group">
@@ -258,13 +258,13 @@ export default function FreightFullPage() {
                     <option value="dap">DAP - Delivered at Place</option>
                     <option value="dpd">DPD - Delivered Duty Paid</option>
                   </select>
-                  <button type="button" className="info-btn" onclick="showIncotermDetails()">
+                  <button type="button" className="info-btn" onClick={() => window.showIncotermDetails && window.showIncotermDetails()}>
                     <span>ℹ️</span> Ver Detalhes
                   </button>
                 </div>
               </div>
 
-              <!-- Calculate Button -->
+              {/* Calculate Button */}
               <div className="form-actions">
                 <button type="submit" className="calculate-btn" id="air-calculate-btn">
                   <span className="btn-icon">✈️</span>
@@ -274,10 +274,10 @@ export default function FreightFullPage() {
             </form>
           </div>
 
-          <!-- Road Modal Content -->
+          {/* Road Modal Content */}
           <div className="modal-content" id="road-modal">
             <form className="freight-form" id="road-form">
-              <!-- Route Section -->
+              {/* Route Section */}
               <div className="form-section">
                 <h3>Rota e Origem/Destino</h3>
                 <div className="form-grid">
@@ -294,7 +294,7 @@ export default function FreightFullPage() {
                 </div>
               </div>
 
-              <!-- Cargo Section -->
+              {/* Cargo Section */}
               <div className="form-section">
                 <h3>Carga e Dimensões</h3>
                 <div className="form-grid">
@@ -322,7 +322,7 @@ export default function FreightFullPage() {
                 </div>
               </div>
 
-              <!-- Service Type Section -->
+              {/* Service Type Section */}
               <div className="form-section">
                 <h3>Tipo de Serviço</h3>
                 <div className="form-group">
@@ -336,7 +336,7 @@ export default function FreightFullPage() {
                 </div>
               </div>
 
-              <!-- Incoterms Section -->
+              {/* Incoterms Section */}
               <div className="form-section">
                 <h3>Incoterms</h3>
                 <div className="form-group">
@@ -349,13 +349,13 @@ export default function FreightFullPage() {
                     <option value="dap">DAP - Delivered at Place</option>
                     <option value="dpd">DPD - Delivered Duty Paid</option>
                   </select>
-                  <button type="button" className="info-btn" onclick="showIncotermDetails()">
+                  <button type="button" className="info-btn" onClick={() => window.showIncotermDetails && window.showIncotermDetails()}>
                     <span>ℹ️</span> Ver Detalhes
                   </button>
                 </div>
               </div>
 
-              <!-- Calculate Button -->
+              {/* Calculate Button */}
               <div className="form-actions">
                 <button type="submit" className="calculate-btn" id="road-calculate-btn">
                   <span className="btn-icon">🚛</span>
@@ -365,7 +365,7 @@ export default function FreightFullPage() {
             </form>
           </div>
 
-          <!-- Results Section -->
+          {/* Results Section */}
           <div className="results-section" id="results-section" style={{display: 'none'}}>
             <div className="results-header">
               <h2>Resultados do Cálculo</h2>
@@ -436,32 +436,32 @@ export default function FreightFullPage() {
               </div>
             </div>
 
-            <!-- Action Buttons -->
+            {/* Action Buttons */}
             <div className="action-buttons">
-              <button className="action-btn quotation-btn" onclick="showQuotationPreview()">
+              <button className="action-btn quotation-btn" onClick={() => window.showQuotationPreview && window.showQuotationPreview()}>
                 <span className="btn-icon">📋</span>
                 Gerar Pedido de Cotação
               </button>
-              <button className="action-btn template-btn" onclick="showTemplatePreview()">
+              <button className="action-btn template-btn" onClick={() => window.showTemplatePreview && window.showTemplatePreview()}>
                 <span className="btn-icon">👁️</span>
                 Visualizar Template
               </button>
-              <button className="action-btn report-btn" onclick="showExecutiveReportPreview()">
+              <button className="action-btn report-btn" onClick={() => window.showExecutiveReportPreview && window.showExecutiveReportPreview()}>
                 <span className="btn-icon">📊</span>
                 Gerar Relatório Executivo
               </button>
             </div>
           </div>
 
-          <!-- Modals -->
+          {/* Modals */}
           <div className="modal" id="incoterm-modal">
             <div className="modal-content">
               <div className="modal-header">
                 <h3>Detalhes do Incoterm</h3>
-                <button className="close-btn" onclick="closeIncotermModal()">&times;</button>
+                <button className="close-btn" onClick={() => window.closeIncotermModal && window.closeIncotermModal()}>&times;</button>
               </div>
               <div className="modal-body" id="incoterm-details">
-                <!-- Content will be loaded dynamically -->
+                {/* Content will be loaded dynamically */}
               </div>
             </div>
           </div>
@@ -470,11 +470,11 @@ export default function FreightFullPage() {
             <div className="modal-content">
               <div className="modal-header">
                 <h3>Pedido de Cotação</h3>
-                <button className="close-btn" onclick="closeQuotationPreview()">&times;</button>
+                <button className="close-btn" onClick={() => window.closeQuotationPreview && window.closeQuotationPreview()}>&times;</button>
               </div>
               <div className="modal-body">
                 <div className="quotation-preview" id="quotation-preview-content">
-                  <!-- Content will be loaded dynamically -->
+                  {/* Content will be loaded dynamically */}
                 </div>
               </div>
             </div>
@@ -484,11 +484,11 @@ export default function FreightFullPage() {
             <div className="modal-content">
               <div className="modal-header">
                 <h3>Template de Documentação</h3>
-                <button className="close-btn" onclick="closeTemplatePreview()">&times;</button>
+                <button className="close-btn" onClick={() => window.closeTemplatePreview && window.closeTemplatePreview()}>&times;</button>
               </div>
               <div className="modal-body">
                 <div className="template-preview" id="template-preview-content">
-                  <!-- Content will be loaded dynamically -->
+                  {/* Content will be loaded dynamically */}
                 </div>
               </div>
             </div>
@@ -498,11 +498,11 @@ export default function FreightFullPage() {
             <div className="modal-content">
               <div className="modal-header">
                 <h3>Relatório Executivo</h3>
-                <button className="close-btn" onclick="closeExecutiveReportPreview()">&times;</button>
+                <button className="close-btn" onClick={() => window.closeExecutiveReportPreview && window.closeExecutiveReportPreview()}>&times;</button>
               </div>
               <div className="modal-body">
                 <div className="executive-report-preview" id="executive-report-preview-content">
-                  <!-- Content will be loaded dynamically -->
+                  {/* Content will be loaded dynamically */}
                 </div>
               </div>
             </div>
