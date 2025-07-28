@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Frete Internacional - OLV Internacional</title>
+    <link rel="stylesheet" href="simulador-frete.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="https://olvinternacional.com.br/logo.png" alt="OLV Internacional" class="logo-img">
+                    <span class="logo-text">OLV Internacional</span>
+                </div>
+                <div class="api-status">
+                    <div class="status-item">
+                        <span class="status-dot" id="weather-status"></span>
+                        <span class="status-text">Clima</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-dot" id="traffic-status"></span>
+                        <span class="status-text">Tráfego</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-dot" id="currency-status"></span>
+                        <span class="status-text">Câmbio</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            
+            <!-- Development Banner -->
+            <div class="development-banner">
+                <div class="banner-content">
+                    <span class="banner-icon">🚧</span>
+                    <span class="banner-text">Simuladores Multimodal em Desenvolvimento</span>
+                    <span class="banner-badge">BETA</span>
+                </div>
+            </div>
+
+            <!-- Title Section -->
+            <div class="title-section">
+                <h1>Simulador de Frete Internacional</h1>
+                <p>Calcule custos de frete marítimo, aéreo e terrestre com dados em tempo real</p>
+            </div>
+
+            <!-- Modal Navigation -->
+            <div class="modal-nav">
+                <button class="modal-btn active" data-modal="maritime">
+                    <span class="modal-icon">🚢</span>
+                    <span class="modal-text">Marítimo</span>
+                </button>
+                <button class="modal-btn" data-modal="air">
+                    <span class="modal-icon">✈️</span>
+                    <span class="modal-text">Aéreo</span>
+                </button>
+                <button class="modal-btn" data-modal="road">
+                    <span class="modal-icon">🚛</span>
+                    <span class="modal-text">Terrestre</span>
+                </button>
+            </div>
+
+            <!-- Commercial Direction -->
+            <div class="direction-selector">
+                <button class="direction-btn active" data-direction="import">Importação</button>
+                <button class="direction-btn" data-direction="export">Exportação</button>
+            </div>
+
+            <!-- Maritime Modal Content -->
+            <div class="modal-content active" id="maritime-modal">
+                <form class="freight-form" id="maritime-form">
+                    <!-- Route Section -->
+                    <div class="form-section">
+                        <h3>Rota e Origem/Destino</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="origin">Origem <span class="required">*</span></label>
+                                <input type="text" id="origin" placeholder="Digite a origem" required 
+                                       title="Digite o porto, cidade ou país de origem da carga. Ex: Santos, São Paulo, Brasil">
+                                <div class="autocomplete-list" id="origin-list"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="destination">Destino <span class="required">*</span></label>
+                                <input type="text" id="destination" placeholder="Digite o destino" required
+                                       title="Digite o porto, cidade ou país de destino da carga. Ex: Shanghai, China">
+                                <div class="autocomplete-list" id="destination-list"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cargo Section -->
+                    <div class="form-section">
+                        <h3>Carga e Dimensões</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="cargo-type">Tipo de Carga <span class="required">*</span></label>
+                                <select id="cargo-type" required
+                                        title="Selecione o tipo de carga que será transportada">
+                                    <option value="">Selecione o tipo de carga</option>
+                                    <option value="general">Carga Geral</option>
+                                    <option value="container">Container</option>
+                                    <option value="bulk">Granel</option>
+                                    <option value="liquid">Líquido</option>
+                                    <option value="dangerous">Perigosa</option>
+                                    <option value="refrigerated">Refrigerada</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="weight">Peso (kg) <span class="required">*</span></label>
+                                <input type="number" id="weight" placeholder="0.00" min="0" step="0.01" required
+                                       title="Digite o peso total da carga em quilogramas">
+                            </div>
+                            <div class="form-group">
+                                <label for="volume">Volume (m³) <span class="required">*</span></label>
+                                <input type="number" id="volume" placeholder="0.00" min="0" step="0.01" required
+                                       title="Digite o volume total da carga em metros cúbicos">
+                            </div>
+                            <div class="form-group">
+                                <label for="taxable-weight">Peso Taxável (kg)</label>
+                                <input type="number" id="taxable-weight" placeholder="Calculado automaticamente" readonly
+                                       title="Peso utilizado para cálculo de frete (maior entre peso real e volumétrico)">
+                            </div>
+                            <div class="form-group">
+                                <label for="volumetric-weight">Peso Volumétrico (kg)</label>
+                                <input type="number" id="volumetric-weight" placeholder="Calculado automaticamente" readonly
+                                       title="Peso calculado com base no volume (1m³ = 1000kg para frete marítimo)">
+                            </div>
+                            <div class="form-group">
+                                <label for="service-type">Tipo de Serviço <span class="required">*</span></label>
+                                <select id="service-type" required title="Selecione o tipo de serviço de transporte marítimo">
+                                    <option value="">Selecione o tipo de serviço</option>
+                                    <option value="FCL">FCL - Full Container Load (Container Completo)</option>
+                                    <option value="LCL">LCL - Less than Container Load (Carga Parcial)</option>
+                                    <option value="bulk">Granel (Bulk Cargo)</option>
+                                </select>
+                            </div>
+                            <div class="form-group container-section" style="display: none;">
+                                <label for="container-type">Tipo de Container</label>
+                                <select id="container-type" title="Selecione o tipo de container para FCL">
+                                    <option value="">Selecione o container</option>
+                                    <option value="20GP">20' GP (General Purpose)</option>
+                                    <option value="40GP">40' GP (General Purpose)</option>
+                                    <option value="40HC">40' HC (High Cube)</option>
+                                    <option value="45HC">45' HC (High Cube)</option>
+                                    <option value="20RF">20' RF (Reefer)</option>
+                                    <option value="40RF">40' RF (Reefer)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="ncm">Código NCM <span class="required">*</span></label>
+                                <input type="text" id="ncm" placeholder="Digite o código NCM" maxlength="8" required
+                                       title="Código NCM (Nomenclatura Comum do Mercosul) da mercadoria. Ex: 8471 para computadores">
+                                <div class="ncm-info" id="ncm-info"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="incoterm">Incoterm <span class="required">*</span></label>
+                                <select id="incoterm" required title="Termos de comércio internacional que definem responsabilidades e custos">
+                                    <option value="">Selecione o Incoterm</option>
+                                    <option value="EXW">EXW - Ex Works</option>
+                                    <option value="FCA">FCA - Free Carrier</option>
+                                    <option value="CPT">CPT - Carriage Paid To</option>
+                                    <option value="CIP">CIP - Carriage and Insurance Paid To</option>
+                                    <option value="DAP">DAP - Delivered at Place</option>
+                                    <option value="DPU">DPU - Delivered at Place Unloaded</option>
+                                    <option value="DDP">DDP - Delivered Duty Paid</option>
+                                    <option value="FAS">FAS - Free Alongside Ship</option>
+                                    <option value="FOB">FOB - Free on Board</option>
+                                    <option value="CFR">CFR - Cost and Freight</option>
+                                    <option value="CIF">CIF - Cost, Insurance and Freight</option>
+                                </select>
+                                <div class="incoterm-info" id="incoterm-info"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="currency">Moeda <span class="required">*</span></label>
+                                <select id="currency" required title="Moeda para cotação dos valores de frete">
+                                    <option value="USD">USD - Dólar Americano</option>
+                                    <option value="EUR">EUR - Euro</option>
+                                    <option value="BRL">BRL - Real Brasileiro</option>
+                                    <option value="CNY">CNY - Yuan Chinês</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="cargo-value">Valor da Carga <span class="required">*</span></label>
+                                <input type="number" id="cargo-value" placeholder="0.00" min="0" step="0.01" required
+                                       title="Valor total da carga para cálculo de seguro e impostos">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Manual Tariff Settings Section -->
+                    <div class="form-section">
+                        <h3>Configurações de Tarifas (Opcional)</h3>
+                        <p class="section-description">Insira manualmente os valores de tarifas para cálculos mais precisos:</p>
+                        
+                        <div class="manual-tariffs">
+                            <div class="tariff-group">
+                                <h4>Tarifas Base</h4>
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="manual-base-freight">Frete Base (USD/TEU)</label>
+                                        <div class="input-with-button">
+                                            <input type="number" id="manual-base-freight" placeholder="0.00" min="0" step="0.01">
+                                            <button type="button" class="manual-input-btn" data-field="manual-base-freight">Inserir Manualmente</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="manual-baf">BAF - Bunker Adjustment Factor (%)</label>
+                                        <div class="input-with-button">
+                                            <input type="number" id="manual-baf" placeholder="0.00" min="0" step="0.01">
+                                            <button type="button" class="manual-input-btn" data-field="manual-baf">Inserir Manualmente</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="manual-caf">CAF - Currency Adjustment Factor (%)</label>
+                                        <div class="input-with-button">
+                                            <input type="number" id="manual-caf" placeholder="0.00" min="0" step="0.01">
+                                            <button type="button" class="manual-input-btn" data-field="manual-caf">Inserir Manualmente</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="tariff-group">
+                                <h4>Custos Operacionais</h4>
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="manual-thc-origin">THC Origem (USD)</label>
+                                        <div class="input-with-button">
+                                            <input type="number" id="manual-thc-origin" placeholder="0.00" min="0" step="0.01">
+                                            <button type="button" class="manual-input-btn" data-field="manual-thc-origin">Inserir Manualmente</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="manual-thc-destination">THC Destino (USD)</label>
+                                        <div class="input-with-button">
+                                            <input type="number" id="manual-thc-destination" placeholder="0.00" min="0" step="0.01">
+                                            <button type="button" class="manual-input-btn" data-field="manual-thc-destination">Inserir Manualmente</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="manual-documentation">Documentação (USD)</label>
+                                        <div class="input-with-button">
+                                            <input type="number" id="manual-documentation" placeholder="0.00" min="0" step="0.01">
+                                            <button type="button" class="manual-input-btn" data-field="manual-documentation">Inserir Manualmente</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="manual-customs">Despacho Aduaneiro (USD)</label>
+                                        <div class="input-with-button">
+                                            <input type="number" id="manual-customs" placeholder="0.00" min="0" step="0.01">
+                                            <button type="button" class="manual-input-btn" data-field="manual-customs">Inserir Manualmente</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="manual-inland">Transporte Interno (USD)</label>
+                                        <div class="input-with-button">
+                                            <input type="number" id="manual-inland" placeholder="0.00" min="0" step="0.01">
+                                            <button type="button" class="manual-input-btn" data-field="manual-inland">Inserir Manualmente</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Calculate Button -->
+                    <div class="calculate-section">
+                        <button type="submit" class="calculate-btn" id="calculate-btn">
+                            <span class="btn-icon">🧮</span>
+                            <span class="btn-text">Calcular Frete</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Air Modal Content -->
+            <div class="modal-content" id="air-modal">
+                <form class="freight-form" id="air-form">
+                    <!-- Route Section -->
+                    <div class="form-section">
+                        <h3>Rota e Origem/Destino</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="air-origin">Origem <span class="required">*</span></label>
+                                <input type="text" id="air-origin" placeholder="Digite a origem" required
+                                       title="Digite o aeroporto, cidade ou país de origem da carga. Ex: Guarulhos, São Paulo, Brasil">
+                                <div class="autocomplete-list" id="air-origin-list"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="air-destination">Destino <span class="required">*</span></label>
+                                <input type="text" id="air-destination" placeholder="Digite o destino" required
+                                       title="Digite o aeroporto, cidade ou país de destino da carga. Ex: Shanghai Pudong, China">
+                                <div class="autocomplete-list" id="air-destination-list"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cargo Section -->
+                    <div class="form-section">
+                        <h3>Carga e Dimensões</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="air-cargo-type">Tipo de Carga <span class="required">*</span></label>
+                                <select id="air-cargo-type" required
+                                        title="Selecione o tipo de carga que será transportada por via aérea">
+                                    <option value="">Selecione o tipo de carga</option>
+                                    <option value="general">Carga Geral</option>
+                                    <option value="perishable">Perecível</option>
+                                    <option value="dangerous">Perigosa</option>
+                                    <option value="valuable">Valiosa</option>
+                                    <option value="oversized">Oversized</option>
+                                    <option value="live">Viva</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="air-weight">Peso (kg) <span class="required">*</span></label>
+                                <input type="number" id="air-weight" placeholder="0.00" min="0" step="0.01" required
+                                       title="Digite o peso total da carga em quilogramas">
+                            </div>
+                            <div class="form-group">
+                                <label for="air-volume">Volume (m³) <span class="required">*</span></label>
+                                <input type="number" id="air-volume" placeholder="0.00" min="0" step="0.01" required
+                                       title="Digite o volume total da carga em metros cúbicos">
+                            </div>
+                            <div class="form-group">
+                                <label for="air-volumetric-weight">Peso Volumétrico (kg)</label>
+                                <input type="number" id="air-volumetric-weight" placeholder="Calculado automaticamente" readonly
+                                       title="Peso calculado com base no volume (1m³ = 167kg para frete aéreo)">
+                            </div>
+                            <div class="form-group">
+                                <label for="air-taxable-weight">Peso Taxável (kg)</label>
+                                <input type="number" id="air-taxable-weight" placeholder="Calculado automaticamente" readonly
+                                       title="Peso utilizado para cálculo de frete (maior entre peso real e volumétrico)">
+                            </div>
+                            <div class="form-group">
+                                <label for="air-service">Tipo de Serviço <span class="required">*</span></label>
+                                <select id="air-service" required title="Selecione o tipo de serviço de transporte aéreo">
+                                    <option value="">Selecione o tipo de serviço</option>
+                                    <option value="express">Express - Entrega Rápida (24-48h)</option>
+                                    <option value="standard">Standard - Entrega Normal (3-5 dias)</option>
+                                    <option value="economy">Economy - Entrega Econômica (5-7 dias)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="air-incoterm">Incoterm <span class="required">*</span></label>
+                                <select id="air-incoterm" required title="Termos de comércio internacional que definem responsabilidades e custos">
+                                    <option value="">Selecione o Incoterm</option>
+                                    <option value="EXW">EXW - Ex Works</option>
+                                    <option value="FCA">FCA - Free Carrier</option>
+                                    <option value="CPT">CPT - Carriage Paid To</option>
+                                    <option value="CIP">CIP - Carriage and Insurance Paid To</option>
+                                    <option value="DAP">DAP - Delivered at Place</option>
+                                    <option value="DPU">DPU - Delivered at Place Unloaded</option>
+                                    <option value="DDP">DDP - Delivered Duty Paid</option>
+                                    <option value="FAS">FAS - Free Alongside Ship</option>
+                                    <option value="FOB">FOB - Free on Board</option>
+                                    <option value="CFR">CFR - Cost and Freight</option>
+                                    <option value="CIF">CIF - Cost, Insurance and Freight</option>
+                                </select>
+                                <div class="incoterm-info" id="air-incoterm-info"></div>
+                                <button type="button" class="incoterm-guide-btn" data-incoterm="">Ver Guia Detalhado</button>
+                            </div>
+                            <div class="form-group">
+                                <label for="air-ncm">Código NCM <span class="required">*</span></label>
+                                <input type="text" id="air-ncm" placeholder="Ex: 8471.30.00" maxlength="8" required
+                                       title="Código NCM (Nomenclatura Comum do Mercosul) da mercadoria. Ex: 8471 para computadores">
+                                <div class="ncm-info" id="air-ncm-info"></div>
+                            </div>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="air-currency">Moeda de Cotação <span class="required">*</span></label>
+                                <select id="air-currency" required title="Moeda para cotação dos valores de frete">
+                                    <option value="USD">USD - Dólar Americano</option>
+                                    <option value="BRL">BRL - Real Brasileiro</option>
+                                    <option value="EUR">EUR - Euro</option>
+                                    <option value="GBP">GBP - Libra Esterlina</option>
+                                    <option value="CNY">CNY - Yuan Chinês</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="air-exchange-rate">Taxa de Câmbio (Tempo Real)</label>
+                                <input type="number" id="air-exchange-rate" readonly
+                                       title="Taxa de câmbio atual obtida da API Radar 360">
+                                <small>Fonte: API Radar 360</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="air-cargo-value">Valor da Carga <span class="required">*</span></label>
+                                <input type="number" id="air-cargo-value" placeholder="0.00" min="0" step="0.01" required
+                                       title="Valor total da carga para cálculo de seguro e impostos">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Manual Tariff Settings Section -->
+                    <div class="form-section">
+                        <h3>Configurações de Tarifas (Opcional)</h3>
+                        <p class="section-description">Insira manualmente os valores de tarifas para cálculos mais precisos:</p>
+                        
+                        <div class="manual-tariffs">
+                            <div class="tariff-group">
+                                <h4>Tarifas Base</h4>
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="air-manual-base-freight">Frete Base (USD/kg)</label>
+                                        <div class="input-with-button">
+                                            <input type="number" id="air-manual-base-freight" placeholder="0.00" min="0" step="0.01">
+                                            <button type="button" class="manual-input-btn" data-field="air-manual-base-freight">Inserir Manualmente</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="air-manual-fuel-surcharge">Fuel Surcharge (%)</label>
+                                        <div class="input-with-button">
+                                            <input type="number" id="air-manual-fuel-surcharge" placeholder="0.00" min="0" step="0.01">
+                                            <button type="button" class="manual-input-btn" data-field="air-manual-fuel-surcharge">Inserir Manualmente</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="air-manual-security-surcharge">Security Surcharge (%)</label>
+                                        <div class="input-with-button">
+                                            <input type="number" id="air-manual-security-surcharge" placeholder="0.00" min="0" step="0.01">
+                                            <button type="button" class="manual-input-btn" data-field="air-manual-security-surcharge">Inserir Manualmente</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="tariff-group">
+                                <h4>Custos Operacionais</h4>
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="air-manual-handling-origin">Handling Origem (USD)</label>
+                                        <div class="input-with-button">
+                                            <input type="number" id="air-manual-handling-origin" placeholder="0.00" min="0" step="0.01">
+                                            <button type="button" class="manual-input-btn" data-field="air-manual-handling-origin">Inserir Manualmente</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="air-manual-handling-destination">Handling Destino (USD)</label>
+                                        <div class="input-with-button">
+                                            <input type="number" id="air-manual-handling-destination" placeholder="0.00" min="0" step="0.01">
+                                            <button type="button" class="manual-input-btn" data-field="air-manual-handling-destination">Inserir Manualmente</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="air-manual-documentation">Documentação (USD)</label>
+                                        <div class="input-with-button">
+                                            <input type="number" id="air-manual-documentation" placeholder="0.00" min="0" step="0.01">
+                                            <button type="button" class="manual-input-btn" data-field="air-manual-documentation">Inserir Manualmente</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="air-manual-customs">Despacho Aduaneiro (USD)</label>
+                                        <div class="input-with-button">
+                                            <input type="number" id="air-manual-customs" placeholder="0.00" min="0" step="0.01">
+                                            <button type="button" class="manual-input-btn" data-field="air-manual-customs">Inserir Manualmente</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="air-manual-inland">Transporte Interno (USD)</label>
+                                        <div class="input-with-button">
+                                            <input type="number" id="air-manual-inland" placeholder="0.00" min="0" step="0.01">
+                                            <button type="button" class="manual-input-btn" data-field="air-manual-inland">Inserir Manualmente</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Calculate Section -->
+                    <div class="calculate-section">
+                        <button type="submit" id="air-calculate-btn" class="calculate-btn">
+                            <span class="btn-icon">🧮</span>
+                            <span class="btn-text">Calcular Frete Aéreo</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Road Modal Content -->
+            <div class="modal-content" id="road-modal">
+                <form class="freight-form" id="road-form">
+                    <!-- Route Section -->
+                    <div class="form-section">
+                        <h3>Rota e Origem/Destino</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="road-origin">Origem <span class="required">*</span></label>
+                                <input type="text" id="road-origin" placeholder="Digite a origem" required
+                                       title="Digite a cidade ou país de origem da carga. Ex: São Paulo, Brasil">
+                                <div class="autocomplete-list" id="road-origin-list"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="road-destination">Destino <span class="required">*</span></label>
+                                <input type="text" id="road-destination" placeholder="Digite o destino" required
+                                       title="Digite a cidade ou país de destino da carga. Ex: Buenos Aires, Argentina">
+                                <div class="autocomplete-list" id="road-destination-list"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="road-cargo-type">Tipo de Carga <span class="required">*</span></label>
+                                <select id="road-cargo-type" required
+                                        title="Selecione o tipo de carga que será transportada por via rodoviária">
+                                    <option value="">Selecione o tipo de carga</option>
+                                    <option value="general">Carga Geral</option>
+                                    <option value="perishable">Perecível</option>
+                                    <option value="dangerous">Perigosa</option>
+                                    <option value="oversized">Oversized</option>
+                                    <option value="heavy">Pesada</option>
+                                    <option value="live">Viva</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="road-weight">Peso (kg) <span class="required">*</span></label>
+                                <input type="number" id="road-weight" placeholder="0.00" min="0" step="0.01" required
+                                       title="Digite o peso total da carga em quilogramas">
+                            </div>
+                            <div class="form-group">
+                                <label for="road-volume">Volume (m³) <span class="required">*</span></label>
+                                <input type="number" id="road-volume" placeholder="0.00" min="0" step="0.01" required
+                                       title="Digite o volume total da carga em metros cúbicos">
+                            </div>
+                            <div class="form-group">
+                                <label for="road-service">Tipo de Serviço <span class="required">*</span></label>
+                                <select id="road-service" required title="Selecione o tipo de serviço de transporte rodoviário">
+                                    <option value="">Selecione o tipo de serviço</option>
+                                    <option value="express">Express - Entrega Rápida (2-3 dias)</option>
+                                    <option value="standard">Standard - Entrega Normal (5-7 dias)</option>
+                                    <option value="economy">Economy - Entrega Econômica (7-10 dias)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="road-incoterm">Incoterm <span class="required">*</span></label>
+                                <select id="road-incoterm" required title="Termos de comércio internacional que definem responsabilidades e custos">
+                                    <option value="">Selecione o Incoterm</option>
+                                    <option value="EXW">EXW - Ex Works</option>
+                                    <option value="FCA">FCA - Free Carrier</option>
+                                    <option value="CPT">CPT - Carriage Paid To</option>
+                                    <option value="CIP">CIP - Carriage and Insurance Paid To</option>
+                                    <option value="DAP">DAP - Delivered at Place</option>
+                                    <option value="DPU">DPU - Delivered at Place Unloaded</option>
+                                    <option value="DDP">DDP - Delivered Duty Paid</option>
+                                    <option value="FAS">FAS - Free Alongside Ship</option>
+                                    <option value="FOB">FOB - Free on Board</option>
+                                    <option value="CFR">CFR - Cost and Freight</option>
+                                    <option value="CIF">CIF - Cost, Insurance and Freight</option>
+                                </select>
+                                <div class="incoterm-info" id="road-incoterm-info"></div>
+                                <button type="button" class="incoterm-guide-btn" data-incoterm="">Ver Guia Detalhado</button>
+                            </div>
+                            <div class="form-group">
+                                <label for="road-ncm">Código NCM <span class="required">*</span></label>
+                                <input type="text" id="road-ncm" placeholder="Ex: 8471.30.00" maxlength="8" required
+                                       title="Código NCM (Nomenclatura Comum do Mercosul) da mercadoria. Ex: 8471 para computadores">
+                                <div class="ncm-info" id="road-ncm-info"></div>
+                            </div>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="road-currency">Moeda de Cotação <span class="required">*</span></label>
+                                <select id="road-currency" required title="Moeda para cotação dos valores de frete">
+                                    <option value="USD">USD - Dólar Americano</option>
+                                    <option value="BRL">BRL - Real Brasileiro</option>
+                                    <option value="EUR">EUR - Euro</option>
+                                    <option value="GBP">GBP - Libra Esterlina</option>
+                                    <option value="CNY">CNY - Yuan Chinês</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="road-exchange-rate">Taxa de Câmbio (Tempo Real)</label>
+                                <input type="number" id="road-exchange-rate" readonly
+                                       title="Taxa de câmbio atual obtida da API Radar 360">
+                                <small>Fonte: API Radar 360</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="road-cargo-value">Valor da Carga <span class="required">*</span></label>
+                                <input type="number" id="road-cargo-value" placeholder="0.00" min="0" step="0.01" required
+                                       title="Valor total da carga para cálculo de seguro e impostos">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Manual Tariff Settings Section -->
+                    <div class="form-section">
+                        <h3>Configurações de Tarifas (Opcional)</h3>
+                        <p class="section-description">Insira manualmente os valores de tarifas para cálculos mais precisos:</p>
+                        
+                        <div class="manual-tariffs">
+                            <div class="tariff-group">
+                                <h4>Tarifas Base</h4>
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="road-manual-base-freight">Frete Base (USD/km)</label>
+                                        <div class="input-with-button">
+                                            <input type="number" id="road-manual-base-freight" placeholder="0.00" min="0" step="0.01">
+                                            <button type="button" class="manual-input-btn" data-field="road-manual-base-freight">Inserir Manualmente</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="road-manual-fuel-surcharge">Fuel Surcharge (%)</label>
+                                        <div class="input-with-button">
+                                            <input type="number" id="road-manual-fuel-surcharge" placeholder="0.00" min="0" step="0.01">
+                                            <button type="button" class="manual-input-btn" data-field="road-manual-fuel-surcharge">Inserir Manualmente</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="road-manual-toll-surcharge">Toll Surcharge (%)</label>
+                                        <div class="input-with-button">
+                                            <input type="number" id="road-manual-toll-surcharge" placeholder="0.00" min="0" step="0.01">
+                                            <button type="button" class="manual-input-btn" data-field="road-manual-toll-surcharge">Inserir Manualmente</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="tariff-group">
+                                <h4>Custos Operacionais</h4>
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="road-manual-loading">Loading (USD)</label>
+                                        <div class="input-with-button">
+                                            <input type="number" id="road-manual-loading" placeholder="0.00" min="0" step="0.01">
+                                            <button type="button" class="manual-input-btn" data-field="road-manual-loading">Inserir Manualmente</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="road-manual-unloading">Unloading (USD)</label>
+                                        <div class="input-with-button">
+                                            <input type="number" id="road-manual-unloading" placeholder="0.00" min="0" step="0.01">
+                                            <button type="button" class="manual-input-btn" data-field="road-manual-unloading">Inserir Manualmente</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="road-manual-documentation">Documentação (USD)</label>
+                                        <div class="input-with-button">
+                                            <input type="number" id="road-manual-documentation" placeholder="0.00" min="0" step="0.01">
+                                            <button type="button" class="manual-input-btn" data-field="road-manual-documentation">Inserir Manualmente</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="road-manual-customs">Despacho Aduaneiro (USD)</label>
+                                        <div class="input-with-button">
+                                            <input type="number" id="road-manual-customs" placeholder="0.00" min="0" step="0.01">
+                                            <button type="button" class="manual-input-btn" data-field="road-manual-customs">Inserir Manualmente</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="road-manual-insurance">Seguro de Carga (USD)</label>
+                                        <div class="input-with-button">
+                                            <input type="number" id="road-manual-insurance" placeholder="0.00" min="0" step="0.01">
+                                            <button type="button" class="manual-input-btn" data-field="road-manual-insurance">Inserir Manualmente</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Calculate Section -->
+                    <div class="calculate-section">
+                        <button type="submit" id="road-calculate-btn" class="calculate-btn">
+                            <span class="btn-icon">🧮</span>
+                            <span class="btn-text">Calcular Frete Terrestre</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-section" id="results-section" style="display: none;">
+                <h3>Resultado do Cálculo</h3>
+                <div class="results-content" id="results-content">
+                    <!-- Results will be populated by JavaScript -->
+                </div>
+                
+                <!-- Disclaimer Banner -->
+                <div class="disclaimer-banner hidden" id="results-disclaimer">
+                    <div class="disclaimer-icon">⚠️</div>
+                    <div class="disclaimer-content">
+                        <h3>Importante: Valores Estimados</h3>
+                        <p>Os valores de frete exibidos são <strong>estimativas de mercado</strong> e servem apenas como referência. Para cotações finais e ofertas comerciais, consulte diretamente:</p>
+                        <ul>
+                            <li>Companhias aéreas e marítimas</li>
+                            <li>Transportadoras rodoviárias</li>
+                            <li>Freight forwarders</li>
+                            <li>Agentes de carga</li>
+                        </ul>
+                        <p><strong>OLV Internacional</strong> não se responsabiliza pela precisão destes valores estimados.</p>
+                    </div>
+                    <button class="disclaimer-close" id="results-disclaimer-close">&times;</button>
+                </div>
+                
+                <!-- Quotation Generation Section -->
+                <div class="quotation-section">
+                    <h4>Gerar Pedido de Cotação</h4>
+                    <p>Use os dados do formulário para gerar um pedido de cotação profissional:</p>
+                    
+                    <div class="quotation-options">
+                        <div class="quotation-option">
+                            <input type="radio" id="quote-maritime" name="quote-type" value="maritime" checked>
+                            <label for="quote-maritime">
+                                <span class="quote-icon">🚢</span>
+                                <div class="quote-info">
+                                    <span class="quote-name">Cotação Marítima</span>
+                                    <span class="quote-desc">Para armadores e NVOCCs</span>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="quotation-option">
+                            <input type="radio" id="quote-air" name="quote-type" value="air">
+                            <label for="quote-air">
+                                <span class="quote-icon">✈️</span>
+                                <div class="quote-info">
+                                    <span class="quote-name">Cotação Aérea</span>
+                                    <span class="quote-desc">Para companhias aéreas e forwarders</span>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="quotation-option">
+                            <input type="radio" id="quote-road" name="quote-type" value="road">
+                            <label for="quote-road">
+                                <span class="quote-icon">🚛</span>
+                                <div class="quote-info">
+                                    <span class="quote-name">Cotação Rodoviária</span>
+                                    <span class="quote-desc">Para transportadoras internacionais</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="quotation-actions">
+                        <button type="button" id="generate-quotation-btn" class="quotation-btn">
+                            <span class="btn-icon">📋</span>
+                            <span class="btn-text">Gerar Pedido de Cotação</span>
+                        </button>
+                        <button type="button" id="preview-quotation-btn" class="preview-btn">
+                            <span class="btn-icon">👁️</span>
+                            <span class="btn-text">Visualizar Template</span>
+                        </button>
+                        <button type="button" id="generate-report-btn" class="report-btn">
+                            <span class="btn-icon">📊</span>
+                            <span class="btn-text">Gerar Relatório Executivo</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA Section -->
+            <div class="cta-section">
+                <h3>Precisa de Consultoria Especializada?</h3>
+                <p>Nossos especialistas estão prontos para ajudar você a otimizar suas operações de frete internacional</p>
+                <div class="cta-buttons">
+                    <a href="https://olvinternacional.com.br/contato" class="cta-btn primary">Fale com um Especialista</a>
+                    <a href="https://olvinternacional.com.br/simuladores" class="cta-btn secondary">Ver Outros Simuladores</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Quotation Preview Modal -->
+    <div class="quotation-modal" id="quotation-modal">
+        <div class="quotation-modal-content">
+            <div class="quotation-modal-header">
+                <h3>Preview do Pedido de Cotação</h3>
+                <button class="close-modal" id="close-modal">&times;</button>
+            </div>
+            
+            <div class="quotation-template">
+                <h4>Assunto do Email</h4>
+                <div class="quotation-template-content" id="quotation-subject"></div>
+            </div>
+            
+            <div class="quotation-template">
+                <h4>Conteúdo do Email</h4>
+                <div class="quotation-template-content" id="quotation-content"></div>
+            </div>
+            
+            <div class="quotation-actions-modal">
+                <button class="copy-btn" id="copy-quotation">
+                    <span class="btn-icon">📋</span>
+                    <span class="btn-text">Copiar</span>
+                </button>
+                <button class="download-btn" id="download-quotation">
+                    <span class="btn-icon">📥</span>
+                    <span class="btn-text">Baixar</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Incoterm Guide Modal -->
+    <div class="incoterm-modal" id="incoterm-modal">
+        <div class="incoterm-modal-content">
+            <div class="incoterm-modal-header">
+                <h3 id="incoterm-modal-title">Guia de Incoterms</h3>
+                <button class="close-modal" id="close-incoterm-modal">&times;</button>
+            </div>
+            
+            <div class="incoterm-content" id="incoterm-content">
+                <!-- Content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Quotation Preview Modal -->
+    <div class="quotation-modal" id="quotation-modal">
+        <div class="quotation-modal-content">
+            <div class="quotation-modal-header">
+                <h3 id="quotation-modal-title">📋 Pedido de Cotação</h3>
+                <button class="close-modal" id="close-quotation-modal">&times;</button>
+            </div>
+            
+            <div class="quotation-content" id="quotation-content">
+                <!-- Content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Template Preview Modal -->
+    <div class="template-modal" id="template-modal">
+        <div class="template-modal-content">
+            <div class="template-modal-header">
+                <h3 id="template-modal-title">👁️ Template de Cotação</h3>
+                <button class="close-modal" id="close-template-modal">&times;</button>
+            </div>
+            
+            <div class="template-content" id="template-content">
+                <!-- Content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Executive Report Modal -->
+    <div class="report-modal" id="report-modal">
+        <div class="report-modal-content">
+            <div class="report-modal-header">
+                <h3>Relatório Executivo Gerencial</h3>
+                <button class="close-modal" id="close-report-modal">&times;</button>
+            </div>
+            
+            <div class="report-content" id="report-content">
+                <!-- Executive Summary -->
+                <div class="report-section" id="executive-summary">
+                    <h4>📋 Resumo Executivo</h4>
+                    <div class="summary-content" id="summary-content"></div>
+                </div>
+
+                <!-- Route Analysis -->
+                <div class="report-section" id="route-analysis">
+                    <h4>🗺️ Análise da Rota</h4>
+                    <div class="route-content" id="route-content"></div>
+                </div>
+
+                <!-- Cargo Analysis -->
+                <div class="report-section" id="cargo-analysis">
+                    <h4>📦 Análise da Carga</h4>
+                    <div class="cargo-content" id="cargo-content"></div>
+                </div>
+
+                <!-- Cost Breakdown -->
+                <div class="report-section" id="cost-breakdown">
+                    <h4>💰 Análise de Custos</h4>
+                    <div class="cost-chart-container">
+                        <canvas id="cost-chart" width="400" height="300"></canvas>
+                    </div>
+                    <div class="cost-details" id="cost-details"></div>
+                </div>
+
+                <!-- Transit Timeline -->
+                <div class="report-section" id="transit-timeline">
+                    <h4>⏱️ Timeline de Trânsito</h4>
+                    <div class="timeline-container" id="timeline-container"></div>
+                </div>
+
+                <!-- AI Insights -->
+                <div class="report-section" id="ai-insights">
+                    <h4>🤖 Insights de IA Preditiva</h4>
+                    <div class="insights-content" id="insights-content"></div>
+                </div>
+
+                <!-- Recommendations -->
+                <div class="report-section" id="recommendations">
+                    <h4>💡 Recomendações Estratégicas</h4>
+                    <div class="recommendations-content" id="recommendations-content"></div>
+                </div>
+            </div>
+
+            <div class="report-actions">
+                <button class="download-report-btn" id="download-report">
+                    <span class="btn-icon">📥</span>
+                    <span class="btn-text">Baixar Relatório PDF</span>
+                </button>
+                <button class="share-report-btn" id="share-report">
+                    <span class="btn-icon">📤</span>
+                    <span class="btn-text">Compartilhar</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 OLV Internacional. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="simulador-frete.js"></script>
+</body>
+</html> 
