@@ -11,6 +11,7 @@ export interface Location {
     lat: number;
     lng: number;
   };
+  supported_modals?: ('maritime' | 'air' | 'road')[];
 }
 
 export interface ValidationResult {
