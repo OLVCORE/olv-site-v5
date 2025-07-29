@@ -710,7 +710,7 @@ export default function FreightCalculatorReal({ className = '' }: FreightCalcula
                       </div>
                       <div className="text-xs text-gray-400 mt-1">
                         {location.country} • {location.type === 'port' ? 'Porto' : location.type === 'airport' ? 'Aeroporto' : 'Fronteira'}
-                        {location.supported_modals.includes(mapModalToEnglish(modalTransporte)) && (
+                        {location.supported_modals?.includes(mapModalToEnglish(modalTransporte)) && (
                           <span className="text-green-400 ml-2">✓ Suporta {modalTransporte}</span>
                         )}
                       </div>
@@ -720,11 +720,9 @@ export default function FreightCalculatorReal({ className = '' }: FreightCalcula
               )}
 
               {/* Aviso sobre validação de rota */}
-              {routeValidation && routeValidation.warnings.length > 0 && (
+              {routeValidation && !routeValidation.isValid && (
                 <div className="mt-2 p-2 bg-yellow-600/20 border border-yellow-600/30 rounded text-yellow-300 text-xs">
-                  {routeValidation.warnings.map((warning, index) => (
-                    <div key={index}>⚠️ {warning}</div>
-                  ))}
+                  <div>⚠️ {routeValidation.message}</div>
                 </div>
               )}
             </div>
@@ -772,7 +770,7 @@ export default function FreightCalculatorReal({ className = '' }: FreightCalcula
                       </div>
                       <div className="text-xs text-gray-400 mt-1">
                         {location.country} • {location.type === 'port' ? 'Porto' : location.type === 'airport' ? 'Aeroporto' : 'Fronteira'}
-                        {location.supported_modals.includes(mapModalToEnglish(modalTransporte)) && (
+                        {location.supported_modals?.includes(mapModalToEnglish(modalTransporte)) && (
                           <span className="text-green-400 ml-2">✓ Suporta {modalTransporte}</span>
                         )}
                       </div>
@@ -781,15 +779,19 @@ export default function FreightCalculatorReal({ className = '' }: FreightCalcula
                 </div>
               )}
 
-              {/* Sugestões de melhorias de rota */}
-              {routeValidation && routeValidation.suggestions.length > 0 && (
-                <div className="mt-2 p-2 bg-blue-600/20 border border-blue-600/30 rounded text-blue-300 text-xs">
-                  <div className="font-medium mb-1">💡 Sugestões:</div>
-                  {routeValidation.suggestions.slice(0, 2).map((suggestion, index) => (
-                    <div key={index} className="mb-1">
-                      • {suggestion.name}: {suggestion.reason}
-                    </div>
-                  ))}
+              {/* Informações da rota */}
+              {routeValidation && routeValidation.isValid && (
+                <div className="mt-2 p-2 bg-green-600/20 border border-green-600/30 rounded text-green-300 text-xs">
+                  <div>✅ Rota válida: {routeValidation.message}</div>
+                  {routeValidation.routeType && (
+                    <div className="mt-1">Tipo: {routeValidation.routeType}</div>
+                  )}
+                  {routeValidation.distance && (
+                    <div className="mt-1">Distância: {routeValidation.distance.toFixed(0)} km</div>
+                  )}
+                  {routeValidation.estimatedTime && (
+                    <div className="mt-1">Tempo estimado: {routeValidation.estimatedTime}</div>
+                  )}
                 </div>
               )}
             </div>
