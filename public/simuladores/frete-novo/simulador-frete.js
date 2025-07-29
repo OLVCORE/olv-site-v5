@@ -600,8 +600,9 @@ const INTERNAL_DATA = {
 
 // BUSCA DINÂMICA E REAL
 class AutocompleteReal {
-    constructor() {
+    constructor(simulator = null) {
         this.cache = new Map();
+        this.simulator = simulator;
     }
 
     async buscarLocalizacoes(termo, tipo) {
@@ -658,15 +659,124 @@ class AutocompleteReal {
     }
 
     async buscarPaisesPorTermo(termo) {
-        try {
-            // Busca real em APIs de países
-            const response = await fetch(`https://restcountries.com/v3.1/name/${encodeURIComponent(termo)}`);
-            if (response.ok) {
-                return await response.json();
+        // Prioridade 1: API do MDIC (lista de países do comércio exterior brasileiro)
+        if (this.simulator && this.simulator.apis && this.simulator.apis.mdic && this.simulator.apis.mdic.ativa) {
+            try {
+                const urlMDIC = `${this.simulator.apis.mdic.url}${this.simulator.apis.mdic.endpoints.paises}`;
+                const responseMDIC = await fetch(urlMDIC);
+                
+                if (responseMDIC.ok) {
+                    const paisesMDIC = await responseMDIC.json();
+                    const resultadosProcessados = [];
+
+                    // Mapear e adicionar informações de Lat/Lon a partir da base interna
+                    paisesMDIC.forEach(paisMDIC => {
+                        const termoPaisMDIC = paisMDIC.nome.toLowerCase();
+                        if (termoPaisMDIC.includes(termo.toLowerCase()) || paisMDIC.codigo.toLowerCase().includes(termo.toLowerCase())) {
+                            // Tenta encontrar lat/lon na base interna (dadosReferencia.localidadesInterno.paises)
+                            const dadosInternos = this.dadosReferencia?.localidadesInterno?.paises?.find(p => p.codigo === paisMDIC.codigo);
+                            
+                            resultadosProcessados.push({
+                                tipo: 'pais',
+                                codigo: paisMDIC.codigo, // Ex: 'AR'
+                                nome: paisMDIC.nome,     // Ex: 'Argentina'
+                                nomePortugues: paisMDIC.nome, // MDIC já retorna em português
+                                lat: dadosInternos?.lat || null, // Puxa lat/lon do dado interno
+                                lon: dadosInternos?.lon || null, // Puxa lat/lon do dado interno
+                                relevancia: this.calcularRelevancia(paisMDIC.nome, termo),
+                                fonte: 'MDIC'
+                            });
+                        }
+                    });
+                    return resultadosProcessados;
+                }
+            } catch (error) {
+                console.warn('Erro ao buscar países da API MDIC:', error);
+                // Continua para o fallback se o MDIC falhar
             }
-        } catch (error) {
-            return null;
         }
+
+        // Prioridade 2 (Fallback): API RestCountries (lista genérica de países, mas com lat/lon)
+        if (this.simulator && this.simulator.apis && this.simulator.apis.restCountries && this.simulator.apis.restCountries.ativa) {
+            try {
+                const urlRestCountries = `${this.simulator.apis.restCountries.url}/name/${encodeURIComponent(termo)}?fields=name,cca2,cca3,translations,continents,latlng`;
+                const responseRestCountries = await fetch(urlRestCountries);
+                if (responseRestCountries.ok) {
+                    const paisesRestCountries = await responseRestCountries.json();
+                    return paisesRestCountries.map(pais => ({ 
+                        tipo: 'pais', 
+                        codigo: pais.cca2, 
+                        codigoISO3: pais.cca3, 
+                        nome: pais.name.common, 
+                        nomePortugues: pais.translations?.por?.common || pais.name.common, 
+                        continente: pais.continents?.[0] || 'N/A', 
+                        lat: pais.latlng ? pais.latlng[0] : null, 
+                        lon: pais.latlng ? pais.latlng[1] : null,
+                        relevancia: this.calcularRelevancia(pais.name.common, termo),
+                        fonte: 'RestCountries'
+                    }));
+                }
+            } catch (error) { 
+                console.error('Erro ao buscar países da RestCountries API:', error); 
+            }
+        }
+
+        // Prioridade 3 (Fallback Final): Bases de dados internas (já presentes na Fase 1)
+        return this.buscarPaisesInterno(termo);
+    }
+
+    // Método auxiliar para calcular relevância da busca
+    calcularRelevancia(nome, termo) {
+        const nomeLower = nome.toLowerCase();
+        const termoLower = termo.toLowerCase();
+        
+        if (nomeLower.startsWith(termoLower)) return 10; // Começa com o termo
+        if (nomeLower.includes(termoLower)) return 5;    // Contém o termo
+        return 1; // Relevância baixa
+    }
+
+    // Método auxiliar para busca interna de países
+    buscarPaisesInterno(termo) {
+        // Dados internos de países com relações comerciais com o Brasil
+        const paisesComerciais = [
+            { codigo: 'CN', nome: 'China', lat: 35.8617, lon: 104.1954 },
+            { codigo: 'US', nome: 'Estados Unidos', lat: 37.0902, lon: -95.7129 },
+            { codigo: 'AR', nome: 'Argentina', lat: -38.4161, lon: -63.6167 },
+            { codigo: 'DE', nome: 'Alemanha', lat: 51.1657, lon: 10.4515 },
+            { codigo: 'KR', nome: 'Coreia do Sul', lat: 35.9078, lon: 127.7669 },
+            { codigo: 'IN', nome: 'Índia', lat: 20.5937, lon: 78.9629 },
+            { codigo: 'IT', nome: 'Itália', lat: 41.8719, lon: 12.5674 },
+            { codigo: 'JP', nome: 'Japão', lat: 36.2048, lon: 138.2529 },
+            { codigo: 'CL', nome: 'Chile', lat: -35.6751, lon: -71.5430 },
+            { codigo: 'FR', nome: 'França', lat: 46.2276, lon: 2.2137 },
+            { codigo: 'NL', nome: 'Países Baixos', lat: 52.1326, lon: 5.2913 },
+            { codigo: 'MX', nome: 'México', lat: 23.6345, lon: -102.5528 },
+            { codigo: 'CA', nome: 'Canadá', lat: 56.1304, lon: -106.3468 },
+            { codigo: 'AU', nome: 'Austrália', lat: -25.2744, lon: 133.7751 },
+            { codigo: 'RU', nome: 'Rússia', lat: 61.5240, lon: 105.3188 },
+            { codigo: 'ES', nome: 'Espanha', lat: 40.4637, lon: -3.7492 },
+            { codigo: 'GB', nome: 'Reino Unido', lat: 55.3781, lon: -3.4360 },
+            { codigo: 'BE', nome: 'Bélgica', lat: 50.8503, lon: 4.3517 },
+            { codigo: 'SE', nome: 'Suécia', lat: 60.1282, lon: 18.6435 },
+            { codigo: 'CH', nome: 'Suíça', lat: 46.8182, lon: 8.2275 }
+        ];
+
+        const termoLower = termo.toLowerCase();
+        return paisesComerciais
+            .filter(pais => 
+                pais.nome.toLowerCase().includes(termoLower) || 
+                pais.codigo.toLowerCase().includes(termoLower)
+            )
+            .map(pais => ({
+                tipo: 'pais',
+                codigo: pais.codigo,
+                nome: pais.nome,
+                nomePortugues: pais.nome,
+                lat: pais.lat,
+                lon: pais.lon,
+                relevancia: this.calcularRelevancia(pais.nome, termo),
+                fonte: 'Dados Internos'
+            }));
     }
 }
 
@@ -685,6 +795,33 @@ class FreightSimulator {
             traffic: 'offline',
             currency: 'offline'
         };
+        
+        // Configuração das APIs
+        this.apis = {
+            mdic: { 
+                url: 'https://api.comexstat.mdic.gov.br', 
+                ativa: false, // Será verificado em verificarStatusAPIs()
+                endpoints: { 
+                    ncm: '/general/ncm', 
+                    paises: '/general/paises' // NOVO ENDPOINT DE PAÍSES
+                } 
+            },
+            restCountries: {
+                url: 'https://restcountries.com/v3.1',
+                ativa: false
+            },
+            weather: {
+                url: 'https://api.openweathermap.org/data/2.5',
+                ativa: false
+            },
+            currency: {
+                url: 'https://api.exchangerate-api.com/v4/latest',
+                ativa: false
+            }
+        };
+        
+        // Atualizar referência do simulador no autocomplete
+        autocompleteReal.simulator = this;
         
         console.log('📋 Configurações iniciais definidas');
         
@@ -996,7 +1133,13 @@ class FreightSimulator {
     
     // Atualizar status das APIs
     updateApiStatus() {
-        // Simular verificação de status das APIs
+        // Verificar API do MDIC (prioridade máxima)
+        this.verificarAPI('mdic', `${this.apis.mdic.url}${this.apis.mdic.endpoints.paises}`);
+        
+        // Verificar API RestCountries
+        this.verificarAPI('restCountries', `${this.apis.restCountries.url}/all?fields=name`);
+        
+        // Simular verificação de status das outras APIs
         setTimeout(() => {
             this.apiStatus.weather = 'online';
             this.updateStatusIndicator('weather-status', 'online');
@@ -1011,6 +1154,29 @@ class FreightSimulator {
             this.apiStatus.currency = 'online';
             this.updateStatusIndicator('currency-status', 'online');
         }, 3000);
+    }
+
+    // Método para verificar conectividade das APIs
+    async verificarAPI(nomeAPI, url) {
+        try {
+            console.log(`🔍 Verificando API ${nomeAPI}: ${url}`);
+            const response = await fetch(url, { 
+                method: 'HEAD',
+                mode: 'cors',
+                timeout: 5000 
+            });
+            
+            if (response.ok) {
+                this.apis[nomeAPI].ativa = true;
+                console.log(`✅ API ${nomeAPI} está ativa`);
+            } else {
+                this.apis[nomeAPI].ativa = false;
+                console.log(`❌ API ${nomeAPI} não está disponível`);
+            }
+        } catch (error) {
+            this.apis[nomeAPI].ativa = false;
+            console.log(`❌ Erro ao verificar API ${nomeAPI}:`, error.message);
+        }
     }
     
     // Atualizar indicador de status

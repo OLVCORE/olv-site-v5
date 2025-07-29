@@ -2374,3 +2374,18 @@ input[readonly] {
         padding: 1rem;
     }
 } 
+
+/* Info comercial sobre países */
+.info-comercial {
+    font-size: 0.875rem;
+    opacity: 0.9;
+    margin-top: 0.5rem;
+    font-style: italic;
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+.info-comercial strong {
+    font-weight: 600;
+    color: var(--warning-color);
+} 
