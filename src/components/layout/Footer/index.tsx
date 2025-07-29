@@ -10,18 +10,44 @@ const Footer: React.FC = () => {
   const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
 
   // Efeito para mostrar o footer apenas quando o usuário rolar 100% até o final da página
+  // com delay de 5 segundos após chegar ao final
   useEffect(() => {
+    let timeoutId: NodeJS.Timeout | null = null;
+    let isAtBottom = false;
+
     const handleScroll = () => {
       const position = window.scrollY;
       const windowHeight = window.innerHeight;
       const documentHeight = document.documentElement.scrollHeight;
       
-      // Mostrar footer apenas quando o usuário chegar ao final absoluto da página
+      // Verificar se o usuário chegou ao final absoluto da página
       // Com uma pequena margem de tolerância (10px) para garantir que apareça
-      if (position + windowHeight >= documentHeight - 10) {
-        setShowFooter(true);
-      } else {
+      const reachedBottom = position + windowHeight >= documentHeight - 10;
+      
+      if (reachedBottom && !isAtBottom) {
+        // Usuário chegou ao final pela primeira vez
+        isAtBottom = true;
+        
+        // Limpar timeout anterior se existir
+        if (timeoutId) {
+          clearTimeout(timeoutId);
+        }
+        
+        // Definir timeout de 5 segundos para mostrar o footer
+        timeoutId = setTimeout(() => {
+          setShowFooter(true);
+        }, 5000); // 5 segundos de delay
+        
+      } else if (!reachedBottom && isAtBottom) {
+        // Usuário saiu do final da página
+        isAtBottom = false;
         setShowFooter(false);
+        
+        // Limpar timeout se existir
+        if (timeoutId) {
+          clearTimeout(timeoutId);
+          timeoutId = null;
+        }
       }
     };
     
@@ -30,7 +56,12 @@ const Footer: React.FC = () => {
     // Verificar a posição inicial
     handleScroll();
     
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
   }, []);
 
   return (
