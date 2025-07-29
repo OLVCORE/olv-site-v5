@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Footer from '@/components/layout/Footer';
 
 export const metadata = {
   title: 'Mapa do Site | OLV Internacional',
@@ -37,24 +38,27 @@ export default function SitemapPage() {
   } as const;
 
   return (
-    <main className="container mx-auto px-4 py-12 max-w-4xl">
-      <h1 className="text-3xl font-bold mb-8 text-accent">Mapa do Site</h1>
-      <div className="space-y-10">
-        {Object.entries(sections).map(([section, links]) => (
-          <section key={section}>
-            <h2 className="text-xl font-semibold mb-4 text-on-surface">{section}</h2>
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              {links.map((l) => (
-                <li key={l.href}>
-                  <Link href={l.href} className="text-accent hover:opacity-90">
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </section>
-        ))}
-      </div>
-    </main>
+    <div className="min-h-screen bg-gray-900">
+      <main className="container mx-auto px-4 py-12 max-w-4xl">
+        <h1 className="text-3xl font-bold mb-8 text-accent">Mapa do Site</h1>
+        <div className="space-y-10">
+          {Object.entries(sections).map(([section, links]) => (
+            <section key={section}>
+              <h2 className="text-xl font-semibold mb-4 text-on-surface">{section}</h2>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {links.map((l) => (
+                  <li key={l.href}>
+                    <Link href={l.href} className="text-accent hover:opacity-90">
+                      {l.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
+        </div>
+      </main>
+      <Footer />
+    </div>
   );
 } 

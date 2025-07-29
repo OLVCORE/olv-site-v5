@@ -9,17 +9,18 @@ const Footer: React.FC = () => {
   const [showFooter, setShowFooter] = useState(false);
   const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
 
-  // Efeito para mostrar o footer quando o usuário rolar até o final da página
+  // Efeito para mostrar o footer apenas quando o usuário rolar 100% até o final da página
   useEffect(() => {
     const handleScroll = () => {
       const position = window.scrollY;
       const windowHeight = window.innerHeight;
       const documentHeight = document.documentElement.scrollHeight;
       
-      if (position + windowHeight >= documentHeight - windowHeight * 0.5) {
+      // Mostrar footer apenas quando o usuário chegar ao final absoluto da página
+      // Com uma pequena margem de tolerância (10px) para garantir que apareça
+      if (position + windowHeight >= documentHeight - 10) {
         setShowFooter(true);
-      }
-      else {
+      } else {
         setShowFooter(false);
       }
     };

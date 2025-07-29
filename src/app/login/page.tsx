@@ -5,6 +5,7 @@ import { supabase } from '@/lib/supabaseClient';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import SocialButton from '@/components/auth/SocialButton';
+import Footer from '@/components/layout/Footer';
 
 declare const process: { env: Record<string,string|undefined> };
 
@@ -98,162 +99,174 @@ export default function LoginPage() {
       const { error } = await supabase.auth.signInWithOAuth({ 
         provider, 
         options: { 
-          redirectTo: typeof window !== 'undefined' ? window.location.origin + returnTo : undefined 
-        } 
+          redirectTo: returnTo
+        }
       });
       
       if (error) {
-        setError('Erro no login social: ' + error.message);
+        setError('Erro ao fazer login com ' + provider + ': ' + error.message);
       }
     } catch (err) {
-      setError('Erro inesperado no login social.');
+      setError('Erro inesperado ao fazer login com ' + provider);
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        <div className="bg-white/10 backdrop-blur-md rounded-2xl shadow-2xl p-8 border border-white/20">
-          <div className="text-center mb-8">
-            <Image src="/images/olv-logo.jpeg" alt="OLV Internacional" width={80} height={80} className="mx-auto rounded-full mb-4" />
-            <h1 className="text-2xl font-bold text-white mb-2">
-              {mode === 'login' ? 'Entrar' : 'Criar Conta'}
-            </h1>
-            <p className="text-white/70">
-              {mode === 'login' ? 'Acesse sua conta OLV' : 'Crie sua conta gratuita'}
-            </p>
+        {/* Logo */}
+        <div className="text-center mb-8">
+          <Image
+            src="/images/olv-logo.jpeg"
+            alt="OLV Internacional"
+            width={120}
+            height={60}
+            className="mx-auto mb-4"
+          />
+          <h1 className="text-2xl font-bold text-white mb-2">
+            {mode === 'login' ? 'Entrar' : 'Criar Conta'}
+          </h1>
+          <p className="text-gray-300">
+            {mode === 'login' 
+              ? 'Acesse sua conta OLV Internacional' 
+              : 'Junte-se à OLV Internacional'
+            }
+          </p>
+        </div>
+
+        {/* Auth Card */}
+        <div className="bg-white/10 backdrop-blur-lg rounded-lg p-6 border border-white/20">
+          {/* Mode Toggle */}
+          <div className="flex mb-6 bg-gray-800/50 rounded-lg p-1">
+            <button
+              onClick={() => setMode('login')}
+              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
+                mode === 'login'
+                  ? 'bg-blue-600 text-white'
+                  : 'text-gray-300 hover:text-white'
+              }`}
+            >
+              Entrar
+            </button>
+            <button
+              onClick={() => setMode('signup')}
+              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
+                mode === 'signup'
+                  ? 'bg-blue-600 text-white'
+                  : 'text-gray-300 hover:text-white'
+              }`}
+            >
+              Criar Conta
+            </button>
           </div>
 
-          {error && (
-            <div className="mb-4 p-3 bg-red-500/20 border border-red-500/50 rounded-lg text-red-200 text-sm" data-testid="error-message">
-              {error}
-            </div>
-          )}
-
-          {info && (
-            <div className="mb-4 p-3 bg-green-500/20 border border-green-500/50 rounded-lg text-green-200 text-sm" data-testid="info-message">
-              {info}
-            </div>
-          )}
-
-          <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }} className="space-y-4">
+          {/* Form */}
+          <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
             {mode === 'signup' && (
-              <div>
-                <label className="text-xs font-semibold uppercase opacity-70" htmlFor="name">Nome Completo</label>
-                <input 
-                  id="name" 
-                  type="text" 
-                  placeholder="Seu nome completo" 
-                  value={name} 
-                  onChange={e => setName(e.target.value)} 
-                  className="w-full p-2 rounded border bg-transparent text-white placeholder:text-white/50 border-white/20 focus:border-blue-400 outline-none"
-                  data-testid="name-input"
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  Nome Completo
+                </label>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="w-full px-3 py-2 bg-gray-800/50 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Seu nome completo"
                 />
               </div>
             )}
 
-            <div>
-              <label className="text-xs font-semibold uppercase opacity-70 text-white" htmlFor="email">Email</label>
-              <input 
-                id="email" 
-                type="email" 
-                placeholder="seu@email.com" 
-                value={email} 
-                onChange={e => setEmail(e.target.value)} 
-                className="w-full p-2 rounded border bg-transparent text-white placeholder:text-white/50 border-white/20 focus:border-blue-400 outline-none"
-                data-testid="email-input"
-                required
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                E-mail
+              </label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-3 py-2 bg-gray-800/50 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="seu@email.com"
               />
             </div>
 
-            <div>
-              <label className="text-xs font-semibold uppercase opacity-70 text-white" htmlFor="pass">Password</label>
-              <input 
-                id="pass" 
-                type="password" 
-                placeholder="••••••••" 
-                value={password} 
-                onChange={e => setPassword(e.target.value)} 
-                className="w-full p-2 rounded border bg-transparent text-white placeholder:text-white/50 border-white/20 focus:border-blue-400 outline-none"
-                data-testid="password-input"
-                required
+            <div className="mb-6">
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                Senha
+              </label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-3 py-2 bg-gray-800/50 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="••••••••"
               />
             </div>
 
-            {mode === 'signup' && (
-              <div>
-                <label className="text-xs font-semibold uppercase opacity-70 text-white" htmlFor="cpass">Confirm Password</label>
-                <input 
-                  id="cpass" 
-                  type="password" 
-                  placeholder="••••••••" 
-                  value={info ?? ''} 
-                  onChange={e => setInfo(e.target.value)} 
-                  className="w-full p-2 rounded border bg-transparent text-white placeholder:text-white/50 border-white/20 focus:border-blue-400 outline-none"
-                  data-testid="confirm-password-input"
-                />
+            {/* Error/Info Messages */}
+            {error && (
+              <div className="mb-4 p-3 bg-red-500/20 border border-red-500/30 rounded-md text-red-300 text-sm">
+                {error}
               </div>
             )}
 
-            {mode === 'login' && (
-              <div className="text-right text-xs">
-                <button 
-                  type="button"
-                  className="hover:underline text-white/70 hover:text-white"
-                  onClick={() => {
-                    if (email) {
-                      supabase.auth.resetPasswordForEmail(email);
-                      setInfo('Email de recuperação enviado!');
-                    } else {
-                      setError('Informe seu email para recuperar a senha.');
-                    }
-                  }}
-                >
-                  Forgot password?
-                </button>
+            {info && (
+              <div className="mb-4 p-3 bg-green-500/20 border border-green-500/30 rounded-md text-green-300 text-sm">
+                {info}
               </div>
             )}
 
-            <button 
-              type="submit" 
+            {/* Submit Button */}
+            <button
+              type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-600/50 text-white py-2 px-4 rounded-lg transition-colors font-medium"
-              data-testid="submit-button"
+              className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 disabled:cursor-not-allowed text-white font-medium py-2 px-4 rounded-md transition-colors mb-4"
             >
               {loading ? 'Carregando...' : (mode === 'login' ? 'Entrar' : 'Criar Conta')}
             </button>
           </form>
 
-          <div className="mt-6">
+          {/* Social Login */}
+          <div className="space-y-3">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-white/20"></div>
+                <div className="w-full border-t border-gray-600"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-transparent text-white/70">Ou continue com</span>
+                <span className="px-2 bg-gray-900 text-gray-300">ou continue com</span>
               </div>
             </div>
 
-            <div className="mt-4 space-y-2">
-              <SocialButton provider="google" onClick={() => signInWithProvider('google')} />
-              <SocialButton provider="facebook" onClick={() => signInWithProvider('facebook')} />
-              <SocialButton provider="linkedin" onClick={() => signInWithProvider('linkedin' as 'google')} />
+            <div className="grid grid-cols-1 gap-3">
+              <SocialButton
+                provider="google"
+                onClick={() => signInWithProvider('google')}
+                disabled={loading}
+              />
+              <SocialButton
+                provider="facebook"
+                onClick={() => signInWithProvider('facebook')}
+                disabled={loading}
+              />
             </div>
           </div>
 
+          {/* Links */}
           <div className="mt-6 text-center">
-            <button 
-              onClick={() => setMode(mode === 'login' ? 'signup' : 'login')}
-              className="text-white/70 hover:text-white text-sm"
-              data-testid="mode-toggle"
+            <a
+              href="/"
+              className="text-sm text-gray-300 hover:text-white transition-colors"
             >
-              {mode === 'login' ? 'Não tem uma conta? Criar conta' : 'Já tem uma conta? Entrar'}
-            </button>
+              ← Voltar ao site
+            </a>
           </div>
         </div>
       </div>
+      
+      {/* Footer Universal */}
+      <Footer />
     </div>
   );
 } 

@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 // Sidebar removed completely
 import Header from '../layout/Header';
-import Footer from '../layout/Footer';
 import Ticker from '../layout/Ticker';
 import WhatsAppButton from '../layout/WhatsAppButton';
 import PlatformHero from './PlatformHero';
@@ -204,8 +203,8 @@ const PlatformLayout: React.FC<PlatformLayoutProps> = ({
           {children}
         </main>
         
-        {/* Footer */}
-        <Footer />
+        {/* Espaçamento para o footer universal */}
+        <div className="h-12"></div>
       </div>
       
       {/* Floating buttons */}

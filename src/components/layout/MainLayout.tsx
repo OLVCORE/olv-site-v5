@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import Header from './Header/index';
-import Footer from './Footer/index';
 import Sidebar from './Sidebar/index';
 import Ticker from './Ticker';
 import { usePathname } from 'next/navigation';
@@ -21,7 +20,6 @@ const MainLayout: React.FC<MainLayoutProps> = ({
   isPlatformPage = false 
 }) => {
   const [theme, setTheme] = useState<'light' | 'dark'>('dark');
-  const [showFooter, setShowFooter] = useState(false);
   const [isPageLoaded, setIsPageLoaded] = useState(false);
   
   const pathname = usePathname();
@@ -49,34 +47,15 @@ const MainLayout: React.FC<MainLayoutProps> = ({
       document.body.classList.add(`theme-${initial}`);
     }
 
-    // Show footer after 500ms
-    const footerTimer = setTimeout(() => {
-      setShowFooter(true);
-    }, 500);
-
     // Show page after 200ms for transition effect
     const pageTimer = setTimeout(() => {
       setIsPageLoaded(true);
     }, 200);
     
     return () => {
-      clearTimeout(footerTimer);
       clearTimeout(pageTimer);
     };
   }, []);
-
-  useEffect(() => {
-    const updateFooterHeight = () => {
-      const footerEl = document.querySelector<HTMLElement>('footer.footer-reveal');
-      if (footerEl) {
-        document.documentElement.style.setProperty('--footer-height', `${footerEl.offsetHeight}px`);
-      }
-    };
-
-    updateFooterHeight();
-    window.addEventListener('resize', updateFooterHeight);
-    return () => window.removeEventListener('resize', updateFooterHeight);
-  }, [showFooter]);
 
   // Toggle theme function
   const toggleTheme = () => {
@@ -110,10 +89,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({
         {/* highlight search term inside page */}
         <SearchHighlighter />
         
-        {/* Reduzindo o espaçamento antes do footer para evitar muito espaço */}
+        {/* Espaçamento para o footer universal */}
         <div className="h-12"></div>
-        
-        {showFooter && <Footer />}
       </div>
     </div>
   );

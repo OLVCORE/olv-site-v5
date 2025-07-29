@@ -3,6 +3,7 @@ import React, { Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import useSWRInfinite from 'swr/infinite';
+import Footer from '@/components/layout/Footer';
 
 export const dynamic = 'force-dynamic';
 
@@ -25,18 +26,18 @@ function Results() {
 
   return (
     <main className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-4">Resultados para "{q}"</h1>
-      {q === '' && <p>Digite um termo na busca.</p>}
+      <h1 className="text-2xl font-bold mb-4 text-white">Resultados para "{q}"</h1>
+      {q === '' && <p className="text-gray-300">Digite um termo na busca.</p>}
       {q && (
         <>
-          {results.length === 0 && !isLoading && <p>Nenhum resultado encontrado.</p>}
+          {results.length === 0 && !isLoading && <p className="text-gray-300">Nenhum resultado encontrado.</p>}
           <ul className="space-y-4">
             {results.map((item: any) => (
-              <li key={item.slug} className="border-b pb-4">
+              <li key={item.slug} className="border-b border-gray-700 pb-4">
                 <Link href={item.slug} className="text-accent hover:underline font-semibold">
                   {item.title}
                 </Link>
-                {item.excerpt && <p className="text-on-surface/80 mt-1">{item.excerpt}</p>}
+                {item.excerpt && <p className="text-gray-300 mt-1">{item.excerpt}</p>}
               </li>
             ))}
           </ul>
@@ -53,8 +54,11 @@ function Results() {
 
 export default function SearchPage() {
   return (
-    <Suspense fallback={<p className="p-8">Carregando...</p>}>
-      <Results />
-    </Suspense>
+    <div className="min-h-screen bg-gray-900">
+      <Suspense fallback={<p className="p-8 text-white">Carregando...</p>}>
+        <Results />
+      </Suspense>
+      <Footer />
+    </div>
   );
 } 

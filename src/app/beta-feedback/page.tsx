@@ -2,6 +2,7 @@
 
 import React, { useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
+import Footer from '@/components/layout/Footer';
 
 function FeedbackForm() {
   const searchParams = useSearchParams();
@@ -46,6 +47,7 @@ function FeedbackForm() {
           <h1 className="text-2xl font-bold text-[#d4af37] mb-4">Obrigado pelo feedback!</h1>
           <p className="text-lg">Sua contribuição é muito importante para que possamos aprimorar a {platform}.</p>
         </div>
+        <Footer />
       </div>
     );
   }
@@ -104,18 +106,19 @@ function FeedbackForm() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-3 px-4 bg-[#d4af37] text-[#0a0f1d] font-medium rounded-md hover:bg-[#b9952e] transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#d4af37] disabled:opacity-50"
+          className="w-full bg-[#d4af37] text-[#0a0f1d] font-semibold py-3 px-4 rounded-md hover:bg-[#b8941f] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {loading ? 'Enviando...' : 'Enviar feedback'}
+          {loading ? 'Enviando...' : 'Enviar Feedback'}
         </button>
       </form>
+      <Footer />
     </div>
   );
 }
 
 export default function BetaFeedbackPage() {
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-[#0e1425] text-[#e6f2ff]">Carregando...</div>}>
       <FeedbackForm />
     </Suspense>
   );
