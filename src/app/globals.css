@@ -777,10 +777,11 @@ body.theme-light .ticker-inner a {
   bottom: 0;
   width: 100%;
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(100%);
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
   z-index: 1900;
   pointer-events: none;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
 }
 .footer-reveal.reveal {
   opacity: 1;
@@ -801,7 +802,26 @@ body.theme-light .ticker-inner a {
 }
 
 .content-wrapper > .main-content {
-  padding-bottom: calc(var(--footer-height, 100px) + 1rem);
+  padding-bottom: calc(var(--footer-height, 200px) + 2rem);
+}
+
+/* Garantir que o conteúdo não seja sobreposto pelo footer */
+body {
+  padding-bottom: 0;
+}
+
+/* Footer não deve interferir com o conteúdo da página */
+.footer-reveal {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1900;
+  pointer-events: none;
+}
+
+.footer-reveal.reveal {
+  pointer-events: auto;
 }
 
 /* Mobile footer scroll if taller than viewport */

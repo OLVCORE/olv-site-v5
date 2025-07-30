@@ -10,19 +10,18 @@ const Footer: React.FC = () => {
   const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
 
   // Efeito para mostrar o footer apenas quando o usuário rolar 100% até o final da página
-  // com delay de 5 segundos após chegar ao final
+  // com delay de 3 segundos após chegar ao final
   useEffect(() => {
     let timeoutId: NodeJS.Timeout | null = null;
     let isAtBottom = false;
 
     const handleScroll = () => {
-      const position = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight;
+      const scrollPosition = window.scrollY + window.innerHeight;
+      const pageHeight = document.body.offsetHeight;
       
       // Verificar se o usuário chegou ao final absoluto da página
-      // Com uma pequena margem de tolerância (10px) para garantir que apareça
-      const reachedBottom = position + windowHeight >= documentHeight - 10;
+      // Com uma pequena margem de tolerância (5px) para garantir que apareça
+      const reachedBottom = scrollPosition >= pageHeight - 5;
       
       if (reachedBottom && !isAtBottom) {
         // Usuário chegou ao final pela primeira vez
@@ -33,10 +32,10 @@ const Footer: React.FC = () => {
           clearTimeout(timeoutId);
         }
         
-        // Definir timeout de 5 segundos para mostrar o footer
+        // Definir timeout de 3 segundos para mostrar o footer
         timeoutId = setTimeout(() => {
           setShowFooter(true);
-        }, 5000); // 5 segundos de delay
+        }, 3000); // 3 segundos de delay
         
       } else if (!reachedBottom && isAtBottom) {
         // Usuário saiu do final da página
