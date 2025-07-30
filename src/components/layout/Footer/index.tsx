@@ -16,12 +16,21 @@ const Footer: React.FC = () => {
     let isAtBottom = false;
 
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + window.innerHeight;
-      const pageHeight = document.body.offsetHeight;
+      // Calcular a posição atual de scroll + altura da janela
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const windowHeight = window.innerHeight;
+      const documentHeight = Math.max(
+        document.body.scrollHeight,
+        document.body.offsetHeight,
+        document.documentElement.clientHeight,
+        document.documentElement.scrollHeight,
+        document.documentElement.offsetHeight
+      );
       
       // Verificar se o usuário chegou ao final absoluto da página
-      // Com uma pequena margem de tolerância (5px) para garantir que apareça
-      const reachedBottom = scrollPosition >= pageHeight - 5;
+      // Com uma margem de tolerância muito pequena (2px) para precisão
+      const scrollPosition = scrollTop + windowHeight;
+      const reachedBottom = scrollPosition >= documentHeight - 2;
       
       if (reachedBottom && !isAtBottom) {
         // Usuário chegou ao final pela primeira vez
@@ -50,13 +59,25 @@ const Footer: React.FC = () => {
       }
     };
     
-    window.addEventListener('scroll', handleScroll);
+    // Adicionar listener de scroll com throttling para performance
+    let ticking = false;
+    const throttledHandleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+    
+    window.addEventListener('scroll', throttledHandleScroll, { passive: true });
     
     // Verificar a posição inicial
     handleScroll();
     
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', throttledHandleScroll);
       if (timeoutId) {
         clearTimeout(timeoutId);
       }
