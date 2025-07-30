@@ -2,7 +2,7 @@
 
 import React, { useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import Footer from '@/components/layout/Footer';
+
 
 function FeedbackForm() {
   const searchParams = useSearchParams();
@@ -47,7 +47,6 @@ function FeedbackForm() {
           <h1 className="text-2xl font-bold text-[#d4af37] mb-4">Obrigado pelo feedback!</h1>
           <p className="text-lg">Sua contribuição é muito importante para que possamos aprimorar a {platform}.</p>
         </div>
-        <Footer />
       </div>
     );
   }
@@ -111,7 +110,6 @@ function FeedbackForm() {
           {loading ? 'Enviando...' : 'Enviar Feedback'}
         </button>
       </form>
-      <Footer />
     </div>
   );
 }

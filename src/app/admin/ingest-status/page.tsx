@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import Footer from '@/components/layout/Footer';
+
 
 export default function IngestStatusPage() {
   const [status, setStatus] = useState<any>(null);
@@ -85,7 +85,6 @@ export default function IngestStatusPage() {
             {error && <p className="mt-4 text-red-400 text-sm">{error}</p>}
           </form>
         </div>
-        <Footer />
       </div>
     );
   }
@@ -185,8 +184,6 @@ export default function IngestStatusPage() {
           </div>
         </div>
       </div>
-      
-      <Footer />
     </div>
   );
 } 

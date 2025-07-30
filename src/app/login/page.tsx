@@ -5,7 +5,7 @@ import { supabase } from '@/lib/supabaseClient';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-import Footer from '@/components/layout/Footer';
+
 
 declare const process: { env: Record<string,string|undefined> };
 
@@ -279,8 +279,7 @@ export default function LoginPage() {
         </div>
       </div>
       
-      {/* Footer Universal */}
-      <Footer />
+
     </div>
   );
 } 

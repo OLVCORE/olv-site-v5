@@ -3,7 +3,7 @@ import React, { Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import useSWRInfinite from 'swr/infinite';
-import Footer from '@/components/layout/Footer';
+
 
 export const dynamic = 'force-dynamic';
 
@@ -58,7 +58,7 @@ export default function SearchPage() {
       <Suspense fallback={<p className="p-8 text-white">Carregando...</p>}>
         <Results />
       </Suspense>
-      <Footer />
+
     </div>
   );
 } 

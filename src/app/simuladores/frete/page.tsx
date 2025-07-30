@@ -1,7 +1,7 @@
 'use client';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Footer from '@/components/layout/Footer';
+
 
 export default function FreightPage() {
   const router = useRouter();
@@ -18,7 +18,7 @@ export default function FreightPage() {
         <h1 className="text-2xl font-bold mb-2">Redirecionando...</h1>
         <p className="text-gray-400">Carregando simulador correto</p>
       </div>
-      <Footer />
+
     </div>
   );
 } 

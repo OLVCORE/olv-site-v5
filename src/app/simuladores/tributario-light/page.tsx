@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import TaxSimulatorLight from '../../../components/simulators/TaxSimulatorLight';
-import Footer from '@/components/layout/Footer';
+
 
 export const metadata = {
   title: 'Simulador Tributário – Versão Light',
@@ -27,7 +27,7 @@ export default function Page() {
         </div>
         <TaxSimulatorLight />
       </main>
-      <Footer />
+
     </div>
   );
 } 

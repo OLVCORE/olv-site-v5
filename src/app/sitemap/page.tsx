@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import Footer from '@/components/layout/Footer';
+
 
 export const metadata = {
   title: 'Mapa do Site | OLV Internacional',
@@ -58,7 +58,7 @@ export default function SitemapPage() {
           ))}
         </div>
       </main>
-      <Footer />
+
     </div>
   );
 } 

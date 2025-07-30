@@ -2,7 +2,7 @@
 import { useState } from "react";
 import VolumesTable from "@/components/simulators/VolumesTable";
 import { PackageInput } from "@/lib/binPacking";
-import Footer from "@/components/layout/Footer";
+
 
 export default function LoadStuffingPage() {
   const [step, setStep] = useState<0 | 1 | 2>(0);
@@ -116,7 +116,7 @@ export default function LoadStuffingPage() {
         )}
       </div>
       
-      <Footer />
+
     </div>
   );
 } 
