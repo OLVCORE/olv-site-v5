@@ -120,6 +120,15 @@ const Footer: React.FC = () => {
     };
   }, []);
 
+  // Garantir que o footer seja sempre visível quando necessário
+  // Se a página for muito curta, mostrar o footer sempre
+  useEffect(() => {
+    const { hasEnoughContent } = checkScrollPosition();
+    if (!hasEnoughContent) {
+      setShowFooter(true); // Mostrar footer sempre em páginas curtas
+    }
+  }, [checkScrollPosition]);
+
   return (
     <footer className={`footer-reveal ${showFooter ? 'reveal' : ''}`}>
       <div className="footer-container max-w-7xl mx-auto px-4 py-8">

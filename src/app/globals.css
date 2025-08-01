@@ -789,6 +789,8 @@ body.theme-light .ticker-inner a {
   will-change: transform, opacity;
   /* Garantir que botões flutuantes fiquem acima do footer */
   z-index: 1800;
+  /* Garantir que o footer seja sempre visível quando necessário */
+  display: block;
 }
 
 .footer-reveal.reveal {
