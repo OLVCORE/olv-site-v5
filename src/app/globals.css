@@ -772,11 +772,11 @@ body.theme-light .ticker-inner a {
 .footer-reveal {
   background: var(--color-surface);
   border-top: 1px solid var(--color-accent);
-  position: relative;
+  position: static;
   width: 100%;
   opacity: 1;
-  transform: translateY(0);
-  z-index: 100;
+  transform: none;
+  z-index: 1;
   pointer-events: auto;
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
   /* Garantir que o footer seja sempre visível */
@@ -786,18 +786,14 @@ body.theme-light .ticker-inner a {
 
 /* ===== Footer Reveal Animation (apenas quando necessário) ===== */
 .footer-reveal.reveal {
-  position: fixed;
-  left: 0;
-  bottom: 0;
+  position: static;
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
   pointer-events: auto;
-  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 1800;
-  max-height: 85vh;
-  overflow-y: auto;
-  will-change: transform, opacity;
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  max-height: none;
+  overflow-y: visible;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .footer-reveal.reveal {

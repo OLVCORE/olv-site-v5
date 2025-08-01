@@ -1,134 +1,15 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaPhone, FaWhatsapp, FaMapMarkerAlt, FaEnvelope } from 'react-icons/fa';
 
 const Footer: React.FC = () => {
-  const [showFooter, setShowFooter] = useState(true); // Sempre visível por padrão
   const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
 
-  // Função otimizada para detectar se o usuário chegou ao final da página
-  const checkScrollPosition = useCallback(() => {
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const windowHeight = window.innerHeight;
-    const documentHeight = Math.max(
-      document.body.scrollHeight,
-      document.body.offsetHeight,
-      document.documentElement.clientHeight,
-      document.documentElement.scrollHeight,
-      document.documentElement.offsetHeight
-    );
-    
-    // Calcular a posição atual de scroll
-    const scrollPosition = scrollTop + windowHeight;
-    const reachedBottom = scrollPosition >= documentHeight - 10; // Margem de 10px
-    
-    // Verificar se a página tem conteúdo suficiente para mostrar o footer
-    const hasEnoughContent = documentHeight > windowHeight + 200;
-    
-    return { reachedBottom, hasEnoughContent };
-  }, []);
-
-  // Efeito principal para controle do footer reveal (apenas como efeito adicional)
-  useEffect(() => {
-    let timeoutId: NodeJS.Timeout | null = null;
-    let isAtBottom = false;
-    let lastScrollTop = 0;
-
-    const handleScroll = () => {
-      const { reachedBottom, hasEnoughContent } = checkScrollPosition();
-      
-      if (reachedBottom && !isAtBottom && hasEnoughContent) {
-        // Usuário chegou ao final pela primeira vez
-        isAtBottom = true;
-        
-        // Limpar timeout anterior se existir
-        if (timeoutId) {
-          clearTimeout(timeoutId);
-        }
-        
-        // Definir timeout de 2 segundos para mostrar o footer (reduzido de 3s para 2s)
-        timeoutId = setTimeout(() => {
-          setShowFooter(true);
-        }, 2000);
-        
-      } else if (!reachedBottom && isAtBottom) {
-        // Usuário saiu do final da página
-        isAtBottom = false;
-        setShowFooter(true); // Manter footer visível
-        
-        // Limpar timeout se existir
-        if (timeoutId) {
-          clearTimeout(timeoutId);
-          timeoutId = null;
-        }
-      } else if (!hasEnoughContent) {
-        // Página muito curta, mostrar footer sempre
-        setShowFooter(true);
-        if (timeoutId) {
-          clearTimeout(timeoutId);
-          timeoutId = null;
-        }
-      }
-      
-      lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    };
-    
-    // Throttling otimizado para melhor performance
-    let ticking = false;
-    const throttledHandleScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          handleScroll();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-    
-    // Adicionar listener de scroll com opções otimizadas
-    window.addEventListener('scroll', throttledHandleScroll, { 
-      passive: true,
-      capture: false 
-    });
-    
-    // Verificar a posição inicial
-    handleScroll();
-    
-    // Cleanup function
-    return () => {
-      window.removeEventListener('scroll', throttledHandleScroll);
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-    };
-  }, [checkScrollPosition]);
-
-  // Efeito para resetar o footer quando a rota mudar
-  useEffect(() => {
-    const handleRouteChange = () => {
-      setShowFooter(true); // Manter footer visível
-    };
-
-    // Resetar footer em mudanças de rota
-    window.addEventListener('popstate', handleRouteChange);
-    
-    return () => {
-      window.removeEventListener('popstate', handleRouteChange);
-    };
-  }, []);
-
-  // Garantir que o footer seja sempre visível
-  useEffect(() => {
-    const { hasEnoughContent } = checkScrollPosition();
-    // Footer sempre visível, independente do conteúdo
-    setShowFooter(true);
-  }, [checkScrollPosition]);
-
   return (
-    <footer className={`footer-reveal ${showFooter ? 'reveal' : ''}`}>
+    <footer className="footer-reveal">
       <div className="footer-container max-w-7xl mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           {/* Coluna 1 - Sobre */}
