@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaPhone, FaWhatsapp, FaMapMarkerAlt, FaEnvelope } from 'react-icons/fa';
@@ -9,30 +9,38 @@ const Footer: React.FC = () => {
   const [showFooter, setShowFooter] = useState(false);
   const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
 
-  // Efeito para mostrar o footer apenas quando o usuário rolar 100% até o final da página
-  // com delay de 3 segundos após chegar ao final
+  // Função otimizada para detectar se o usuário chegou ao final da página
+  const checkScrollPosition = useCallback(() => {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const windowHeight = window.innerHeight;
+    const documentHeight = Math.max(
+      document.body.scrollHeight,
+      document.body.offsetHeight,
+      document.documentElement.clientHeight,
+      document.documentElement.scrollHeight,
+      document.documentElement.offsetHeight
+    );
+    
+    // Calcular a posição atual de scroll
+    const scrollPosition = scrollTop + windowHeight;
+    const reachedBottom = scrollPosition >= documentHeight - 10; // Margem de 10px
+    
+    // Verificar se a página tem conteúdo suficiente para mostrar o footer
+    const hasEnoughContent = documentHeight > windowHeight + 200;
+    
+    return { reachedBottom, hasEnoughContent };
+  }, []);
+
+  // Efeito principal para controle do footer reveal
   useEffect(() => {
     let timeoutId: NodeJS.Timeout | null = null;
     let isAtBottom = false;
+    let lastScrollTop = 0;
 
     const handleScroll = () => {
-      // Calcular a posição atual de scroll + altura da janela
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const windowHeight = window.innerHeight;
-      const documentHeight = Math.max(
-        document.body.scrollHeight,
-        document.body.offsetHeight,
-        document.documentElement.clientHeight,
-        document.documentElement.scrollHeight,
-        document.documentElement.offsetHeight
-      );
+      const { reachedBottom, hasEnoughContent } = checkScrollPosition();
       
-      // Verificar se o usuário chegou ao final absoluto da página
-      // Com uma margem de tolerância muito pequena (2px) para precisão
-      const scrollPosition = scrollTop + windowHeight;
-      const reachedBottom = scrollPosition >= documentHeight - 2;
-      
-      if (reachedBottom && !isAtBottom) {
+      if (reachedBottom && !isAtBottom && hasEnoughContent) {
         // Usuário chegou ao final pela primeira vez
         isAtBottom = true;
         
@@ -41,10 +49,10 @@ const Footer: React.FC = () => {
           clearTimeout(timeoutId);
         }
         
-        // Definir timeout de 3 segundos para mostrar o footer
+        // Definir timeout de 2 segundos para mostrar o footer (reduzido de 3s para 2s)
         timeoutId = setTimeout(() => {
           setShowFooter(true);
-        }, 3000); // 3 segundos de delay
+        }, 2000);
         
       } else if (!reachedBottom && isAtBottom) {
         // Usuário saiu do final da página
@@ -56,10 +64,19 @@ const Footer: React.FC = () => {
           clearTimeout(timeoutId);
           timeoutId = null;
         }
+      } else if (!hasEnoughContent) {
+        // Página muito curta, não mostrar footer
+        setShowFooter(false);
+        if (timeoutId) {
+          clearTimeout(timeoutId);
+          timeoutId = null;
+        }
       }
+      
+      lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
     };
     
-    // Adicionar listener de scroll com throttling para performance
+    // Throttling otimizado para melhor performance
     let ticking = false;
     const throttledHandleScroll = () => {
       if (!ticking) {
@@ -71,16 +88,35 @@ const Footer: React.FC = () => {
       }
     };
     
-    window.addEventListener('scroll', throttledHandleScroll, { passive: true });
+    // Adicionar listener de scroll com opções otimizadas
+    window.addEventListener('scroll', throttledHandleScroll, { 
+      passive: true,
+      capture: false 
+    });
     
     // Verificar a posição inicial
     handleScroll();
     
+    // Cleanup function
     return () => {
       window.removeEventListener('scroll', throttledHandleScroll);
       if (timeoutId) {
         clearTimeout(timeoutId);
       }
+    };
+  }, [checkScrollPosition]);
+
+  // Efeito para resetar o footer quando a rota mudar
+  useEffect(() => {
+    const handleRouteChange = () => {
+      setShowFooter(false);
+    };
+
+    // Resetar footer em mudanças de rota
+    window.addEventListener('popstate', handleRouteChange);
+    
+    return () => {
+      window.removeEventListener('popstate', handleRouteChange);
     };
   }, []);
 

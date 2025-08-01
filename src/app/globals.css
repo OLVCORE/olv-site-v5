@@ -778,15 +778,30 @@ body.theme-light .ticker-inner a {
   width: 100%;
   opacity: 0;
   transform: translateY(100%);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-  z-index: 1900;
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1800;
   pointer-events: none;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+  /* Garantir que o footer não sobreponha conteúdo */
+  max-height: 85vh;
+  overflow-y: auto;
+  /* Melhorar performance com will-change */
+  will-change: transform, opacity;
+  /* Garantir que botões flutuantes fiquem acima do footer */
+  z-index: 1800;
 }
+
 .footer-reveal.reveal {
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
+}
+
+/* Garantir que botões flutuantes fiquem acima do footer */
+.whatsapp-button,
+.floating-menu-button,
+.mobile-menu-floating {
+  z-index: 2000 !important;
 }
 
 /* ================= LABEL OFFSET FINAL OVERRIDE ================= */
@@ -810,14 +825,42 @@ body {
   padding-bottom: 0;
 }
 
+/* Espaçamento adicional para o footer reveal */
+.content-wrapper {
+  padding-bottom: 120px;
+}
+
+/* Garantir que o conteúdo principal tenha espaço suficiente */
+.main-content {
+  min-height: calc(100vh - 200px);
+  padding-bottom: 2rem;
+}
+
 
 
 /* Mobile footer scroll if taller than viewport */
 @media (max-width: 768px) {
   .footer-reveal {
-    max-height: 70vh;
+    max-height: 75vh;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    /* Melhorar performance no mobile */
+    transform: translateY(100%) translateZ(0);
+    backface-visibility: hidden;
+  }
+  
+  .footer-reveal.reveal {
+    transform: translateY(0) translateZ(0);
+  }
+  
+  /* Garantir que o footer não apareça em páginas muito curtas no mobile */
+  .footer-reveal:not(.reveal) {
+    display: none;
+  }
+  
+  /* Otimizar scroll no mobile */
+  .footer-reveal .footer-container {
+    padding: 1rem;
   }
 }
 
@@ -825,12 +868,41 @@ body {
 .footer-reveal {
   color: var(--color-on-surface);
   background: var(--color-surface);
+  /* Melhorar acessibilidade */
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-accent) transparent;
 }
+
 .footer-reveal a {
   color: var(--color-on-surface);
+  transition: color 0.2s ease;
 }
+
+.footer-reveal a:hover {
+  color: var(--color-accent);
+}
+
 .footer-reveal h3 {
   color: var(--color-accent);
+  font-weight: 600;
+}
+
+/* Custom scrollbar para o footer */
+.footer-reveal::-webkit-scrollbar {
+  width: 6px;
+}
+
+.footer-reveal::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.footer-reveal::-webkit-scrollbar-thumb {
+  background: var(--color-accent);
+  border-radius: 3px;
+}
+
+.footer-reveal::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent-light);
 }
 
 /* ---------- FINAL Light theme polish ---------- */
@@ -844,6 +916,35 @@ body.theme-light .footer-reveal li,
 body.theme-light .footer-reveal a,
 body.theme-light .footer-reveal span {
   color: var(--core-color) !important;
+}
+
+/* Melhorar compatibilidade com diferentes navegadores */
+@supports not (backdrop-filter: blur(10px)) {
+  .footer-reveal {
+    background: var(--color-surface);
+  }
+}
+
+/* Suporte para navegadores mais antigos */
+@supports not (will-change: transform) {
+  .footer-reveal {
+    transform: translateY(100%);
+  }
+  
+  .footer-reveal.reveal {
+    transform: translateY(0);
+  }
+}
+
+/* Melhorar performance em dispositivos com tela de baixa resolução */
+@media (max-resolution: 1dppx) {
+  .footer-reveal {
+    transform: translateY(100%);
+  }
+  
+  .footer-reveal.reveal {
+    transform: translateY(0);
+  }
 }
 
 body.theme-light .ticker-inner p,
