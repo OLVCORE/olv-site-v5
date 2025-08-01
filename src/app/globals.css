@@ -782,6 +782,9 @@ body.theme-light .ticker-inner a {
   /* Garantir que o footer seja sempre visível */
   display: block;
   margin-top: auto;
+  /* Garantir que apareça imediatamente após o último container */
+  clear: both;
+  flex-shrink: 0;
 }
 
 /* ===== Footer Reveal Animation (apenas quando necessário) ===== */
@@ -5417,5 +5420,95 @@ img, video, iframe, embed {
   
   a {
     color: black !important;
+  }
+}
+
+/* ===== MELHORIAS DE RESPONSIVIDADE E ACESSIBILIDADE DO FOOTER ===== */
+
+/* Melhorar espaçamento em mobile */
+@media (max-width: 768px) {
+  .footer-reveal {
+    padding: 1.5rem 1rem;
+  }
+  
+  .footer-reveal .footer-container {
+    gap: 1.5rem;
+  }
+  
+  /* Melhorar legibilidade dos links */
+  .footer-reveal a {
+    font-size: 0.95rem;
+    padding: 0.25rem 0;
+  }
+  
+  /* Centralizar elementos em mobile */
+  .footer-reveal .social-icons {
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .footer-reveal h3 {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  /* Melhorar grid em mobile */
+  .footer-reveal .grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+/* Melhorar acessibilidade do foco */
+.footer-reveal a:focus,
+.footer-reveal button:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Melhorar contraste para acessibilidade */
+@media (prefers-contrast: high) {
+  .footer-reveal {
+    border-top: 3px solid var(--color-accent);
+  }
+  
+  .footer-reveal a {
+    text-decoration: underline;
+  }
+}
+
+/* Melhorar performance de animações */
+@media (prefers-reduced-motion: reduce) {
+  .footer-reveal a,
+  .footer-reveal button {
+    transition: none;
+  }
+}
+
+/* Garantir que o footer apareça imediatamente após o último container */
+.footer-reveal {
+  margin-top: 0;
+  clear: both;
+  flex-shrink: 0;
+}
+
+/* Melhorar espaçamento entre seções */
+.footer-reveal .footer-container > div:not(:last-child) {
+  margin-bottom: 2rem;
+}
+
+/* Otimizar para telas muito pequenas */
+@media (max-width: 480px) {
+  .footer-reveal {
+    padding: 1rem 0.75rem;
+  }
+  
+  .footer-reveal .footer-container {
+    padding: 0.75rem;
+  }
+  
+  .footer-reveal .grid {
+    gap: 1.5rem;
   }
 }
