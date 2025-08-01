@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { FaPhone, FaWhatsapp, FaMapMarkerAlt, FaEnvelope } from 'react-icons/fa';
 
 const Footer: React.FC = () => {
-  const [showFooter, setShowFooter] = useState(false);
+  const [showFooter, setShowFooter] = useState(true); // Sempre visível por padrão
   const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
 
   // Função otimizada para detectar se o usuário chegou ao final da página
@@ -31,7 +31,7 @@ const Footer: React.FC = () => {
     return { reachedBottom, hasEnoughContent };
   }, []);
 
-  // Efeito principal para controle do footer reveal
+  // Efeito principal para controle do footer reveal (apenas como efeito adicional)
   useEffect(() => {
     let timeoutId: NodeJS.Timeout | null = null;
     let isAtBottom = false;
@@ -57,7 +57,7 @@ const Footer: React.FC = () => {
       } else if (!reachedBottom && isAtBottom) {
         // Usuário saiu do final da página
         isAtBottom = false;
-        setShowFooter(false);
+        setShowFooter(true); // Manter footer visível
         
         // Limpar timeout se existir
         if (timeoutId) {
@@ -65,8 +65,8 @@ const Footer: React.FC = () => {
           timeoutId = null;
         }
       } else if (!hasEnoughContent) {
-        // Página muito curta, não mostrar footer
-        setShowFooter(false);
+        // Página muito curta, mostrar footer sempre
+        setShowFooter(true);
         if (timeoutId) {
           clearTimeout(timeoutId);
           timeoutId = null;
@@ -109,7 +109,7 @@ const Footer: React.FC = () => {
   // Efeito para resetar o footer quando a rota mudar
   useEffect(() => {
     const handleRouteChange = () => {
-      setShowFooter(false);
+      setShowFooter(true); // Manter footer visível
     };
 
     // Resetar footer em mudanças de rota
@@ -120,13 +120,11 @@ const Footer: React.FC = () => {
     };
   }, []);
 
-  // Garantir que o footer seja sempre visível quando necessário
-  // Se a página for muito curta, mostrar o footer sempre
+  // Garantir que o footer seja sempre visível
   useEffect(() => {
     const { hasEnoughContent } = checkScrollPosition();
-    if (!hasEnoughContent) {
-      setShowFooter(true); // Mostrar footer sempre em páginas curtas
-    }
+    // Footer sempre visível, independente do conteúdo
+    setShowFooter(true);
   }, [checkScrollPosition]);
 
   return (
