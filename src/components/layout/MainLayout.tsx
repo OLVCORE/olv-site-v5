@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import Header from './Header/index';
 import Sidebar from './Sidebar/index';
-import Ticker from './Ticker';
 import { usePathname } from 'next/navigation';
 import BetaVersion from './BetaVersion';
 import SearchHighlighter from '../SearchHighlighter';
@@ -77,9 +76,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({
       <Sidebar />
       <div className="content-wrapper">
         <Header theme={theme} toggleTheme={toggleTheme} />
-        <Ticker />
-        
-        {/* Beta Version Box - only on platform pages and below ticker */}
+        {/* Beta Version Box - only on platform pages */}
         {isPlatformPage || isCurrentPagePlatform ? <BetaVersion /> : null}
         
         <main className={`main-content ${isPageLoaded ? 'fade-in' : ''} min-h-screen pb-36`}>

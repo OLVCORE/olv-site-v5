@@ -11,7 +11,7 @@ interface WebVitalsData {
 export const WebVitals: React.FC = () => {
   useEffect(() => {
     // Configuração temporária do Web Vitals
-    console.log('Web Vitals monitorado - configuração em andamento');
+    // Web Vitals monitorado
     
     // Função para enviar métricas para Google Analytics
     const sendToAnalytics = (metric: WebVitalsData) => {
@@ -28,7 +28,7 @@ export const WebVitals: React.FC = () => {
     // Configuração simplificada para evitar erros de linter
     try {
       // Log para indicar que o componente está funcionando
-      console.log('Web Vitals component loaded successfully');
+      // Web Vitals component loaded successfully
     } catch (error) {
       console.warn('Web Vitals não disponível:', error);
     }

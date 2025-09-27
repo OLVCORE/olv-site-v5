@@ -23,7 +23,6 @@ const PlatformTooltip = React.memo<{
         border: '2px solid #d4af37',
         animation: 'tooltipGlow 2s infinite'
       }}
-      role="tooltip"
       aria-label={`Descrição da plataforma ${platform}`}
     >
       {description}
@@ -69,14 +68,13 @@ const Footer: React.FC = () => {
             <p className="text-sm mb-4 text-gray-300">
               Há mais de 35 anos integrando estratégia, operação e resultado para empresas que querem operar globalmente com segurança e alta performance.
             </p>
-            <div className="social-icons flex gap-4 mt-4" role="list" aria-label="Redes sociais">
+            <div className="social-icons flex gap-4 mt-4" aria-label="Redes sociais">
               <a 
                 href="https://www.instagram.com/olvinternacional/" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="bg-gray-800 p-2 rounded-full hover:opacity-90 transition-colors focus:outline-none focus:ring-2 focus:ring-accent"
                 aria-label="Siga-nos no Instagram"
-                role="listitem"
               >
                 <Image src="/icons/instagram-original.svg" alt="Instagram" width={20} height={20} />
               </a>
@@ -86,7 +84,6 @@ const Footer: React.FC = () => {
                 rel="noopener noreferrer" 
                 className="bg-gray-800 p-2 rounded-full hover:opacity-90 transition-colors focus:outline-none focus:ring-2 focus:ring-accent"
                 aria-label="Conecte-se conosco no LinkedIn"
-                role="listitem"
               >
                 <Image src="/icons/linkedin-original.svg" alt="LinkedIn" width={20} height={20} />
               </a>
@@ -96,7 +93,6 @@ const Footer: React.FC = () => {
                 rel="noopener noreferrer" 
                 className="bg-gray-800 p-2 rounded-full hover:opacity-90 transition-colors focus:outline-none focus:ring-2 focus:ring-accent"
                 aria-label="Curta nossa página no Facebook"
-                role="listitem"
               >
                 <Image src="/icons/facebook-original.svg" alt="Facebook" width={20} height={20} />
               </a>
@@ -106,7 +102,6 @@ const Footer: React.FC = () => {
                 rel="noopener noreferrer" 
                 className="bg-gray-800 p-2 rounded-full hover:opacity-90 transition-colors focus:outline-none focus:ring-2 focus:ring-accent"
                 aria-label="Siga-nos no X (Twitter)"
-                role="listitem"
               >
                 <Image src="/icons/twitter-original.svg" alt="X" width={20} height={20} />
               </a>
@@ -116,7 +111,6 @@ const Footer: React.FC = () => {
                 rel="noopener noreferrer" 
                 className="bg-gray-800 p-2 rounded-full hover:opacity-90 transition-colors focus:outline-none focus:ring-2 focus:ring-accent"
                 aria-label="Inscreva-se no nosso canal do YouTube"
-                role="listitem"
               >
                 <Image src="/icons/youtube-original.svg" alt="YouTube" width={20} height={20} />
               </a>
@@ -124,7 +118,6 @@ const Footer: React.FC = () => {
                 href="mailto:consultores@olvinternacional.com.br" 
                 className="bg-gray-800 p-2 rounded-full hover:opacity-90 transition-colors focus:outline-none focus:ring-2 focus:ring-accent"
                 aria-label="Envie-nos um e-mail"
-                role="listitem"
               >
                 <Image src="/icons/email-original.svg" alt="E-mail" width={20} height={20} />
               </a>
@@ -134,8 +127,8 @@ const Footer: React.FC = () => {
           {/* Coluna 2 - Links Rápidos */}
           <nav aria-label="Links rápidos do site">
             <h3 className="text-xl font-bold mb-4 text-accent">Links Rápidos</h3>
-            <ul className="space-y-2" role="list">
-              <li role="listitem">
+            <ul className="space-y-2">
+              <li>
                 <Link 
                   href="/solucoes" 
                   className="text-gray-300 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-accent rounded px-1"
@@ -144,7 +137,7 @@ const Footer: React.FC = () => {
                   Soluções
                 </Link>
               </li>
-              <li role="listitem">
+              <li>
                 <Link 
                   href="/sobre" 
                   className="text-gray-300 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-accent rounded px-1"
@@ -153,7 +146,7 @@ const Footer: React.FC = () => {
                   Sobre Nós
                 </Link>
               </li>
-              <li role="listitem">
+              <li>
                 <Link 
                   href="/radar360" 
                   className="text-gray-300 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-accent rounded px-1"
@@ -162,7 +155,7 @@ const Footer: React.FC = () => {
                   Radar 360
                 </Link>
               </li>
-              <li role="listitem">
+              <li>
                 <Link 
                   href="/contato" 
                   className="text-gray-300 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-accent rounded px-1"
@@ -171,7 +164,7 @@ const Footer: React.FC = () => {
                   Contato
                 </Link>
               </li>
-              <li role="listitem">
+              <li>
                 <Link 
                   href="/blog" 
                   className="text-gray-300 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-accent rounded px-1"
@@ -186,9 +179,9 @@ const Footer: React.FC = () => {
           {/* Coluna 3 - Plataformas */}
           <nav aria-label="Nossas plataformas">
             <h3 className="text-xl font-bold mb-4 text-accent">Nossas Plataformas</h3>
-            <ul className="space-y-2" role="list">
+            <ul className="space-y-2">
               {Object.entries(platformData).map(([platform, description]) => (
-                <li key={platform} className="relative group" role="listitem">
+                <li key={platform} className="relative group">
                   <Link 
                     href={`/${platform}`}
                     className="text-white hover:text-[#d4af37] transition-colors border-b border-transparent hover:border-[#d4af37] inline-block focus:outline-none focus:ring-2 focus:ring-accent rounded px-1"
@@ -196,7 +189,7 @@ const Footer: React.FC = () => {
                     onMouseLeave={handleTooltipLeave}
                     onFocus={() => handleTooltipEnter(platform)}
                     onBlur={handleTooltipLeave}
-                    aria-describedby={`tooltip-${platform}`}
+                    title={description}
                   >
                     {platform.toUpperCase()}
                   </Link>

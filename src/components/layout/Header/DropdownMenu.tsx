@@ -91,7 +91,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({ label, items, className = '
       
       {isOpen && (
         <div 
-          className="absolute top-full left-0 mt-2 w-64 bg-white dark:bg-[#1a2338] rounded-lg shadow-xl border border-gray-200 dark:border-[#2a3448] z-[9999] py-2 max-h-96 overflow-y-auto"
+          className="absolute top-full left-0 mt-2 min-w-64 max-w-96 w-auto bg-white dark:bg-[#1a2338] rounded-lg shadow-xl border border-gray-200 dark:border-[#2a3448] z-[9999] py-2 max-h-96 overflow-y-auto"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
