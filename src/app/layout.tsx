@@ -212,9 +212,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         {children}
         {/* <CookieConsent /> */}
         
-        {/* Footer Universal - Garante que todas as páginas tenham o footer reveal */}
-        <Footer />
-        
         {/* Google Analytics 4 */}
         <GoogleAnalytics measurementId="G-3D4GMDQSFS" />
         

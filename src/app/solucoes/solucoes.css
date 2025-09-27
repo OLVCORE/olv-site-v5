@@ -1,14 +1,4 @@
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-}
-
-.solucoes-page {
-  min-height: 100vh;
-  padding: 2rem;
-  background-color: white;
-}
+/* CSS específico removido - usando padronização universal do globals.css */
 
 .solucoes-container {
   max-width: 1000px;

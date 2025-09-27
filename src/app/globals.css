@@ -7,6 +7,175 @@
   box-sizing: border-box;
 }
 
+/* Força tema escuro em todo o site */
+html, body {
+  background-color: #0d1117 !important;
+  color: #d1d5db !important;
+}
+
+body.theme-light {
+  background-color: #0d1117 !important;
+  color: #d1d5db !important;
+}
+
+/* Remove qualquer tema claro */
+.theme-light {
+  background-color: #0d1117 !important;
+  color: #d1d5db !important;
+}
+
+/* ===== CORREÇÃO COMPLETA DO LAYOUT E FOOTER ===== */
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.content-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  margin-top: 110px; /* 70px header + 40px ticker */
+  padding: 2rem 1rem;
+  padding-bottom: 1rem; /* 16px - distância próxima ao último elemento */
+}
+
+/* ===== FOOTER PADRONIZADO PARA TODAS AS PÁGINAS ===== */
+footer, .footer-reveal, .footer-standard {
+  margin-top: auto;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  background: #1f2937 !important;
+  color: white !important;
+  padding: 2rem 0;
+  border-top: 1px solid #374151;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0; /* Não encolhe */
+}
+
+/* Garantir que o footer container tenha o mesmo layout em todas as páginas */
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Padronizar cores dos links no footer */
+footer a, .footer-reveal a, .footer-standard a {
+  color: #d1d5db !important;
+  transition: color 0.3s ease;
+}
+
+footer a:hover, .footer-reveal a:hover, .footer-standard a:hover {
+  color: #d4af37 !important;
+}
+
+/* Padronizar títulos do footer */
+footer h3, .footer-reveal h3, .footer-standard h3 {
+  color: #d4af37 !important;
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+/* ===== PADRONIZAÇÃO UNIVERSAL DO FOOTER E LAYOUT ===== */
+/* Garantir que TODAS as páginas tenham o mesmo layout e espaçamento */
+.page, .solucoes-page, .blog-page, .faq-page, .contato-page, 
+.simuladores-page, .radar360-page, .sobre-page, .academy-page,
+.labs-page, .stratevo-page, .exceltta-page, .connecta-page,
+.engage-page, .finx-page, .veritus-page, .core-page, .ventures-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Padronização universal do main-content para todas as páginas */
+.main-content {
+  flex: 1;
+  margin-top: 110px; /* 70px header + 40px ticker */
+  padding: 2rem 1rem;
+  padding-bottom: 1rem !important; /* 16px - distância próxima ao último elemento */
+  min-height: auto !important; /* Remove altura mínima conflitante */
+}
+
+/* Forçar espaçamento correto em todas as páginas */
+.app-container .main-content {
+  padding-bottom: 1rem !important;
+  margin-bottom: 0 !important;
+}
+
+/* Container padrão para todas as páginas */
+.main-content .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Garantir que todas as páginas tenham o mesmo espaçamento do último elemento ao footer */
+.main-content > *:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0.5rem; /* Espaçamento mínimo próximo ao footer */
+}
+
+/* Corrigir espaçamento do header fixo */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(17, 22, 30, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #374151;
+}
+
+/* Corrigir espaçamento do ticker */
+.ticker {
+  position: fixed;
+  top: 70px;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+  color: white;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Ajustar main-content para header e ticker fixos - REMOVIDO - usando padronização universal acima */
+
+/* Mobile adjustments - Padronização universal */
+@media (max-width: 768px) {
+  .main-content {
+    margin-top: 100px; /* Ajuste para mobile */
+    padding: 1rem;
+    padding-bottom: 1rem; /* Distância próxima ao último elemento */
+  }
+  
+  .ticker {
+    height: 35px;
+    top: 60px;
+  }
+  
+  /* Garantir que o container seja responsivo em mobile */
+  .main-content .container {
+    padding: 0 0.5rem;
+  }
+}
+
 /* Optimize paint and layout */
 .transform-gpu {
   transform: translateZ(0);
@@ -824,25 +993,16 @@ body.theme-light .ticker-inner a {
   }
 }
 
-.content-wrapper > .main-content {
-  padding-bottom: calc(var(--footer-height, 200px) + 2rem);
-}
+/* Regra conflitante removida - usando padronização universal */
 
 /* Garantir que o conteúdo não seja sobreposto pelo footer */
 body {
   padding-bottom: 0;
 }
 
-/* Espaçamento adicional para o footer reveal */
-.content-wrapper {
-  padding-bottom: 120px;
-}
+/* Regra conflitante removida - usando padronização universal */
 
-/* Garantir que o conteúdo principal tenha espaço suficiente */
-.main-content {
-  min-height: calc(100vh - 200px);
-  padding-bottom: 2rem;
-}
+/* Regra conflitante removida - usando padronização universal */
 
 
 
@@ -1176,7 +1336,7 @@ body[class*="page-"] .main-content {
 }
 
 /* === Spacing overrides for Soluções page === */
-/* body.solucoes-page .main-content { margin-top: calc(var(--height-header) + 0.5cm) !important; } */
+/* Regra específica removida - usando padronização universal */
 
 /* Markdown tables inside prose */
 .prose table {
@@ -1208,30 +1368,9 @@ body[class*="page-"] .main-content {
 }
 
 /* =============================================================
-   FIX 2025-06-28 – Garante espaçamento do hero nas páginas com
-   classe "page-*" mesmo quando aplicada na div .app-container.
+   REGRAS ESPECÍFICAS REMOVIDAS - USANDO PADRONIZAÇÃO UNIVERSAL
+   Todas as páginas agora usam as mesmas regras de layout e espaçamento
    ============================================================= */
-@media (min-width: 769px) {
-  .app-container.faq-page .main-content,
-  .app-container.page-answer .main-content {
-    /* Hero a 0,8 cm abaixo do ticker em desktop (0,3 cm adicional) */
-    margin-top: 0.5cm !important; /* distância fixa */
-    padding-top: 0 !important; /* remove py top padding */
-  }
-}
-
-@media (min-width: 769px) {
-  /* Universal desktop content offset: header + ticker + 0.8cm */
-  .content-wrapper > .main-content {
-    margin-top: calc(var(--height-header) + var(--height-ticker) + 0.8cm) !important;
-    padding-top: 0 !important;
-  }
-}
-
-/* === Reset previous hero spacing attempts === */
-.app-container.page-answer .main-content {
-  margin-top: 0 !important;
-}
 
 /* Helper class: explicit hero offset for custom sections */
 @media (min-width: 769px) {

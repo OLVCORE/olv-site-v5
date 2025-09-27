@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Header from './Header/index';
 import Sidebar from './Sidebar/index';
 import Ticker from './Ticker';
+import Footer from './Footer';
 import { usePathname } from 'next/navigation';
 import BetaVersion from './BetaVersion';
 import SearchHighlighter from '../SearchHighlighter';
@@ -19,7 +20,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({
   className = '',
   isPlatformPage = false 
 }) => {
-  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
+  const [theme] = useState<'dark'>('dark'); // Sempre tema escuro
   const [isPageLoaded, setIsPageLoaded] = useState(false);
   
   const pathname = usePathname();
@@ -34,18 +35,9 @@ const MainLayout: React.FC<MainLayoutProps> = ({
   ].includes(pathname);
 
   useEffect(() => {
-    // Detect current body class (for SPA navigations) before applying default
-    const bodyHasLight = document.body.classList.contains('theme-light');
-    const bodyHasDark = document.body.classList.contains('theme-dark');
-
-    if (bodyHasLight || bodyHasDark) {
-      setTheme(bodyHasLight ? 'light' : 'dark');
-    } else {
-      const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
-      const initial = savedTheme ?? 'dark';
-      setTheme(initial);
-      document.body.classList.add(`theme-${initial}`);
-    }
+    // Força sempre tema escuro
+    document.body.classList.remove('theme-light');
+    document.body.classList.add('theme-dark');
 
     // Show page after 200ms for transition effect
     const pageTimer = setTimeout(() => {
@@ -57,19 +49,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({
     };
   }, []);
 
-  // Toggle theme function
-  const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    setTheme(newTheme);
-    
-    // Remove current theme class
-    document.body.classList.remove('theme-light', 'theme-dark');
-    // Add new theme class
-    document.body.classList.add(`theme-${newTheme}`);
-    
-    // Save to localStorage
-    localStorage.setItem('theme', newTheme);
-  };
+  // Função vazia para compatibilidade
+  const toggleTheme = () => {};
 
   return (
     <div className={`app-container ${className} ${isPageLoaded ? 'loaded' : ''}`}>
@@ -82,16 +63,16 @@ const MainLayout: React.FC<MainLayoutProps> = ({
         {/* Beta Version Box - only on platform pages and below ticker */}
         {isPlatformPage || isCurrentPagePlatform ? <BetaVersion /> : null}
         
-        <main className={`main-content ${isPageLoaded ? 'fade-in' : ''} min-h-screen pb-36`}>
+        <main className={`main-content ${isPageLoaded ? 'fade-in' : ''}`}>
           {children}
         </main>
         
         {/* highlight search term inside page */}
         <SearchHighlighter />
-        
-        {/* Espaçamento para o footer universal */}
-        <div className="h-12"></div>
       </div>
+      
+      {/* Footer Universal - Sempre visível no final das páginas */}
+      <Footer />
     </div>
   );
 };
