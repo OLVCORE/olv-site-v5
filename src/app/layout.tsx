@@ -15,7 +15,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 // SISTEMA DE SEO OTIMIZADO PARA GOOGLE AI MODE
 // Foco na INTENÇÃO DO USUÁRIO ao invés de palavras-chave tradicionais
-import { getAllKeywords, detectUserIntentionFromQuery, generateAIOptimizedCopy } from '@/lib/seoKeywords';
+import { getAllKeywords } from '@/lib/seoKeywords';
 
 // Palavras-chave contextuais para intenção (não mais exatas)
 const keywordsList = getAllKeywords();

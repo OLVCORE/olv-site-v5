@@ -7,7 +7,7 @@ import { detectUserIntentionFromQuery, generateAIOptimizedCopy } from '@/lib/seo
 export default function IntentionDetector() {
   const [userIntention, setUserIntention] = useState<string | null>(null);
   const [optimizedContent, setOptimizedContent] = useState<any>(null);
-  const [userType, setUserType] = useState<string>('pme-industrial');
+  const [userType] = useState<string>('pme-industrial');
 
   useEffect(() => {
     // Detectar intenção baseada na URL e comportamento
@@ -116,7 +116,7 @@ export default function IntentionDetector() {
 // Hook para usar intenção detectada em outros componentes
 export function useIntentionDetection() {
   const [intention, setIntention] = useState<string | null>(null);
-  const [optimizedContent, setOptimizedContent] = useState<any>(null);
+  const [optimizedContent, setOptimizedContent] = useState<Record<string, unknown> | null>(null);
 
   useEffect(() => {
     const detectIntention = () => {

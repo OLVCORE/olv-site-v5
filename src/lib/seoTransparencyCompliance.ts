@@ -139,7 +139,7 @@ export const transparencyCompliance = {
 };
 
 // Função para validar compliance de transparência
-export function validateTransparencyCompliance(content: any) {
+export function validateTransparencyCompliance(content: Record<string, unknown>) {
   const checklist = transparencyCompliance.complianceMonitoring.transparencyChecklist;
   const violations = [];
   
@@ -165,7 +165,7 @@ export function validateTransparencyCompliance(content: any) {
 // Função para gerar conteúdo transparente
 export function generateTransparentContent(serviceType: string) {
   const paymentModel = transparencyCompliance.pricingTransparency.paymentModels[serviceType as keyof typeof transparencyCompliance.pricingTransparency.paymentModels];
-  const disclosures = transparencyCompliance.pricingTransparency.mandatoryDisclosures;
+  const _disclosures = transparencyCompliance.pricingTransparency.mandatoryDisclosures;
   
   if (!paymentModel) return null;
   

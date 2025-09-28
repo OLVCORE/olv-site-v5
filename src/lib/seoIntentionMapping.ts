@@ -96,7 +96,7 @@ export const userIntentionMapping = {
 };
 
 // Função para detectar intenção baseada em comportamento
-export function detectUserIntention(searchQuery: string, userContext: any) {
+export function detectUserIntention(searchQuery: string, userContext: Record<string, unknown>) {
   const query = searchQuery.toLowerCase();
   
   // Mapear query para intenção primária

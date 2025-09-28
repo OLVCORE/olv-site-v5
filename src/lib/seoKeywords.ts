@@ -249,7 +249,7 @@ export function getDescriptionByIntention(intention: string): string {
 // 🚀 NOVAS FUNÇÕES PARA GOOGLE AI MODE
 
 // Função para detectar intenção do usuário (substitui palavras-chave tradicionais)
-export function detectUserIntentionFromQuery(query: string, context: any = {}) {
+export function detectUserIntentionFromQuery(query: string, context: Record<string, unknown> = {}) {
   return userIntentionMapping.detectUserIntention(query, context);
 }
 
@@ -259,17 +259,17 @@ export function generateAIOptimizedCopy(intention: string, userType: string) {
 }
 
 // Função para otimizar conteúdo baseado em intenção
-export function optimizeContentForGoogleAI(content: string, intention: string, userType: string) {
-  return contentOptimizer.optimizeContentForAI(content, intention, userType);
+export function optimizeContentForGoogleAI(content: string, intention: string, _userType: string) {
+  return contentOptimizer.optimizeContentForAI(content, intention, _userType);
 }
 
 // Função para validar compliance de transparência (política outubro 2025)
-export function validateGoogleAdsCompliance(content: any) {
+export function validateGoogleAdsCompliance(content: Record<string, unknown>) {
   return transparencyCompliance.validateTransparencyCompliance(content);
 }
 
 // Função para gerar dados estruturados para IA
-export function generateStructuredDataForAI(pageType: string, content: any) {
+export function generateStructuredDataForAI(pageType: string, content: Record<string, unknown>) {
   return contentOptimizer.generateStructuredDataForAI(pageType, content);
 }
 

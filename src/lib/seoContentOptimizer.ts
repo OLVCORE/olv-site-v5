@@ -140,7 +140,7 @@ export const contentOptimizer = {
 };
 
 // Função para otimizar conteúdo baseado em intenção
-export function optimizeContentForAI(content: string, intention: string, userType: string) {
+export function optimizeContentForAI(content: string, intention: string, _userType: string) {
   const intentionData = contentOptimizer.intentionBasedContent[intention as keyof typeof contentOptimizer.intentionBasedContent];
   
   if (!intentionData) return content;
@@ -184,7 +184,7 @@ export function optimizeContentForAI(content: string, intention: string, userTyp
 }
 
 // Função para gerar dados estruturados para IA
-export function generateStructuredDataForAI(pageType: string, content: any) {
+export function generateStructuredDataForAI(pageType: string, content: Record<string, unknown>) {
   const baseStructuredData = contentOptimizer.aiOptimization.structuredData;
   
   // Personalizar dados estruturados baseado no tipo de página
