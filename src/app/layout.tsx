@@ -206,10 +206,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           }}
         />
 
-        {/* GoAdopt LGPD Script - Carregamento síncrono para garantir funcionamento */}
+        {/* GoAdopt LGPD Script - Carregamento assíncrono com defer */}
         <script
           src="https://tag.goadopt.io/injector.js?website_code=1d3503e5-6e70-4135-906f-6c9840d27875"
           className="adopt-injector"
+          defer
         ></script>
       </head>
       <body className={inter.className}>
@@ -245,8 +246,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              // Aguardar carregamento completo do DOM
-              document.addEventListener('DOMContentLoaded', function() {
+              // Aguardar carregamento completo do DOM e scripts
+              window.addEventListener('load', function() {
                 // Verificar se o GoAdopt foi carregado
                 if (typeof window.adopt !== 'undefined') {
                   console.log('GoAdopt carregado com sucesso');
@@ -257,7 +258,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     if (typeof window.adopt === 'undefined') {
                       console.log('GoAdopt ainda não carregado');
                     }
-                  }, 2000);
+                  }, 3000);
                 }
               });
             `
