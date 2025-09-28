@@ -3,7 +3,7 @@
 // Compatível com AI Max for Search e Agentic
 
 import { userIntentionMapping, detectUserIntention, generateAIOptimizedCopy } from './seoIntentionMapping';
-import { contentOptimizer } from './seoContentOptimizer';
+import { contentOptimizer, optimizeContentForAI } from './seoContentOptimizer';
 import { transparencyCompliance } from './seoTransparencyCompliance';
 
 export const seoKeywords = {
@@ -260,7 +260,7 @@ export function generateAIOptimizedCopyWrapper(intention: string, userType: stri
 
 // Função para otimizar conteúdo baseado em intenção
 export function optimizeContentForGoogleAI(content: string, intention: string, _userType: string) {
-  return contentOptimizer.optimizeContentForAI(content, intention, _userType);
+  return optimizeContentForAI(content, intention, _userType);
 }
 
 // Função para validar compliance de transparência (política outubro 2025)
