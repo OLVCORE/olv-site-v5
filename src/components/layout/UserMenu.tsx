@@ -33,7 +33,7 @@ export default function UserMenu() {
 
   // init theme
   useEffect(() => {
-    const saved = (localStorage.getItem("theme") as ThemeValue | null) ?? "system";
+    const saved = (localStorage.getItem("theme") as ThemeValue | null) ?? "dark";
     setTheme(saved);
     applyTheme(saved);
   }, []);

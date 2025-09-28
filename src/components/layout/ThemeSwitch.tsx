@@ -10,10 +10,13 @@ const ThemeSwitch: React.FC = () => {
     // Check for saved theme
     const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
     
-    // If saved theme exists, use it, otherwise keep dark
-    if (savedTheme) {
-      setTheme(savedTheme);
-    }
+    // Always default to dark theme (Google guidelines compliance)
+    const finalTheme = savedTheme || 'dark';
+    setTheme(finalTheme);
+    
+    // Apply theme to body
+    document.body.classList.remove('theme-light', 'theme-dark');
+    document.body.classList.add(`theme-${finalTheme}`);
   }, []);
   
   const toggleTheme = () => {

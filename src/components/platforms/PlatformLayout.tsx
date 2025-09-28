@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 // Sidebar removed completely
 import Header from '../layout/Header';
+import Footer from '../layout/Footer';
 import Ticker from '../layout/Ticker';
 import WhatsAppButton from '../layout/WhatsAppButton';
 import PlatformHero from './PlatformHero';
@@ -37,12 +38,13 @@ const PlatformLayout: React.FC<PlatformLayoutProps> = ({
     // Check for saved theme
     const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
     
-    // If saved theme exists, use it, otherwise keep dark
-    if (savedTheme) {
-      setTheme(savedTheme);
-      document.body.classList.remove('theme-light', 'theme-dark');
-      document.body.classList.add(`theme-${savedTheme}`);
-    }
+    // Always default to dark theme (Google guidelines compliance)
+    const finalTheme = savedTheme || 'dark';
+    setTheme(finalTheme);
+    
+    // Remove any existing theme classes and apply the final theme
+    document.body.classList.remove('theme-light', 'theme-dark');
+    document.body.classList.add(`theme-${finalTheme}`);
     
     // Add platform-page class to body
     document.body.classList.add('platform-page');
@@ -203,8 +205,8 @@ const PlatformLayout: React.FC<PlatformLayoutProps> = ({
           {children}
         </main>
         
-        {/* Espaçamento para o footer universal */}
-        <div className="h-12"></div>
+        {/* Footer */}
+        <Footer />
       </div>
       
       {/* Floating buttons */}
