@@ -27,7 +27,7 @@ export const metadata = {
     template: '%s | OLV Internacional'
   },
   description: 'Resolvemos seus problemas de comércio exterior com soluções práticas e resultados comprovados. 35 anos de experiência em multinacionais. Reduza custos, otimize processos e transforme sua empresa em exportadora. Consultoria transparente, preços claros, sem surpresas.',
-  keywords: keywordsList,
+  keywords: keywordsList + ', consultoria em exportação, consultoria em importação, exportação de produtos, logística internacional, 3pl, 4pl',
   authors: [{ name: 'OLV Internacional' }],
   creator: 'OLV Internacional',
   publisher: 'OLV Internacional',

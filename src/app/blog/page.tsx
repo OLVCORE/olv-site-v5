@@ -47,11 +47,11 @@ const BlogSearch = dynamic(() => import('../../components/blog/BlogSearch'), {
 // Força revalidação a cada 5 minutos para posts novos
 export const revalidate = 300;
 
-export default async function BlogPage({ searchParams }: { searchParams: { page?: string } }) {
+export default async function BlogPage() {
   let posts, categoryCounts;
   try {
     const POSTS_PER_PAGE = 10;
-    const page = parseInt(searchParams?.page || '1');
+    const page = 1; // Página fixa para renderização estática
     const offset = (page - 1) * POSTS_PER_PAGE;
     posts = await getAllPosts(1000); // Busca todos para simular paginação simples
     categoryCounts = await getCategoryCounts();
