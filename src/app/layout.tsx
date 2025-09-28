@@ -93,7 +93,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         
         {/* ▶ Go Adopt LGPD - IMPLEMENTAÇÃO CORRETA APP ROUTER ▶ */}
         <meta name="adopt-website-id" content="1d3503e5-6e70-4135-906f-6c9840d27875" />
-        <link rel="preload" href="https://tag.goadopt.io/injector.js?website_code=1d3503e5-6e70-4135-906f-6c9840d27875" as="script" crossOrigin="anonymous" />
         
         {/* Script de verificação GoAdopt */}
         <script
