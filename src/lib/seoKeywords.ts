@@ -4,7 +4,7 @@
 
 import { userIntentionMapping, detectUserIntention, generateAIOptimizedCopy } from './seoIntentionMapping';
 import { optimizeContentForAI, generateStructuredDataForAI } from './seoContentOptimizer';
-import { transparencyCompliance, validateTransparencyCompliance } from './seoTransparencyCompliance';
+import { transparencyCompliance, validateTransparencyCompliance, generateTransparentContent } from './seoTransparencyCompliance';
 
 export const seoKeywords = {
   // 📁 CONSULTORIA EM EXPORTAÇÃO
@@ -274,8 +274,8 @@ export function generateStructuredDataForAIWrapper(pageType: string, content: Re
 }
 
 // Função para gerar conteúdo transparente
-export function generateTransparentContent(serviceType: string) {
-  return transparencyCompliance.generateTransparentContent(serviceType);
+export function generateTransparentContentWrapper(serviceType: string) {
+  return generateTransparentContent(serviceType);
 }
 
 // 🎯 ESTRATÉGIA DE INTENÇÃO (Nova abordagem)
