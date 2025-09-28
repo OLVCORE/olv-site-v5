@@ -1,5 +1,10 @@
-// Lista completa de palavras-chave organizadas por grupos de intenção
-// Baseada na nova estratégia de IA do Google - foco na intenção do usuário
+// SISTEMA DE SEO OTIMIZADO PARA GOOGLE AI MODE
+// Foco na INTENÇÃO DO USUÁRIO ao invés de palavras-chave tradicionais
+// Compatível com AI Max for Search e Agentic
+
+import { userIntentionMapping } from './seoIntentionMapping';
+import { contentOptimizer } from './seoContentOptimizer';
+import { transparencyCompliance } from './seoTransparencyCompliance';
 
 export const seoKeywords = {
   // 📁 CONSULTORIA EM EXPORTAÇÃO
@@ -239,4 +244,64 @@ export function getDescriptionByIntention(intention: string): string {
   };
   
   return descriptions[intention as keyof typeof descriptions] || descriptions.consultoria;
-} 
+}
+
+// 🚀 NOVAS FUNÇÕES PARA GOOGLE AI MODE
+
+// Função para detectar intenção do usuário (substitui palavras-chave tradicionais)
+export function detectUserIntentionFromQuery(query: string, context: any = {}) {
+  return userIntentionMapping.detectUserIntention(query, context);
+}
+
+// Função para gerar copy otimizada para Google AI
+export function generateAIOptimizedCopy(intention: string, userType: string) {
+  return userIntentionMapping.generateAIOptimizedCopy(intention, userType);
+}
+
+// Função para otimizar conteúdo baseado em intenção
+export function optimizeContentForGoogleAI(content: string, intention: string, userType: string) {
+  return contentOptimizer.optimizeContentForAI(content, intention, userType);
+}
+
+// Função para validar compliance de transparência (política outubro 2025)
+export function validateGoogleAdsCompliance(content: any) {
+  return transparencyCompliance.validateTransparencyCompliance(content);
+}
+
+// Função para gerar dados estruturados para IA
+export function generateStructuredDataForAI(pageType: string, content: any) {
+  return contentOptimizer.generateStructuredDataForAI(pageType, content);
+}
+
+// Função para gerar conteúdo transparente
+export function generateTransparentContent(serviceType: string) {
+  return transparencyCompliance.generateTransparentContent(serviceType);
+}
+
+// 🎯 ESTRATÉGIA DE INTENÇÃO (Nova abordagem)
+export const intentionStrategy = {
+  // Mapear intenções primárias para soluções
+  mapIntentionToSolution: (intention: string) => {
+    const intentionData = userIntentionMapping.primaryIntentions[intention as keyof typeof userIntentionMapping.primaryIntentions];
+    return intentionData?.solutionMapping || 'consultoria-geral';
+  },
+
+  // Gerar jornada de intenção
+  generateIntentionJourney: (intention: string) => {
+    const intentionData = userIntentionMapping.primaryIntentions[intention as keyof typeof userIntentionMapping.primaryIntentions];
+    return intentionData?.userJourney || [];
+  },
+
+  // Otimizar para comportamento do usuário
+  optimizeForBehavior: (userType: string, intention: string) => {
+    const behavioralData = userIntentionMapping.behavioralData[userType as keyof typeof userIntentionMapping.behavioralData];
+    const intentionData = userIntentionMapping.primaryIntentions[intention as keyof typeof userIntentionMapping.primaryIntentions];
+    
+    return {
+      painPoints: behavioralData?.painPoints || [],
+      decisionFactors: behavioralData?.decisionFactors || [],
+      contentPreferences: behavioralData?.contentPreferences || [],
+      solutionMapping: intentionData?.solutionMapping || 'consultoria-geral'
+    };
+  }
+}; 

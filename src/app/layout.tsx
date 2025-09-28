@@ -8,12 +8,17 @@ import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics';
 import { WebVitals } from '@/components/analytics/WebVitals';
 import WhatsAppButton from '@/components/layout/WhatsAppButton';
 import MobileFloatingMenu from '@/components/MobileFloatingMenu';
+import IntentionDetector from '@/components/seo/IntentionDetector';
 // Internationalization temporarily disabled
 
 const inter = Inter({ subsets: ["latin"] });
 
-// Lista completa de palavras-chave para SEO e Google Ads - OTIMIZADA
-const keywordsList = "consultoria importação exportação, supply chain industrial, comércio exterior PME, logística internacional, desembaraço aduaneiro, radar siscomex, planejamento tributário comex, importação insumos industriais, exportação produtos acabados, redução custos importação, otimização supply chain, consultoria comex industrial, frete internacional, câmbio importação, impostos importação, compliance aduaneiro, logística 4.0, automação comex, inteligência mercado industrial, consultoria estratégica industrial, PME industrial, multinacionais experiência, Volkswagen Ericsson Lupatech, expertise industrial, cadeia suprimentos, otimização estoques, lead time importação, custos portuários, demurrage porto, incoterms 2020, ncm classificação fiscal, drawback suspensão, regime aduaneiro especial, due diligence global, trading company, importação drop shipping, commodities importação, bens capital importação, produtos acabados importação, insumos matéria prima, licenciamento anvisa, certificado origem, compliance aeo oea, controle riscos aduaneiros, digitalização processos comex, documentos exportação, financiamento exim, habilitar radar siscomex, cotação dólar importação, custos portuários despacho, demurrage porto evitar, despacho aduaneiro etapas, diferença incoterms 2020, digitalização processos comex, documentos necessários exportação, drawback suspensão benefícios, due diligence global, engage o que é, escolha mercado alvo exportação, escolher transportadora internacional, exceltta o que é, financiamento exim, finx o que é, habilitar radar siscomex requisitos, importação bens capital, importação commodities, importação drop shipping regulamentação, importação insumos matéria prima, importação produtos acabados, labs o que é, licenciamento anvisa importação, logística 4.0 benefícios supply chain, ncm classificação fiscal, negociar câmbio importação, otimização estoques importação, passos li anvisa, planejamento tributário importação, plano internacionalização PME, quanto custa importar china, reduzir lead time importação, regimes aduaneiros especiais, risco cambial hedge, seguro carga internacional, simulador custo importação, simulador frete internacional, simulador tax importação, siscomex li declaração, stratevo o que é, supply chain resiliente, trading company vs importação própria, ventures o que é, veritus o que é, consultoria em exportação, consultoria em importação, exportação de produtos, logística internacional, 3PL, 4PL, Consultoria em exportação, Consultoria em importação, Exportação de produtos, Logística internacional";
+// SISTEMA DE SEO OTIMIZADO PARA GOOGLE AI MODE
+// Foco na INTENÇÃO DO USUÁRIO ao invés de palavras-chave tradicionais
+import { getAllKeywords, detectUserIntentionFromQuery, generateAIOptimizedCopy } from '@/lib/seoKeywords';
+
+// Palavras-chave contextuais para intenção (não mais exatas)
+const keywordsList = getAllKeywords();
 
 export const metadata = {
   metadataBase: new URL(SITE_URL),
@@ -21,7 +26,7 @@ export const metadata = {
     default: 'OLV Internacional – Integramos Estratégia, Operação e Resultado',
     template: '%s | OLV Internacional'
   },
-  description: 'Consultoria especializada em Supply Chain Industrial e Comércio Exterior para PMEs. 35 anos de experiência em multinacionais (Volkswagen, Ericsson, Lupatech). Otimizamos importação de insumos, exportação de produtos acabados e redução de custos logísticos. Radar SISCOMEX, desembaraço aduaneiro e planejamento tributário.',
+  description: 'Resolvemos seus problemas de comércio exterior com soluções práticas e resultados comprovados. 35 anos de experiência em multinacionais. Reduza custos, otimize processos e transforme sua empresa em exportadora. Consultoria transparente, preços claros, sem surpresas.',
   keywords: keywordsList,
   authors: [{ name: 'OLV Internacional' }],
   creator: 'OLV Internacional',
@@ -212,6 +217,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           />
         </noscript>
         {/* End Google Tag Manager (noscript) */}
+        
+        {/* Detector de Intenção para Google AI Mode */}
+        <IntentionDetector />
         
         {children}
         {/* <CookieConsent /> */}
