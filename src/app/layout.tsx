@@ -90,8 +90,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         {/* Meta tag GoAdopt */}
         <meta name="adopt-website-id" content="1d3503e5-6e70-4135-906f-6c9840d27875" />
         
-        {/* CSP Meta Tag para GoAdopt - SIMPLES */}
-        <meta httpEquiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; script-src * 'unsafe-inline' 'unsafe-eval'; connect-src *; frame-src *; img-src * data: blob:; style-src * 'unsafe-inline'; font-src * data:;" />
+        {/* CSP Meta Tag para GoAdopt - SEGURA */}
+        <meta httpEquiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://tag.goadopt.io https://www.googletagmanager.com https://www.google-analytics.com https://www.google.com https://www.gstatic.com; connect-src 'self' 'unsafe-inline' https://tag.goadopt.io https://www.google-analytics.com https://analytics.google.com https://www.google.com; frame-src 'self' 'unsafe-inline' https://tag.goadopt.io; img-src 'self' 'unsafe-inline' data: blob: https:; style-src 'self' 'unsafe-inline' https:; font-src 'self' 'unsafe-inline' data: https:;" />
         
         <meta name="keywords" content={keywordsList} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -209,8 +209,20 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           }}
         />
 
-        {/* GoAdopt LGPD Script - IMPLEMENTAÇÃO SIMPLES */}
-        <script src="https://tag.goadopt.io/injector.js?website_code=1d3503e5-6e70-4135-906f-6c9840d27875" async></script>
+        {/* GoAdopt LGPD Script - MÉTODO PADRÃO */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                var script = document.createElement('script');
+                script.src = 'https://tag.goadopt.io/injector.js?website_code=1d3503e5-6e70-4135-906f-6c9840d27875';
+                script.async = true;
+                script.defer = true;
+                document.head.appendChild(script);
+              })();
+            `
+          }}
+        />
       </head>
       <body className={inter.className}>
         {/* Google Tag Manager (noscript) */}
@@ -241,18 +253,60 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         {/* Menu Flutuante Mobile */}
         <MobileFloatingMenu />
         
-        {/* GoAdopt Inicialização SIMPLES */}
+        {/* GoAdopt Verificação e Fallback */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              console.log('🚀 [GOADOPT] Carregando GoAdopt...');
-              setTimeout(function() {
-                if (typeof window.adopt !== 'undefined') {
-                  console.log('✅ [GOADOPT] GoAdopt carregado!');
-                } else {
-                  console.log('⚠️ [GOADOPT] GoAdopt não carregado');
+              (function() {
+                console.log('🚀 [GOADOPT] Verificando carregamento...');
+                
+                // Verificar se já carregou
+                function checkGoAdopt() {
+                  if (typeof window.adopt !== 'undefined') {
+                    console.log('✅ [GOADOPT] GoAdopt já carregado!');
+                    return true;
+                  }
+                  
+                  // Verificar elementos no DOM
+                  const adoptElements = document.querySelectorAll('[class*="adopt"], [id*="adopt"], [data-adopt]');
+                  if (adoptElements.length > 0) {
+                    console.log('✅ [GOADOPT] Elementos GoAdopt encontrados no DOM!');
+                    return true;
+                  }
+                  
+                  return false;
                 }
-              }, 3000);
+                
+                // Verificação imediata
+                if (checkGoAdopt()) return;
+                
+                // Verificação após 2 segundos
+                setTimeout(function() {
+                  if (checkGoAdopt()) return;
+                  
+                  // Fallback: recarregar script
+                  console.log('🔄 [GOADOPT] Fallback: recarregando script...');
+                  const existingScript = document.querySelector('script[src*="goadopt"]');
+                  if (existingScript) {
+                    existingScript.remove();
+                  }
+                  
+                  var script = document.createElement('script');
+                  script.src = 'https://tag.goadopt.io/injector.js?website_code=1d3503e5-6e70-4135-906f-6c9840d27875&t=' + Date.now();
+                  script.async = true;
+                  script.defer = true;
+                  document.head.appendChild(script);
+                  
+                  // Verificação final
+                  setTimeout(function() {
+                    if (checkGoAdopt()) {
+                      console.log('✅ [GOADOPT] GoAdopt carregado via fallback!');
+                    } else {
+                      console.log('❌ [GOADOPT] GoAdopt não conseguiu carregar');
+                    }
+                  }, 3000);
+                }, 2000);
+              })();
             `
           }}
         />
