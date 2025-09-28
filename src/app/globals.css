@@ -37,7 +37,10 @@ img, video, canvas, audio, iframe, embed, object {
 [class*="adopt-"],
 [class*="goadopt-"],
 [class*="cookie-consent"],
-[class*="privacy-banner"] {
+[class*="privacy-banner"],
+[class*="adopt-banner"],
+[class*="adopt-widget"],
+[class*="adopt-consent"] {
   z-index: 9999 !important;
   position: fixed !important;
 }
@@ -45,8 +48,28 @@ img, video, canvas, audio, iframe, embed, object {
 /* Garantir que o banner de cookies apareça no canto inferior esquerdo */
 .adopt-injector + *,
 [class*="adopt-"] + *,
-[class*="goadopt-"] + * {
+[class*="goadopt-"] + *,
+[class*="adopt-banner"],
+[class*="adopt-widget"],
+[class*="adopt-consent"] {
   z-index: 9999 !important;
+}
+
+/* Forçar posicionamento no canto inferior esquerdo */
+[class*="adopt-banner"],
+[class*="adopt-widget"],
+[class*="adopt-consent"] {
+  bottom: 20px !important;
+  left: 20px !important;
+  right: auto !important;
+  top: auto !important;
+}
+
+/* Garantir que elementos do GoAdopt sejam visíveis */
+[class*="adopt-"] {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 /* --------------------------------------------------
