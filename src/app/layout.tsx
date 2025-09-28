@@ -58,17 +58,7 @@ export const metadata = {
     title: 'OLV Internacional',
     description: 'Consultoria premium em Supply Chain, Comércio Exterior, Logística Internacional e Desenvolvimento de Negócios.',
     images: [`${SITE_URL}/og-image.jpg`]
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-image-preview': 'large'
-    }
-  },
-  keywords: keywordsList
+  }
 };
 
 export default async function RootLayout({
