@@ -90,6 +90,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         {/* Meta tag GoAdopt */}
         <meta name="adopt-website-id" content="1d3503e5-6e70-4135-906f-6c9840d27875" />
         
+        {/* ▶ Go Adopt LGPD – Ícone + Banner ▶ */}
+        <meta name="adopt-website-id" content="1d3503e5-6e70-4135-906f-6c9840d27875" />
+        <script
+          src="https://tag.goadopt.io/injector.js?website_code=1d3503e5-6e70-4135-906f-6c9840d27875"
+          className="adopt-injector"
+          async
+        ></script>
+        {/* ◀ Fim Go Adopt ▶ */}
+        
         {/* CSP Meta Tag para GoAdopt - SEGURA */}
         <meta httpEquiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://tag.goadopt.io https://www.googletagmanager.com https://www.google-analytics.com https://www.google.com https://www.gstatic.com; connect-src 'self' 'unsafe-inline' https://tag.goadopt.io https://www.google-analytics.com https://analytics.google.com https://www.google.com; frame-src 'self' 'unsafe-inline' https://tag.goadopt.io; img-src 'self' 'unsafe-inline' data: blob: https:; style-src 'self' 'unsafe-inline' https:; font-src 'self' 'unsafe-inline' data: https:;" />
         
@@ -310,6 +319,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             `
           }}
         />
+        
+        {/* ▶ Go Adopt LGPD – Container do ícone ▶ */}
+        <div id="go-adopt-container" />
+        {/* ◀ Fim Container ▶ */}
       </body>
     </html>
   );
