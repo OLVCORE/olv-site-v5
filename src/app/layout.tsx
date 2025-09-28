@@ -120,12 +120,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
         {/* LGPD GoAdopt - Compliance Total */}
         <meta name="adopt-website-id" content="1d3503e5-6e70-4135-906f-6c9840d27875" />
-        <script 
-          src="//tag.goadopt.io/injector.js?website_code=1d3503e5-6e70-4135-906f-6c9840d27875" 
-          className="adopt-injector" 
-          async 
-          defer
-        ></script>
 
         {/* Open Graph para compartilhamento em redes sociais */}
         <meta property="og:title" content={metadata.title.default} />
@@ -228,6 +222,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         
         {children}
         {/* GoAdopt fornece compliance completo LGPD/GDPR */}
+        <script 
+          src="https://tag.goadopt.io/injector.js?website_code=1d3503e5-6e70-4135-906f-6c9840d27875" 
+          className="adopt-injector" 
+          async 
+          defer
+        ></script>
         
         {/* Google Analytics 4 */}
         <GoogleAnalytics measurementId="G-3D4GMDQSFS" />
