@@ -1,6 +1,6 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-// import CookieConsent from "@/components/CookieConsent"; // Removido
+// GoAdopt já fornece compliance completo LGPD/GDPR
 import 'tippy.js/dist/tippy.css';
 import { SITE_URL } from '@/lib/siteConfig';
 import { LocalBusinessSchema, OrganizationSchema } from '@/components/SeoSchema';
@@ -118,9 +118,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         {/* Yandex Webmaster */}
         <meta name="yandex-verification" content="SEU_CODIGO_YANDEX_AQUI" />
 
-        {/* LGPD GoAdopt */}
+        {/* LGPD GoAdopt - Compliance Total */}
         <meta name="adopt-website-id" content="1d3503e5-6e70-4135-906f-6c9840d27875" />
-        <script src="//tag.goadopt.io/injector.js?website_code=1d3503e5-6e70-4135-906f-6c9840d27875" className="adopt-injector" async></script>
+        <script 
+          src="//tag.goadopt.io/injector.js?website_code=1d3503e5-6e70-4135-906f-6c9840d27875" 
+          className="adopt-injector" 
+          async 
+          defer
+        ></script>
 
         {/* Open Graph para compartilhamento em redes sociais */}
         <meta property="og:title" content={metadata.title.default} />
@@ -222,7 +227,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <IntentionDetector />
         
         {children}
-        {/* <CookieConsent /> */}
+        {/* GoAdopt fornece compliance completo LGPD/GDPR */}
         
         {/* Google Analytics 4 */}
         <GoogleAnalytics measurementId="G-3D4GMDQSFS" />
