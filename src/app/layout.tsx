@@ -1,4 +1,5 @@
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 // GoAdopt já fornece compliance completo LGPD/GDPR
 import 'tippy.js/dist/tippy.css';
@@ -222,8 +223,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         
         {children}
         {/* GoAdopt fornece compliance completo LGPD/GDPR */}
-        <script src="//tag.goadopt.io/injector.js?website_code=1d3503e5-6e70-4135-906f-6c9840d27875" 
-        class="adopt-injector"></script>
+        <Script 
+          src="//tag.goadopt.io/injector.js?website_code=1d3503e5-6e70-4135-906f-6c9840d27875" 
+          className="adopt-injector"
+          strategy="afterInteractive"
+        />
         
         {/* Google Analytics 4 */}
         <GoogleAnalytics measurementId="G-3D4GMDQSFS" />
