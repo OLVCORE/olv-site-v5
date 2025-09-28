@@ -61,7 +61,7 @@ const nextConfig = {
     formats: ['image/webp', 'image/avif'],
     minimumCacheTTL: 31536000, // 1 ano
     dangerouslyAllowSVG: true,
-    contentSecurityPolicy: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://tag.goadopt.io https://www.googletagmanager.com https://www.google-analytics.com https://www.google.com; connect-src 'self' https://tag.goadopt.io https://www.google-analytics.com https://analytics.google.com https://www.google.com; frame-src 'self' https://tag.goadopt.io; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https:;",
+    contentSecurityPolicy: "default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; script-src * 'unsafe-inline' 'unsafe-eval'; connect-src *; frame-src *; img-src * data: blob:; style-src * 'unsafe-inline'; font-src * data:;",
   },
 
   // Compressão
