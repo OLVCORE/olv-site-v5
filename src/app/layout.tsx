@@ -93,6 +93,32 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         
         {/* ▶ Go Adopt LGPD - IMPLEMENTAÇÃO CORRETA APP ROUTER ▶ */}
         <meta name="adopt-website-id" content="1d3503e5-6e70-4135-906f-6c9840d27875" />
+        
+        {/* Script de verificação GoAdopt */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              console.log('🔍 [GOADOPT] Verificando carregamento...');
+              window.addEventListener('load', function() {
+                setTimeout(function() {
+                  if (typeof (window as any).adopt !== 'undefined') {
+                    console.log('✅ [GOADOPT] GoAdopt detectado no window!');
+                  } else {
+                    console.log('⚠️ [GOADOPT] GoAdopt não encontrado no window');
+                    // Verificar elementos no DOM
+                    const adoptElements = document.querySelectorAll('[class*="adopt"], [id*="adopt"], [data-adopt]');
+                    console.log('🔍 [GOADOPT] Elementos GoAdopt no DOM:', adoptElements.length);
+                    if (adoptElements.length > 0) {
+                      console.log('✅ [GOADOPT] Elementos GoAdopt encontrados!');
+                    } else {
+                      console.log('❌ [GOADOPT] Nenhum elemento GoAdopt encontrado');
+                    }
+                  }
+                }, 3000);
+              });
+            `
+          }}
+        />
         {/* ◀ Fim Go Adopt Meta ▶ */}
         
         <meta name="keywords" content={keywordsList} />
@@ -255,11 +281,41 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         {/* Menu Flutuante Mobile */}
         <MobileFloatingMenu />
         
-        {/* ▶ Go Adopt LGPD Script - APP ROUTER CORRETO ▶ */}
+        {/* ▶ Go Adopt LGPD Script - IMPLEMENTAÇÃO ROBUSTA ▶ */}
         <Script
           src="https://tag.goadopt.io/injector.js?website_code=1d3503e5-6e70-4135-906f-6c9840d27875"
           strategy="afterInteractive"
           id="goadopt-script"
+          onLoad={() => {
+            console.log('🚀 [GOADOPT] Script carregado com sucesso!');
+            // Verificar se o GoAdopt foi inicializado
+            setTimeout(() => {
+              if (typeof window !== 'undefined' && (window as any).adopt) {
+                console.log('✅ [GOADOPT] GoAdopt inicializado!');
+              } else {
+                console.log('⚠️ [GOADOPT] GoAdopt não inicializado, tentando fallback...');
+                // Fallback: recarregar o script
+                const existingScript = document.getElementById('goadopt-script');
+                if (existingScript) {
+                  existingScript.remove();
+                }
+                const newScript = document.createElement('script');
+                newScript.src = 'https://tag.goadopt.io/injector.js?website_code=1d3503e5-6e70-4135-906f-6c9840d27875&t=' + Date.now();
+                newScript.async = true;
+                newScript.id = 'goadopt-fallback';
+                document.head.appendChild(newScript);
+              }
+            }, 2000);
+          }}
+          onError={(e) => {
+            console.error('❌ [GOADOPT] Erro ao carregar script:', e);
+            // Fallback em caso de erro
+            const fallbackScript = document.createElement('script');
+            fallbackScript.src = 'https://tag.goadopt.io/injector.js?website_code=1d3503e5-6e70-4135-906f-6c9840d27875&t=' + Date.now();
+            fallbackScript.async = true;
+            fallbackScript.id = 'goadopt-error-fallback';
+            document.head.appendChild(fallbackScript);
+          }}
         />
         {/* ◀ Fim Go Adopt Script ▶ */}
       </body>
