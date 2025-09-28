@@ -2,7 +2,7 @@
 // Foco na INTENÇÃO DO USUÁRIO ao invés de palavras-chave tradicionais
 // Compatível com AI Max for Search e Agentic
 
-import { userIntentionMapping, detectUserIntention } from './seoIntentionMapping';
+import { userIntentionMapping, detectUserIntention, generateAIOptimizedCopy } from './seoIntentionMapping';
 import { contentOptimizer } from './seoContentOptimizer';
 import { transparencyCompliance } from './seoTransparencyCompliance';
 
@@ -254,8 +254,8 @@ export function detectUserIntentionFromQuery(query: string, context: Record<stri
 }
 
 // Função para gerar copy otimizada para Google AI
-export function generateAIOptimizedCopy(intention: string, userType: string) {
-  return userIntentionMapping.generateAIOptimizedCopy(intention, userType);
+export function generateAIOptimizedCopyWrapper(intention: string, userType: string) {
+  return generateAIOptimizedCopy(intention, userType);
 }
 
 // Função para otimizar conteúdo baseado em intenção
