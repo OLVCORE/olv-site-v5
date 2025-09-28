@@ -2,7 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import Header from './Header/index';
+import Footer from './Footer/index';
 import Sidebar from './Sidebar/index';
+import Ticker from './Ticker';
 import { usePathname } from 'next/navigation';
 import BetaVersion from './BetaVersion';
 import SearchHighlighter from '../SearchHighlighter';
@@ -19,6 +21,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({
   isPlatformPage = false 
 }) => {
   const [theme, setTheme] = useState<'light' | 'dark'>('dark');
+  const [showFooter, setShowFooter] = useState(false);
   const [isPageLoaded, setIsPageLoaded] = useState(false);
   
   const pathname = usePathname();
@@ -46,6 +49,9 @@ const MainLayout: React.FC<MainLayoutProps> = ({
       document.body.classList.add(`theme-${initial}`);
     }
 
+  // Show footer immediately
+  setShowFooter(true);
+
     // Show page after 200ms for transition effect
     const pageTimer = setTimeout(() => {
       setIsPageLoaded(true);
@@ -55,6 +61,19 @@ const MainLayout: React.FC<MainLayoutProps> = ({
       clearTimeout(pageTimer);
     };
   }, []);
+
+  useEffect(() => {
+    const updateFooterHeight = () => {
+      const footerEl = document.querySelector<HTMLElement>('footer.footer-reveal');
+      if (footerEl) {
+        document.documentElement.style.setProperty('--footer-height', `${footerEl.offsetHeight}px`);
+      }
+    };
+
+    updateFooterHeight();
+    window.addEventListener('resize', updateFooterHeight);
+    return () => window.removeEventListener('resize', updateFooterHeight);
+  }, [showFooter]);
 
   // Toggle theme function
   const toggleTheme = () => {
@@ -76,7 +95,9 @@ const MainLayout: React.FC<MainLayoutProps> = ({
       <Sidebar />
       <div className="content-wrapper">
         <Header theme={theme} toggleTheme={toggleTheme} />
-        {/* Beta Version Box - only on platform pages */}
+        <Ticker />
+        
+        {/* Beta Version Box - only on platform pages and below ticker */}
         {isPlatformPage || isCurrentPagePlatform ? <BetaVersion /> : null}
         
         <main className={`main-content ${isPageLoaded ? 'fade-in' : ''} min-h-screen pb-36`}>
@@ -86,8 +107,10 @@ const MainLayout: React.FC<MainLayoutProps> = ({
         {/* highlight search term inside page */}
         <SearchHighlighter />
         
-        {/* Espaçamento para o footer universal */}
+        {/* Reduzindo o espaçamento antes do footer para evitar muito espaço */}
         <div className="h-12"></div>
+        
+        {showFooter && <Footer />}
       </div>
     </div>
   );

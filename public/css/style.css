@@ -254,7 +254,7 @@ img {
 .nav-menu .nav-item {
   position: relative;
   padding: var(--space-0-25cm) var(--space-0-25cm); /* Reduzido padding */
-  font-size: 0.8rem; /* Reduzido tamanho da fonte */
+  font-size: 0.9rem; /* Tamanho da fonte restaurado */
   font-weight: 500;
   color: var(--txt);
   text-decoration: none;
@@ -638,7 +638,7 @@ img {
   }
   
   .nav-menu .nav-item {
-    font-size: 0.75rem;
+    font-size: 0.85rem;
     padding: var(--space-0-25cm) var(--space-0-25cm);
   }
 }
@@ -654,7 +654,7 @@ img {
   }
   
   .nav-menu .nav-item {
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     padding: 8px 12px;
   }
   
