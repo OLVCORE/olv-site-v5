@@ -150,7 +150,7 @@ div[data-adopt] {
   /* Altura fixa da barra de ticker (desktop) */
   --height-ticker: 45px;
 
-  /* Header variables */
+  /* Header variables - TEMA ESCURO POR PADRÃO */
   --header-bg: #11161e;
   --text-primary: #d1d5db;
   --text-secondary: #9ca3af;
@@ -2502,7 +2502,7 @@ body.theme-light .mobile-simulator-item:hover {
    HEADER STRUCTURE - NEW CLEAN VERSION
    ======================================== */
 
-/* Header Structure */
+/* Header Structure - TEMA ESCURO POR PADRÃO */
 .header {
   display: flex;
   align-items: center;
@@ -2510,7 +2510,7 @@ body.theme-light .mobile-simulator-item:hover {
   padding: 1rem 2rem;
   height: auto;
   min-height: 70px;
-  background: var(--header-bg);
+  background: var(--header-bg) !important;
   border-bottom: 1px solid var(--border-color);
   position: fixed;
   top: 0;
@@ -2826,6 +2826,11 @@ body.theme-light .mobile-simulator-item:hover {
 /* ========================================
    THEME OVERRIDES
    ======================================== */
+
+/* FORÇAR TEMA ESCURO POR PADRÃO NO HEADER */
+.header {
+  background: #11161e !important;
+}
 
 body.theme-light .header {
   background: var(--header-bg);
