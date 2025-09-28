@@ -145,7 +145,7 @@ export function validateTransparencyCompliance(content: Record<string, unknown>)
   
   // Verificar cada item do checklist
   for (const [item, description] of Object.entries(checklist)) {
-    if (!content.includes(description)) {
+    if (!content[item]) {
       violations.push({
         item,
         description,
