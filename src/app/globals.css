@@ -32,6 +32,23 @@ img, video, canvas, audio, iframe, embed, object {
   contain-intrinsic-size: 0 500px;
 }
 
+/* GoAdopt LGPD - Garantir que apareça acima de outros elementos */
+.adopt-injector,
+[class*="adopt-"],
+[class*="goadopt-"],
+[class*="cookie-consent"],
+[class*="privacy-banner"] {
+  z-index: 9999 !important;
+  position: fixed !important;
+}
+
+/* Garantir que o banner de cookies apareça no canto inferior esquerdo */
+.adopt-injector + *,
+[class*="adopt-"] + *,
+[class*="goadopt-"] + * {
+  z-index: 9999 !important;
+}
+
 /* --------------------------------------------------
    Design Tokens – V2 (system colours)
    -------------------------------------------------- */
