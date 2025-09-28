@@ -32,41 +32,67 @@ img, video, canvas, audio, iframe, embed, object {
   contain-intrinsic-size: 0 500px;
 }
 
-/* GoAdopt LGPD - Garantir que apareça acima de outros elementos */
+/* ========================================
+   GOADOPT LGPD - SISTEMA CRÍTICO DE VISIBILIDADE
+   ======================================== */
+
+/* Garantir que TODOS os elementos GoAdopt apareçam */
 .adopt-injector,
+.adopt-injector-force,
 [class*="adopt-"],
 [class*="goadopt-"],
 [class*="cookie-consent"],
 [class*="privacy-banner"],
 [class*="adopt-banner"],
 [class*="adopt-widget"],
-[class*="adopt-consent"] {
-  z-index: 9999 !important;
+[class*="adopt-consent"],
+[data-adopt-button],
+.adopt-button,
+#adopt-button,
+div[class*="adopt"],
+div[id*="adopt"],
+div[data-adopt] {
+  z-index: 99999 !important;
   position: fixed !important;
-}
-
-/* Garantir que o banner de cookies apareça no canto inferior esquerdo */
-.adopt-injector + *,
-[class*="adopt-"] + *,
-[class*="goadopt-"] + *,
-[class*="adopt-banner"],
-[class*="adopt-widget"],
-[class*="adopt-consent"] {
-  z-index: 9999 !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 /* Forçar posicionamento no canto inferior esquerdo */
 [class*="adopt-banner"],
 [class*="adopt-widget"],
-[class*="adopt-consent"] {
+[class*="adopt-consent"],
+[data-adopt-button],
+.adopt-button,
+#adopt-button,
+div[class*="adopt"],
+div[id*="adopt"],
+div[data-adopt] {
   bottom: 20px !important;
   left: 20px !important;
   right: auto !important;
   top: auto !important;
+  z-index: 99999 !important;
 }
 
-/* Garantir que elementos do GoAdopt sejam visíveis */
-[class*="adopt-"] {
+/* Garantir que elementos filhos também apareçam */
+[class*="adopt-"] *,
+[class*="goadopt-"] *,
+[data-adopt-button] *,
+.adopt-button *,
+#adopt-button * {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Forçar visibilidade em todos os estados */
+[class*="adopt-"]:not([style*="display: none"]),
+[class*="goadopt-"]:not([style*="display: none"]),
+[data-adopt-button]:not([style*="display: none"]),
+.adopt-button:not([style*="display: none"]),
+#adopt-button:not([style*="display: none"]) {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;

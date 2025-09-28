@@ -206,11 +206,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           }}
         />
 
-        {/* GoAdopt LGPD Script - Carregamento assíncrono com defer */}
+        {/* GoAdopt LGPD Script - Carregamento prioritário */}
         <script
           src="https://tag.goadopt.io/injector.js?website_code=1d3503e5-6e70-4135-906f-6c9840d27875"
           className="adopt-injector"
-          defer
           async
         ></script>
       </head>
@@ -243,43 +242,99 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         {/* Menu Flutuante Mobile */}
         <MobileFloatingMenu />
         
-        {/* GoAdopt Inicialização - Garantir que apareça */}
+        {/* GoAdopt Inicialização CRÍTICA - Garantir que apareça */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              // Função para verificar e forçar carregamento do GoAdopt
-              function checkGoAdopt() {
-                if (typeof window.adopt !== 'undefined') {
-                  console.log('✅ GoAdopt carregado com sucesso');
-                  return true;
-                }
-                return false;
-              }
-              
-              // Verificar imediatamente
-              if (checkGoAdopt()) return;
-              
-              // Aguardar carregamento completo do DOM
-              if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', function() {
-                  setTimeout(checkGoAdopt, 1000);
-                });
-              }
-              
-              // Aguardar carregamento completo da página
-              window.addEventListener('load', function() {
-                setTimeout(function() {
-                  if (!checkGoAdopt()) {
-                    console.log('⚠️ GoAdopt não carregado, tentando recarregar...');
-                    // Tentar recarregar o script
-                    const script = document.createElement('script');
-                    script.src = 'https://tag.goadopt.io/injector.js?website_code=1d3503e5-6e70-4135-906f-6c9840d27875';
-                    script.className = 'adopt-injector-retry';
-                    script.async = true;
-                    document.head.appendChild(script);
+              // Sistema CRÍTICO para garantir que GoAdopt apareça
+              (function() {
+                let goAdoptLoaded = false;
+                let retryCount = 0;
+                const maxRetries = 5;
+                
+                function checkGoAdopt() {
+                  if (typeof window.adopt !== 'undefined' && window.adopt) {
+                    console.log('✅ GoAdopt carregado com sucesso');
+                    goAdoptLoaded = true;
+                    return true;
                   }
-                }, 2000);
-              });
+                  return false;
+                }
+                
+                function forceGoAdoptLoad() {
+                  if (goAdoptLoaded) return;
+                  
+                  console.log('🔄 Forçando carregamento do GoAdopt...');
+                  
+                  // Remover script anterior se existir
+                  const existingScript = document.querySelector('.adopt-injector');
+                  if (existingScript) {
+                    existingScript.remove();
+                  }
+                  
+                  // Criar novo script
+                  const script = document.createElement('script');
+                  script.src = 'https://tag.goadopt.io/injector.js?website_code=1d3503e5-6e70-4135-906f-6c9840d27875';
+                  script.className = 'adopt-injector-force';
+                  script.async = true;
+                  script.onload = function() {
+                    console.log('📦 Script GoAdopt carregado, aguardando inicialização...');
+                    setTimeout(checkGoAdopt, 500);
+                  };
+                  script.onerror = function() {
+                    console.log('❌ Erro ao carregar GoAdopt, tentando novamente...');
+                    retryCount++;
+                    if (retryCount < maxRetries) {
+                      setTimeout(forceGoAdoptLoad, 2000);
+                    }
+                  };
+                  
+                  document.head.appendChild(script);
+                }
+                
+                // Verificar imediatamente
+                if (checkGoAdopt()) return;
+                
+                // Múltiplas verificações em intervalos diferentes
+                const checkIntervals = [100, 500, 1000, 2000, 3000, 5000];
+                
+                checkIntervals.forEach((delay, index) => {
+                  setTimeout(function() {
+                    if (!goAdoptLoaded) {
+                      if (checkGoAdopt()) {
+                        goAdoptLoaded = true;
+                        return;
+                      }
+                      
+                      if (index === checkIntervals.length - 1) {
+                        console.log('⚠️ GoAdopt não detectado após todas as verificações, forçando carregamento...');
+                        forceGoAdoptLoad();
+                      }
+                    }
+                  }, delay);
+                });
+                
+                // Verificação final após carregamento completo
+                window.addEventListener('load', function() {
+                  setTimeout(function() {
+                    if (!goAdoptLoaded) {
+                      console.log('🚨 GoAdopt não carregado após load completo, forçando...');
+                      forceGoAdoptLoad();
+                    }
+                  }, 1000);
+                });
+                
+                // Verificação contínua a cada 5 segundos
+                setInterval(function() {
+                  if (!goAdoptLoaded && retryCount < maxRetries) {
+                    if (!checkGoAdopt()) {
+                      console.log('🔄 Verificação contínua: GoAdopt não encontrado, tentando novamente...');
+                      forceGoAdoptLoad();
+                    }
+                  }
+                }, 5000);
+                
+              })();
             `
           }}
         />
