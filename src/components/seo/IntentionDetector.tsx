@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { detectUserIntentionFromQuery, generateAIOptimizedCopy } from '@/lib/seoKeywords';
+import { detectUserIntentionFromQuery, generateAIOptimizedCopyWrapper } from '@/lib/seoKeywords';
 
 // Componente para detectar intenção do usuário e otimizar conteúdo
 export default function IntentionDetector() {
@@ -27,7 +27,7 @@ export default function IntentionDetector() {
         setUserIntention(intention.primaryIntention);
         
         // Gerar conteúdo otimizado para a intenção
-        const optimized = generateAIOptimizedCopy(intention.primaryIntention, userType);
+        const optimized = generateAIOptimizedCopyWrapper(intention.primaryIntention, userType);
         setOptimizedContent(optimized);
       }
     };
@@ -131,7 +131,7 @@ export function useIntentionDetection() {
 
       if (detected) {
         setIntention(detected.primaryIntention);
-        const optimized = generateAIOptimizedCopy(detected.primaryIntention, 'pme-industrial');
+        const optimized = generateAIOptimizedCopyWrapper(detected.primaryIntention, 'pme-industrial');
         setOptimizedContent(optimized);
       }
     };
