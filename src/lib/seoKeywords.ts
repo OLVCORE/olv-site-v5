@@ -4,7 +4,7 @@
 
 import { userIntentionMapping, detectUserIntention, generateAIOptimizedCopy } from './seoIntentionMapping';
 import { contentOptimizer, optimizeContentForAI } from './seoContentOptimizer';
-import { transparencyCompliance } from './seoTransparencyCompliance';
+import { transparencyCompliance, validateTransparencyCompliance } from './seoTransparencyCompliance';
 
 export const seoKeywords = {
   // 📁 CONSULTORIA EM EXPORTAÇÃO
@@ -265,7 +265,7 @@ export function optimizeContentForGoogleAI(content: string, intention: string, _
 
 // Função para validar compliance de transparência (política outubro 2025)
 export function validateGoogleAdsCompliance(content: Record<string, unknown>) {
-  return transparencyCompliance.validateTransparencyCompliance(content);
+  return validateTransparencyCompliance(content);
 }
 
 // Função para gerar dados estruturados para IA
