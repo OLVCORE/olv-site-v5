@@ -68,7 +68,10 @@ export default function UserMenu() {
   return (
     <div className="user-menu-wrapper relative">
       <button
-        aria-label="User menu"
+        aria-label="Menu do usuário"
+        aria-expanded={open}
+        aria-haspopup="menu"
+        aria-controls="user-menu-dropdown"
         className="flex items-center justify-center w-10 h-10 rounded-full bg-transparent text-[var(--color-accent)] hover:bg-[rgba(255,255,255,0.1)] transition-colors"
         onClick={() => setOpen((o) => !o)}
       >
@@ -79,7 +82,7 @@ export default function UserMenu() {
       </button>
 
       {open && (
-        <div className="absolute top-full right-0 mt-2 w-64 rounded-md border border-gray-600 bg-[var(--color-surface)] shadow-lg p-4 space-y-3 z-[3000]">
+        <div className="absolute top-full right-0 mt-2 w-64 rounded-md border border-gray-600 bg-[var(--color-surface)] shadow-lg p-4 space-y-3 z-[3000]" id="user-menu-dropdown" role="menu">
           {user && (
             <>
               {/* profile */}

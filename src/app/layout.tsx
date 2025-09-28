@@ -22,6 +22,21 @@ export const metadata = {
     template: '%s | OLV Internacional'
   },
   description: 'Consultoria especializada em Supply Chain Industrial e Comércio Exterior para PMEs. 35 anos de experiência em multinacionais (Volkswagen, Ericsson, Lupatech). Otimizamos importação de insumos, exportação de produtos acabados e redução de custos logísticos. Radar SISCOMEX, desembaraço aduaneiro e planejamento tributário.',
+  keywords: keywordsList,
+  authors: [{ name: 'OLV Internacional' }],
+  creator: 'OLV Internacional',
+  publisher: 'OLV Internacional',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   openGraph: {
     title: 'OLV Internacional – Integramos Estratégia, Operação e Resultado',
     description: 'Consultoria premium em Supply Chain, Comércio Exterior, Logística Internacional e Desenvolvimento de Negócios.',

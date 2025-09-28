@@ -796,6 +796,32 @@ body.theme-light .ticker-inner a {
   pointer-events: auto !important;
 }
 
+/* Otimizações de performance */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Preload de recursos críticos */
+body {
+  font-display: swap;
+}
+
+/* Otimizações de renderização */
+img {
+  content-visibility: auto;
+  contain-intrinsic-size: 300px;
+}
+
+/* Reduzir repaints */
+.header, .footer-reveal {
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
 /* ================= LABEL OFFSET FINAL OVERRIDE ================= */
 @media (max-width: 768px) {
   /* Allow labels to overflow */

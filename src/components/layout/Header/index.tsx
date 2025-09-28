@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { usePathname } from 'next/navigation';
+import UserMenu from '../UserMenu';
 import OptimizedImage from '../../OptimizedImage';
 import DropdownMenu from './DropdownMenu';
 
@@ -14,7 +15,7 @@ interface HeaderProps {
 
 const GlobalSearch = dynamic(() => import('../../GlobalSearch'), { ssr: false });
 
-const Header: React.FC<HeaderProps> = ({ theme = 'dark', toggleTheme = () => {} }) => {
+const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
   const [navOpen, setNavOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const pathname = usePathname();
@@ -124,20 +125,26 @@ const Header: React.FC<HeaderProps> = ({ theme = 'dark', toggleTheme = () => {} 
             <Link href="/blog" className={`nav-item ${isActive('/blog') ? 'active' : ''}`} data-page="blog">Blog</Link>
             <Link href="/faq" className={`nav-item ${isActive('/faq') ? 'active' : ''}`} data-page="faq">FAQ</Link>
             <Link href="/contato" className={`nav-item ${isActive('/contato') ? 'active' : ''}`} data-page="contato">Contato</Link>
-            <Link href="/login" className={`nav-item ${isActive('/login') ? 'active' : ''}`} data-page="login" id="login-link">Login</Link>
           </nav>
         </div>
 
         <div className="header-right">
-          <GlobalSearch />
-          
-          {/* Botão de Login Direto */}
-          
+          {/* Buscar (desktop only) */}
+          <div className="search-container desktop-only">
+            <GlobalSearch />
+          </div>
+
+          {/* User Menu (avatar + settings) - desktop */}
+          <div className="user-menu-wrapper desktop-only">
+            <UserMenu />
+          </div>
 
           {/* Ícone menu mobile elegante */}
           <button
             className={`hamburger-circle-container mobile-only ${navOpen ? 'active' : ''}`}
-            aria-label="Abrir menu principal"
+            aria-label={navOpen ? "Fechar menu principal" : "Abrir menu principal"}
+            aria-expanded={navOpen}
+            aria-controls="mobile-navigation"
             onClick={() => setNavOpen(!navOpen)}
           >
             <div className="hamburger-glass-icon">
@@ -150,7 +157,7 @@ const Header: React.FC<HeaderProps> = ({ theme = 'dark', toggleTheme = () => {} 
       </header>
 
       {/* Overlay nav mobile */}
-      <nav className={`nav-menu-mobile md:hidden ${navOpen ? 'show' : ''}`}>
+      <nav className={`nav-menu-mobile md:hidden ${navOpen ? 'show' : ''}`} id="mobile-navigation">
         <Link href="/" className={`nav-item ${isActive('/') ? 'active' : ''}`} onClick={() => setNavOpen(false)}>Home</Link>
         <Link href="/sobre" className={`nav-item ${isActive('/sobre') ? 'active' : ''}`} onClick={() => setNavOpen(false)}>Sobre</Link>
         <Link href="/solucoes" className={`nav-item ${isActive('/solucoes') ? 'active' : ''}`} onClick={() => setNavOpen(false)}>Soluções</Link>
