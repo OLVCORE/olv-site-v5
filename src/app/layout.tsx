@@ -224,7 +224,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         {/* GoAdopt fornece compliance completo LGPD/GDPR */}
         {/* eslint-disable-next-line @next/next/no-sync-scripts */}
         <script src="//tag.goadopt.io/injector.js?website_code=1d3503e5-6e70-4135-906f-6c9840d27875" 
-        class="adopt-injector"></script>
+        className="adopt-injector"></script>
         
         {/* Google Analytics 4 */}
         <GoogleAnalytics measurementId="G-3D4GMDQSFS" />
