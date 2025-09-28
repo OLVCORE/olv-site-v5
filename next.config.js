@@ -13,7 +13,7 @@ const nextConfig = {
     },
   },
   
-  // Headers de segurança para melhorar Best Practices
+  // Headers de segurança e cache para melhorar Best Practices e Performance
   async headers() {
     return [
       {
@@ -51,6 +51,65 @@ const nextConfig = {
             key: 'Cross-Origin-Resource-Policy',
             value: 'same-origin',
           },
+          // Headers adicionais para melhorar Best Practices
+          {
+            key: 'X-XSS-Protection',
+            value: '1; mode=block',
+          },
+          {
+            key: 'Expect-CT',
+            value: 'max-age=86400, enforce',
+          },
+        ],
+      },
+      // Cache otimizado para assets estáticos
+      {
+        source: '/_next/static/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      // Cache otimizado para imagens
+      {
+        source: '/images/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      // Cache otimizado para CSS
+      {
+        source: '/css/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      // Cache otimizado para ícones
+      {
+        source: '/icons/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      // Cache moderado para páginas HTML
+      {
+        source: '/((?!api|_next/static|_next/image|favicon.ico).*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=3600, s-maxage=86400, stale-while-revalidate=86400',
+          },
         ],
       },
     ];
@@ -73,14 +132,28 @@ const nextConfig = {
       // Otimizações para produção
       config.optimization.splitChunks = {
         chunks: 'all',
+        minSize: 20000,
+        maxSize: 244000,
         cacheGroups: {
           vendor: {
             test: /[\\/]node_modules[\\/]/,
             name: 'vendors',
             chunks: 'all',
+            priority: 10,
+          },
+          common: {
+            name: 'common',
+            minChunks: 2,
+            chunks: 'all',
+            priority: 5,
+            reuseExistingChunk: true,
           },
         },
       };
+      
+      // Tree shaking otimizado
+      config.optimization.usedExports = true;
+      config.optimization.sideEffects = false;
     }
     return config;
   },

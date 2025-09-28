@@ -131,7 +131,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         
         {/* Preload otimizado - apenas recursos essenciais */}
-        <link rel="preload" href="/images/BANNER-HOME.jpeg" as="image" type="image/jpeg" />
+        {/* BANNER-HOME.jpeg removido do preload pois já tem priority={true} no componente */}
         
         {/* Carregamento não-bloqueante do CSS legado */}
         <link rel="stylesheet" href="/css/style.css" media="screen and (min-width: 769px)" />
