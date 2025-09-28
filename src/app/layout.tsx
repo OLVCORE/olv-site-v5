@@ -87,14 +87,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         />
         {/* End Google Tag Manager */}
         
-        {/* ▶ Go Adopt Injector ▶ */}
+        {/* Meta tag GoAdopt */}
         <meta name="adopt-website-id" content="1d3503e5-6e70-4135-906f-6c9840d27875" />
-        <script
-          src="https://tag.goadopt.io/injector.js?website_code=1d3503e5-6e70-4135-906f-6c9840d27875"
-          className="adopt-injector"
-          async
-        ></script>
-        {/* ◀ Fim Go Adopt ▶ */}
         
         <meta name="keywords" content={keywordsList} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -127,8 +121,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         {/* Yandex Webmaster */}
         <meta name="yandex-verification" content="SEU_CODIGO_YANDEX_AQUI" />
 
-        {/* LGPD GoAdopt - Compliance Total */}
-        <meta name="adopt-website-id" content="1d3503e5-6e70-4135-906f-6c9840d27875" />
 
         {/* Open Graph para compartilhamento em redes sociais */}
         <meta property="og:title" content={metadata.title.default} />
@@ -213,6 +205,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             })
           }}
         />
+
+        {/* GoAdopt LGPD Script - Deve ser o último no head */}
+        <script
+          src="https://tag.goadopt.io/injector.js?website_code=1d3503e5-6e70-4135-906f-6c9840d27875"
+          className="adopt-injector"
+          async
+        ></script>
       </head>
       <body className={inter.className}>
         {/* Google Tag Manager (noscript) */}
