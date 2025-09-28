@@ -8,6 +8,7 @@ import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics';
 import { WebVitals } from '@/components/analytics/WebVitals';
 import WhatsAppButton from '@/components/layout/WhatsAppButton';
 import MobileFloatingMenu from '@/components/MobileFloatingMenu';
+import Footer from '@/components/layout/Footer';
 // Internationalization temporarily disabled
 
 const inter = Inter({ subsets: ["latin"] });
@@ -210,6 +211,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         
         {children}
         {/* <CookieConsent /> */}
+        
+        {/* Footer Universal - Garante que todas as páginas tenham o footer */}
+        <Footer />
         
         {/* Google Analytics 4 */}
         <GoogleAnalytics measurementId="G-3D4GMDQSFS" />
