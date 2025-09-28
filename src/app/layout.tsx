@@ -1,5 +1,5 @@
 import { Inter } from "next/font/google";
-import Script from "next/script";
+import GoAdoptScript from "@/components/GoAdoptScript";
 import "./globals.css";
 // GoAdopt já fornece compliance completo LGPD/GDPR
 import 'tippy.js/dist/tippy.css';
@@ -282,41 +282,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <MobileFloatingMenu />
         
         {/* ▶ Go Adopt LGPD Script - IMPLEMENTAÇÃO ROBUSTA ▶ */}
-        <Script
-          src="https://tag.goadopt.io/injector.js?website_code=1d3503e5-6e70-4135-906f-6c9840d27875"
-          strategy="afterInteractive"
-          id="goadopt-script"
-          onLoad={() => {
-            console.log('🚀 [GOADOPT] Script carregado com sucesso!');
-            // Verificar se o GoAdopt foi inicializado
-            setTimeout(() => {
-              if (typeof window !== 'undefined' && (window as any).adopt) {
-                console.log('✅ [GOADOPT] GoAdopt inicializado!');
-              } else {
-                console.log('⚠️ [GOADOPT] GoAdopt não inicializado, tentando fallback...');
-                // Fallback: recarregar o script
-                const existingScript = document.getElementById('goadopt-script');
-                if (existingScript) {
-                  existingScript.remove();
-                }
-                const newScript = document.createElement('script');
-                newScript.src = 'https://tag.goadopt.io/injector.js?website_code=1d3503e5-6e70-4135-906f-6c9840d27875&t=' + Date.now();
-                newScript.async = true;
-                newScript.id = 'goadopt-fallback';
-                document.head.appendChild(newScript);
-              }
-            }, 2000);
-          }}
-          onError={(e) => {
-            console.error('❌ [GOADOPT] Erro ao carregar script:', e);
-            // Fallback em caso de erro
-            const fallbackScript = document.createElement('script');
-            fallbackScript.src = 'https://tag.goadopt.io/injector.js?website_code=1d3503e5-6e70-4135-906f-6c9840d27875&t=' + Date.now();
-            fallbackScript.async = true;
-            fallbackScript.id = 'goadopt-error-fallback';
-            document.head.appendChild(fallbackScript);
-          }}
-        />
+        <GoAdoptScript />
         {/* ◀ Fim Go Adopt Script ▶ */}
       </body>
     </html>
