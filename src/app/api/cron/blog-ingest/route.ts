@@ -9,7 +9,9 @@ const supabase = supabaseUrl && supabaseKey
   ? createClient(supabaseUrl, supabaseKey)
   : null;
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY! });
+const openai = process.env.OPENAI_API_KEY 
+  ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+  : null;
 
 // Fontes RSS reais - 42 feeds
 const SOURCES = [
@@ -194,6 +196,11 @@ async function generatePostContent(title: string, sourceText: string, link: stri
       max_tokens: 1200,
       temperature: 0.7
     };
+
+    if (!openai) {
+      console.warn('OpenAI not configured, skipping content generation');
+      return '';
+    }
 
     const completion = await retryWithBackoff(() => openai.chat.completions.create(prompt as any));
     return completion.choices[0]?.message?.content || '';

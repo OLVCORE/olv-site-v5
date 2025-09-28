@@ -2,15 +2,16 @@
 import { NextRequest } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-const supabase = createClient(supabaseUrl, supabaseServiceKey, {
+// Only create Supabase client if environment variables are available
+const supabase = supabaseUrl && supabaseServiceKey ? createClient(supabaseUrl, supabaseServiceKey, {
   auth: {
     autoRefreshToken: false,
     persistSession: false,
   },
-});
+}) : null;
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -54,6 +55,14 @@ function getClientIP(request: NextRequest): string {
 
 export async function GET(req: NextRequest) {
   try {
+    // Check if Supabase is available
+    if (!supabase) {
+      return Response.json(
+        { error: 'Database not configured' },
+        { status: 503 }
+      );
+    }
+
     // Rate limiting
     const clientIP = getClientIP(req);
     if (!checkRateLimit(clientIP)) {
