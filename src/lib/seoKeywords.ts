@@ -3,7 +3,7 @@
 // Compatível com AI Max for Search e Agentic
 
 import { userIntentionMapping, detectUserIntention, generateAIOptimizedCopy } from './seoIntentionMapping';
-import { contentOptimizer, optimizeContentForAI } from './seoContentOptimizer';
+import { contentOptimizer, optimizeContentForAI, generateStructuredDataForAI } from './seoContentOptimizer';
 import { transparencyCompliance, validateTransparencyCompliance } from './seoTransparencyCompliance';
 
 export const seoKeywords = {
@@ -269,8 +269,8 @@ export function validateGoogleAdsCompliance(content: Record<string, unknown>) {
 }
 
 // Função para gerar dados estruturados para IA
-export function generateStructuredDataForAI(pageType: string, content: Record<string, unknown>) {
-  return contentOptimizer.generateStructuredDataForAI(pageType, content);
+export function generateStructuredDataForAIWrapper(pageType: string, content: Record<string, unknown>) {
+  return generateStructuredDataForAI(pageType, content);
 }
 
 // Função para gerar conteúdo transparente
