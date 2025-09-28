@@ -1,65 +1,60 @@
 "use client";
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaPhone, FaWhatsapp, FaMapMarkerAlt, FaEnvelope } from 'react-icons/fa';
 
-// Memoizar tooltip para melhor performance
-const PlatformTooltip = React.memo<{ 
-  platform: string; 
-  description: string; 
-  isVisible: boolean; 
-}>(({ platform, description, isVisible }) => {
-  if (!isVisible) return null;
-  
-  return (
-    <div 
-      className="absolute left-0 top-full mt-2 bg-blue-900 text-white text-xs p-3 rounded shadow-lg z-10 w-max max-w-[280px] sidebar-tooltip" 
-      style={{
-        opacity: 1,
-        visibility: 'visible',
-        boxShadow: '0 0 15px rgba(212, 175, 55, 0.7)',
-        border: '2px solid #d4af37',
-        animation: 'tooltipGlow 2s infinite'
-      }}
-      aria-label={`Descrição da plataforma ${platform}`}
-    >
-      {description}
-    </div>
-  );
-});
-
-PlatformTooltip.displayName = 'PlatformTooltip';
-
 const Footer: React.FC = () => {
+  const [showFooter, setShowFooter] = useState(false);
   const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
+  const [isClient, setIsClient] = useState(false);
 
-  // Otimizar handlers com useCallback
-  const handleTooltipEnter = useCallback((platform: string) => {
-    setActiveTooltip(platform);
+  // Efeito para mostrar o footer quando o usuário rolar até o final da página
+  useEffect(() => {
+    // Marcar que estamos no cliente
+    setIsClient(true);
+    
+    // Verificar se estamos no cliente (não no servidor)
+    if (typeof window === 'undefined') return;
+    
+    const handleScroll = () => {
+      try {
+        const position = window.scrollY;
+        const windowHeight = window.innerHeight;
+        const documentHeight = document.documentElement.scrollHeight;
+        
+        // Footer aparece quando usuário está a 200px do final do conteúdo
+        if (position + windowHeight >= documentHeight - 200) {
+          setShowFooter(true);
+        }
+        else {
+          setShowFooter(false);
+        }
+      } catch (error) {
+        console.error('Erro no scroll handler:', error);
+        // Em caso de erro, mostrar o footer
+        setShowFooter(true);
+      }
+    };
+    
+    // Aguardar um pouco para garantir que o DOM está pronto
+    const timeoutId = setTimeout(() => {
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      // Verificar a posição inicial
+      handleScroll();
+    }, 100);
+    
+    return () => {
+      clearTimeout(timeoutId);
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('scroll', handleScroll);
+      }
+    };
   }, []);
-
-  const handleTooltipLeave = useCallback(() => {
-    setActiveTooltip(null);
-  }, []);
-
-  // Dados das plataformas para melhor manutenção
-  const platformData = {
-    stratevo: "Inteligência de Mercado e Gestão Estratégica",
-    exceltta: "Análise de Visão para Tomada de Decisão",
-    connecta: "Conexões Seguras com Fornecedores Homologados",
-    engage: "CRM e qualificação de leads inteligente",
-    finx: "Gestão Financeira e Otimização de Fluxo de Caixa",
-    academy: "Educação Corporativa e Desenvolvimento de Talentos"
-  };
 
   return (
-    <footer 
-      className="footer-reveal" 
-      role="contentinfo" 
-      aria-label="Rodapé do site OLV Internacional"
-    >
+    <footer className={`footer-reveal ${showFooter || !isClient ? 'reveal' : ''}`} style={{ display: 'block' }}>
       <div className="footer-container max-w-7xl mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           {/* Coluna 1 - Sobre */}
@@ -68,140 +63,185 @@ const Footer: React.FC = () => {
             <p className="text-sm mb-4 text-gray-300">
               Há mais de 35 anos integrando estratégia, operação e resultado para empresas que querem operar globalmente com segurança e alta performance.
             </p>
-            <div className="social-icons flex gap-4 mt-4" aria-label="Redes sociais">
-              <a 
-                href="https://www.instagram.com/olvinternacional/" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="bg-gray-800 p-2 rounded-full hover:opacity-90 transition-colors focus:outline-none focus:ring-2 focus:ring-accent"
-                aria-label="Siga-nos no Instagram"
-              >
+            <div className="social-icons flex gap-4 mt-4">
+              <a href="https://www.instagram.com/olvinternacional/" target="_blank" rel="noopener noreferrer" className="bg-gray-800 p-2 rounded-full hover:opacity-90 transition-colors">
                 <Image src="/icons/instagram-original.svg" alt="Instagram" width={20} height={20} />
               </a>
-              <a 
-                href="https://www.linkedin.com/company/olv-internacional/" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="bg-gray-800 p-2 rounded-full hover:opacity-90 transition-colors focus:outline-none focus:ring-2 focus:ring-accent"
-                aria-label="Conecte-se conosco no LinkedIn"
-              >
+              <a href="https://www.linkedin.com/company/26251289/admin/dashboard/" target="_blank" rel="noopener noreferrer" className="bg-gray-800 p-2 rounded-full hover:opacity-90 transition-colors">
                 <Image src="/icons/linkedin-original.svg" alt="LinkedIn" width={20} height={20} />
               </a>
-              <a 
-                href="https://www.facebook.com/olvinternacional/" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="bg-gray-800 p-2 rounded-full hover:opacity-90 transition-colors focus:outline-none focus:ring-2 focus:ring-accent"
-                aria-label="Curta nossa página no Facebook"
-              >
+              <a href="https://www.facebook.com/olvinternacional/" target="_blank" rel="noopener noreferrer" className="bg-gray-800 p-2 rounded-full hover:opacity-90 transition-colors">
                 <Image src="/icons/facebook-original.svg" alt="Facebook" width={20} height={20} />
               </a>
-              <a 
-                href="https://twitter.com/olvinternacional" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="bg-gray-800 p-2 rounded-full hover:opacity-90 transition-colors focus:outline-none focus:ring-2 focus:ring-accent"
-                aria-label="Siga-nos no X (Twitter)"
-              >
+              <a href="https://twitter.com/olvinternacional" target="_blank" rel="noopener noreferrer" className="bg-gray-800 p-2 rounded-full hover:opacity-90 transition-colors">
                 <Image src="/icons/twitter-original.svg" alt="X" width={20} height={20} />
               </a>
-              <a 
-                href="https://www.youtube.com/@olvinternacional" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="bg-gray-800 p-2 rounded-full hover:opacity-90 transition-colors focus:outline-none focus:ring-2 focus:ring-accent"
-                aria-label="Inscreva-se no nosso canal do YouTube"
-              >
+              <a href="https://www.youtube.com/@olvinternacional" target="_blank" rel="noopener noreferrer" className="bg-gray-800 p-2 rounded-full hover:opacity-90 transition-colors">
                 <Image src="/icons/youtube-original.svg" alt="YouTube" width={20} height={20} />
               </a>
-              <a 
-                href="mailto:consultores@olvinternacional.com.br" 
-                className="bg-gray-800 p-2 rounded-full hover:opacity-90 transition-colors focus:outline-none focus:ring-2 focus:ring-accent"
-                aria-label="Envie-nos um e-mail"
-              >
+              <a href="mailto:consultores@olvinternacional.com.br" className="bg-gray-800 p-2 rounded-full hover:opacity-90 transition-colors">
                 <Image src="/icons/email-original.svg" alt="E-mail" width={20} height={20} />
               </a>
             </div>
           </div>
 
           {/* Coluna 2 - Links Rápidos */}
-          <nav aria-label="Links rápidos do site">
+          <div>
             <h3 className="text-xl font-bold mb-4 text-accent">Links Rápidos</h3>
             <ul className="space-y-2">
               <li>
-                <Link 
-                  href="/solucoes" 
-                  className="text-gray-300 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-accent rounded px-1"
-                  aria-label="Ver nossas soluções"
-                >
-                  Soluções
-                </Link>
+                <Link href="/solucoes" className="text-gray-300 hover:text-white transition-colors">Soluções</Link>
               </li>
               <li>
-                <Link 
-                  href="/sobre" 
-                  className="text-gray-300 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-accent rounded px-1"
-                  aria-label="Saiba mais sobre nós"
-                >
-                  Sobre Nós
-                </Link>
+                <Link href="/sobre" className="text-gray-300 hover:text-white transition-colors">Sobre Nós</Link>
               </li>
               <li>
-                <Link 
-                  href="/radar360" 
-                  className="text-gray-300 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-accent rounded px-1"
-                  aria-label="Acesse o Radar 360"
-                >
-                  Radar 360
-                </Link>
+                <Link href="/radar360" className="text-gray-300 hover:text-white transition-colors">Radar 360</Link>
               </li>
               <li>
-                <Link 
-                  href="/contato" 
-                  className="text-gray-300 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-accent rounded px-1"
-                  aria-label="Entre em contato conosco"
-                >
-                  Contato
-                </Link>
+                <Link href="/sobre" className="text-gray-300 hover:text-white transition-colors">Sobre Nós</Link>
               </li>
               <li>
-                <Link 
-                  href="/blog" 
-                  className="text-gray-300 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-accent rounded px-1"
-                  aria-label="Leia nosso blog"
-                >
-                  Blog
-                </Link>
+                <Link href="/contato" className="text-gray-300 hover:text-white transition-colors">Contato</Link>
+              </li>
+              <li>
+                <Link href="/blog" className="text-gray-300 hover:text-white transition-colors">Blog</Link>
               </li>
             </ul>
-          </nav>
+          </div>
 
           {/* Coluna 3 - Plataformas */}
-          <nav aria-label="Nossas plataformas">
+          <div>
             <h3 className="text-xl font-bold mb-4 text-accent">Nossas Plataformas</h3>
             <ul className="space-y-2">
-              {Object.entries(platformData).map(([platform, description]) => (
-                <li key={platform} className="relative group">
-                  <Link 
-                    href={`/${platform}`}
-                    className="text-white hover:text-[#d4af37] transition-colors border-b border-transparent hover:border-[#d4af37] inline-block focus:outline-none focus:ring-2 focus:ring-accent rounded px-1"
-                    onMouseEnter={() => handleTooltipEnter(platform)}
-                    onMouseLeave={handleTooltipLeave}
-                    onFocus={() => handleTooltipEnter(platform)}
-                    onBlur={handleTooltipLeave}
-                    title={description}
-                  >
-                    {platform.toUpperCase()}
-                  </Link>
-                  <PlatformTooltip 
-                    platform={platform}
-                    description={description}
-                    isVisible={activeTooltip === platform}
-                  />
-                </li>
-              ))}
+              <li className="relative group">
+                <Link 
+                  href="/stratevo" 
+                  className="text-white hover:text-[#d4af37] transition-colors border-b border-transparent hover:border-[#d4af37] inline-block"
+                  onMouseEnter={() => setActiveTooltip('stratevo')}
+                  onMouseLeave={() => setActiveTooltip(null)}
+                >
+                  STRATEVO
+                </Link>
+                {activeTooltip === 'stratevo' && (
+                  <div className="absolute left-0 top-full mt-0 bg-blue-900 text-white text-xs p-2 rounded shadow-lg z-10 w-max max-w-[250px] sidebar-tooltip" style={{
+                    opacity: 1,
+                    visibility: 'visible',
+                    boxShadow: '0 0 15px rgba(212, 175, 55, 0.7)',
+                    border: '2px solid #d4af37',
+                    animation: 'tooltipGlow 2s infinite'
+                  }}>
+                    Inteligência de Mercado e Gestão Estratégica
+                  </div>
+                )}
+              </li>
+              <li className="relative group">
+                <Link 
+                  href="/exceltta" 
+                  className="text-white hover:text-[#d4af37] transition-colors border-b border-transparent hover:border-[#d4af37] inline-block"
+                  onMouseEnter={() => setActiveTooltip('exceltta')}
+                  onMouseLeave={() => setActiveTooltip(null)}
+                >
+                  EXCELTTA
+                </Link>
+                {activeTooltip === 'exceltta' && (
+                  <div className="absolute left-0 top-full mt-0 bg-blue-900 text-white text-xs p-2 rounded shadow-lg z-10 w-max max-w-[250px] sidebar-tooltip" style={{
+                    opacity: 1,
+                    visibility: 'visible',
+                    boxShadow: '0 0 15px rgba(212, 175, 55, 0.7)',
+                    border: '2px solid #d4af37',
+                    animation: 'tooltipGlow 2s infinite'
+                  }}>
+                    Análise de Visão para Tomada de Decisão
+                  </div>
+                )}
+              </li>
+              <li className="relative group">
+                <Link 
+                  href="/connecta" 
+                  className="text-white hover:text-[#d4af37] transition-colors border-b border-transparent hover:border-[#d4af37] inline-block"
+                  onMouseEnter={() => setActiveTooltip('connecta')}
+                  onMouseLeave={() => setActiveTooltip(null)}
+                >
+                  CONNECTA
+                </Link>
+                {activeTooltip === 'connecta' && (
+                  <div className="absolute left-0 top-full mt-0 bg-blue-900 text-white text-xs p-2 rounded shadow-lg z-10 w-max max-w-[250px] sidebar-tooltip" style={{
+                    opacity: 1,
+                    visibility: 'visible',
+                    boxShadow: '0 0 15px rgba(212, 175, 55, 0.7)',
+                    border: '2px solid #d4af37',
+                    animation: 'tooltipGlow 2s infinite'
+                  }}>
+                    Conexões Seguras com Fornecedores Homologados
+                  </div>
+                )}
+              </li>
+              <li className="relative group">
+                <Link 
+                  href="/engage" 
+                  className="text-white hover:text-[#d4af37] transition-colors border-b border-transparent hover:border-[#d4af37] inline-block"
+                  onMouseEnter={() => setActiveTooltip('engage')}
+                  onMouseLeave={() => setActiveTooltip(null)}
+                >
+                  ENGAGE
+                </Link>
+                {activeTooltip === 'engage' && (
+                  <div className="absolute left-0 top-full mt-0 bg-blue-900 text-white text-xs p-2 rounded shadow-lg z-10 w-max max-w-[250px] sidebar-tooltip" style={{
+                    opacity: 1,
+                    visibility: 'visible',
+                    boxShadow: '0 0 15px rgba(212, 175, 55, 0.7)',
+                    border: '2px solid #d4af37',
+                    animation: 'tooltipGlow 2s infinite'
+                  }}>
+                    CRM e qualificação de leads inteligente
+                  </div>
+                )}
+              </li>
+              <li className="relative group">
+                <Link 
+                  href="/finx" 
+                  className="text-white hover:text-[#d4af37] transition-colors border-b border-transparent hover:border-[#d4af37] inline-block"
+                  onMouseEnter={() => setActiveTooltip('finx')}
+                  onMouseLeave={() => setActiveTooltip(null)}
+                >
+                  FINX
+                </Link>
+                {activeTooltip === 'finx' && (
+                  <div className="absolute left-0 top-full mt-0 bg-blue-900 text-white text-xs p-2 rounded shadow-lg z-10 w-max max-w-[250px] sidebar-tooltip" style={{
+                    opacity: 1,
+                    visibility: 'visible',
+                    boxShadow: '0 0 15px rgba(212, 175, 55, 0.7)',
+                    border: '2px solid #d4af37',
+                    animation: 'tooltipGlow 2s infinite'
+                  }}>
+                    Gestão Financeira e Otimização de Fluxo de Caixa
+                  </div>
+                )}
+              </li>
+              <li className="relative group">
+                <Link 
+                  href="/academy" 
+                  className="text-white hover:text-[#d4af37] transition-colors border-b border-transparent hover:border-[#d4af37] inline-block"
+                  onMouseEnter={() => setActiveTooltip('academy')}
+                  onMouseLeave={() => setActiveTooltip(null)}
+                >
+                  ACADEMY
+                </Link>
+                {activeTooltip === 'academy' && (
+                  <div className="absolute left-0 top-full mt-0 bg-blue-900 text-white text-xs p-2 rounded shadow-lg z-10 w-max max-w-[250px] sidebar-tooltip" style={{
+                    opacity: 1,
+                    visibility: 'visible',
+                    boxShadow: '0 0 15px rgba(212, 175, 55, 0.7)',
+                    border: '2px solid #d4af37',
+                    animation: 'tooltipGlow 2s infinite'
+                  }}>
+                    Educação Corporativa e Desenvolvimento de Talentos
+                  </div>
+                )}
+              </li>
             </ul>
-          </nav>
+          </div>
 
           {/* Coluna 4 - Contato */}
           <div>
@@ -210,37 +250,31 @@ const Footer: React.FC = () => {
             <div className="grid gap-4">
               {/* Endereço */}
               <div className="flex">
-                <FaMapMarkerAlt className="text-accent mt-1 mr-3 flex-shrink-0" size={18} aria-hidden="true" />
+                <FaMapMarkerAlt className="text-accent mt-1 mr-3 flex-shrink-0" size={18} />
                 <div>
                   <p className="text-sm text-white font-semibold mb-1">Endereço:</p>
-                  <address className="text-sm text-gray-300 not-italic">
+                  <p className="text-sm text-gray-300">
                     Avenida Paulista, 1471 - Conj 1110<br />
                     CEP 01311-927 - Bela Vista<br />
                     São Paulo - SP
-                  </address>
+                  </p>
                 </div>
               </div>
               
               {/* Telefone */}
               <div className="flex">
-                <FaPhone className="text-accent mt-1 mr-3 flex-shrink-0" size={16} aria-hidden="true" />
+                <FaPhone className="text-accent mt-1 mr-3 flex-shrink-0" size={16} />
                 <div>
                   <p className="text-sm text-white font-semibold mb-1">Telefone:</p>
                   <div className="flex items-center">
-                    <a 
-                      href="tel:+551126751446" 
-                      className="text-sm text-gray-300 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-accent rounded px-1"
-                      aria-label="Ligue para +55 11 2675 1446"
-                    >
-                      +55 11 2675 1446
-                    </a>
+                    <p className="text-sm text-gray-300">+55 11 2675 1446</p>
                   </div>
                 </div>
               </div>
               
               {/* WhatsApp */}
               <div className="flex">
-                <FaWhatsapp className="text-accent mt-1 mr-3 flex-shrink-0" size={16} aria-hidden="true" />
+                <FaWhatsapp className="text-accent mt-1 mr-3 flex-shrink-0" size={16} />
                 <div>
                   <p className="text-sm text-white font-semibold mb-1">WhatsApp:</p>
                   <div className="flex items-center">
@@ -248,8 +282,7 @@ const Footer: React.FC = () => {
                       href="https://wa.me/5511999244444?text=Olá! Vim do site da OLV Internacional e gostaria de saber mais sobre os serviços de comércio exterior." 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="text-sm text-gray-300 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-accent rounded px-1"
-                      aria-label="Envie uma mensagem no WhatsApp"
+                      className="text-sm text-gray-300 hover:text-white transition-colors"
                     >
                       +55 11 99924-4444
                     </a>
@@ -257,31 +290,23 @@ const Footer: React.FC = () => {
                 </div>
               </div>
               
-              {/* Email - Projetos */}
+              {/* Email - Consultas */}
               <div className="flex">
-                <FaEnvelope className="text-accent mt-1 mr-3 flex-shrink-0" size={16} aria-hidden="true" />
+                <FaEnvelope className="text-accent mt-1 mr-3 flex-shrink-0" size={16} />
                 <p className="text-sm text-white">
                   <span className="font-semibold">Projetos:</span> 
-                  <a 
-                    href="mailto:consultores@olvinternacional.com.br" 
-                    className="ml-1 text-gray-300 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-accent rounded px-1"
-                    aria-label="Envie um e-mail para projetos"
-                  >
+                  <a href="mailto:consultores@olvinternacional.com.br" className="ml-1 text-gray-300 hover:text-white transition-colors">
                     consultores@olvinternacional.com.br
                   </a>
                 </p>
               </div>
               
-              {/* Email - Atendimento */}
+              {/* Email - Vendas */}
               <div className="flex">
-                <FaEnvelope className="text-accent mt-1 mr-3 flex-shrink-0" size={16} aria-hidden="true" />
+                <FaEnvelope className="text-accent mt-1 mr-3 flex-shrink-0" size={16} />
                 <p className="text-sm text-white">
                   <span className="font-semibold">Atendimento:</span> 
-                  <a 
-                    href="mailto:consultores@olvinternacional.com.br" 
-                    className="ml-1 text-gray-300 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-accent rounded px-1"
-                    aria-label="Envie um e-mail para atendimento"
-                  >
+                  <a href="mailto:consultores@olvinternacional.com.br" className="ml-1 text-gray-300 hover:text-white transition-colors">
                     consultores@olvinternacional.com.br
                   </a>
                 </p>
@@ -294,23 +319,15 @@ const Footer: React.FC = () => {
         <div className="border-t border-gray-700 pt-6 mt-4">
           <div className="flex flex-col space-y-2">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-              <nav className="flex gap-4" aria-label="Links legais">
-                <Link 
-                  href="/politica" 
-                  className="text-xs text-gray-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-accent rounded px-1"
-                  aria-label="Política de privacidade"
-                >
+              <div className="flex gap-4">
+                <Link href="/politica" className="text-xs text-gray-400 hover:text-white transition-colors">
                   Política de Privacidade
                 </Link>
-                <span className="text-gray-600" aria-hidden="true">|</span>
-                <Link 
-                  href="/termos" 
-                  className="text-xs text-gray-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-accent rounded px-1"
-                  aria-label="Termos de uso"
-                >
+                <span className="text-gray-600">|</span>
+                <Link href="/termos" className="text-xs text-gray-400 hover:text-white transition-colors">
                   Termos de Uso
                 </Link>
-              </nav>
+              </div>
             </div>
             <p className="text-xs text-gray-400 text-center">
               © Copyright - 2025   |   <span className="text-white font-semibold">OLV INTERNACIONAL</span> - CNPJ 67.867.580/0001-90 / Desenvolvido por <span className="text-white font-semibold">OLV CORE DIGITAL</span>  |   All Rights Reserved   |   Powered by OLV Internacional
