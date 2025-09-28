@@ -4,7 +4,7 @@
 
 import { userIntentionMapping, detectUserIntention, generateAIOptimizedCopy } from './seoIntentionMapping';
 import { optimizeContentForAI, generateStructuredDataForAI } from './seoContentOptimizer';
-import { transparencyCompliance, validateTransparencyCompliance, generateTransparentContent } from './seoTransparencyCompliance';
+import { validateTransparencyCompliance, generateTransparentContent } from './seoTransparencyCompliance';
 
 export const seoKeywords = {
   // 📁 CONSULTORIA EM EXPORTAÇÃO
