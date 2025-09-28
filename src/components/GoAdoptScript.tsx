@@ -27,6 +27,7 @@ export default function GoAdoptScript() {
         newScript.src = 'https://tag.goadopt.io/injector.js?website_code=1d3503e5-6e70-4135-906f-6c9840d27875&t=' + Date.now();
         newScript.async = true;
         newScript.id = 'goadopt-fallback';
+        newScript.crossOrigin = 'anonymous';
         document.head.appendChild(newScript);
       }
     }, 2000);
@@ -44,6 +45,7 @@ export default function GoAdoptScript() {
       fallbackScript.src = 'https://tag.goadopt.io/injector.js?website_code=1d3503e5-6e70-4135-906f-6c9840d27875&t=' + Date.now();
       fallbackScript.async = true;
       fallbackScript.id = 'goadopt-error-fallback';
+      fallbackScript.crossOrigin = 'anonymous';
       document.head.appendChild(fallbackScript);
     } else {
       console.error('❌ [GOADOPT] Máximo de tentativas atingido');
@@ -82,6 +84,7 @@ export default function GoAdoptScript() {
       src="https://tag.goadopt.io/injector.js?website_code=1d3503e5-6e70-4135-906f-6c9840d27875"
       strategy="afterInteractive"
       id="goadopt-script"
+      crossOrigin="anonymous"
       onLoad={handleScriptLoad}
       onError={handleScriptError}
     />
