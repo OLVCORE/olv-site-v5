@@ -126,20 +126,46 @@ const nextConfig = {
   // Compressão
   compress: true,
 
-  // Otimizações de bundle
+  // Otimizações de bundle AGRESSIVAS
   webpack: (config, { dev, isServer }) => {
     if (!dev && !isServer) {
-      // Otimizações para produção
+      // Code splitting agressivo
       config.optimization.splitChunks = {
         chunks: 'all',
-        minSize: 20000,
-        maxSize: 244000,
+        minSize: 10000,
+        maxSize: 100000, // Reduzido drasticamente
         cacheGroups: {
+          // Separar bibliotecas pesadas
+          framerMotion: {
+            test: /[\\/]node_modules[\\/]framer-motion[\\/]/,
+            name: 'framer-motion',
+            chunks: 'all',
+            priority: 20,
+          },
+          charts: {
+            test: /[\\/]node_modules[\\/](recharts|chart\.js|react-chartjs-2)[\\/]/,
+            name: 'charts',
+            chunks: 'all',
+            priority: 20,
+          },
+          pdf: {
+            test: /[\\/]node_modules[\\/](jspdf|html2canvas)[\\/]/,
+            name: 'pdf-libs',
+            chunks: 'all',
+            priority: 20,
+          },
+          three: {
+            test: /[\\/]node_modules[\\/]@react-three[\\/]/,
+            name: 'three-js',
+            chunks: 'all',
+            priority: 20,
+          },
           vendor: {
             test: /[\\/]node_modules[\\/]/,
             name: 'vendors',
             chunks: 'all',
             priority: 10,
+            maxSize: 50000,
           },
           common: {
             name: 'common',
@@ -147,13 +173,18 @@ const nextConfig = {
             chunks: 'all',
             priority: 5,
             reuseExistingChunk: true,
+            maxSize: 30000,
           },
         },
       };
       
-      // Tree shaking otimizado
+      // Tree shaking agressivo
       config.optimization.usedExports = true;
       config.optimization.sideEffects = false;
+      config.optimization.providedExports = true;
+      
+      // Remover código morto
+      config.optimization.minimize = true;
     }
     return config;
   },
