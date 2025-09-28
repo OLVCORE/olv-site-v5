@@ -94,27 +94,30 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         {/* ▶ Go Adopt LGPD - IMPLEMENTAÇÃO CORRETA APP ROUTER ▶ */}
         <meta name="adopt-website-id" content="1d3503e5-6e70-4135-906f-6c9840d27875" />
         
-        {/* Script de verificação GoAdopt */}
+        {/* Script de controle do comportamento GoAdopt */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              console.log('🔍 [GOADOPT] Verificando carregamento...');
-              window.addEventListener('load', function() {
-                setTimeout(function() {
-                  if (typeof (window as any).adopt !== 'undefined') {
-                    console.log('✅ [GOADOPT] GoAdopt detectado no window!');
-                  } else {
-                    console.log('⚠️ [GOADOPT] GoAdopt não encontrado no window');
-                    // Verificar elementos no DOM
-                    const adoptElements = document.querySelectorAll('[class*="adopt"], [id*="adopt"], [data-adopt]');
-                    console.log('🔍 [GOADOPT] Elementos GoAdopt no DOM:', adoptElements.length);
-                    if (adoptElements.length > 0) {
-                      console.log('✅ [GOADOPT] Elementos GoAdopt encontrados!');
-                    } else {
-                      console.log('❌ [GOADOPT] Nenhum elemento GoAdopt encontrado');
-                    }
+              document.addEventListener('DOMContentLoaded', function() {
+                // Aguarda o SDK injetar o ícone e o banner no DOM
+                const iconInterval = setInterval(() => {
+                  const icon = document.querySelector('.adopt-injector-icon');
+                  const banner = document.querySelector('.adopt-banner');
+                  if (icon && banner) {
+                    clearInterval(iconInterval);
+                    console.log('🎯 [GOADOPT] Ícone e banner encontrados, configurando comportamento...');
+                    // Quando o ícone for clicado, alterna a classe que mostra o banner
+                    icon.addEventListener('click', () => {
+                      console.log('🖱️ [GOADOPT] Ícone clicado, alternando banner...');
+                      banner.classList.toggle('show-banner');
+                    });
                   }
-                }, 3000);
+                }, 200);
+                
+                // Timeout de segurança
+                setTimeout(() => {
+                  clearInterval(iconInterval);
+                }, 10000);
               });
             `
           }}

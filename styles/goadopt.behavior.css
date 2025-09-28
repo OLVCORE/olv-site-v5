@@ -1,0 +1,27 @@
+/* Esconde o banner até o clique */
+.adopt-banner, /* seletores do banner Go Adopt */
+.adopt-banner * {
+  display: none !important;
+}
+
+/* Posição e estilo do ícone (sem alteração, caso já esteja OK) */
+.adopt-injector-icon {
+  position: fixed !important;
+  bottom: 1rem !important;
+  left: 1rem !important;
+  z-index: 9999 !important;
+}
+
+/* Quando a classe .show-banner for aplicada, exibe o banner */
+.adopt-banner.show-banner {
+  display: block !important;
+  /* restaura layout original */
+  position: fixed !important;
+  bottom: 1rem !important;
+  left: calc(1rem + 3rem) !important; /* desloca para não sobrepor o ícone */
+  width: auto !important;
+  max-width: 20rem !important;
+  background: #fff !important; /* ou cor de fundo correta */
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2) !important;
+  border-radius: 0.5rem !important;
+}
