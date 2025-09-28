@@ -65,6 +65,34 @@ export default function GoAdoptScript() {
           console.log('🔍 [GOADOPT] Elementos GoAdopt no DOM:', adoptElements.length);
           if (adoptElements.length > 0) {
             console.log('✅ [GOADOPT] Elementos GoAdopt encontrados!');
+            
+            // Configurar comportamento correto: ícone visível, banner oculto
+            const banners = document.querySelectorAll('[class*="adopt"] [class*="banner"], [class*="adopt"] [class*="consent"], [class*="adopt"] [class*="cookie"], [class*="adopt"] [class*="modal"], [class*="adopt"] [class*="popup"]');
+            banners.forEach(banner => {
+              (banner as HTMLElement).style.display = 'none';
+              (banner as HTMLElement).style.visibility = 'hidden';
+              (banner as HTMLElement).style.opacity = '0';
+            });
+            
+            // Garantir que ícones estejam visíveis
+            const icons = document.querySelectorAll('[class*="adopt-"], [class*="goadopt-"], [data-adopt-button], .adopt-button, #adopt-button');
+            icons.forEach(icon => {
+              (icon as HTMLElement).style.display = 'block';
+              (icon as HTMLElement).style.visibility = 'visible';
+              (icon as HTMLElement).style.opacity = '1';
+            });
+            
+            // Adicionar event listeners para mostrar banner ao clicar no ícone
+            icons.forEach(icon => {
+              icon.addEventListener('click', (e) => {
+                e.preventDefault();
+                banners.forEach(banner => {
+                  (banner as HTMLElement).style.display = 'block';
+                  (banner as HTMLElement).style.visibility = 'visible';
+                  (banner as HTMLElement).style.opacity = '1';
+                });
+              });
+            });
           } else {
             console.log('❌ [GOADOPT] Nenhum elemento GoAdopt encontrado');
           }

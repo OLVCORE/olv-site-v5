@@ -24,7 +24,7 @@
   min-width: 300px !important;
 }
 
-/* Banner de cookies - correção de layout truncado */
+/* Banner de cookies - INICIALMENTE OCULTO, só aparece ao clicar no ícone */
 [class*="adopt"] [class*="banner"],
 [class*="adopt"] [class*="consent"],
 [class*="adopt"] [class*="cookie"],
@@ -50,6 +50,23 @@
   word-wrap: break-word !important;
   overflow-wrap: break-word !important;
   white-space: normal !important;
+  display: none !important; /* OCULTO INICIALMENTE */
+  visibility: hidden !important;
+  opacity: 0 !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Banner visível quando ativo (ao clicar no ícone) */
+[class*="adopt"] [class*="banner"].active,
+[class*="adopt"] [class*="consent"].active,
+[class*="adopt"] [class*="cookie"].active,
+[class*="adopt"] [class*="modal"].active,
+[class*="adopt"] [class*="popup"].active,
+[id*="adopt"] [class*="banner"].active,
+[id*="adopt"] [class*="consent"].active,
+[id*="adopt"] [class*="cookie"].active,
+[id*="adopt"] [class*="modal"].active,
+[id*="adopt"] [class*="popup"].active {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
@@ -128,12 +145,16 @@
   overflow-wrap: break-word !important;
 }
 
-/* Garantir visibilidade do ícone flutuante */
+/* Garantir visibilidade do ícone flutuante - APENAS O ÍCONE */
 [class*="adopt-"],
 [class*="goadopt-"],
 [data-adopt-button],
 .adopt-button,
-#adopt-button {
+#adopt-button,
+[class*="adopt"] [class*="icon"],
+[class*="adopt"] [class*="button"],
+[id*="adopt"] [class*="icon"],
+[id*="adopt"] [class*="button"] {
   position: fixed !important;
   bottom: 1rem !important;
   left: 1rem !important;
@@ -141,8 +162,29 @@
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
-  width: auto !important;
-  height: auto !important;
+  width: 60px !important;
+  height: 60px !important;
+  border-radius: 50% !important;
+  background: #28a745 !important;
+  color: #ffffff !important;
+  border: none !important;
+  cursor: pointer !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Hover no ícone */
+[class*="adopt-"]:hover,
+[class*="goadopt-"]:hover,
+[data-adopt-button]:hover,
+.adopt-button:hover,
+#adopt-button:hover,
+[class*="adopt"] [class*="icon"]:hover,
+[class*="adopt"] [class*="button"]:hover,
+[id*="adopt"] [class*="icon"]:hover,
+[id*="adopt"] [class*="button"]:hover {
+  transform: scale(1.1) !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2) !important;
 }
 
 /* Responsividade - correção para mobile */
