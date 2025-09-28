@@ -61,7 +61,7 @@ const nextConfig = {
     formats: ['image/webp', 'image/avif'],
     minimumCacheTTL: 31536000, // 1 ano
     dangerouslyAllowSVG: true,
-    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    contentSecurityPolicy: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://tag.goadopt.io https://www.googletagmanager.com https://www.google-analytics.com; connect-src 'self' https://tag.goadopt.io https://www.google-analytics.com https://analytics.google.com; frame-src 'self' https://tag.goadopt.io;",
   },
 
   // Compressão
