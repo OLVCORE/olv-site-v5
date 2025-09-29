@@ -1,11 +1,21 @@
 import React from 'react';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import MainLayout from '../../../components/layout/MainLayout';
-import ImportCostCalculator from '../../../components/simulators/ImportCostCalculator';
 import ImportSimWrapper from '../../../components/simulators/ImportSimWrapper';
 import Icon from '../../../components/icons/Icon';
 import SimLayout from '../../../components/simulators/SimLayout';
 import RealtimeQuotes from '../../../components/radar/RealtimeQuotes';
+
+// Lazy load dos componentes pesados
+const ImportCostCalculator = dynamic(() => import('../../../components/simulators/ImportCostCalculator'), {
+  loading: () => (
+    <div className="flex items-center justify-center p-8">
+      <div className="w-8 h-8 border-4 border-gray-300 border-t-blue-600 rounded-full animate-spin"></div>
+    </div>
+  ),
+  ssr: false
+});
 
 export const metadata = {
   title: 'Simulador de Custos de Importação | OLV Internacional',

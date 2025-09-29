@@ -33,7 +33,7 @@ const PlatformHero: React.FC<PlatformHeroProps> = ({
       {/* Text Block */}
       <div className="flex-1 order-2 md:order-1 text-center md:text-left">
         <div className="flex items-center mb-6 relative">
-          <img src={platformLogo} alt={`${platformName} logo`} className="w-16 h-16 mr-4" />
+          <Image src={platformLogo} alt={`${platformName} logo`} width={64} height={64} className="mr-4" priority />
           <h1 className="text-4xl font-bold" style={{ color: platformColor }}>{platformName}</h1>
           {isBeta && (
             <span className="ml-3 px-3 py-1 text-xs font-semibold rounded-full bg-yellow-500/20 text-yellow-400 border border-yellow-500 absolute -top-2 right-0 md:static md:relative">Versão Beta</span>

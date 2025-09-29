@@ -1,11 +1,21 @@
 import React from 'react';
 import { Metadata } from 'next';
+import dynamic from 'next/dynamic';
 import MainLayout from '@/components/layout/MainLayout';
-import ExportCostCalculator from '@/components/simulators/ExportCostCalculator';
 import RealtimeQuotes from '@/components/radar/RealtimeQuotes';
 import Icon from '@/components/icons/Icon';
 import Link from 'next/link';
 import SimLayout from '@/components/simulators/SimLayout';
+
+// Lazy load do simulador de exportação
+const ExportCostCalculator = dynamic(() => import('@/components/simulators/ExportCostCalculator'), {
+  loading: () => (
+    <div className="flex items-center justify-center p-8">
+      <div className="w-8 h-8 border-4 border-gray-300 border-t-blue-600 rounded-full animate-spin"></div>
+    </div>
+  ),
+  ssr: false
+});
 
 export const metadata: Metadata = {
   title: 'Simulador de Custos de Exportação - OLV Internacional',

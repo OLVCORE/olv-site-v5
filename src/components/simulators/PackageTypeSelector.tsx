@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Image from "next/image";
 
 export type PackageKind =
   | "box"
@@ -43,7 +44,7 @@ export default function PackageTypeSelector({
               active ? "border-accent bg-accent/10" : "bg-gray-50 dark:bg-gray-800"
             } ${glow && !active ? "ring-2 ring-accent/50" : ""}`}
           >
-            <img src={k.icon} alt={k.label} className="w-6 h-6 mb-1" />
+            <Image src={k.icon} alt={k.label} width={24} height={24} className="mb-1" />
             <span className="text-[11px] leading-none">{k.label}</span>
           </button>
         );

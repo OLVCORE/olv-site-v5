@@ -1116,8 +1116,8 @@
     "slug": "Projects/olv-site-v5/src/app/simuladores/exportacao",
     "category": "Projects",
     "section": "Projects",
-    "excerpt": "export const metadata: Metadata =  ,  };    export default function SimuladorExportacaoPage()              calculator=             guide=           />                    );  }",
-    "searchText": "          export const metadata: metadata =  ,  };    export default function simuladorexportacaopage()              calculator=             guide=           />                    );  } "
+    "excerpt": "const ExportCostCalculator = dynamic(() => import('@/components/simulators/ExportCostCalculator'),  );    export const metadata: Metadata =  ,  };    export default function SimuladorExportacaoPage()              calculator=             guide=           />                    );  }",
+    "searchText": "             const exportcostcalculator = dynamic(() => import('@/components/simulators/exportcostcalculator'),  );    export const metadata: metadata =  ,  };    export default function simuladorexportacaopage()              calculator=             guide=           />                    );  } "
   },
   {
     "title": "frete",
@@ -1140,8 +1140,8 @@
     "slug": "Projects/olv-site-v5/src/app/simuladores/importacao",
     "category": "Projects",
     "section": "Projects",
-    "excerpt": "export const metadata =  ;    export default function ImportSimPage()              calculator=             guide=           />                    );  }",
-    "searchText": "          export const metadata =  ;    export default function importsimpage()              calculator=             guide=           />                    );  } "
+    "excerpt": "const ImportCostCalculator = dynamic(() => import('../../../components/simulators/ImportCostCalculator'),  );    export const metadata =  ;    export default function ImportSimPage()              calculator=             guide=           />                    );  }",
+    "searchText": "             const importcostcalculator = dynamic(() => import('../../../components/simulators/importcostcalculator'),  );    export const metadata =  ;    export default function importsimpage()              calculator=             guide=           />                    );  } "
   },
   {
     "title": "load-stuffing",

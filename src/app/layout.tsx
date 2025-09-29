@@ -1,4 +1,5 @@
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import GoAdoptScript from "@/components/GoAdoptScript";
 import "./globals.css";
 // GoAdopt já fornece compliance completo LGPD/GDPR
@@ -76,8 +77,10 @@ export default async function RootLayout({
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <head>
-        {/* Google Tag Manager */}
-        <script
+        {/* Google Tag Manager - Convertido para Next.js Script */}
+        <Script
+          id="gtm-script"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -88,14 +91,112 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         />
         {/* End Google Tag Manager */}
         
+        {/* Critical CSS Inline - Melhora LCP */}
+        <style dangerouslySetInnerHTML={{
+          __html: `
+            /* Critical CSS para LCP otimizado */
+            body { margin: 0; font-family: ${inter.style.fontFamily}; }
+            .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+            .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+            .btn-primary { background: #d4af37; color: #000; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block; font-weight: 600; }
+            .btn-primary:hover { background: #b8941f; }
+            .glass { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); }
+            .card-hover { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+            .card-hover:hover { transform: translateY(-4px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+            .animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+            @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+            .animate-spin { animation: spin 1s linear infinite; }
+            @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+            .shadow-lg { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+            .rounded-xl { border-radius: 0.75rem; }
+            .text-accent { color: #d4af37; }
+            .bg-accent { background-color: #d4af37; }
+            .border-accent { border-color: #d4af37; }
+            .hover\\:bg-accent:hover { background-color: #b8941f; }
+            .transition-all { transition-property: all; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
+            .duration-300 { transition-duration: 300ms; }
+            .opacity-60 { opacity: 0.6; }
+            .opacity-100 { opacity: 1; }
+            .flex { display: flex; }
+            .items-center { align-items: center; }
+            .justify-center { justify-content: center; }
+            .justify-between { justify-content: space-between; }
+            .gap-2 { gap: 0.5rem; }
+            .gap-4 { gap: 1rem; }
+            .p-6 { padding: 1.5rem; }
+            .px-4 { padding-left: 1rem; padding-right: 1rem; }
+            .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+            .mb-4 { margin-bottom: 1rem; }
+            .mb-6 { margin-bottom: 1.5rem; }
+            .text-white { color: #ffffff; }
+            .text-gray-900 { color: #111827; }
+            .text-gray-300 { color: #d1d5db; }
+            .text-gray-100 { color: #f3f4f6; }
+            .bg-gray-900 { background-color: #111827; }
+            .bg-gray-800 { background-color: #1f2937; }
+            .bg-gray-700 { background-color: #374151; }
+            .border-gray-200 { border-color: #e5e7eb; }
+            .border-gray-700 { border-color: #374151; }
+            .font-bold { font-weight: 700; }
+            .font-semibold { font-weight: 600; }
+            .text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+            .text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+            .text-2xl { font-size: 1.5rem; line-height: 2rem; }
+            .text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+            .w-6 { width: 1.5rem; }
+            .h-6 { height: 1.5rem; }
+            .w-8 { width: 2rem; }
+            .h-8 { height: 2rem; }
+            .min-h-screen { min-height: 100vh; }
+            .max-w-7xl { max-width: 80rem; }
+            .mx-auto { margin-left: auto; margin-right: auto; }
+            .overflow-hidden { overflow: hidden; }
+            .cursor-pointer { cursor: pointer; }
+            .relative { position: relative; }
+            .absolute { position: absolute; }
+            .inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+            .pointer-events-none { pointer-events: none; }
+            .border-2 { border-width: 2px; }
+            .border-4 { border-width: 4px; }
+            .border-gray-300 { border-color: #d1d5db; }
+            .border-t-blue-600 { border-top-color: #2563eb; }
+            .rounded-full { border-radius: 9999px; }
+            .text-center { text-align: center; }
+            .text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+            .leading-relaxed { line-height: 1.625; }
+            .list-decimal { list-style-type: decimal; }
+            .pl-4 { padding-left: 1rem; }
+            .space-y-2 > * + * { margin-top: 0.5rem; }
+            .space-y-4 > * + * { margin-top: 1rem; }
+            .space-y-8 > * + * { margin-top: 2rem; }
+            .inline-flex { display: inline-flex; }
+            .block { display: block; }
+            .hidden { display: none; }
+            .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0; }
+            /* Accessibility improvements */
+            :focus-visible { outline: 2px solid #d4af37; outline-offset: 2px; }
+            .focus\\:ring-2:focus { box-shadow: 0 0 0 2px #d4af37; }
+            .focus\\:outline-none:focus { outline: 2px solid #d4af37; outline-offset: 2px; }
+            button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid #d4af37; outline-offset: 2px; }
+            /* High contrast text for better accessibility */
+            .text-gray-600 { color: #374151; }
+            .text-gray-500 { color: #6b7280; }
+            .text-gray-400 { color: #9ca3af; }
+            @media (min-width: 768px) { .md\\:flex { display: flex; } .md\\:hidden { display: none; } }
+            @media (min-width: 1024px) { .lg\\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+          `
+        }} />
+        
         {/* CSP Meta Tag para GoAdopt - SEGURA */}
         <meta httpEquiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://tag.goadopt.io https://www.googletagmanager.com https://www.google-analytics.com https://www.google.com https://www.gstatic.com https://googleads.g.doubleclick.net https://vercel.live; connect-src 'self' 'unsafe-inline' https://tag.goadopt.io https://disclaimer-api.goadopt.io https://axeptio-api.goadopt.io https://stats.g.doubleclick.net https://www.google-analytics.com https://analytics.google.com https://www.google.com https://googleads.g.doubleclick.net https://www.googleadservices.com; frame-src 'self' 'unsafe-inline' https://tag.goadopt.io https://www.googletagmanager.com https://www.google.com https://vercel.live; img-src 'self' 'unsafe-inline' data: blob: https:; style-src 'self' 'unsafe-inline' https:; font-src 'self' 'unsafe-inline' data: https:;" />
         
         {/* ▶ Go Adopt LGPD - IMPLEMENTAÇÃO CORRETA APP ROUTER ▶ */}
         <meta name="adopt-website-id" content="1d3503e5-6e70-4135-906f-6c9840d27875" />
         
-        {/* Script de controle do comportamento GoAdopt */}
-        <script
+        {/* Script de controle do comportamento GoAdopt - Convertido para Next.js Script */}
+        <Script
+          id="goadopt-control"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               document.addEventListener('DOMContentLoaded', function() {
@@ -130,11 +231,77 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         
-        {/* Preload otimizado - apenas recursos essenciais */}
+        {/* Preload otimizado - recursos críticos para performance */}
+        <link rel="preload" href="/fonts/Inter.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" href="/icons/calculator.svg" as="image" type="image/svg+xml" />
+        <link rel="preload" href="/icons/info.svg" as="image" type="image/svg+xml" />
+        <link rel="preload" href="/icons/weight.svg" as="image" type="image/svg+xml" />
         {/* BANNER-HOME.jpeg removido do preload pois já tem priority={true} no componente */}
         
         {/* Carregamento não-bloqueante do CSS legado */}
         <link rel="stylesheet" href="/css/style.css" media="screen and (min-width: 769px)" />
+
+        {/* Structured Data para SEO otimizado */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "OLV Internacional",
+              "url": "https://olvinternacional.com.br",
+              "logo": "https://olvinternacional.com.br/images/logo.png",
+              "description": "Consultoria especializada em Supply Chain Global e Comércio Exterior para empresas industriais",
+              "foundingDate": "1989",
+              "address": {
+                "@type": "PostalAddress",
+                "addressCountry": "BR",
+                "addressRegion": "São Paulo",
+                "addressLocality": "São Paulo"
+              },
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "telephone": "+55-11-99999-9999",
+                "contactType": "customer service",
+                "availableLanguage": "Portuguese"
+              },
+              "sameAs": [
+                "https://www.linkedin.com/company/olv-internacional",
+                "https://www.instagram.com/olvinternacional"
+              ],
+              "hasOfferCatalog": {
+                "@type": "OfferCatalog",
+                "name": "Serviços de Comércio Exterior",
+                "itemListElement": [
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Consultoria em Importação",
+                      "description": "Consultoria especializada em importação para empresas industriais"
+                    }
+                  },
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Consultoria em Exportação",
+                      "description": "Consultoria especializada em exportação para empresas industriais"
+                    }
+                  },
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Logística Internacional",
+                      "description": "Soluções em logística internacional e supply chain"
+                    }
+                  }
+                ]
+              }
+            })
+          }}
+        />
 
         {/* Metadados adicionais para otimização de intenção do usuário */}
         <meta name="author" content="OLV Internacional" />

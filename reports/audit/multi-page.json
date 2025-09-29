@@ -1,0 +1,70 @@
+{
+  "/": {
+    "performance": "Error",
+    "accessibility": "Error",
+    "bestPractices": "Error",
+    "seo": "Error",
+    "error": "spawnSync C:\\Windows\\system32\\cmd.exe ENOBUFS"
+  },
+  "/sobre": {
+    "performance": "Error",
+    "accessibility": "Error",
+    "bestPractices": "Error",
+    "seo": "Error",
+    "error": "spawnSync C:\\Windows\\system32\\cmd.exe ENOBUFS"
+  },
+  "/solucoes": {
+    "performance": "Error",
+    "accessibility": "Error",
+    "bestPractices": "Error",
+    "seo": "Error",
+    "error": "spawnSync C:\\Windows\\system32\\cmd.exe ENOBUFS"
+  },
+  "/radar360": {
+    "performance": "Error",
+    "accessibility": "Error",
+    "bestPractices": "Error",
+    "seo": "Error",
+    "error": "Command failed: npx lighthouse \"https://olvinternacional.com.br/radar360\" --only-categories=performance,accessibility,best-practices,seo --quiet --output=json --chrome-flags=\"--headless\"\nUnhandled Rejection. Reason: Error: Protocol error (Page.enable): Protocol error (Page.enable): Session closed. Most likely the page has been closed.\n"
+  },
+  "/blog": {
+    "performance": "Error",
+    "accessibility": "Error",
+    "bestPractices": "Error",
+    "seo": "Error",
+    "error": "spawnSync C:\\Windows\\system32\\cmd.exe ENOBUFS"
+  },
+  "/faq": {
+    "performance": 26,
+    "accessibility": 95,
+    "bestPractices": 75,
+    "seo": 100,
+    "fcp": "6.7 s",
+    "lcp": "10.6 s",
+    "tbt": "2,880 ms",
+    "cls": "0",
+    "si": "37.5 s"
+  },
+  "/contato": {
+    "performance": 26,
+    "accessibility": 96,
+    "bestPractices": 75,
+    "seo": 100,
+    "fcp": "6.9 s",
+    "lcp": "14.8 s",
+    "tbt": "2,750 ms",
+    "cls": "0",
+    "si": "38.6 s"
+  },
+  "/simuladores/importacao": {
+    "performance": 38,
+    "accessibility": 82,
+    "bestPractices": 75,
+    "seo": 100,
+    "fcp": "2.1 s",
+    "lcp": "10.1 s",
+    "tbt": "2,750 ms",
+    "cls": "0",
+    "si": "6.6 s"
+  }
+}

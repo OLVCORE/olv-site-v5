@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import MainLayout from '../../components/layout/MainLayout';
 import HomeImage from '../../components/home/HomeImage';
-import { AnimatedCard, FadeIn } from '../../components/MicroInteractions';
+import { AnimatedCard, FadeIn } from '../../components/LazyMicroInteractions';
 import { OrganizationSchema } from '../../components/SeoSchema';
 import WhatsAppButton from '../../components/layout/WhatsAppButton';
 
