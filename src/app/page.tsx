@@ -91,10 +91,10 @@ export default function HomePage() {
                 A <span className="text-[#d4af37] font-semibold">OLV Internacional</span> é especializada em Supply Chain Global e Comércio Exterior para agroindústria, mineração, energia, petróleo e gás, metalurgia, bens de capital, máquinas e equipamentos, manufatura e logística industrial, entre outros.
               </p>
               <p className="mb-2 text-gray-300">
-                Com <span className="text-[#d4af37] font-semibold">experiência consolidada</span> em Supply Chain Global, nossa equipe possui expertise especializada em importação, exportação, regimes aduaneiros, benefícios fiscais e gestão de negócios para tornar empresas dos setores industriais competitivas internacionalmente.
+                apoia empresas dos setores industriais e de serviços com soluções que unem diagnóstico empresarial, procurement estratégico e comércio exterior. Nosso foco é ajudar sua empresa a comprar melhor, gerir fornecedores com eficiência, aplicar o capital de forma inteligente e expandir com segurança no mercado global.
               </p>
               <p className="mb-2 text-gray-300">
-                Atuamos como parceiro consultivo do Ecossistema OLV, oferecendo suporte especializado para empresas dos setores industriais que buscam importar insumos, exportar produtos acabados, expandir suas operações e operar com eficiência no mercado global.
+                Com mais de 35 anos de experiência em Supply Chain Global e Logística Internacional, atuamos como parceiros consultivos, simplificando operações complexas e transformando estratégias em resultados práticos e mensuráveis.
               </p>
               <p className="mb-2 text-gray-300">
                 Nossa abordagem visa simplificar operações complexas, otimizar processos através de Supply Chain Global e integrar estratégias com resultados práticos. Atuamos como extensão da sua equipe, sem ativos próprios, focando exclusivamente na entrega de valor e resultados mensuráveis.
