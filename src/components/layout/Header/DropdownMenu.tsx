@@ -109,7 +109,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({ label, items, className = '
                   </div>
                 )}
                 <div className="flex-1 min-w-0">
-                  <div className="font-medium text-gray-900 dark:text-white group-hover:text-[#d4af37] transition-colors duration-150 text-sm">
+                  <div className="font-medium text-white group-hover:text-[#d4af37] transition-colors duration-150 text-sm">
                     {item.label}
                   </div>
                 </div>
