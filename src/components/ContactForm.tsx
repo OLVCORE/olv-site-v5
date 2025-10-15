@@ -342,13 +342,13 @@ export default function ContactForm() {
           onClick={closeModal}
         >
           <div 
-            className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-8 relative animate-slideIn"
+            className="bg-white dark:bg-[#0e1425] rounded-2xl shadow-2xl max-w-md w-full p-8 relative animate-slideIn border border-gray-200 dark:border-[#d4af37]/30"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Botão Fechar */}
             <button
               onClick={closeModal}
-              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:text-gray-300 dark:hover:text-[#d4af37] transition-colors"
               aria-label="Fechar"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -358,8 +358,8 @@ export default function ContactForm() {
 
             {/* Ícone de Sucesso */}
             <div className="flex justify-center mb-6">
-              <div className="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
-                <svg className="w-10 h-10 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
+              <div className="w-20 h-20 bg-green-100 dark:bg-green-500/20 rounded-full flex items-center justify-center border-2 border-green-500 dark:border-green-400">
+                <svg className="w-10 h-10 text-green-600 dark:text-green-300" fill="currentColor" viewBox="0 0 20 20">
                   <path
                     fillRule="evenodd"
                     d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
@@ -373,17 +373,17 @@ export default function ContactForm() {
             <h3 className="text-2xl font-bold text-center text-gray-900 dark:text-white mb-3">
               Mensagem Enviada com Sucesso!
             </h3>
-            <p className="text-center text-gray-600 dark:text-gray-300 mb-8">
+            <p className="text-center text-gray-600 dark:text-gray-200 mb-8">
               Agradecemos seu contato. Nossa equipe retornará em breve.
             </p>
 
             {/* Seção de Contato Urgente */}
-            <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-xl p-6 border border-green-200 dark:border-green-800">
+            <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-[#1a2332] dark:to-[#1a2f32] rounded-xl p-6 border border-green-200 dark:border-green-500/30">
               <div className="flex items-center justify-center mb-3">
-                <svg className="w-5 h-5 text-green-600 dark:text-green-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-5 h-5 text-green-600 dark:text-green-300 mr-2" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                 </svg>
-                <p className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                <p className="text-sm font-semibold text-gray-700 dark:text-white">
                   Precisa de atendimento urgente?
                 </p>
               </div>
@@ -398,7 +398,7 @@ export default function ContactForm() {
                 Falar com Consultor Agora
               </button>
 
-              <p className="text-xs text-center text-gray-500 dark:text-gray-400 mt-3">
+              <p className="text-xs text-center text-gray-500 dark:text-gray-300 mt-3">
                 Clique para abrir o WhatsApp e agendar uma reunião
               </p>
             </div>
