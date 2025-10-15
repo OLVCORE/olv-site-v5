@@ -131,10 +131,10 @@ export default function ContactForm() {
 
   return (
     <section 
-      className="contact-form-container bg-white dark:bg-[#0e1425] rounded-lg shadow-lg p-6 mb-8 border border-gray-200 dark:border-[#d4af37]/30"
+      className="contact-form-container rounded-lg shadow-lg p-6 mb-8"
       style={{
-        backgroundColor: 'var(--bg-color, #ffffff)',
-        border: '1px solid var(--border-color, #e5e7eb)',
+        backgroundColor: '#0e1425',
+        border: '1px solid rgba(212, 175, 55, 0.3)',
       }}
     >
       <h3 

@@ -19,9 +19,12 @@ export default function ContatoPage() {
         <section className="section">
           <div className="container">
             <div className="bg-gray-800 dark:bg-gray-900 p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
-              <h2 className="flex items-center gap-2 text-2xl md:text-3xl font-bold text-white mb-4">
-                <span className="text-blue-400">📱</span> Fale com a OLV Internacional
-              </h2>
+                    <h2 className="flex items-center gap-3 text-2xl md:text-3xl font-bold text-white mb-4">
+                      <svg className="w-8 h-8 text-blue-400" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                      </svg>
+                      Fale com a OLV Internacional
+                    </h2>
               <p className="text-lg text-gray-300 mb-6">
                 Estamos aqui para conectar sua empresa dos setores industriais ao mundo. Seja para tirar dúvidas, solicitar uma proposta 
                 ou conhecer melhor nossas soluções em Supply Chain Global e Comércio Exterior, nossa equipe está pronta para atendê-lo. Preencha o formulário 
@@ -41,38 +44,56 @@ export default function ContatoPage() {
 
             {/* INFORMAÇÕES DE CONTATO */}
             <div className="w-full lg:w-1/3">
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
-                <h3 className="text-xl font-bold mb-6 text-gray-900 dark:text-white">
+              <div 
+                className="rounded-lg shadow-lg p-6 mb-8"
+                style={{
+                  backgroundColor: '#0e1425',
+                  border: '1px solid rgba(212, 175, 55, 0.3)',
+                }}
+              >
+                <h3 
+                  className="text-xl font-bold mb-6"
+                  style={{ color: '#22d3ee' }}
+                >
                   Informações de Contato
                 </h3>
                 <div className="space-y-6">
                   <div>
-                    <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                    <h4 
+                      className="text-lg font-semibold mb-2"
+                      style={{ color: '#22d3ee' }}
+                    >
                       Atendimento
                     </h4>
-                    <p className="text-gray-700 dark:text-gray-300 mb-1">
+                    <p className="mb-1" style={{ color: '#ffffff' }}>
                       <strong>E-mail:</strong> consultores@olvinternacional.com.br
                     </p>
-                    <p className="text-gray-700 dark:text-gray-300">
+                    <p style={{ color: '#ffffff' }}>
                       <strong>Telefone:</strong> +55 (11) 2675-1446
                     </p>
                   </div>
 
                   <div>
-                    <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                    <h4 
+                      className="text-lg font-semibold mb-2"
+                      style={{ color: '#22d3ee' }}
+                    >
                       Horário de Atendimento
                     </h4>
-                    <p className="text-gray-700 dark:text-gray-300">
+                    <p style={{ color: '#ffffff' }}>
                       Segunda a Sexta: 08:00 às 18:00<br />
                       Sábados, Domingos e Feriados: Fechado
                     </p>
                   </div>
 
                   <div>
-                    <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                    <h4 
+                      className="text-lg font-semibold mb-2"
+                      style={{ color: '#22d3ee' }}
+                    >
                       Endereço
                     </h4>
-                    <p className="text-gray-700 dark:text-gray-300">
+                    <p style={{ color: '#ffffff' }}>
                       Av. Paulista, 1471, Conjunto 1010<br />
                       Bela Vista, São Paulo - SP<br />
                       CEP: 01311-927
@@ -106,9 +127,23 @@ export default function ContatoPage() {
                 </div>
               </div>
 
-              <div className="bg-primary text-on-primary rounded-lg shadow-lg p-6">
-                <h3 className="text-xl font-bold mb-4">Precisa de atendimento urgente?</h3>
-                <p className="mb-6">
+              <div 
+                className="rounded-lg shadow-lg p-6"
+                style={{
+                  backgroundColor: '#1a2332',
+                  border: '1px solid rgba(212, 175, 55, 0.3)',
+                }}
+              >
+                <h3 
+                  className="text-xl font-bold mb-4"
+                  style={{ color: '#22d3ee' }}
+                >
+                  Precisa de atendimento urgente?
+                </h3>
+                <p 
+                  className="mb-6"
+                  style={{ color: '#ffffff' }}
+                >
                   Nossa equipe pode entrar em contato com você imediatamente para resolver seu problema.
                 </p>
                 <a 
