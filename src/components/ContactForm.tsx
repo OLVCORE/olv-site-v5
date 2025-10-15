@@ -130,8 +130,22 @@ export default function ContactForm() {
   };
 
   return (
-    <section className="contact-form-container bg-white dark:bg-[#0e1425] rounded-lg shadow-lg p-6 mb-8 border border-gray-200 dark:border-[#d4af37]/30">
-      <h3 className="title-cyan text-xl font-bold mb-6 text-gray-900 dark:text-cyan-400">
+    <section 
+      className="contact-form-container bg-white dark:bg-[#0e1425] rounded-lg shadow-lg p-6 mb-8 border border-gray-200 dark:border-[#d4af37]/30"
+      style={{
+        backgroundColor: 'var(--bg-color, #ffffff)',
+        border: '1px solid var(--border-color, #e5e7eb)',
+      }}
+    >
+      <h3 
+        className="title-cyan text-xl font-bold mb-6"
+        style={{
+          color: '#22d3ee',
+          fontWeight: 'bold',
+          fontSize: '1.25rem',
+          marginBottom: '1.5rem',
+        }}
+      >
         Envie-nos uma mensagem
       </h3>
 
@@ -158,7 +172,7 @@ export default function ContactForm() {
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label htmlFor="nome" className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
+            <label htmlFor="nome" className="block text-sm font-medium mb-1" style={{ color: '#ffffff' }}>
               Nome completo *
             </label>
             <input
@@ -170,11 +184,21 @@ export default function ContactForm() {
               required
               disabled={isSubmitting}
               placeholder="Digite seu nome completo"
-              className="w-full px-4 py-2 border border-gray-300 dark:border-[#d4af37]/50 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-[#d4af37] dark:focus:border-[#d4af37] bg-white dark:bg-[#1a2332] text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full px-4 py-2 border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              style={{
+                color: '#ffffff',
+                backgroundColor: '#1a2332',
+                borderColor: 'rgba(212, 175, 55, 0.5)',
+                borderWidth: '1px',
+                borderStyle: 'solid',
+                borderRadius: '0.5rem',
+                padding: '0.5rem 1rem',
+                width: '100%',
+              }}
             />
           </div>
           <div>
-            <label htmlFor="empresa" className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
+            <label htmlFor="empresa" className="block text-sm font-medium mb-1" style={{ color: '#ffffff' }}>
               Empresa *
             </label>
             <input
@@ -186,14 +210,24 @@ export default function ContactForm() {
               required
               disabled={isSubmitting}
               placeholder="Nome da sua empresa"
-              className="w-full px-4 py-2 border border-gray-300 dark:border-[#d4af37]/50 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-[#d4af37] dark:focus:border-[#d4af37] bg-white dark:bg-[#1a2332] text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full px-4 py-2 border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              style={{
+                color: '#ffffff',
+                backgroundColor: '#1a2332',
+                borderColor: 'rgba(212, 175, 55, 0.5)',
+                borderWidth: '1px',
+                borderStyle: 'solid',
+                borderRadius: '0.5rem',
+                padding: '0.5rem 1rem',
+                width: '100%',
+              }}
             />
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
+            <label htmlFor="email" className="block text-sm font-medium mb-1" style={{ color: '#ffffff' }}>
               E-mail corporativo *
             </label>
             <input
@@ -205,11 +239,21 @@ export default function ContactForm() {
               required
               disabled={isSubmitting}
               placeholder="seu.email@empresa.com.br"
-              className="w-full px-4 py-2 border border-gray-300 dark:border-[#d4af37]/50 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-[#d4af37] dark:focus:border-[#d4af37] bg-white dark:bg-[#1a2332] text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full px-4 py-2 border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              style={{
+                color: '#ffffff',
+                backgroundColor: '#1a2332',
+                borderColor: 'rgba(212, 175, 55, 0.5)',
+                borderWidth: '1px',
+                borderStyle: 'solid',
+                borderRadius: '0.5rem',
+                padding: '0.5rem 1rem',
+                width: '100%',
+              }}
             />
           </div>
           <div>
-            <label htmlFor="telefone" className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
+            <label htmlFor="telefone" className="block text-sm font-medium mb-1" style={{ color: '#ffffff' }}>
               Telefone com DDD *
             </label>
             <input
@@ -221,13 +265,23 @@ export default function ContactForm() {
               required
               disabled={isSubmitting}
               placeholder="(11) 99999-9999"
-              className="w-full px-4 py-2 border border-gray-300 dark:border-[#d4af37]/50 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-[#d4af37] dark:focus:border-[#d4af37] bg-white dark:bg-[#1a2332] text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full px-4 py-2 border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              style={{
+                color: '#ffffff',
+                backgroundColor: '#1a2332',
+                borderColor: 'rgba(212, 175, 55, 0.5)',
+                borderWidth: '1px',
+                borderStyle: 'solid',
+                borderRadius: '0.5rem',
+                padding: '0.5rem 1rem',
+                width: '100%',
+              }}
             />
           </div>
         </div>
 
         <div>
-          <label htmlFor="departamento" className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
+          <label htmlFor="departamento" className="block text-sm font-medium mb-1" style={{ color: '#ffffff' }}>
             Departamento *
           </label>
           <select
@@ -237,7 +291,17 @@ export default function ContactForm() {
             onChange={handleChange}
             required
             disabled={isSubmitting}
-            className="w-full px-4 py-2 border border-gray-300 dark:border-[#d4af37]/50 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-[#d4af37] dark:focus:border-[#d4af37] bg-white dark:bg-[#1a2332] text-gray-900 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full px-4 py-2 border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            style={{
+              color: '#ffffff',
+              backgroundColor: '#1a2332',
+              borderColor: 'rgba(212, 175, 55, 0.5)',
+              borderWidth: '1px',
+              borderStyle: 'solid',
+              borderRadius: '0.5rem',
+              padding: '0.5rem 1rem',
+              width: '100%',
+            }}
           >
             <option value="" className="dark:text-white dark:bg-[#1a2332]">Selecione o departamento</option>
             <option value="projetos" className="dark:text-white dark:bg-[#1a2332]">Projetos</option>
@@ -246,7 +310,7 @@ export default function ContactForm() {
         </div>
 
         <div>
-          <label htmlFor="assunto" className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
+          <label htmlFor="assunto" className="block text-sm font-medium mb-1" style={{ color: '#ffffff' }}>
             Assunto *
           </label>
           <select
@@ -256,7 +320,17 @@ export default function ContactForm() {
             onChange={handleChange}
             required
             disabled={isSubmitting}
-            className="w-full px-4 py-2 border border-gray-300 dark:border-[#d4af37]/50 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-[#d4af37] dark:focus:border-[#d4af37] bg-white dark:bg-[#1a2332] text-gray-900 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full px-4 py-2 border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            style={{
+              color: '#ffffff',
+              backgroundColor: '#1a2332',
+              borderColor: 'rgba(212, 175, 55, 0.5)',
+              borderWidth: '1px',
+              borderStyle: 'solid',
+              borderRadius: '0.5rem',
+              padding: '0.5rem 1rem',
+              width: '100%',
+            }}
           >
             <option value="" className="dark:text-white dark:bg-[#1a2332]">Selecione uma opção</option>
             <option value="comercial" className="dark:text-white dark:bg-[#1a2332]">Contato Comercial</option>
@@ -270,7 +344,7 @@ export default function ContactForm() {
         </div>
 
         <div>
-          <label htmlFor="mensagem" className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
+          <label htmlFor="mensagem" className="block text-sm font-medium mb-1" style={{ color: '#ffffff' }}>
             Mensagem *
           </label>
           <textarea
@@ -281,8 +355,19 @@ export default function ContactForm() {
             onChange={handleChange}
             required
             disabled={isSubmitting}
-            className="w-full px-4 py-2 border border-gray-300 dark:border-[#d4af37]/50 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-[#d4af37] dark:focus:border-[#d4af37] bg-white dark:bg-[#1a2332] text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full px-4 py-2 border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
             placeholder="Descreva sua necessidade, dúvida ou como podemos ajudar sua empresa..."
+            style={{
+              color: '#ffffff',
+              backgroundColor: '#1a2332',
+              borderColor: 'rgba(212, 175, 55, 0.5)',
+              borderWidth: '1px',
+              borderStyle: 'solid',
+              borderRadius: '0.5rem',
+              padding: '0.5rem 1rem',
+              width: '100%',
+              minHeight: '120px',
+            }}
           ></textarea>
         </div>
 
