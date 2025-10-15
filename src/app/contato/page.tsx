@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import MainLayout from '../../components/layout/MainLayout';
+import ContactForm from '../../components/ContactForm';
 
 export const metadata = {
   title: 'Contato | OLV Internacional - Consultoria em Supply Chain Global para Setores Industriais',
@@ -36,122 +37,7 @@ export default function ContatoPage() {
           <div className="flex flex-col lg:flex-row gap-8">
             {/* FORMULÁRIO DE CONTATO */}
             <div className="w-full lg:w-2/3">
-              <section className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
-                <h3 className="text-xl font-bold mb-6 text-gray-900 dark:text-white">
-                  Envie-nos uma mensagem
-                </h3>
-                <form className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <label htmlFor="nome" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        Nome completo *
-                      </label>
-                      <input
-                        type="text"
-                        id="nome"
-                        name="nome"
-                        required
-                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="empresa" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        Empresa *
-                      </label>
-                      <input
-                        type="text"
-                        id="empresa"
-                        name="empresa"
-                        required
-                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        E-mail corporativo *
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        required
-                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="telefone" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        Telefone com DDD *
-                      </label>
-                      <input
-                        type="tel"
-                        id="telefone"
-                        name="telefone"
-                        required
-                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label htmlFor="assunto" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                      Assunto *
-                    </label>
-                    <select
-                      id="assunto"
-                      name="assunto"
-                      required
-                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                    >
-                      <option value="">Selecione uma opção</option>
-                      <option value="comercial">Contato Comercial</option>
-                      <option value="suporte">Suporte Técnico</option>
-                      <option value="consultoria">Consultoria Estratégica</option>
-                      <option value="parceria">Proposta de Parceria</option>
-                      <option value="imprensa">Assessoria de Imprensa</option>
-                      <option value="outro">Outro</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label htmlFor="mensagem" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                      Mensagem *
-                    </label>
-                    <textarea
-                      id="mensagem"
-                      name="mensagem"
-                      rows={5}
-                      required
-                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                      placeholder="Descreva como podemos ajudar..."
-                    ></textarea>
-                  </div>
-
-                  <div className="flex items-start">
-                    <div className="flex items-center h-5">
-                      <input
-                        id="termos"
-                        name="termos"
-                        type="checkbox"
-                        required
-                        className="w-4 h-4 border border-gray-300 dark:border-gray-600 rounded focus:ring-blue-500"
-                      />
-                    </div>
-                    <label htmlFor="termos" className="ml-2 text-sm text-gray-700 dark:text-gray-300">
-                      Concordo com os <Link href="/politica" className="text-accent hover:underline">termos de privacidade</Link> e com o recebimento de comunicações.
-                    </label>
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="w-full px-6 py-3 btn btn-primary font-medium"
-                  >
-                    Enviar Mensagem
-                  </button>
-                </form>
-              </section>
+              <ContactForm />
             </div>
 
             {/* INFORMAÇÕES DE CONTATO */}
