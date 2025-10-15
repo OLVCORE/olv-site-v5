@@ -55,38 +55,69 @@ img, video, canvas, audio, iframe, embed, object {
   animation: slideIn 0.3s ease-out;
 }
 
-/* FORÇA ESTILOS DO FORMULÁRIO DE CONTATO - SOBRESCREVE CSS GLOBAL */
+/* FORÇA ESTILOS DO FORMULÁRIO DE CONTATO - SOBRESCREVE TUDO */
+.contact-form-container h3,
+.contact-form-container .title-cyan {
+  color: #22d3ee !important;
+  font-weight: bold !important;
+}
+
 .contact-form-container input,
 .contact-form-container select,
 .contact-form-container textarea {
   color: #111827 !important;
   background-color: #ffffff !important;
+  border: 1px solid #d1d5db !important;
 }
 
-.dark .contact-form-container input,
-.dark .contact-form-container select,
-.dark .contact-form-container textarea {
+.contact-form-container input::placeholder,
+.contact-form-container textarea::placeholder {
+  color: #6b7280 !important;
+}
+
+/* DARK MODE - FORÇA ABSOLUTA */
+html.dark .contact-form-container h3,
+html.dark .contact-form-container .title-cyan,
+body.dark .contact-form-container h3,
+body.dark .contact-form-container .title-cyan,
+.theme-dark .contact-form-container h3,
+.theme-dark .contact-form-container .title-cyan {
+  color: #22d3ee !important;
+}
+
+html.dark .contact-form-container input,
+html.dark .contact-form-container select,
+html.dark .contact-form-container textarea,
+body.dark .contact-form-container input,
+body.dark .contact-form-container select,
+body.dark .contact-form-container textarea,
+.theme-dark .contact-form-container input,
+.theme-dark .contact-form-container select,
+.theme-dark .contact-form-container textarea {
   color: #ffffff !important;
   background-color: #1a2332 !important;
   border-color: rgba(212, 175, 55, 0.5) !important;
 }
 
-.dark .contact-form-container input::placeholder,
-.dark .contact-form-container textarea::placeholder {
+html.dark .contact-form-container input::placeholder,
+html.dark .contact-form-container textarea::placeholder,
+body.dark .contact-form-container input::placeholder,
+body.dark .contact-form-container textarea::placeholder,
+.theme-dark .contact-form-container input::placeholder,
+.theme-dark .contact-form-container textarea::placeholder {
   color: #d1d5db !important;
 }
 
-.dark .contact-form-container select option {
+html.dark .contact-form-container select option,
+body.dark .contact-form-container select option,
+.theme-dark .contact-form-container select option {
   color: #ffffff !important;
   background-color: #1a2332 !important;
 }
 
-.dark .contact-form-container .title-cyan {
-  color: #22d3ee !important;
-}
-
-/* FORÇA CORES DOS DROPDOWNS */
-.dark .contact-form-container select:focus {
+html.dark .contact-form-container select:focus,
+body.dark .contact-form-container select:focus,
+.theme-dark .contact-form-container select:focus {
   border-color: #d4af37 !important;
   box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1) !important;
 }

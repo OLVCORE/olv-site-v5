@@ -170,8 +170,12 @@ export async function POST(req: Request) {
   try {
     const data: ContactFormData = await req.json();
 
+    console.log('=== CONTACT FORM SUBMISSION ===');
+    console.log('Data received:', JSON.stringify(data, null, 2));
+
     // Validação server-side
     if (!data.nome || !data.empresa || !data.email || !data.telefone || !data.departamento || !data.assunto || !data.mensagem) {
+      console.error('Validation failed: Missing required fields');
       return NextResponse.json(
         { success: false, error: 'Todos os campos obrigatórios devem ser preenchidos.' },
         { status: 400 }
@@ -181,28 +185,34 @@ export async function POST(req: Request) {
     // Validação básica de email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(data.email)) {
+      console.error('Validation failed: Invalid email format');
       return NextResponse.json(
         { success: false, error: 'E-mail inválido.' },
         { status: 400 }
       );
     }
 
-    // Enviar email
+    console.log('Validation passed. Attempting to send email...');
+
+    // Enviar email - BLOQUEANTE para capturar erros
     try {
       await sendContactEmail(data);
+      console.log('✅ EMAIL SENT SUCCESSFULLY!');
+      return NextResponse.json({ 
+        success: true, 
+        message: 'Mensagem enviada com sucesso! Entraremos em contato em breve.' 
+      });
     } catch (emailError) {
-      console.error('Erro ao enviar email de contato:', emailError);
-      // Não retornar erro para o usuário para evitar exposição de detalhes do servidor
+      console.error('❌ EMAIL SENDING FAILED:', emailError);
+      return NextResponse.json(
+        { success: false, error: 'Erro ao enviar email. Verifique a configuração SMTP.' },
+        { status: 500 }
+      );
     }
-
-    return NextResponse.json({ 
-      success: true, 
-      message: 'Mensagem enviada com sucesso! Entraremos em contato em breve.' 
-    });
   } catch (err) {
-    console.error('Erro na API de contato:', err);
+    console.error('Contact API error', err);
     return NextResponse.json(
-      { success: false, error: 'Erro ao processar sua solicitação. Por favor, tente novamente.' },
+      { success: false, error: 'Erro interno do servidor.' },
       { status: 500 }
     );
   }
