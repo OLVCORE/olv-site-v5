@@ -130,8 +130,8 @@ export default function ContactForm() {
   };
 
   return (
-    <section className="bg-white dark:bg-[#0e1425] rounded-lg shadow-lg p-6 mb-8 border border-gray-200 dark:border-[#d4af37]/30">
-      <h3 className="text-xl font-bold mb-6 text-gray-900 dark:text-cyan-400">
+    <section className="contact-form-container bg-white dark:bg-[#0e1425] rounded-lg shadow-lg p-6 mb-8 border border-gray-200 dark:border-[#d4af37]/30">
+      <h3 className="title-cyan text-xl font-bold mb-6 text-gray-900 dark:text-cyan-400">
         Envie-nos uma mensagem
       </h3>
 
