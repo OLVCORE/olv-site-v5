@@ -12,20 +12,31 @@ interface ContactFormData {
 }
 
 async function sendContactEmail(data: ContactFormData) {
+  console.log('=== DEBUG EMAIL CONFIG ===');
+  console.log('EMAIL_HOST:', process.env.EMAIL_HOST ? 'SET' : 'NOT SET');
+  console.log('EMAIL_PORT:', process.env.EMAIL_PORT || 'NOT SET');
+  console.log('EMAIL_USER:', process.env.EMAIL_USER ? 'SET' : 'NOT SET');
+  console.log('EMAIL_PASS:', process.env.EMAIL_PASS ? 'SET' : 'NOT SET');
+  
   if (!process.env.EMAIL_HOST) {
-    console.warn('EMAIL_HOST not set. Skipping mail send.');
-    return;
+    console.error('EMAIL_HOST not set. Cannot send email.');
+    throw new Error('EMAIL_HOST environment variable not configured');
   }
 
-  const transporter = nodemailer.createTransport({
-    host: process.env.EMAIL_HOST,
-    port: Number(process.env.EMAIL_PORT) || 465,
-    secure: true,
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-  });
+  try {
+    const transporter = nodemailer.createTransport({
+      host: process.env.EMAIL_HOST,
+      port: Number(process.env.EMAIL_PORT) || 465,
+      secure: true,
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    // Test connection
+    await transporter.verify();
+    console.log('SMTP connection verified successfully');
 
   // Mapear códigos de departamento para labels e emails
   const departamentoInfo: Record<string, { label: string; email: string }> = {
@@ -140,13 +151,19 @@ async function sendContactEmail(data: ContactFormData) {
     </html>
   `;
 
-  await transporter.sendMail({
-    from: 'OLV Internacional <consultores@olvinternacional.com.br>',
-    to: departamento.email,
-    subject: `Nova Mensagem - ${departamento.label} - ${assuntoLabel}`,
-    html,
-    replyTo: data.email,
-  });
+    await transporter.sendMail({
+      from: 'OLV Internacional <consultores@olvinternacional.com.br>',
+      to: departamento.email,
+      subject: `Nova Mensagem - ${departamento.label} - ${assuntoLabel}`,
+      html,
+      replyTo: data.email,
+    });
+    
+    console.log('Email sent successfully to:', departamento.email);
+  } catch (error) {
+    console.error('Error sending email:', error);
+    throw error;
+  }
 }
 
 export async function POST(req: Request) {

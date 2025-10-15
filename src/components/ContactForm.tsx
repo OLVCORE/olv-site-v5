@@ -131,7 +131,7 @@ export default function ContactForm() {
 
   return (
     <section className="bg-white dark:bg-[#0e1425] rounded-lg shadow-lg p-6 mb-8 border border-gray-200 dark:border-[#d4af37]/30">
-      <h3 className="text-xl font-bold mb-6 text-gray-900 dark:text-white">
+      <h3 className="text-xl font-bold mb-6 text-gray-900 dark:text-cyan-400">
         Envie-nos uma mensagem
       </h3>
 
@@ -169,7 +169,8 @@ export default function ContactForm() {
               onChange={handleChange}
               required
               disabled={isSubmitting}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-[#d4af37]/50 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-[#d4af37] dark:focus:border-[#d4af37] bg-white dark:bg-[#1a2332] text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
+              placeholder="Digite seu nome completo"
+              className="w-full px-4 py-2 border border-gray-300 dark:border-[#d4af37]/50 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-[#d4af37] dark:focus:border-[#d4af37] bg-white dark:bg-[#1a2332] text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
             />
           </div>
           <div>
@@ -184,7 +185,8 @@ export default function ContactForm() {
               onChange={handleChange}
               required
               disabled={isSubmitting}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-[#d4af37]/50 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-[#d4af37] dark:focus:border-[#d4af37] bg-white dark:bg-[#1a2332] text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
+              placeholder="Nome da sua empresa"
+              className="w-full px-4 py-2 border border-gray-300 dark:border-[#d4af37]/50 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-[#d4af37] dark:focus:border-[#d4af37] bg-white dark:bg-[#1a2332] text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
             />
           </div>
         </div>
@@ -202,7 +204,8 @@ export default function ContactForm() {
               onChange={handleChange}
               required
               disabled={isSubmitting}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-[#d4af37]/50 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-[#d4af37] dark:focus:border-[#d4af37] bg-white dark:bg-[#1a2332] text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
+              placeholder="seu.email@empresa.com.br"
+              className="w-full px-4 py-2 border border-gray-300 dark:border-[#d4af37]/50 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-[#d4af37] dark:focus:border-[#d4af37] bg-white dark:bg-[#1a2332] text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
             />
           </div>
           <div>
@@ -217,7 +220,8 @@ export default function ContactForm() {
               onChange={handleChange}
               required
               disabled={isSubmitting}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-[#d4af37]/50 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-[#d4af37] dark:focus:border-[#d4af37] bg-white dark:bg-[#1a2332] text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
+              placeholder="(11) 99999-9999"
+              className="w-full px-4 py-2 border border-gray-300 dark:border-[#d4af37]/50 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-[#d4af37] dark:focus:border-[#d4af37] bg-white dark:bg-[#1a2332] text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
             />
           </div>
         </div>
@@ -235,9 +239,9 @@ export default function ContactForm() {
             disabled={isSubmitting}
             className="w-full px-4 py-2 border border-gray-300 dark:border-[#d4af37]/50 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-[#d4af37] dark:focus:border-[#d4af37] bg-white dark:bg-[#1a2332] text-gray-900 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <option value="">Selecione o departamento</option>
-            <option value="projetos">Projetos</option>
-            <option value="atendimento">Atendimento</option>
+            <option value="" className="dark:text-white dark:bg-[#1a2332]">Selecione o departamento</option>
+            <option value="projetos" className="dark:text-white dark:bg-[#1a2332]">Projetos</option>
+            <option value="atendimento" className="dark:text-white dark:bg-[#1a2332]">Atendimento</option>
           </select>
         </div>
 
@@ -254,14 +258,14 @@ export default function ContactForm() {
             disabled={isSubmitting}
             className="w-full px-4 py-2 border border-gray-300 dark:border-[#d4af37]/50 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-[#d4af37] dark:focus:border-[#d4af37] bg-white dark:bg-[#1a2332] text-gray-900 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <option value="">Selecione uma opção</option>
-            <option value="comercial">Contato Comercial</option>
-            <option value="suporte">Suporte Técnico</option>
-            <option value="consultoria">Consultoria Estratégica</option>
-            <option value="parceria">Proposta de Parceria</option>
-            <option value="imprensa">Assessoria de Imprensa</option>
-            <option value="totvs">Tecnologia TOTVS</option>
-            <option value="outro">Outro</option>
+            <option value="" className="dark:text-white dark:bg-[#1a2332]">Selecione uma opção</option>
+            <option value="comercial" className="dark:text-white dark:bg-[#1a2332]">Contato Comercial</option>
+            <option value="suporte" className="dark:text-white dark:bg-[#1a2332]">Suporte Técnico</option>
+            <option value="consultoria" className="dark:text-white dark:bg-[#1a2332]">Consultoria Estratégica</option>
+            <option value="parceria" className="dark:text-white dark:bg-[#1a2332]">Proposta de Parceria</option>
+            <option value="imprensa" className="dark:text-white dark:bg-[#1a2332]">Assessoria de Imprensa</option>
+            <option value="totvs" className="dark:text-white dark:bg-[#1a2332]">Tecnologia TOTVS</option>
+            <option value="outro" className="dark:text-white dark:bg-[#1a2332]">Outro</option>
           </select>
         </div>
 
@@ -277,8 +281,8 @@ export default function ContactForm() {
             onChange={handleChange}
             required
             disabled={isSubmitting}
-            className="w-full px-4 py-2 border border-gray-300 dark:border-[#d4af37]/50 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-[#d4af37] dark:focus:border-[#d4af37] bg-white dark:bg-[#1a2332] text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
-            placeholder="Descreva como podemos ajudar..."
+            className="w-full px-4 py-2 border border-gray-300 dark:border-[#d4af37]/50 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-[#d4af37] dark:focus:border-[#d4af37] bg-white dark:bg-[#1a2332] text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            placeholder="Descreva sua necessidade, dúvida ou como podemos ajudar sua empresa..."
           ></textarea>
         </div>
 
