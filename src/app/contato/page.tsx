@@ -1,5 +1,4 @@
 import React from 'react';
-import Link from 'next/link';
 import MainLayout from '../../components/layout/MainLayout';
 import ContactForm from '../../components/ContactForm';
 
