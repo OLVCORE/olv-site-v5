@@ -130,7 +130,7 @@ export default function ContactForm() {
   };
 
   return (
-    <section className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
+    <section className="bg-white dark:bg-[#0e1425] rounded-lg shadow-lg p-6 mb-8 border border-gray-200 dark:border-[#d4af37]/30">
       <h3 className="text-xl font-bold mb-6 text-gray-900 dark:text-white">
         Envie-nos uma mensagem
       </h3>
@@ -158,7 +158,7 @@ export default function ContactForm() {
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label htmlFor="nome" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label htmlFor="nome" className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
               Nome completo *
             </label>
             <input
@@ -169,11 +169,11 @@ export default function ContactForm() {
               onChange={handleChange}
               required
               disabled={isSubmitting}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full px-4 py-2 border border-gray-300 dark:border-[#d4af37]/50 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-[#d4af37] dark:focus:border-[#d4af37] bg-white dark:bg-[#1a2332] text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
             />
           </div>
           <div>
-            <label htmlFor="empresa" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label htmlFor="empresa" className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
               Empresa *
             </label>
             <input
@@ -184,14 +184,14 @@ export default function ContactForm() {
               onChange={handleChange}
               required
               disabled={isSubmitting}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full px-4 py-2 border border-gray-300 dark:border-[#d4af37]/50 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-[#d4af37] dark:focus:border-[#d4af37] bg-white dark:bg-[#1a2332] text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
             />
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
               E-mail corporativo *
             </label>
             <input
@@ -202,11 +202,11 @@ export default function ContactForm() {
               onChange={handleChange}
               required
               disabled={isSubmitting}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full px-4 py-2 border border-gray-300 dark:border-[#d4af37]/50 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-[#d4af37] dark:focus:border-[#d4af37] bg-white dark:bg-[#1a2332] text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
             />
           </div>
           <div>
-            <label htmlFor="telefone" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label htmlFor="telefone" className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
               Telefone com DDD *
             </label>
             <input
@@ -217,13 +217,13 @@ export default function ContactForm() {
               onChange={handleChange}
               required
               disabled={isSubmitting}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full px-4 py-2 border border-gray-300 dark:border-[#d4af37]/50 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-[#d4af37] dark:focus:border-[#d4af37] bg-white dark:bg-[#1a2332] text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
             />
           </div>
         </div>
 
         <div>
-          <label htmlFor="departamento" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          <label htmlFor="departamento" className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
             Departamento *
           </label>
           <select
@@ -233,7 +233,7 @@ export default function ContactForm() {
             onChange={handleChange}
             required
             disabled={isSubmitting}
-            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full px-4 py-2 border border-gray-300 dark:border-[#d4af37]/50 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-[#d4af37] dark:focus:border-[#d4af37] bg-white dark:bg-[#1a2332] text-gray-900 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <option value="">Selecione o departamento</option>
             <option value="projetos">Projetos</option>
@@ -242,7 +242,7 @@ export default function ContactForm() {
         </div>
 
         <div>
-          <label htmlFor="assunto" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          <label htmlFor="assunto" className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
             Assunto *
           </label>
           <select
@@ -252,7 +252,7 @@ export default function ContactForm() {
             onChange={handleChange}
             required
             disabled={isSubmitting}
-            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full px-4 py-2 border border-gray-300 dark:border-[#d4af37]/50 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-[#d4af37] dark:focus:border-[#d4af37] bg-white dark:bg-[#1a2332] text-gray-900 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <option value="">Selecione uma opção</option>
             <option value="comercial">Contato Comercial</option>
@@ -266,7 +266,7 @@ export default function ContactForm() {
         </div>
 
         <div>
-          <label htmlFor="mensagem" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          <label htmlFor="mensagem" className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
             Mensagem *
           </label>
           <textarea
@@ -277,7 +277,7 @@ export default function ContactForm() {
             onChange={handleChange}
             required
             disabled={isSubmitting}
-            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full px-4 py-2 border border-gray-300 dark:border-[#d4af37]/50 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-[#d4af37] dark:focus:border-[#d4af37] bg-white dark:bg-[#1a2332] text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
             placeholder="Descreva como podemos ajudar..."
           ></textarea>
         </div>
@@ -292,18 +292,18 @@ export default function ContactForm() {
               onChange={handleChange}
               required
               disabled={isSubmitting}
-              className="w-4 h-4 border border-gray-300 dark:border-gray-600 rounded focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-4 h-4 border border-gray-300 dark:border-[#d4af37] rounded focus:ring-blue-500 dark:focus:ring-[#d4af37] bg-white dark:bg-[#1a2332] text-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
             />
           </div>
-          <label htmlFor="termos" className="ml-2 text-sm text-gray-700 dark:text-gray-300">
-            Concordo com os <Link href="/politica" className="text-accent hover:underline">termos de privacidade</Link> e com o recebimento de comunicações.
+          <label htmlFor="termos" className="ml-2 text-sm text-gray-700 dark:text-white">
+            Concordo com os <Link href="/politica" className="text-accent hover:underline dark:text-[#d4af37] dark:hover:text-[#e6cc7a]">termos de privacidade</Link> e com o recebimento de comunicações.
           </label>
         </div>
 
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full px-6 py-3 btn btn-primary font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+          className="w-full px-6 py-3 bg-blue-600 hover:bg-blue-700 dark:bg-[#d4af37] dark:hover:bg-[#e6cc7a] text-white font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
         >
           {isSubmitting ? (
             <>
