@@ -2,7 +2,6 @@
 // Foco na INTENÇÃO DO USUÁRIO ao invés de palavras-chave tradicionais
 // Compatível com AI Max for Search e Agentic
 
-import { userIntentionMapping, detectUserIntention, generateAIOptimizedCopy } from './seoIntentionMapping';
 import { optimizeContentForAI, generateStructuredDataForAI } from './seoContentOptimizer';
 import { validateTransparencyCompliance, generateTransparentContent } from './seoTransparencyCompliance';
 
@@ -248,16 +247,6 @@ export function getDescriptionByIntention(intention: string): string {
 
 // 🚀 NOVAS FUNÇÕES PARA GOOGLE AI MODE
 
-// Função para detectar intenção do usuário (substitui palavras-chave tradicionais)
-export function detectUserIntentionFromQuery(query: string, context: Record<string, unknown> = {}) {
-  return detectUserIntention(query, context);
-}
-
-// Função para gerar copy otimizada para Google AI
-export function generateAIOptimizedCopyWrapper(intention: string, userType: string) {
-  return generateAIOptimizedCopy(intention, userType);
-}
-
 // Função para otimizar conteúdo baseado em intenção
 export function optimizeContentForGoogleAI(content: string, intention: string, _userType: string) {
   return optimizeContentForAI(content, intention, _userType);
@@ -276,32 +265,4 @@ export function generateStructuredDataForAIWrapper(pageType: string, content: Re
 // Função para gerar conteúdo transparente
 export function generateTransparentContentWrapper(serviceType: string) {
   return generateTransparentContent(serviceType);
-}
-
-// 🎯 ESTRATÉGIA DE INTENÇÃO (Nova abordagem)
-export const intentionStrategy = {
-  // Mapear intenções primárias para soluções
-  mapIntentionToSolution: (intention: string) => {
-    const intentionData = userIntentionMapping.primaryIntentions[intention as keyof typeof userIntentionMapping.primaryIntentions];
-    return intentionData?.solutionMapping || 'consultoria-geral';
-  },
-
-  // Gerar jornada de intenção
-  generateIntentionJourney: (intention: string) => {
-    const intentionData = userIntentionMapping.primaryIntentions[intention as keyof typeof userIntentionMapping.primaryIntentions];
-    return intentionData?.userJourney || [];
-  },
-
-  // Otimizar para comportamento do usuário
-  optimizeForBehavior: (userType: string, intention: string) => {
-    const behavioralData = userIntentionMapping.behavioralData[userType as keyof typeof userIntentionMapping.behavioralData];
-    const intentionData = userIntentionMapping.primaryIntentions[intention as keyof typeof userIntentionMapping.primaryIntentions];
-    
-    return {
-      painPoints: behavioralData?.painPoints || [],
-      decisionFactors: behavioralData?.decisionFactors || [],
-      contentPreferences: behavioralData?.contentPreferences || [],
-      solutionMapping: intentionData?.solutionMapping || 'consultoria-geral'
-    };
-  }
-}; 
+} 
