@@ -24,19 +24,45 @@ async function sendContactEmail(data: ContactFormData, formData: FormData) {
   }
 
   try {
-    const transporter = nodemailer.createTransporter({
+    const port = Number(process.env.EMAIL_PORT) || 465;
+    const isSSL = port === 465;
+    
+    // Configuração otimizada para HostGator
+    const transporter = nodemailer.createTransport({
       host: process.env.EMAIL_HOST,
-      port: Number(process.env.EMAIL_PORT) || 465,
-      secure: true,
+      port: port,
+      secure: isSSL, // true para porta 465 (SSL), false para 587 (TLS)
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
       },
+      // Configurações adicionais para compatibilidade com HostGator
+      tls: {
+        rejectUnauthorized: false, // Permite certificados auto-assinados
+        minVersion: 'TLSv1.2'
+      },
+      connectionTimeout: 15000, // 15 segundos
+      greetingTimeout: 15000,
+      socketTimeout: 15000,
+      debug: true, // Logs detalhados
+      logger: true,
     });
 
-    // Test connection
-    await transporter.verify();
-    console.log('SMTP connection verified successfully');
+    // Test connection com logs detalhados
+    console.log('=== ATTEMPTING SMTP CONNECTION ===');
+    console.log('Host:', process.env.EMAIL_HOST);
+    console.log('Port:', port);
+    console.log('Secure (SSL):', isSSL);
+    console.log('User:', process.env.EMAIL_USER);
+    
+    try {
+      await transporter.verify();
+      console.log('✅ SMTP connection verified successfully');
+    } catch (verifyError: any) {
+      console.error('❌ SMTP verify failed:', verifyError.message);
+      console.error('Full error:', JSON.stringify(verifyError, null, 2));
+      throw new Error(`SMTP connection failed: ${verifyError.message}`);
+    }
 
   // Mapear códigos de departamento para labels e emails
   const departamentoInfo: Record<string, { label: string; email: string }> = {
@@ -174,6 +200,8 @@ async function sendContactEmail(data: ContactFormData, formData: FormData) {
     </html>
   `;
 
+    console.log('Sending email with attachments:', anexoCount);
+    
     await transporter.sendMail({
       from: 'OLV Internacional <consultores@olvinternacional.com.br>',
       to: departamento.email,
@@ -183,12 +211,15 @@ async function sendContactEmail(data: ContactFormData, formData: FormData) {
       attachments: attachments.length > 0 ? attachments : undefined,
     });
     
-    console.log('Email sent successfully to:', departamento.email);
+    console.log('✅ Email sent successfully to:', departamento.email);
     if (anexoCount > 0) {
-      console.log(`With ${anexoCount} attachment(s)`);
+      console.log(`📎 With ${anexoCount} attachment(s)`);
     }
-  } catch (error) {
-    console.error('Error sending email:', error);
+  } catch (error: any) {
+    console.error('❌ Error sending email:', error);
+    console.error('Error code:', error.code);
+    console.error('Error message:', error.message);
+    console.error('Full error:', JSON.stringify(error, null, 2));
     throw error;
   }
 }
@@ -240,14 +271,33 @@ export async function POST(req: Request) {
         success: true, 
         message: 'Mensagem enviada com sucesso! Entraremos em contato em breve.' 
       });
-    } catch (emailError) {
+    } catch (emailError: any) {
       console.error('❌ EMAIL SENDING FAILED:', emailError);
+      console.error('Error details:', {
+        code: emailError.code,
+        message: emailError.message,
+        command: emailError.command
+      });
+      
+      // Mensagem de erro mais específica
+      let errorMessage = 'Erro ao enviar email. ';
+      
+      if (emailError.code === 'EAUTH') {
+        errorMessage += 'Falha de autenticação. Verifique usuário e senha.';
+      } else if (emailError.code === 'ECONNECTION') {
+        errorMessage += 'Não foi possível conectar ao servidor SMTP.';
+      } else if (emailError.code === 'ETIMEDOUT') {
+        errorMessage += 'Timeout ao conectar. Tente novamente.';
+      } else {
+        errorMessage += 'Tente novamente em alguns instantes.';
+      }
+      
       return NextResponse.json(
-        { success: false, error: 'Erro ao enviar email. Verifique a configuração SMTP.' },
+        { success: false, error: errorMessage },
         { status: 500 }
       );
     }
-  } catch (err) {
+  } catch (err: any) {
     console.error('Contact API error', err);
     return NextResponse.json(
       { success: false, error: 'Erro interno do servidor.' },
