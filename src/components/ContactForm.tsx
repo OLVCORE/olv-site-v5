@@ -12,6 +12,7 @@ interface FormData {
   assunto: string;
   mensagem: string;
   termos: boolean;
+  anexos: File[];
 }
 
 export default function ContactForm() {
@@ -24,6 +25,7 @@ export default function ContactForm() {
     assunto: '',
     mensagem: '',
     termos: false,
+    anexos: [],
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -44,6 +46,18 @@ export default function ContactForm() {
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    setFormData((prev) => ({ ...prev, anexos: files }));
+  };
+
+  const removeFile = (index: number) => {
+    setFormData((prev) => ({
+      ...prev,
+      anexos: prev.anexos.filter((_, i) => i !== index)
+    }));
   };
 
   const closeModal = () => {
@@ -76,18 +90,23 @@ export default function ContactForm() {
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          nome: formData.nome,
-          empresa: formData.empresa,
-          email: formData.email,
-          telefone: formData.telefone,
-          departamento: formData.departamento,
-          assunto: formData.assunto,
-          mensagem: formData.mensagem,
-        }),
+        body: (() => {
+          const formDataToSend = new FormData();
+          formDataToSend.append('nome', formData.nome);
+          formDataToSend.append('empresa', formData.empresa);
+          formDataToSend.append('email', formData.email);
+          formDataToSend.append('telefone', formData.telefone);
+          formDataToSend.append('departamento', formData.departamento);
+          formDataToSend.append('assunto', formData.assunto);
+          formDataToSend.append('mensagem', formData.mensagem);
+          
+          // Adicionar anexos
+          formData.anexos.forEach((file, index) => {
+            formDataToSend.append(`anexo_${index}`, file);
+          });
+          
+          return formDataToSend;
+        })(),
       });
 
       const result = await response.json();
@@ -106,6 +125,7 @@ export default function ContactForm() {
           assunto: '',
           mensagem: '',
           termos: false,
+          anexos: [],
         });
 
         // Auto-fechar modal após 10 segundos
@@ -133,8 +153,9 @@ export default function ContactForm() {
     <section 
       className="contact-form-container rounded-lg shadow-lg p-6 mb-8"
       style={{
-        backgroundColor: '#0e1425',
+        backgroundColor: '#0d1117',
         border: '1px solid rgba(212, 175, 55, 0.3)',
+        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.3)',
       }}
     >
       <h3 
@@ -144,6 +165,7 @@ export default function ContactForm() {
           fontWeight: 'bold',
           fontSize: '1.25rem',
           marginBottom: '1.5rem',
+          textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)',
         }}
       >
         Envie-nos uma mensagem
@@ -151,10 +173,14 @@ export default function ContactForm() {
 
       {/* Mensagem de Erro */}
       {submitStatus.type === 'error' && (
-        <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+        <div className="mb-6 p-4 rounded-lg" style={{
+          backgroundColor: 'rgba(239, 68, 68, 0.1)',
+          border: '1px solid rgba(239, 68, 68, 0.3)',
+        }}>
           <div className="flex items-start">
             <svg
-              className="w-5 h-5 text-red-600 dark:text-red-400 mt-0.5 mr-3 flex-shrink-0"
+              className="w-5 h-5 mt-0.5 mr-3 flex-shrink-0"
+              style={{ color: '#ef4444' }}
               fill="currentColor"
               viewBox="0 0 20 20"
             >
@@ -164,7 +190,7 @@ export default function ContactForm() {
                 clipRule="evenodd"
               />
             </svg>
-            <p className="text-sm text-red-800 dark:text-red-200">{submitStatus.message}</p>
+            <p className="text-sm" style={{ color: '#ef4444' }}>{submitStatus.message}</p>
           </div>
         </div>
       )}
@@ -187,7 +213,7 @@ export default function ContactForm() {
               className="w-full px-4 py-2 border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
               style={{
                 color: '#ffffff',
-                backgroundColor: '#1a2332',
+                backgroundColor: '#1a1f29',
                 borderColor: 'rgba(212, 175, 55, 0.5)',
                 borderWidth: '1px',
                 borderStyle: 'solid',
@@ -213,7 +239,7 @@ export default function ContactForm() {
               className="w-full px-4 py-2 border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
               style={{
                 color: '#ffffff',
-                backgroundColor: '#1a2332',
+                backgroundColor: '#1a1f29',
                 borderColor: 'rgba(212, 175, 55, 0.5)',
                 borderWidth: '1px',
                 borderStyle: 'solid',
@@ -242,7 +268,7 @@ export default function ContactForm() {
               className="w-full px-4 py-2 border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
               style={{
                 color: '#ffffff',
-                backgroundColor: '#1a2332',
+                backgroundColor: '#1a1f29',
                 borderColor: 'rgba(212, 175, 55, 0.5)',
                 borderWidth: '1px',
                 borderStyle: 'solid',
@@ -268,7 +294,7 @@ export default function ContactForm() {
               className="w-full px-4 py-2 border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
               style={{
                 color: '#ffffff',
-                backgroundColor: '#1a2332',
+                backgroundColor: '#1a1f29',
                 borderColor: 'rgba(212, 175, 55, 0.5)',
                 borderWidth: '1px',
                 borderStyle: 'solid',
@@ -294,7 +320,7 @@ export default function ContactForm() {
             className="w-full px-4 py-2 border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
             style={{
               color: '#ffffff',
-              backgroundColor: '#1a2332',
+              backgroundColor: '#1a1f29',
               borderColor: 'rgba(212, 175, 55, 0.5)',
               borderWidth: '1px',
               borderStyle: 'solid',
@@ -303,9 +329,9 @@ export default function ContactForm() {
               width: '100%',
             }}
           >
-            <option value="" className="dark:text-white dark:bg-[#1a2332]">Selecione o departamento</option>
-            <option value="projetos" className="dark:text-white dark:bg-[#1a2332]">Projetos</option>
-            <option value="atendimento" className="dark:text-white dark:bg-[#1a2332]">Atendimento</option>
+            <option value="" style={{ backgroundColor: '#1a1f29', color: '#ffffff' }}>Selecione o departamento</option>
+            <option value="projetos" style={{ backgroundColor: '#1a1f29', color: '#ffffff' }}>Projetos</option>
+            <option value="atendimento" style={{ backgroundColor: '#1a1f29', color: '#ffffff' }}>Atendimento</option>
           </select>
         </div>
 
@@ -323,7 +349,7 @@ export default function ContactForm() {
             className="w-full px-4 py-2 border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
             style={{
               color: '#ffffff',
-              backgroundColor: '#1a2332',
+              backgroundColor: '#1a1f29',
               borderColor: 'rgba(212, 175, 55, 0.5)',
               borderWidth: '1px',
               borderStyle: 'solid',
@@ -332,14 +358,14 @@ export default function ContactForm() {
               width: '100%',
             }}
           >
-            <option value="" className="dark:text-white dark:bg-[#1a2332]">Selecione uma opção</option>
-            <option value="comercial" className="dark:text-white dark:bg-[#1a2332]">Contato Comercial</option>
-            <option value="suporte" className="dark:text-white dark:bg-[#1a2332]">Suporte Técnico</option>
-            <option value="consultoria" className="dark:text-white dark:bg-[#1a2332]">Consultoria Estratégica</option>
-            <option value="parceria" className="dark:text-white dark:bg-[#1a2332]">Proposta de Parceria</option>
-            <option value="imprensa" className="dark:text-white dark:bg-[#1a2332]">Assessoria de Imprensa</option>
-            <option value="totvs" className="dark:text-white dark:bg-[#1a2332]">Tecnologia TOTVS</option>
-            <option value="outro" className="dark:text-white dark:bg-[#1a2332]">Outro</option>
+            <option value="" style={{ backgroundColor: '#1a1f29', color: '#ffffff' }}>Selecione uma opção</option>
+            <option value="comercial" style={{ backgroundColor: '#1a1f29', color: '#ffffff' }}>Contato Comercial</option>
+            <option value="suporte" style={{ backgroundColor: '#1a1f29', color: '#ffffff' }}>Suporte Técnico</option>
+            <option value="consultoria" style={{ backgroundColor: '#1a1f29', color: '#ffffff' }}>Consultoria Estratégica</option>
+            <option value="parceria" style={{ backgroundColor: '#1a1f29', color: '#ffffff' }}>Proposta de Parceria</option>
+            <option value="imprensa" style={{ backgroundColor: '#1a1f29', color: '#ffffff' }}>Assessoria de Imprensa</option>
+            <option value="totvs" style={{ backgroundColor: '#1a1f29', color: '#ffffff' }}>Tecnologia TOTVS</option>
+            <option value="outro" style={{ backgroundColor: '#1a1f29', color: '#ffffff' }}>Outro</option>
           </select>
         </div>
 
@@ -359,7 +385,7 @@ export default function ContactForm() {
             placeholder="Descreva sua necessidade, dúvida ou como podemos ajudar sua empresa..."
             style={{
               color: '#ffffff',
-              backgroundColor: '#1a2332',
+              backgroundColor: '#1a1f29',
               borderColor: 'rgba(212, 175, 55, 0.5)',
               borderWidth: '1px',
               borderStyle: 'solid',
@@ -369,6 +395,73 @@ export default function ContactForm() {
               minHeight: '120px',
             }}
           ></textarea>
+        </div>
+
+        {/* Seção de Anexos */}
+        <div>
+          <label htmlFor="anexos" className="block text-sm font-medium mb-1" style={{ color: '#ffffff' }}>
+            Anexar Arquivos (Opcional)
+          </label>
+          <div className="space-y-3">
+            <input
+              type="file"
+              id="anexos"
+              name="anexos"
+              multiple
+              onChange={handleFileChange}
+              disabled={isSubmitting}
+              accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png,.gif,.txt"
+              className="w-full px-4 py-2 border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              style={{
+                color: '#ffffff',
+                backgroundColor: '#1a1f29',
+                borderColor: 'rgba(212, 175, 55, 0.5)',
+                borderWidth: '1px',
+                borderStyle: 'solid',
+                borderRadius: '0.5rem',
+                padding: '0.5rem 1rem',
+                width: '100%',
+              }}
+            />
+            <p className="text-xs" style={{ color: '#22d3ee' }}>
+              Formatos aceitos: PDF, DOC, DOCX, XLS, XLSX, JPG, PNG, GIF, TXT (máx. 10MB por arquivo)
+            </p>
+            
+            {/* Lista de arquivos selecionados */}
+            {formData.anexos.length > 0 && (
+              <div className="space-y-2">
+                <p className="text-sm font-medium" style={{ color: '#D4AF37' }}>
+                  Arquivos selecionados:
+                </p>
+                {formData.anexos.map((file, index) => (
+                  <div key={index} className="flex items-center justify-between p-2 rounded" style={{
+                    backgroundColor: 'rgba(212, 175, 55, 0.1)',
+                    border: '1px solid rgba(212, 175, 55, 0.3)',
+                  }}>
+                    <div className="flex items-center">
+                      <svg className="w-4 h-4 mr-2" style={{ color: '#22d3ee' }} fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-sm" style={{ color: '#ffffff' }}>{file.name}</span>
+                      <span className="text-xs ml-2" style={{ color: '#22d3ee' }}>
+                        ({(file.size / 1024 / 1024).toFixed(2)} MB)
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => removeFile(index)}
+                      className="text-red-400 hover:text-red-300 transition-colors"
+                      disabled={isSubmitting}
+                    >
+                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                      </svg>
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
         <div className="flex items-start">
@@ -381,18 +474,41 @@ export default function ContactForm() {
               onChange={handleChange}
               required
               disabled={isSubmitting}
-              className="w-4 h-4 border border-gray-300 dark:border-[#d4af37] rounded focus:ring-blue-500 dark:focus:ring-[#d4af37] bg-white dark:bg-[#1a2332] text-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-4 h-4 border rounded focus:ring-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              style={{
+                borderColor: 'rgba(212, 175, 55, 0.5)',
+                backgroundColor: '#1a1f29',
+                color: '#D4AF37',
+              }}
             />
           </div>
-          <label htmlFor="termos" className="ml-2 text-sm text-gray-700 dark:text-white">
-            Concordo com os <Link href="/politica" className="text-accent hover:underline dark:text-[#d4af37] dark:hover:text-[#e6cc7a]">termos de privacidade</Link> e com o recebimento de comunicações.
+          <label htmlFor="termos" className="ml-2 text-sm" style={{ color: '#ffffff' }}>
+            Concordo com os <Link href="/politica" className="hover:underline" style={{ color: '#22d3ee' }}>termos de privacidade</Link> e com o recebimento de comunicações.
           </label>
         </div>
 
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full px-6 py-3 bg-blue-600 hover:bg-blue-700 dark:bg-[#d4af37] dark:hover:bg-[#e6cc7a] text-white font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+          className="w-full px-6 py-3 font-medium rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+          style={{
+            background: 'linear-gradient(135deg, #D4AF37 0%, #B8860B 100%)',
+            color: '#ffffff',
+            border: 'none',
+            boxShadow: '0 4px 6px -1px rgba(212, 175, 55, 0.3)',
+          }}
+          onMouseEnter={(e) => {
+            if (!isSubmitting) {
+              e.currentTarget.style.transform = 'translateY(-2px)';
+              e.currentTarget.style.boxShadow = '0 6px 8px -1px rgba(212, 175, 55, 0.4)';
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (!isSubmitting) {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(212, 175, 55, 0.3)';
+            }
+          }}
         >
           {isSubmitting ? (
             <>

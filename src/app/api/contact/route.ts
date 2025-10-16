@@ -11,7 +11,7 @@ interface ContactFormData {
   mensagem: string;
 }
 
-async function sendContactEmail(data: ContactFormData) {
+async function sendContactEmail(data: ContactFormData, formData: FormData) {
   console.log('=== DEBUG EMAIL CONFIG ===');
   console.log('EMAIL_HOST:', process.env.EMAIL_HOST ? 'SET' : 'NOT SET');
   console.log('EMAIL_PORT:', process.env.EMAIL_PORT || 'NOT SET');
@@ -24,7 +24,7 @@ async function sendContactEmail(data: ContactFormData) {
   }
 
   try {
-    const transporter = nodemailer.createTransport({
+    const transporter = nodemailer.createTransporter({
       host: process.env.EMAIL_HOST,
       port: Number(process.env.EMAIL_PORT) || 465,
       secure: true,
@@ -73,6 +73,22 @@ async function sendContactEmail(data: ContactFormData) {
     timeStyle: 'short',
   });
 
+  // Preparar anexos
+  const attachments: any[] = [];
+  let anexoCount = 0;
+  
+  for (const [key, value] of formData.entries()) {
+    if (key.startsWith('anexo_') && value instanceof File) {
+      const buffer = Buffer.from(await value.arrayBuffer());
+      attachments.push({
+        filename: value.name,
+        content: buffer,
+        contentType: value.type || 'application/octet-stream',
+      });
+      anexoCount++;
+    }
+  }
+
   const html = `
     <!DOCTYPE html>
     <html>
@@ -90,6 +106,7 @@ async function sendContactEmail(data: ContactFormData) {
         .message-box { background: #f8f9fa; padding: 15px; border-left: 4px solid #0a58ca; margin: 15px 0; }
         .footer { background: #f8f9fa; padding: 15px; text-align: center; font-size: 12px; color: #666; border-radius: 0 0 8px 8px; }
         .badge { display: inline-block; background: #d4af37; color: white; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: bold; }
+        .anexos-info { background: #e8f4fd; padding: 10px; border-left: 4px solid #22d3ee; margin: 10px 0; }
       </style>
     </head>
     <body>
@@ -104,6 +121,12 @@ async function sendContactEmail(data: ContactFormData) {
             <span class="badge" style="background: #0a58ca;">${departamento.label}</span>
             <span class="badge" style="margin-left: 8px;">${assuntoLabel}</span>
           </p>
+          
+          ${anexoCount > 0 ? `
+          <div class="anexos-info">
+            <strong>📎 Anexos:</strong> ${anexoCount} arquivo(s) enviado(s)
+          </div>
+          ` : ''}
           
           <table>
             <tr>
@@ -154,12 +177,16 @@ async function sendContactEmail(data: ContactFormData) {
     await transporter.sendMail({
       from: 'OLV Internacional <consultores@olvinternacional.com.br>',
       to: departamento.email,
-      subject: `Nova Mensagem - ${departamento.label} - ${assuntoLabel}`,
+      subject: `Nova Mensagem - ${departamento.label} - ${assuntoLabel}${anexoCount > 0 ? ` (${anexoCount} anexo${anexoCount > 1 ? 's' : ''})` : ''}`,
       html,
       replyTo: data.email,
+      attachments: attachments.length > 0 ? attachments : undefined,
     });
     
     console.log('Email sent successfully to:', departamento.email);
+    if (anexoCount > 0) {
+      console.log(`With ${anexoCount} attachment(s)`);
+    }
   } catch (error) {
     console.error('Error sending email:', error);
     throw error;
@@ -168,7 +195,18 @@ async function sendContactEmail(data: ContactFormData) {
 
 export async function POST(req: Request) {
   try {
-    const data: ContactFormData = await req.json();
+    const formData = await req.formData();
+    
+    // Extrair dados do formulário
+    const data: ContactFormData = {
+      nome: formData.get('nome') as string,
+      empresa: formData.get('empresa') as string,
+      email: formData.get('email') as string,
+      telefone: formData.get('telefone') as string,
+      departamento: formData.get('departamento') as string,
+      assunto: formData.get('assunto') as string,
+      mensagem: formData.get('mensagem') as string,
+    };
 
     console.log('=== CONTACT FORM SUBMISSION ===');
     console.log('Data received:', JSON.stringify(data, null, 2));
@@ -196,7 +234,7 @@ export async function POST(req: Request) {
 
     // Enviar email - BLOQUEANTE para capturar erros
     try {
-      await sendContactEmail(data);
+      await sendContactEmail(data, formData);
       console.log('✅ EMAIL SENT SUCCESSFULLY!');
       return NextResponse.json({ 
         success: true, 
@@ -217,4 +255,3 @@ export async function POST(req: Request) {
     );
   }
 }
-

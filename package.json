@@ -17,7 +17,8 @@
     "prebuild": "node scripts/generateSearchIndex.js",
     "check:keywords": "node scripts/checkKeywords.js",
     "postbuild": "npm run check:keywords",
-    "validate:launch": "npx tsx scripts/validateLaunchReadiness.ts"
+    "validate:launch": "npx tsx scripts/validateLaunchReadiness.ts",
+    "test:email": "npx tsx scripts/testEmail.ts"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
