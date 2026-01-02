@@ -2149,19 +2149,17 @@ body.theme-light .glass-premium {
   z-index: 9999 !important;
 }
 
-/* Header com z-index alto para ficar sobre TUDO (incluindo GoAdopt) */
+/* ===========================================
+   HEADER - DEFINIÇÃO ÚNICA E DEFINITIVA
+   =========================================== */
 .header {
-  z-index: 10002 !important; /* ACIMA de GoAdopt (1000) e links (10001) */
+  z-index: 10002 !important; /* ACIMA de tudo */
   position: fixed !important;
   top: 0 !important;
   left: 0 !important;
   right: 0 !important;
   pointer-events: auto !important;
-}
-
-/* GARANTIR que links do nav-menu funcionem - CORREÇÃO CRÍTICA */
-.header {
-  pointer-events: auto !important;
+  width: 100% !important;
 }
 
 .header-center {
@@ -2196,12 +2194,15 @@ body.theme-light .glass-premium {
   text-decoration: none !important;
 }
 
-/* Ticker posicionado corretamente abaixo do header - RESTAURADO */
+/* ===========================================
+   TICKER - DEFINIÇÃO ÚNICA E DEFINITIVA
+   =========================================== */
 .ticker {
   position: fixed !important;
   top: var(--height-header) !important; /* Fixo logo abaixo do header, SEM gap */
   left: 0 !important;
   right: 0 !important;
+  width: 100% !important;
   z-index: 9997 !important; /* Abaixo do header (10002) */
   background: var(--color-surface) !important;
   border-bottom: 1px solid var(--color-accent) !important;
@@ -2210,37 +2211,31 @@ body.theme-light .glass-premium {
   align-items: center !important;
   overflow: hidden !important;
   pointer-events: auto !important;
-  margin-top: 0 !important; /* ZERO gap - fixo junto ao header */
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 /* ===========================================
-   CORREÇÃO CRÍTICA: NAVEGAÇÃO BLOQUEADA
+   NAVEGAÇÃO - GARANTIR QUE FUNCIONE
    =========================================== */
-
-/* FORÇAR header e todos os links a funcionarem - SEM QUEBRAR POSITION FIXED */
-.header {
-  pointer-events: auto !important;
-  /* NÃO alterar position: fixed do header - mantém fixo no topo */
-}
-
 .header * {
   pointer-events: auto !important;
 }
 
 .header a,
 .header a[href],
-.header Link {
+.header Link,
+.header button {
   pointer-events: auto !important;
   cursor: pointer !important;
-  z-index: 10001 !important;
+  z-index: 10003 !important;
   position: relative !important;
 }
 
-/* Header center e nav-menu devem funcionar */
 .header-center {
   pointer-events: auto !important;
   position: relative !important;
-  z-index: 10000 !important;
+  z-index: 10001 !important;
 }
 
 .header-center * {
@@ -2250,7 +2245,7 @@ body.theme-light .glass-premium {
 .nav-menu {
   pointer-events: auto !important;
   position: relative !important;
-  z-index: 10000 !important;
+  z-index: 10001 !important;
 }
 
 .nav-menu * {
@@ -2263,7 +2258,7 @@ body.theme-light .glass-premium {
 .nav-menu .nav-item {
   pointer-events: auto !important;
   cursor: pointer !important;
-  z-index: 10001 !important;
+  z-index: 10003 !important;
   position: relative !important;
   display: inline-block !important;
   text-decoration: none !important;
