@@ -77,6 +77,7 @@ export async function GET(req: NextRequest) {
     const offset = Math.max(parseInt(searchParams.get('offset') || '0'), 0);
     const category = searchParams.get('category');
     const search = searchParams.get('search');
+    const today = searchParams.get('today');
 
     // Validate parameters
     if (limit < 1 || offset < 0) {
@@ -104,6 +105,18 @@ export async function GET(req: NextRequest) {
       query = query.or(`title.ilike.%${sanitizedSearch}%,excerpt.ilike.%${sanitizedSearch}%`);
     }
 
+    // Filter by today if requested
+    if (today === '1') {
+      const todayStart = new Date();
+      todayStart.setHours(0, 0, 0, 0);
+      const todayEnd = new Date();
+      todayEnd.setHours(23, 59, 59, 999);
+      
+      query = query
+        .gte('published_at', todayStart.toISOString())
+        .lte('published_at', todayEnd.toISOString());
+    }
+
     const { data, error, count } = await query;
 
     if (error) {
@@ -125,6 +138,12 @@ export async function GET(req: NextRequest) {
       published_at: post.published_at || new Date().toISOString(),
     })) || [];
 
+    // If today=1, return array directly (for Ticker compatibility)
+    if (today === '1') {
+      return Response.json(validatedData);
+    }
+
+    // Otherwise, return full object (for other routes compatibility)
     return Response.json({
       posts: validatedData,
       pagination: {

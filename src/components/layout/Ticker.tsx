@@ -46,15 +46,25 @@ const Ticker: React.FC = () => {
 
     // Buscar todas as notícias do dia via API
     fetch('/api/posts?today=1')
-      .then(res => res.json())
+      .then(async res => {
+        if (!res.ok) {
+          throw new Error(`API error: ${res.status}`);
+        }
+        return res.json();
+      })
       .then(data => {
-        if (Array.isArray(data)) {
-          console.log('Ticker: mensagens recebidas:', data.length);
-          setHeadlines(data.map((post: any) => ({
+        // Tratar tanto array quanto objeto (compatibilidade)
+        const posts = Array.isArray(data) ? data : (data?.posts || []);
+        
+        if (posts.length > 0) {
+          console.log('Ticker: mensagens recebidas:', posts.length);
+          setHeadlines(posts.map((post: any) => ({
             title: post.title,
             excerpt: post.excerpt || '',
             slug: post.slug,
           })));
+        } else {
+          console.warn('Ticker: nenhuma manchete encontrada para hoje');
         }
       })
       .catch(error => {
