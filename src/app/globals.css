@@ -2196,30 +2196,31 @@ body.theme-light .glass-premium {
   text-decoration: none !important;
 }
 
-/* Ticker posicionado corretamente abaixo do header */
+/* Ticker posicionado corretamente abaixo do header - RESTAURADO */
 .ticker {
   position: fixed !important;
-  top: calc(var(--height-header) + 8px) !important; /* 70px + 8px de espaçamento */
+  top: var(--height-header) !important; /* Fixo logo abaixo do header, SEM gap */
   left: 0 !important;
   right: 0 !important;
-  z-index: 9997 !important; /* Menor que o header (9998) - NÃO bloqueia header */
-  background: var(--color-surface);
-  border-bottom: 1px solid var(--color-accent);
+  z-index: 9997 !important; /* Abaixo do header (10002) */
+  background: var(--color-surface) !important;
+  border-bottom: 1px solid var(--color-accent) !important;
   height: var(--height-ticker) !important; /* 45px */
   display: flex !important;
-  align-items: center !important; /* Alinha no centro */
-  overflow: hidden;
-  pointer-events: auto !important; /* Permite cliques no ticker */
+  align-items: center !important;
+  overflow: hidden !important;
+  pointer-events: auto !important;
+  margin-top: 0 !important; /* ZERO gap - fixo junto ao header */
 }
 
 /* ===========================================
    CORREÇÃO CRÍTICA: NAVEGAÇÃO BLOQUEADA
    =========================================== */
 
-/* FORÇAR header e todos os links a funcionarem */
+/* FORÇAR header e todos os links a funcionarem - SEM QUEBRAR POSITION FIXED */
 .header {
   pointer-events: auto !important;
-  position: relative !important;
+  /* NÃO alterar position: fixed do header - mantém fixo no topo */
 }
 
 .header * {
@@ -3575,7 +3576,7 @@ body.theme-light .nav-menu-mobile .nav-item:hover {
    BOTÃO WHATSAPP OFICIAL
    ======================================== */
 
-/* Botão WhatsApp flutuante ELEGANTE */
+/* Botão WhatsApp flutuante ELEGANTE - RESTAURADO */
 .whatsapp-button {
   background: #25D366 !important;
   color: white !important;
@@ -3589,8 +3590,12 @@ body.theme-light .nav-menu-mobile .nav-item:hover {
   cursor: pointer !important;
   box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3), 0 2px 8px rgba(0, 0, 0, 0.2) !important;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  z-index: 1000 !important;
+  z-index: 1001 !important; /* Acima de GoAdopt (1000), abaixo de header (10002) */
   backdrop-filter: blur(10px) !important;
+  position: fixed !important; /* Garantir que seja fixo */
+  bottom: 24px !important; /* Posição padrão */
+  right: 24px !important; /* Posição padrão */
+  pointer-events: auto !important; /* Garantir que funcione */
 }
 
 .whatsapp-button:hover {
@@ -4242,26 +4247,27 @@ body.theme-light .nav-menu-mobile .nav-item:hover {
   }
 }
 
-/* Ticker imediatamente após cabeçalho - SEM GAP */
+/* Ticker imediatamente após cabeçalho - SEM GAP - RESTAURADO */
 .ticker {
   position: fixed !important;
-  top: 60px !important; /* Altura exata do header mobile */
+  top: var(--height-header) !important; /* Usa variável CSS, não valor fixo */
   left: 0 !important;
   right: 0 !important;
   z-index: 9997 !important;
   background: var(--color-surface) !important;
   border-bottom: 1px solid var(--color-accent) !important;
-  height: 35px !important; /* Altura otimizada */
+  height: var(--height-ticker) !important; /* Usa variável CSS */
   display: flex !important;
   align-items: center !important;
   overflow: hidden !important;
-  margin-top: 0 !important; /* ZERO gap */
+  margin-top: 0 !important; /* ZERO gap - fixo junto ao header */
   margin-bottom: 0 !important;
 }
 
 @media (max-width: 767px) {
   .ticker {
-    height: 35px !important;
+    top: var(--height-header) !important; /* Mantém fixo abaixo do header */
+    height: var(--height-ticker) !important; /* Usa variável */
     margin-top: 0 !important; /* ZERO gap */
   }
 }
