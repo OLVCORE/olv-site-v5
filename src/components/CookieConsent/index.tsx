@@ -41,7 +41,7 @@ const CookieConsent: React.FC = () => {
   if (!showConsent) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 w-full bg-gray-800 text-white p-4 shadow-lg z-[2200] border-t-2 border-accent">
+    <div className="fixed bottom-0 left-0 w-full bg-gray-800 text-white p-4 shadow-lg z-[1000] border-t-2 border-accent" style={{ pointerEvents: 'auto' }}>
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-between">
         <div className="mb-4 md:mb-0 md:mr-4 text-sm">
           <p>

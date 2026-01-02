@@ -59,13 +59,12 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({ label, items, className = '
   };
 
   const handleMainLinkClick = (e: React.MouseEvent) => {
-    // Se o dropdown estiver aberto, fecha ao clicar no link principal
-    // MAS permite navegação se clicar diretamente no link (não no dropdown)
-    if (isOpen && (e.target as HTMLElement).closest('.dropdown-content')) {
-      e.preventDefault();
+    // NUNCA bloquear navegação - sempre permitir que o link funcione
+    // Se o dropdown estiver aberto, apenas fecha o dropdown mas permite navegação
+    if (isOpen) {
       setIsOpen(false);
+      // NÃO prevenir default - permite navegação normal
     }
-    // Se não estiver no dropdown, permite navegação normal
   };
 
   return (
@@ -78,7 +77,13 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({ label, items, className = '
       <Link 
         href={mainHref}
         className="nav-item flex items-center gap-1 hover:text-[#d4af37] transition-colors duration-200"
-        onClick={handleMainLinkClick}
+        onClick={(e) => {
+          // Apenas fecha dropdown se estiver aberto, mas SEMPRE permite navegação
+          if (isOpen) {
+            setIsOpen(false);
+          }
+          // NÃO prevenir default - Link do Next.js deve funcionar normalmente
+        }}
       >
         {label}
         <svg 

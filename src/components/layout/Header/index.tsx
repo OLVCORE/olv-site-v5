@@ -52,22 +52,22 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
 
   return (
     <>
-      {/* Header */}
-      <header className="header">
+      {/* Header Premium */}
+      <header className="header backdrop-blur-xl bg-premium-slate-900/95 shadow-premium border-b border-premium-slate-800/50">
         <div className="header-left">
-          <Link href="/" className="logo-container" title="OLV Internacional">
+          <Link href="/" className="logo-container group" title="OLV Internacional">
                         <OptimizedImage
               src="/images/olv-logo.jpeg" 
               alt="OLV Internacional" 
               width={56} 
               height={56} 
-              className="logo-background"
+              className="logo-background transition-transform duration-300 group-hover:scale-110"
               priority={true}
               quality={90}
             />
-            <div className="logo-frame"></div>
+            <div className="logo-frame ring-2 ring-premium-cyan-400/30 group-hover:ring-premium-cyan-400/60 transition-all duration-300"></div>
           </Link>
-          <span className="slogan desktop-only">
+          <span className="slogan desktop-only text-premium-slate-300 group-hover:text-premium-cyan-300 transition-colors">
             Integramos Estratégia,<br />
             Operação e Resultado
           </span>
@@ -75,9 +75,37 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
 
         <div className="header-center">
           <nav className="nav-menu">
-            <Link href="/" className={`nav-item ${isActive('/') ? 'active' : ''}`} data-page="home">Home</Link>
-            <Link href="/sobre" className={`nav-item ${isActive('/sobre') ? 'active' : ''}`} data-page="sobre">Sobre</Link>
-            <Link href="/solucoes" className={`nav-item ${isActive('/solucoes') ? 'active' : ''}`} data-page="solucoes">Soluções</Link>
+            <Link 
+              href="/" 
+              className={`nav-item font-semibold transition-all duration-300 hover:text-premium-cyan-300 hover:scale-105 ${isActive('/') ? 'active text-premium-cyan-400 font-bold' : 'text-premium-slate-300'}`} 
+              data-page="home"
+              onClick={(e) => {
+                // Garantir que navegação funcione sempre
+                console.log('Home clicked');
+              }}
+            >
+              Home
+            </Link>
+            <Link 
+              href="/sobre" 
+              className={`nav-item font-semibold transition-all duration-300 hover:text-premium-cyan-300 hover:scale-105 ${isActive('/sobre') ? 'active text-premium-cyan-400 font-bold' : 'text-premium-slate-300'}`} 
+              data-page="sobre"
+              onClick={(e) => {
+                console.log('Sobre clicked');
+              }}
+            >
+              Sobre
+            </Link>
+            <Link 
+              href="/solucoes" 
+              className={`nav-item font-semibold transition-all duration-300 hover:text-premium-cyan-300 hover:scale-105 ${isActive('/solucoes') ? 'active text-premium-cyan-400 font-bold' : 'text-premium-slate-300'}`} 
+              data-page="solucoes"
+              onClick={(e) => {
+                console.log('Soluções clicked');
+              }}
+            >
+              Soluções
+            </Link>
             
             <DropdownMenu 
               label="Radar 360" 
@@ -122,9 +150,36 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
               ]}
             />
             
-            <Link href="/blog" className={`nav-item ${isActive('/blog') ? 'active' : ''}`} data-page="blog">Blog</Link>
-            <Link href="/faq" className={`nav-item ${isActive('/faq') ? 'active' : ''}`} data-page="faq">FAQ</Link>
-            <Link href="/contato" className={`nav-item ${isActive('/contato') ? 'active' : ''}`} data-page="contato">Contato</Link>
+            <Link 
+              href="/blog" 
+              className={`nav-item font-semibold transition-all duration-300 hover:text-premium-cyan-300 hover:scale-105 ${isActive('/blog') ? 'active text-premium-cyan-400 font-bold' : 'text-premium-slate-300'}`} 
+              data-page="blog"
+              onClick={(e) => {
+                console.log('Blog clicked');
+              }}
+            >
+              Blog
+            </Link>
+            <Link 
+              href="/faq" 
+              className={`nav-item font-semibold transition-all duration-300 hover:text-premium-cyan-300 hover:scale-105 ${isActive('/faq') ? 'active text-premium-cyan-400 font-bold' : 'text-premium-slate-300'}`} 
+              data-page="faq"
+              onClick={(e) => {
+                console.log('FAQ clicked');
+              }}
+            >
+              FAQ
+            </Link>
+            <Link 
+              href="/contato" 
+              className={`nav-item font-semibold transition-all duration-300 hover:text-premium-cyan-300 hover:scale-105 ${isActive('/contato') ? 'active text-premium-cyan-400 font-bold' : 'text-premium-slate-300'}`} 
+              data-page="contato"
+              onClick={(e) => {
+                console.log('Contato clicked');
+              }}
+            >
+              Contato
+            </Link>
           </nav>
         </div>
 
@@ -139,42 +194,42 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
             <UserMenu />
           </div>
 
-          {/* Ícone menu mobile elegante */}
+          {/* Ícone menu mobile premium */}
           <button
-            className={`hamburger-circle-container mobile-only ${navOpen ? 'active' : ''}`}
+            className={`hamburger-circle-container mobile-only ${navOpen ? 'active' : ''} bg-premium-slate-800/50 hover:bg-premium-cyan-400/10 backdrop-blur-lg border border-premium-cyan-400/30 shadow-glow transition-all duration-300`}
             aria-label={navOpen ? "Fechar menu principal" : "Abrir menu principal"}
             aria-expanded={navOpen}
             aria-controls="mobile-navigation"
             onClick={() => setNavOpen(!navOpen)}
           >
             <div className="hamburger-glass-icon">
-              <div className="hamburger-line glass-line-1"></div>
-              <div className="hamburger-line glass-line-2"></div>
-              <div className="hamburger-line glass-line-3"></div>
+              <div className="hamburger-line glass-line-1 bg-premium-cyan-400"></div>
+              <div className="hamburger-line glass-line-2 bg-premium-cyan-400"></div>
+              <div className="hamburger-line glass-line-3 bg-premium-cyan-400"></div>
             </div>
           </button>
         </div>
       </header>
 
-      {/* Overlay nav mobile */}
-      <nav className={`nav-menu-mobile md:hidden ${navOpen ? 'show' : ''}`} id="mobile-navigation">
-        <Link href="/" className={`nav-item ${isActive('/') ? 'active' : ''}`} onClick={() => setNavOpen(false)}>Home</Link>
-        <Link href="/sobre" className={`nav-item ${isActive('/sobre') ? 'active' : ''}`} onClick={() => setNavOpen(false)}>Sobre</Link>
-        <Link href="/solucoes" className={`nav-item ${isActive('/solucoes') ? 'active' : ''}`} onClick={() => setNavOpen(false)}>Soluções</Link>
-        <Link href="/radar360" className={`nav-item ${isActive('/radar360') ? 'active' : ''}`} onClick={() => setNavOpen(false)}>Radar 360</Link>
-        <Link href="/blog" className={`nav-item ${isActive('/blog') ? 'active' : ''}`} onClick={() => setNavOpen(false)}>Blog</Link>
-        <Link href="/faq" className={`nav-item ${isActive('/faq') ? 'active' : ''}`} onClick={() => setNavOpen(false)}>FAQ</Link>
-        <Link href="/contato" className={`nav-item ${isActive('/contato') ? 'active' : ''}`} onClick={() => setNavOpen(false)}>Contato</Link>
+      {/* Overlay nav mobile premium */}
+      <nav className={`nav-menu-mobile md:hidden ${navOpen ? 'show' : ''} backdrop-blur-xl bg-premium-slate-900/98 shadow-elevated`} id="mobile-navigation">
+        <Link href="/" className={`nav-item text-lg font-semibold py-4 transition-all duration-300 hover:text-premium-cyan-300 hover:bg-premium-slate-800/50 rounded-xl ${isActive('/') ? 'active text-premium-cyan-400 bg-premium-slate-800/80 font-bold' : 'text-premium-slate-300'}`} onClick={() => setNavOpen(false)}>Home</Link>
+        <Link href="/sobre" className={`nav-item text-lg font-semibold py-4 transition-all duration-300 hover:text-premium-cyan-300 hover:bg-premium-slate-800/50 rounded-xl ${isActive('/sobre') ? 'active text-premium-cyan-400 bg-premium-slate-800/80 font-bold' : 'text-premium-slate-300'}`} onClick={() => setNavOpen(false)}>Sobre</Link>
+        <Link href="/solucoes" className={`nav-item text-lg font-semibold py-4 transition-all duration-300 hover:text-premium-cyan-300 hover:bg-premium-slate-800/50 rounded-xl ${isActive('/solucoes') ? 'active text-premium-cyan-400 bg-premium-slate-800/80 font-bold' : 'text-premium-slate-300'}`} onClick={() => setNavOpen(false)}>Soluções</Link>
+        <Link href="/radar360" className={`nav-item text-lg font-semibold py-4 transition-all duration-300 hover:text-premium-cyan-300 hover:bg-premium-slate-800/50 rounded-xl ${isActive('/radar360') ? 'active text-premium-cyan-400 bg-premium-slate-800/80 font-bold' : 'text-premium-slate-300'}`} onClick={() => setNavOpen(false)}>Radar 360</Link>
+        <Link href="/blog" className={`nav-item text-lg font-semibold py-4 transition-all duration-300 hover:text-premium-cyan-300 hover:bg-premium-slate-800/50 rounded-xl ${isActive('/blog') ? 'active text-premium-cyan-400 bg-premium-slate-800/80 font-bold' : 'text-premium-slate-300'}`} onClick={() => setNavOpen(false)}>Blog</Link>
+        <Link href="/faq" className={`nav-item text-lg font-semibold py-4 transition-all duration-300 hover:text-premium-cyan-300 hover:bg-premium-slate-800/50 rounded-xl ${isActive('/faq') ? 'active text-premium-cyan-400 bg-premium-slate-800/80 font-bold' : 'text-premium-slate-300'}`} onClick={() => setNavOpen(false)}>FAQ</Link>
+        <Link href="/contato" className={`nav-item text-lg font-semibold py-4 transition-all duration-300 hover:text-premium-cyan-300 hover:bg-premium-slate-800/50 rounded-xl ${isActive('/contato') ? 'active text-premium-cyan-400 bg-premium-slate-800/80 font-bold' : 'text-premium-slate-300'}`} onClick={() => setNavOpen(false)}>Contato</Link>
       </nav>
 
-      {/* Overlay search mobile */}
-      <div className={`search-overlay-mobile md:hidden ${searchOpen ? 'show' : ''}`}>
-        <div className="p-4">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-on-surface">Buscar</h3>
+      {/* Overlay search mobile premium */}
+      <div className={`search-overlay-mobile md:hidden ${searchOpen ? 'show' : ''} backdrop-blur-xl bg-premium-slate-900/98 shadow-elevated`}>
+        <div className="p-4 sm:p-6">
+          <div className="flex items-center justify-between mb-4 sm:mb-6">
+            <h3 className="text-xl sm:text-2xl font-bold text-premium-slate-300">Buscar</h3>
             <button
               onClick={() => setSearchOpen(false)}
-              className="p-2 rounded-full hover:bg-surface-light transition-colors"
+              className="p-2 sm:p-3 rounded-xl hover:bg-premium-slate-800/50 hover:shadow-glow transition-all duration-300 text-premium-cyan-400"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="18" y1="6" x2="6" y2="18"></line>

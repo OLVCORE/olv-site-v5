@@ -19,9 +19,10 @@
   position: fixed !important;
   bottom: 1rem !important;
   left: 1rem !important;
-  z-index: 99999 !important;
+  z-index: 1000 !important; /* REDUZIDO de 99999 para não bloquear navegação */
   max-width: 400px !important;
   min-width: 300px !important;
+  pointer-events: auto !important; /* Permite cliques APENAS no próprio elemento */
 }
 
 /* Banner de cookies - INICIALMENTE OCULTO, só aparece ao clicar no ícone */
@@ -57,9 +58,10 @@
   visibility: hidden !important;
   opacity: 0 !important;
   transition: all 0.3s ease !important;
-  z-index: 99999 !important;
+  z-index: 1000 !important; /* REDUZIDO de 99999 */
   border: 1px solid #e0e0e0 !important;
   overflow: visible !important;
+  pointer-events: none !important; /* NÃO bloqueia quando oculto */
 }
 
 /* Banner visível quando ativo (ao clicar no ícone) */
