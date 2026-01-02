@@ -303,8 +303,15 @@ export async function GET(request: NextRequest) {
   const logs = searchParams.get('logs');
   const force = searchParams.get('force');
 
-  if (pw !== 'olvadmin') {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  // Verificar autenticação: Vercel Cron (automático) ou senha manual
+  const isVercelCron = request.headers.get('x-vercel-cron') === '1';
+  const isAuthorized = isVercelCron || pw === 'olvadmin';
+
+  if (!isAuthorized) {
+    return NextResponse.json({ 
+      error: 'Unauthorized',
+      hint: 'Use ?pw=olvadmin or call from Vercel Cron'
+    }, { status: 401 });
   }
 
   if (status) {
@@ -331,12 +338,30 @@ export async function GET(request: NextRequest) {
   }
 
   // Executa a ingestão real com todas as fontes
-  if (force) {
+  if (force || isVercelCron) {
     try {
-      console.log('Iniciando ingestão forçada com 42 fontes RSS...');
+      console.log(`[INGEST] Iniciando ingestão ${isVercelCron ? '(Vercel Cron)' : '(manual)'} com ${SOURCES.length} fontes RSS...`);
+      
+      // Validar configuração antes de iniciar
+      if (!supabase) {
+        console.error('[INGEST] Supabase não configurado');
+        return NextResponse.json({
+          success: false,
+          error: 'Supabase não configurado. Verifique variáveis de ambiente.'
+        }, { status: 500 });
+      }
+
+      if (!openai) {
+        console.error('[INGEST] OpenAI não configurado');
+        return NextResponse.json({
+          success: false,
+          error: 'OpenAI não configurado. Verifique variáveis de ambiente.'
+        }, { status: 500 });
+      }
       
       let totalProcessed = 0;
       let successCount = 0;
+      const errors: string[] = [];
 
       for (const source of SOURCES) {
         try {
@@ -344,32 +369,42 @@ export async function GET(request: NextRequest) {
           if (processed > 0) {
             successCount++;
             totalProcessed += processed;
+            console.log(`[INGEST] ✅ ${source.url}: ${processed} posts processados`);
           }
           
           // Delay entre feeds para evitar rate limiting
           await new Promise(resolve => setTimeout(resolve, 2000));
-        } catch (error) {
-          console.error(`Erro ao processar ${source.url}:`, error);
+        } catch (error: any) {
+          const errorMsg = `Erro ao processar ${source.url}: ${error.message}`;
+          console.error(`[INGEST] ❌ ${errorMsg}`);
+          errors.push(errorMsg);
         }
       }
 
-      return NextResponse.json({
+      const result = {
         success: true,
-        message: `Ingestão forçada concluída. ${totalProcessed} artigos processados de ${successCount}/${SOURCES.length} feeds com sucesso.`,
+        message: `Ingestão concluída. ${totalProcessed} artigos processados de ${successCount}/${SOURCES.length} feeds com sucesso.`,
         processed: totalProcessed,
         total: SOURCES.length,
-        successfulFeeds: successCount
-      });
+        successfulFeeds: successCount,
+        errors: errors.length > 0 ? errors.slice(0, 5) : undefined, // Limitar erros no response
+        timestamp: new Date().toISOString()
+      };
+
+      console.log(`[INGEST] ✅ Concluído:`, result);
+      return NextResponse.json(result);
     } catch (error: any) {
+      console.error('[INGEST] ❌ Erro fatal:', error);
       return NextResponse.json({
         success: false,
-        error: error.message
-      });
+        error: error.message,
+        timestamp: new Date().toISOString()
+      }, { status: 500 });
     }
   }
 
   return NextResponse.json({
     success: false,
-    error: 'Parâmetro force=1 necessário para executar ingestão'
+    error: 'Parâmetro force=1 necessário para executar ingestão manualmente'
   });
 } 
