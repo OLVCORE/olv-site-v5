@@ -47,36 +47,53 @@ const Ticker: React.FC = () => {
     // Buscar notícias: primeiro tenta posts de hoje, se não houver, busca os mais recentes
     const fetchHeadlines = async () => {
       try {
+        console.log('Ticker: Iniciando busca de manchetes...');
+        
         // 1. Tentar posts de hoje
         let res = await fetch('/api/posts?today=1&limit=10');
+        console.log('Ticker: Resposta hoje - status:', res.status, 'ok:', res.ok);
+        
         if (!res.ok) {
+          console.error('Ticker: Erro na API (hoje):', res.status, res.statusText);
           throw new Error(`API error: ${res.status}`);
         }
-        let data = await res.json();
-        let posts = Array.isArray(data) ? data : (data?.posts || []);
         
-        // 2. Se não houver posts de hoje, buscar os mais recentes (últimos 7 dias ou últimos 5 posts)
+        let data = await res.json();
+        console.log('Ticker: Dados recebidos (hoje):', data);
+        let posts = Array.isArray(data) ? data : (data?.posts || []);
+        console.log('Ticker: Posts extraídos (hoje):', posts.length, posts);
+        
+        // 2. Se não houver posts de hoje, buscar os mais recentes
         if (posts.length === 0) {
           console.log('Ticker: nenhum post de hoje, buscando posts recentes...');
           res = await fetch('/api/posts?limit=5');
+          console.log('Ticker: Resposta recentes - status:', res.status, 'ok:', res.ok);
+          
           if (res.ok) {
             data = await res.json();
+            console.log('Ticker: Dados recebidos (recentes):', data);
             posts = Array.isArray(data) ? data : (data?.posts || []);
+            console.log('Ticker: Posts extraídos (recentes):', posts.length, posts);
+          } else {
+            console.error('Ticker: Erro na API (recentes):', res.status, res.statusText);
           }
         }
         
         if (posts.length > 0) {
-          console.log('Ticker: mensagens recebidas:', posts.length);
-          setHeadlines(posts.map((post: any) => ({
-            title: post.title,
+          console.log('Ticker: ✅ mensagens recebidas:', posts.length);
+          const headlinesData = posts.map((post: any) => ({
+            title: post.title || 'Sem título',
             excerpt: post.excerpt || '',
-            slug: post.slug,
-          })));
+            slug: post.slug || '',
+          }));
+          console.log('Ticker: Headlines processadas:', headlinesData);
+          setHeadlines(headlinesData);
         } else {
-          console.warn('Ticker: nenhuma manchete encontrada');
+          console.warn('Ticker: ⚠️ nenhuma manchete encontrada após todas as tentativas');
         }
-      } catch (error) {
-        console.error('Erro ao buscar notícias:', error);
+      } catch (error: any) {
+        console.error('Ticker: ❌ Erro ao buscar notícias:', error);
+        console.error('Ticker: Stack:', error.stack);
       }
     };
     

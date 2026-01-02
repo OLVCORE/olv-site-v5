@@ -127,6 +127,9 @@ export async function GET(req: NextRequest) {
       );
     }
 
+    console.log(`[API /posts] Query params: today=${today}, limit=${limit}, offset=${offset}`);
+    console.log(`[API /posts] Posts encontrados: ${data?.length || 0}`);
+
     // Validate data before sending
     const validatedData = data?.map(post => ({
       slug: post.slug || '',
@@ -138,8 +141,11 @@ export async function GET(req: NextRequest) {
       published_at: post.published_at || new Date().toISOString(),
     })) || [];
 
+    console.log(`[API /posts] Dados validados: ${validatedData.length} posts`);
+
     // If today=1, return array directly (for Ticker compatibility)
     if (today === '1') {
+      console.log(`[API /posts] Retornando array direto (today=1): ${validatedData.length} posts`);
       return Response.json(validatedData);
     }
 
