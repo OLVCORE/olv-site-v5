@@ -44,17 +44,26 @@ const Ticker: React.FC = () => {
     const observer = new MutationObserver(checkTheme);
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
-    // Buscar todas as notícias do dia via API
-    fetch('/api/posts?today=1')
-      .then(async res => {
+    // Buscar notícias: primeiro tenta posts de hoje, se não houver, busca os mais recentes
+    const fetchHeadlines = async () => {
+      try {
+        // 1. Tentar posts de hoje
+        let res = await fetch('/api/posts?today=1&limit=10');
         if (!res.ok) {
           throw new Error(`API error: ${res.status}`);
         }
-        return res.json();
-      })
-      .then(data => {
-        // Tratar tanto array quanto objeto (compatibilidade)
-        const posts = Array.isArray(data) ? data : (data?.posts || []);
+        let data = await res.json();
+        let posts = Array.isArray(data) ? data : (data?.posts || []);
+        
+        // 2. Se não houver posts de hoje, buscar os mais recentes (últimos 7 dias ou últimos 5 posts)
+        if (posts.length === 0) {
+          console.log('Ticker: nenhum post de hoje, buscando posts recentes...');
+          res = await fetch('/api/posts?limit=5');
+          if (res.ok) {
+            data = await res.json();
+            posts = Array.isArray(data) ? data : (data?.posts || []);
+          }
+        }
         
         if (posts.length > 0) {
           console.log('Ticker: mensagens recebidas:', posts.length);
@@ -64,12 +73,14 @@ const Ticker: React.FC = () => {
             slug: post.slug,
           })));
         } else {
-          console.warn('Ticker: nenhuma manchete encontrada para hoje');
+          console.warn('Ticker: nenhuma manchete encontrada');
         }
-      })
-      .catch(error => {
+      } catch (error) {
         console.error('Erro ao buscar notícias:', error);
-      });
+      }
+    };
+    
+    fetchHeadlines();
 
     return () => {
       window.removeEventListener('resize', checkMobile);
