@@ -2345,18 +2345,34 @@ main::after {
   /* Não aplicar pointer-events: none globalmente */
 }
 
-/* FORÇAR que todos os links e botões funcionem */
+/* FORÇAR que todos os links e botões funcionem - REGRA GLOBAL */
 a[href],
-button,
-[role="button"],
+button:not([disabled]),
+[role="button"]:not([disabled]),
 [onclick],
-Link {
+Link,
+a,
+button {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  z-index: 10001 !important;
+  position: relative !important;
+}
+
+/* REMOVER bloqueios de elementos interativos */
+a, 
+button:not([disabled]), 
+input:not([disabled]), 
+select:not([disabled]), 
+textarea:not([disabled]), 
+[tabindex]:not([tabindex="-1"]) {
   pointer-events: auto !important;
   cursor: pointer !important;
 }
 
-/* REMOVER bloqueios de elementos interativos */
-a, button, input, select, textarea, [tabindex] {
+/* GARANTIR que elementos dentro de links também funcionem */
+a[href] *,
+button * {
   pointer-events: auto !important;
 }
 
