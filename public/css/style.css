@@ -313,18 +313,9 @@ img {
 /* ==========================================
    TICKER 
    ========================================== */
+/* REMOVIDO: Definição de .ticker - usar apenas a definição em src/app/globals.css linha 2200 */
 .ticker {
-  position: fixed;
-  top: var(--height-header);
-  left: var(--sidebar-collapsed-width);
-  right: 0;
-  height: 40px;
-  background-color: var(--bg-secondary);
-  border-top: 1px solid rgba(212, 175, 55, 0.2);
-  border-bottom: 1px solid rgba(212, 175, 55, 0.1);
-  overflow: hidden;
-  z-index: 1700;
-  transition: left 0.3s ease;
+  /* Todas as propriedades movidas para src/app/globals.css para evitar conflitos */
 }
 
 .sidebar:hover ~ .ticker {
