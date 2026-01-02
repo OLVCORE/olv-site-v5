@@ -2142,19 +2142,77 @@ body.theme-light .glass-premium {
   right: 0 !important;
 }
 
+/* GARANTIR que links do nav-menu funcionem - CORREÇÃO CRÍTICA */
+.header {
+  pointer-events: auto !important;
+}
+
+.header-center {
+  pointer-events: auto !important;
+}
+
+.nav-menu {
+  pointer-events: auto !important;
+  position: relative !important;
+  z-index: 9999 !important;
+}
+
+.nav-menu .nav-item,
+.nav-menu a.nav-item {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  position: relative !important;
+  z-index: 10000 !important;
+  display: inline-block !important;
+}
+
+.nav-menu .nav-item:hover,
+.nav-menu a.nav-item:hover {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+/* Garantir que Links do Next.js funcionem */
+.nav-menu a[href] {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  text-decoration: none !important;
+}
+
 /* Ticker posicionado corretamente abaixo do header */
 .ticker {
   position: fixed !important;
   top: calc(var(--height-header) + 8px) !important; /* 70px + 8px de espaçamento */
   left: 0 !important;
   right: 0 !important;
-  z-index: 9997 !important; /* Menor que o header (9998) */
+  z-index: 9997 !important; /* Menor que o header (9998) - NÃO bloqueia header */
   background: var(--color-surface);
   border-bottom: 1px solid var(--color-accent);
   height: var(--height-ticker) !important; /* 45px */
   display: flex !important;
   align-items: center !important; /* Alinha no centro */
   overflow: hidden;
+  pointer-events: auto !important; /* Permite cliques no ticker */
+}
+
+/* GARANTIR que header sempre fique acima e funcione */
+.header {
+  pointer-events: auto !important;
+}
+
+.header * {
+  pointer-events: auto !important;
+}
+
+/* Header center e nav-menu devem funcionar */
+.header-center,
+.header-center * {
+  pointer-events: auto !important;
+}
+
+.nav-menu,
+.nav-menu * {
+  pointer-events: auto !important;
 }
 
 /* Mobile navigation */

@@ -60,10 +60,12 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({ label, items, className = '
 
   const handleMainLinkClick = (e: React.MouseEvent) => {
     // Se o dropdown estiver aberto, fecha ao clicar no link principal
-    if (isOpen) {
+    // MAS permite navegação se clicar diretamente no link (não no dropdown)
+    if (isOpen && (e.target as HTMLElement).closest('.dropdown-content')) {
       e.preventDefault();
       setIsOpen(false);
     }
+    // Se não estiver no dropdown, permite navegação normal
   };
 
   return (
