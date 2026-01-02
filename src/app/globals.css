@@ -601,10 +601,6 @@ div[data-adopt] {
   }
 }
 
-.ticker {
-  display: flex !important;
-}
-
 /* Corrige classe real do logo */
 .logo-olv-padrao {
   width: 56px !important;
@@ -613,17 +609,7 @@ div[data-adopt] {
   border-radius: 4px;
 }
 
-/* Ticker fixo logo abaixo do header - AJUSTADO */
-.ticker {
-  position: fixed !important;
-  top: calc(var(--height-header) + 8px) !important; /* 70px + 8px de espaçamento */
-  left: 0 !important;
-  width: 100%;
-  background: var(--color-surface);
-  border-bottom: 1px solid var(--color-accent);
-  padding-left: var(--space-4);
-  z-index: 9997 !important;
-}
+/* REMOVIDO: Definição duplicada de .ticker - usar apenas a definição única na linha 2200 */
 
 /* Reposiciona botões: Menu à esquerda, Plataformas à direita */
 .mobile-nav-toggle {
@@ -2768,24 +2754,7 @@ body.theme-light .mobile-simulator-item:hover {
    ======================================== */
 
 /* Header Structure */
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem 2rem;
-  height: auto;
-  min-height: 70px;
-  background: var(--header-bg);
-  border-bottom: 1px solid var(--border-color);
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
+/* REMOVIDO: Definição duplicada de .header com z-index baixo (1000) - usar apenas a definição única na linha 2155 com z-index 10002 */
 
 .header-left {
   display: flex;
@@ -4242,30 +4211,7 @@ body.theme-light .nav-menu-mobile .nav-item:hover {
   }
 }
 
-/* Ticker imediatamente após cabeçalho - SEM GAP - RESTAURADO */
-.ticker {
-  position: fixed !important;
-  top: var(--height-header) !important; /* Usa variável CSS, não valor fixo */
-  left: 0 !important;
-  right: 0 !important;
-  z-index: 9997 !important;
-  background: var(--color-surface) !important;
-  border-bottom: 1px solid var(--color-accent) !important;
-  height: var(--height-ticker) !important; /* Usa variável CSS */
-  display: flex !important;
-  align-items: center !important;
-  overflow: hidden !important;
-  margin-top: 0 !important; /* ZERO gap - fixo junto ao header */
-  margin-bottom: 0 !important;
-}
-
-@media (max-width: 767px) {
-  .ticker {
-    top: var(--height-header) !important; /* Mantém fixo abaixo do header */
-    height: var(--height-ticker) !important; /* Usa variável */
-    margin-top: 0 !important; /* ZERO gap */
-  }
-}
+/* REMOVIDO: Definição duplicada de .ticker - usar apenas a definição única na linha 2200 */
 
 /* ========================================
    MODAL RESPONSIVO - CORREÇÃO CRÍTICA
